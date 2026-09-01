@@ -1,23 +1,24 @@
 """Modelos de autenticación y especialización de los usuarios internos."""
 
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
 from .managers import GestorUsuario
 
 
-class Usuario(AbstractBaseUser, PermissionsMixin):
+class Usuario(AbstractBaseUser):
     """Representa la credencial común de empleados y administradores."""
 
     nombre_usuario = models.CharField("nombre de usuario", max_length=150, unique=True)
     is_active = models.BooleanField("activo", default=True)
     is_staff = models.BooleanField("acceso al panel", default=False)
+    is_superuser = models.BooleanField("administrador general", default=False)
     fecha_alta = models.DateTimeField("fecha de alta", auto_now_add=True)
 
     objects = GestorUsuario()
 
     USERNAME_FIELD = "nombre_usuario"
+    REQUIRED_FIELDS = []
 
     class Meta:
         """Configura el nombre físico y las etiquetas administrativas del modelo."""
@@ -30,6 +31,16 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         """Devuelve el identificador legible utilizado en el panel."""
 
         return self.nombre_usuario
+
+    def has_perm(self, permiso, objeto=None):
+        """Autoriza permisos técnicos de Django a los superusuarios activos."""
+
+        return self.is_active and self.is_superuser
+
+    def has_module_perms(self, etiqueta_aplicacion):
+        """Autoriza el acceso administrativo a módulos para superusuarios activos."""
+
+        return self.is_active and self.is_superuser
 
 
 class Empleado(models.Model):
@@ -86,4 +97,3 @@ class Administrador(models.Model):
         """Devuelve una descripción breve del administrador."""
 
         return f"Administrador: {self.usuario.nombre_usuario}"
-

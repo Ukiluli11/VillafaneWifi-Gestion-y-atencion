@@ -1,0 +1,16 @@
+{# Formulario de autenticación para empleados y administradores. #}
+{% extends "base.html" %}
+
+{% block titulo %}Iniciar sesión | Villafañe Wifi{% endblock %}
+
+{% block contenido %}
+<h2>Iniciar sesión</h2>
+{% if form.errors %}
+<p>El nombre de usuario o la contraseña son incorrectos.</p>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Ingresar</button>
+</form>
+{% endblock %}

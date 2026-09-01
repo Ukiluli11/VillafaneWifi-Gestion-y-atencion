@@ -49,6 +49,15 @@ El endpoint `http://127.0.0.1:8000/health/` permite comprobar que el backend est
 Las reglas de idioma, documentación y POO están definidas en
 [`docs/CONVENCIONES_CODIGO.md`](docs/CONVENCIONES_CODIGO.md).
 
+## Pruebas automatizadas
+
+Las pruebas rápidas utilizan SQLite en memoria únicamente para aislar la lógica. El
+sistema desplegado y las verificaciones de integración utilizarán PostgreSQL.
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q
+```
+
 ## Orden de implementación sugerido
 
 1. Usuarios y accesos.

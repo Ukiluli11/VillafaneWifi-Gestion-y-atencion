@@ -26,7 +26,13 @@ class GestorUsuario(BaseUserManager):
         campos_adicionales.setdefault("is_active", True)
         if not campos_adicionales["is_staff"] or not campos_adicionales["is_superuser"]:
             raise ValueError("El superusuario debe tener habilitados todos los permisos.")
-        return self.crear_usuario(nombre_usuario, contrasena, **campos_adicionales)
+        usuario = self.crear_usuario(nombre_usuario, contrasena, **campos_adicionales)
+
+        # La especialización es total: incluso el superusuario técnico es administrador.
+        from .models import Administrador
+
+        Administrador.objects.get_or_create(usuario=usuario)
+        return usuario
 
     def create_user(self, nombre_usuario, password=None, **campos_adicionales):
         """Adapta la operación requerida por Django al método en español."""
@@ -37,4 +43,3 @@ class GestorUsuario(BaseUserManager):
         """Adapta la creación de superusuarios requerida por Django."""
 
         return self.crear_superusuario(nombre_usuario, password, **campos_adicionales)
-

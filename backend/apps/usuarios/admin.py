@@ -26,8 +26,6 @@ class AdministracionUsuario(AdministracionBaseUsuario):
                     "is_active",
                     "is_staff",
                     "is_superuser",
-                    "groups",
-                    "user_permissions",
                 )
             },
         ),
@@ -49,9 +47,8 @@ class AdministracionUsuario(AdministracionBaseUsuario):
         ),
     )
     readonly_fields = ("last_login", "fecha_alta")
-    filter_horizontal = ("groups", "user_permissions")
+    filter_horizontal = ()
 
 
 admin.site.register(Empleado)
 admin.site.register(Administrador)
-

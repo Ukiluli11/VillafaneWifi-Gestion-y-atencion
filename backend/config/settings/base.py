@@ -88,6 +88,9 @@ MEDIA_ROOT = PROJECT_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "usuarios.Usuario"
+LOGIN_URL = "usuarios:iniciar-sesion"
+LOGIN_REDIRECT_URL = "usuarios:inicio"
+LOGOUT_REDIRECT_URL = "usuarios:iniciar-sesion"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [

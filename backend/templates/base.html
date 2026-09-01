@@ -1,0 +1,17 @@
+{# Estructura visual compartida por las pantallas internas del sistema. #}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block titulo %}Villafañe Wifi{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Sistema de Gestión Villafañe Wifi</h1>
+    </header>
+    <main>
+        {% block contenido %}{% endblock %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{# Pantalla inicial protegida que confirma la identidad autenticada. #}
+{% extends "base.html" %}
+
+{% block titulo %}Inicio | Villafañe Wifi{% endblock %}
+
+{% block contenido %}
+<h2>Panel interno</h2>
+<p>Sesión iniciada como <strong>{{ request.user.nombre_usuario }}</strong>.</p>
+<form method="post" action="{% url 'usuarios:cerrar-sesion' %}">
+    {% csrf_token %}
+    <button type="submit">Cerrar sesión</button>
+</form>
+{% endblock %}
