@@ -49,6 +49,15 @@ El endpoint `http://127.0.0.1:8000/health/` permite comprobar que el backend est
 Las reglas de idioma, documentación y POO están definidas en
 [`docs/CONVENCIONES_CODIGO.md`](docs/CONVENCIONES_CODIGO.md).
 
+## Estado de implementación
+
+- **RF-29:** autenticación, cierre de sesión y protección del panel implementados.
+- **RF-30:** matriz de acceso por subtipo y área implementada mediante políticas POO.
+
+El proyecto no define una entidad `Rol`: `Usuario` se especializa de forma total y
+disjunta en `Empleado` o `Administrador`. Las áreas de los empleados determinan sus
+acciones permitidas sin modificar este modelo conceptual.
+
 ## Pruebas automatizadas
 
 Las pruebas rápidas utilizan SQLite en memoria únicamente para aislar la lógica. El
