@@ -51,6 +51,10 @@ Las reglas de idioma, documentación y POO están definidas en
 
 ## Estado de implementación
 
+- **RF-01:** alta integral de cliente, teléfonos y servicios implementada.
+- **RF-02:** consulta, edición y baja lógica de clientes implementadas.
+- **RF-03:** búsqueda por documento, nombre, WhatsApp o localidad implementada.
+- **RF-04:** catálogo de planes y asignación a conexiones implementados.
 - **RF-29:** autenticación, cierre de sesión y protección del panel implementados.
 - **RF-30:** matriz de acceso por subtipo y área implementada mediante políticas POO.
 

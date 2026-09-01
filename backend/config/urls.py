@@ -6,6 +6,8 @@ from django.urls import include, path
 
 urlpatterns = [
     path("", include("apps.usuarios.urls")),
+    path("api/", include("apps.clientes.urls")),
+    path("api/", include("apps.servicios.urls")),
     path("admin/", admin.site.urls),
     path("health/", VistaSalud.as_view(), name="verificar-salud"),
 ]
