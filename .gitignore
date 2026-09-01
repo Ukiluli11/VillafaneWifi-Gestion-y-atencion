@@ -1,0 +1,21 @@
+.venv/
+node_modules/
+__pycache__/
+*.py[cod]
+*.sqlite3
+.env
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+media/
+staticfiles/
+.idea/
+.vscode/
+*.log
+*.bkp
+
+# Resultados temporales de revisión y renderizado local
+qa/
+qa_objetivos_alcance/
+outputs/
