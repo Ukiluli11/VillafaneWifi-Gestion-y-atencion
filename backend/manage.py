@@ -1,9 +1,11 @@
 #!/usr/bin/env python
+"""Punto de entrada para ejecutar los comandos administrativos de Django."""
 import os
 import sys
 
 
-def main():
+def principal():
+    """Configura Django y delega la ejecución al comando solicitado."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
     try:
         from django.core.management import execute_from_command_line
@@ -15,5 +17,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
-
+    principal()

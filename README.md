@@ -10,16 +10,16 @@ con las demás mediante servicios de aplicación bien definidos.
 
 Los módulos iniciales son:
 
-- `users`: autenticación, empleados y administradores.
-- `customers`: clientes y medios de contacto.
-- `services`: planes y conexiones contratadas.
-- `conversations`: conversaciones y mensajes de WhatsApp.
-- `billing`: cuotas, cuenta corriente y pagos acreditados.
-- `payments`: comprobantes, OCR y conciliación.
-- `support`: tickets y notas internas.
-- `reporting`: dashboard, reportes y alertas.
-- `integrations`: adaptadores para Meta, OCR, LLM y tareas externas.
-- `common`: componentes transversales sin reglas de negocio específicas.
+- `usuarios`: autenticación, empleados y administradores.
+- `clientes`: clientes y medios de contacto.
+- `servicios`: planes y conexiones contratadas.
+- `conversaciones`: conversaciones y mensajes de WhatsApp.
+- `facturacion`: cuotas, cuenta corriente y pagos acreditados.
+- `pagos`: comprobantes, OCR y conciliación.
+- `soporte`: tickets y notas internas.
+- `reportes`: dashboard, reportes y alertas.
+- `integraciones`: adaptadores para Meta, OCR, LLM y tareas externas.
+- `comun`: componentes transversales sin reglas de negocio específicas.
 
 ## Preparación local
 
@@ -38,13 +38,16 @@ en `.env`. Luego ejecutar:
 
 ```powershell
 Set-Location backend
-python manage.py makemigrations users
+python manage.py makemigrations usuarios
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
 ```
 
 El endpoint `http://127.0.0.1:8000/health/` permite comprobar que el backend está activo.
+
+Las reglas de idioma, documentación y POO están definidas en
+[`docs/CONVENCIONES_CODIGO.md`](docs/CONVENCIONES_CODIGO.md).
 
 ## Orden de implementación sugerido
 
@@ -55,4 +58,3 @@ El endpoint `http://127.0.0.1:8000/health/` permite comprobar que el backend est
 5. Comprobantes y conciliación de pagos.
 6. Tickets y notas internas.
 7. Reportes e integraciones externas.
-

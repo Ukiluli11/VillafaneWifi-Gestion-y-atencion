@@ -1,3 +1,5 @@
+"""Configuración compartida por todos los entornos de ejecución."""
+
 from pathlib import Path
 
 import environ
@@ -18,16 +20,16 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "apps.common.apps.CommonConfig",
-    "apps.users.apps.UsersConfig",
-    "apps.customers.apps.CustomersConfig",
-    "apps.services.apps.ServicesConfig",
-    "apps.conversations.apps.ConversationsConfig",
-    "apps.billing.apps.BillingConfig",
-    "apps.payments.apps.PaymentsConfig",
-    "apps.support.apps.SupportConfig",
-    "apps.reporting.apps.ReportingConfig",
-    "apps.integrations.apps.IntegrationsConfig",
+    "apps.comun.apps.ComunConfig",
+    "apps.usuarios.apps.UsuariosConfig",
+    "apps.clientes.apps.ClientesConfig",
+    "apps.servicios.apps.ServiciosConfig",
+    "apps.conversaciones.apps.ConversacionesConfig",
+    "apps.facturacion.apps.FacturacionConfig",
+    "apps.pagos.apps.PagosConfig",
+    "apps.soporte.apps.SoporteConfig",
+    "apps.reportes.apps.ReportesConfig",
+    "apps.integraciones.apps.IntegracionesConfig",
 ]
 
 MIDDLEWARE = [
@@ -85,7 +87,7 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = PROJECT_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "usuarios.Usuario"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
@@ -99,4 +101,3 @@ REST_FRAMEWORK = {
 REDIS_URL = env("REDIS_URL", default="redis://localhost:6379/0")
 CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_BACKEND = REDIS_URL
-
