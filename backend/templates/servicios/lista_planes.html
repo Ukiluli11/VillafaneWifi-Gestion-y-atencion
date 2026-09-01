@@ -1,0 +1,17 @@
+{# Catálogo visual de planes comerciales. #}
+{% extends "base.html" %}
+{% block titulo %}Planes | Villafañe Wifi{% endblock %}
+{% block nav_planes %}activo{% endblock %}
+{% block encabezado %}Planes de servicio{% endblock %}
+{% block acciones_encabezado %}{% if "gestionar_planes" in acciones_habilitadas %}<a class="boton boton-primario" href="{% url 'servicios-panel:alta-plan' %}">＋ Nuevo plan</a>{% endif %}{% endblock %}
+{% block contenido %}
+<div class="grilla-planes">
+{% for plan in planes %}
+<article class="tarjeta tarjeta-plan {% if plan.estado == 'INACTIVO' %}desactivado{% endif %}">
+    <div class="cabecera-plan"><span class="indicador-icono violeta">◇</span><span class="estado estado-{{ plan.estado|lower }}">{{ plan.get_estado_display }}</span></div>
+    <p class="etiqueta">Plan de internet</p><h2>{{ plan.nombre }}</h2><div class="velocidad"><strong>{{ plan.velocidad_mbps }}</strong><span>Mbps</span></div><p class="precio-plan">$ {{ plan.precio_vigente|floatformat:2 }} <small>/ mes</small></p>
+    {% if "gestionar_planes" in acciones_habilitadas %}<div class="acciones-plan"><a class="boton boton-secundario" href="{% url 'servicios-panel:editar-plan' plan.pk %}">Editar</a>{% if plan.estado == "ACTIVO" %}<a class="enlace-peligro" href="{% url 'servicios-panel:baja-plan' plan.pk %}">Dar de baja</a>{% endif %}</div>{% endif %}
+</article>
+{% empty %}<section class="estado-vacio tarjeta"><span class="estado-icono">◇</span><h3>No hay planes cargados</h3><p>Creá el primer plan para comenzar a registrar clientes.</p></section>{% endfor %}
+</div>
+{% endblock %}

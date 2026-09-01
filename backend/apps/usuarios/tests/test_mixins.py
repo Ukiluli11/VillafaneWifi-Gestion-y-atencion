@@ -1,6 +1,7 @@
 """Pruebas de la protección reutilizable aplicada a vistas funcionales."""
 
 import pytest
+from config.urls import urlpatterns as rutas_proyecto
 from django.http import HttpResponse
 from django.urls import path
 from django.views import View
@@ -22,7 +23,10 @@ class VistaGestionPagos(AccionRequeridaMixin, View):
         return HttpResponse("Acceso concedido")
 
 
-urlpatterns = [path("prueba-pagos/", VistaGestionPagos.as_view(), name="prueba-pagos")]
+urlpatterns = [
+    path("prueba-pagos/", VistaGestionPagos.as_view(), name="prueba-pagos"),
+    *rutas_proyecto,
+]
 
 
 @pytest.fixture(autouse=True)

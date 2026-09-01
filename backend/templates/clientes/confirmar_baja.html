@@ -1,0 +1,8 @@
+{# Confirmación previa a la baja lógica del cliente. #}
+{% extends "base.html" %}
+{% block titulo %}Dar de baja | Villafañe Wifi{% endblock %}
+{% block nav_clientes %}activo{% endblock %}
+{% block encabezado %}Confirmar baja{% endblock %}
+{% block contenido %}
+<section class="confirmacion tarjeta"><span class="estado-icono peligro">!</span><p class="etiqueta">Acción importante</p><h2>¿Dar de baja a {{ cliente.nombre_razon_social }}?</h2><p>El cliente y sus servicios quedarán inactivos. La información histórica no se eliminará.</p><form method="post">{% csrf_token %}<a class="boton boton-secundario" href="{% url 'clientes-panel:detalle' cliente.pk %}">Cancelar</a><button class="boton boton-peligro" type="submit">Sí, dar de baja</button></form></section>
+{% endblock %}

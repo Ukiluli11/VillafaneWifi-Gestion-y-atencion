@@ -1,0 +1,6 @@
+{# Confirmación de la baja lógica de una conexión. #}
+{% extends "base.html" %}
+{% block titulo %}Dar de baja servicio | Villafañe Wifi{% endblock %}
+{% block nav_servicios %}activo{% endblock %}
+{% block encabezado %}Confirmar baja{% endblock %}
+{% block contenido %}<section class="confirmacion tarjeta"><span class="estado-icono peligro">!</span><p class="etiqueta">Servicio #{{ servicio.pk }}</p><h2>¿Dar de baja esta conexión?</h2><p>{{ servicio.cliente.nombre_razon_social }} · {{ servicio.plan.nombre }} · {{ servicio.instalacion_calle }} {{ servicio.instalacion_numero }}</p><form method="post">{% csrf_token %}<a class="boton boton-secundario" href="{% url 'clientes-panel:detalle' servicio.cliente_id %}">Cancelar</a><button class="boton boton-peligro" type="submit">Sí, dar de baja</button></form></section>{% endblock %}

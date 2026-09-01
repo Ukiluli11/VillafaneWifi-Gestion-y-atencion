@@ -1,16 +1,42 @@
-{# Formulario de autenticación para empleados y administradores. #}
+{# Pantalla de autenticación del personal interno. #}
 {% extends "base.html" %}
 
 {% block titulo %}Iniciar sesión | Villafañe Wifi{% endblock %}
 
 {% block contenido %}
-<h2>Iniciar sesión</h2>
-{% if form.errors %}
-<p>El nombre de usuario o la contraseña son incorrectos.</p>
-{% endif %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Ingresar</button>
-</form>
+<section class="acceso">
+    <div class="acceso-presentacion">
+        <div class="marca marca-clara">
+            <span class="marca-icono">VW</span>
+            <span><strong>Villafañe</strong><small>Wifi · Gestión</small></span>
+        </div>
+        <div>
+            <p class="etiqueta">Sistema integral</p>
+            <h1>Todo el servicio,<br>en un solo lugar.</h1>
+            <p>Clientes, conexiones, pagos y soporte organizados para trabajar mejor.</p>
+        </div>
+    </div>
+    <div class="acceso-formulario">
+        <div class="tarjeta-acceso">
+            <p class="etiqueta">Acceso interno</p>
+            <h2>Bienvenido</h2>
+            <p class="texto-secundario">Ingresá con tu usuario y contraseña.</p>
+            {% if form.errors %}
+            <div class="mensaje mensaje-error">El usuario o la contraseña son incorrectos.</div>
+            {% endif %}
+            <form method="post" class="formulario-vertical">
+                {% csrf_token %}
+                <div class="campo-formulario">
+                    <label for="{{ form.username.id_for_label }}">Nombre de usuario</label>
+                    {{ form.username }}
+                </div>
+                <div class="campo-formulario">
+                    <label for="{{ form.password.id_for_label }}">Contraseña</label>
+                    {{ form.password }}
+                </div>
+                <button class="boton boton-primario boton-ancho" type="submit">Ingresar al sistema</button>
+            </form>
+        </div>
+    </div>
+</section>
 {% endblock %}

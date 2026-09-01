@@ -22,3 +22,14 @@ transformar el DER conceptual. El teléfono multivaluado se representa mediante
 - `GET /api/clientes/{id}/`: consulta el detalle completo.
 - `PUT/PATCH /api/clientes/{id}/`: modifica datos y, opcionalmente, teléfonos.
 - `DELETE /api/clientes/{id}/`: realiza la baja lógica.
+
+## Panel web
+
+- `/panel/clientes/`: listado y búsqueda.
+- `/panel/clientes/nuevo/`: alta integral en tres pasos visuales.
+- `/panel/clientes/{id}/`: ficha con contactos y conexiones.
+- `/panel/clientes/{id}/editar/`: modificación de datos y teléfonos.
+- `/panel/clientes/{id}/baja/`: confirmación y baja lógica.
+
+Los formularios web reutilizan `ServicioClientes` y `CasoUsoAltaIntegralCliente`;
+por lo tanto aplican exactamente las mismas reglas que la API.

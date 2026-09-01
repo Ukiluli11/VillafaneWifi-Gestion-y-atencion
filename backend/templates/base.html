@@ -1,17 +1,75 @@
-{# Estructura visual compartida por las pantallas internas del sistema. #}
+{% load static %}
+{# Estructura visual compartida por todas las pantallas internas. #}
 <!doctype html>
 <html lang="es">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sistema de gestión integral Villafañe Wifi">
     <title>{% block titulo %}Villafañe Wifi{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/panel.css' %}">
 </head>
-<body>
-    <header>
-        <h1>Sistema de Gestión Villafañe Wifi</h1>
-    </header>
-    <main>
-        {% block contenido %}{% endblock %}
-    </main>
+<body class="{% if request.user.is_authenticated %}con-panel{% else %}sin-panel{% endif %}">
+    {% if request.user.is_authenticated %}
+    <aside class="barra-lateral">
+        <a class="marca" href="{% url 'usuarios:inicio' %}" aria-label="Ir al inicio">
+            <span class="marca-icono">VW</span>
+            <span><strong>Villafañe</strong><small>Wifi · Gestión</small></span>
+        </a>
+        <nav class="navegacion" aria-label="Navegación principal">
+            <a href="{% url 'usuarios:inicio' %}" class="{% block nav_inicio %}{% endblock %}">
+                <span>⌂</span> Inicio
+            </a>
+            {% if "consultar_clientes" in acciones_habilitadas %}
+            <a href="{% url 'clientes-panel:lista' %}" class="{% block nav_clientes %}{% endblock %}">
+                <span>◎</span> Clientes
+            </a>
+            {% endif %}
+            {% if "consultar_planes" in acciones_habilitadas %}
+            <a href="{% url 'servicios-panel:planes' %}" class="{% block nav_planes %}{% endblock %}">
+                <span>◇</span> Planes
+            </a>
+            {% endif %}
+            {% if "consultar_servicios" in acciones_habilitadas %}
+            <a href="{% url 'servicios-panel:servicios' %}" class="{% block nav_servicios %}{% endblock %}">
+                <span>⌁</span> Servicios
+            </a>
+            {% endif %}
+        </nav>
+        <div class="usuario-lateral">
+            <span class="avatar">{{ request.user.nombre_usuario|slice:":1"|upper }}</span>
+            <span class="usuario-datos">
+                <strong>{{ request.user.nombre_usuario }}</strong>
+                <small>Sesión activa</small>
+            </span>
+            <form method="post" action="{% url 'usuarios:cerrar-sesion' %}">
+                {% csrf_token %}
+                <button class="boton-icono" type="submit" title="Cerrar sesión">↪</button>
+            </form>
+        </div>
+    </aside>
+    {% endif %}
+
+    <div class="envoltorio">
+        {% if request.user.is_authenticated %}
+        <header class="barra-superior">
+            <div>
+                <p class="seccion-superior">Panel de gestión</p>
+                <h1>{% block encabezado %}Inicio{% endblock %}</h1>
+            </div>
+            {% block acciones_encabezado %}{% endblock %}
+        </header>
+        {% endif %}
+        <main class="contenido-principal">
+            {% if messages %}
+            <div class="mensajes" aria-live="polite">
+                {% for message in messages %}
+                <div class="mensaje mensaje-{{ message.tags|default:'info' }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% block contenido %}{% endblock %}
+        </main>
+    </div>
 </body>
 </html>

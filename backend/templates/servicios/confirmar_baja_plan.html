@@ -1,0 +1,6 @@
+{# Confirmación de la baja lógica de un plan. #}
+{% extends "base.html" %}
+{% block titulo %}Dar de baja plan | Villafañe Wifi{% endblock %}
+{% block nav_planes %}activo{% endblock %}
+{% block encabezado %}Confirmar baja{% endblock %}
+{% block contenido %}<section class="confirmacion tarjeta"><span class="estado-icono peligro">!</span><p class="etiqueta">Catálogo de planes</p><h2>¿Dar de baja {{ plan.nombre }}?</h2><p>No podrá asignarse a nuevas conexiones. Los servicios existentes conservarán este plan.</p><form method="post">{% csrf_token %}<a class="boton boton-secundario" href="{% url 'servicios-panel:planes' %}">Cancelar</a><button class="boton boton-peligro" type="submit">Sí, dar de baja</button></form></section>{% endblock %}

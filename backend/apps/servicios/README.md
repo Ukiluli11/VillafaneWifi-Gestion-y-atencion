@@ -19,3 +19,12 @@ pero impide nuevas contrataciones. La baja de un cliente inactiva sus conexiones
 - `/api/planes/`: operaciones de consulta y gestión del catálogo.
 - `/api/servicios/`: operaciones de consulta y gestión de conexiones.
 - `/api/servicios/?id_cliente={id}`: conexiones de un cliente determinado.
+
+## Panel web
+
+- `/panel/planes/`: catálogo visual y gestión de planes.
+- `/panel/conexiones/`: listado general de servicios contratados.
+- `/panel/conexiones/nueva/`: contratación para un cliente existente.
+
+Las operaciones de edición y baja son lógicas y solicitan confirmación cuando
+corresponde.

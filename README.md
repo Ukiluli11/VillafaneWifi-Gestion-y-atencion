@@ -62,6 +62,16 @@ El proyecto no define una entidad `Rol`: `Usuario` se especializa de forma total
 disjunta en `Empleado` o `Administrador`. Las áreas de los empleados determinan sus
 acciones permitidas sin modificar este modelo conceptual.
 
+## Panel web actual
+
+El panel personalizado ya permite iniciar sesión, consultar indicadores y completar
+los flujos visuales de clientes, planes y servicios. Después de ejecutar el servidor,
+se accede desde `http://127.0.0.1:8000/iniciar-sesion/`.
+
+La navegación y cada pantalla respetan la misma matriz de acceso que la API. Por
+ejemplo, soporte puede consultar clientes y conexiones, pero no modificar el catálogo
+comercial ni registrar clientes.
+
 ## Pruebas automatizadas
 
 Las pruebas rápidas utilizan SQLite en memoria únicamente para aislar la lógica. El
