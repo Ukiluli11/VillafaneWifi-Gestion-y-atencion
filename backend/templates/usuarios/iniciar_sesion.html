@@ -1,14 +1,14 @@
-{# Pantalla de autenticación del personal interno. #}
 {% extends "base.html" %}
+{% load static %}
+{# Pantalla de autenticación del personal interno. #}
 
 {% block titulo %}Iniciar sesión | Villafañe Wifi{% endblock %}
 
 {% block contenido %}
 <section class="acceso">
     <div class="acceso-presentacion">
-        <div class="marca marca-clara">
-            <span class="marca-icono">VW</span>
-            <span><strong>Villafañe</strong><small>Wifi · Gestión</small></span>
+        <div class="marca-clara recorte-logo recorte-logo-acceso">
+            <img src="{% static 'img/logo-villafane-wifi.png' %}" alt="Villafañe Wifi · Servicio de Internet">
         </div>
         <div>
             <p class="etiqueta">Sistema integral</p>

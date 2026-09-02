@@ -27,12 +27,12 @@ button, input, select, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 
 .barra-lateral { position: fixed; inset: 0 auto 0 0; width: 250px; display: flex; flex-direction: column; padding: 28px 20px 20px; background: linear-gradient(180deg, var(--verde-950), #0b3128 70%, #104337); color: #d9eee5; z-index: 10; }
-.marca { display: flex; align-items: center; gap: 12px; }
-.marca-icono { display: grid; place-items: center; width: 43px; height: 43px; flex: 0 0 auto; border-radius: 13px; background: linear-gradient(145deg, #54c797, var(--verde-600)); color: white; font-size: 13px; font-weight: 800; box-shadow: 0 8px 20px rgb(36 147 106 / 28%); }
-.marca strong, .marca small { display: block; }
-.marca strong { color: white; font-size: 17px; letter-spacing: .2px; }
-.marca small { margin-top: 2px; color: #92b8a8; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
-.navegacion { display: grid; gap: 7px; margin-top: 48px; }
+.marca { display: block; }
+.recorte-logo { display: block; overflow: hidden; background: white; }
+.recorte-logo img { display: block; max-width: none; height: auto; }
+.recorte-logo-lateral { width: 100%; height: 150px; border-radius: 14px; box-shadow: 0 8px 24px rgb(0 0 0 / 13%); }
+.recorte-logo-lateral img { width: 210px; transform: translate(-1px, -28px); }
+.navegacion { display: grid; gap: 7px; margin-top: 28px; }
 .navegacion a { display: flex; align-items: center; gap: 13px; padding: 12px 14px; border-radius: 10px; color: #b1ccc0; font-size: 14px; font-weight: 600; transition: .18s ease; }
 .navegacion a span { width: 20px; color: #8bb5a3; font-size: 20px; text-align: center; }
 .navegacion a:hover { background: rgb(255 255 255 / 6%); color: white; }
@@ -217,6 +217,8 @@ td small { margin-top: 4px; color: var(--texto-suave); font-size: 11px; }
 .acceso { min-height: 100vh; display: grid; grid-template-columns: 1.05fr .95fr; background: white; }
 .acceso-presentacion { display: flex; flex-direction: column; justify-content: space-between; padding: 55px 70px 75px; background: radial-gradient(circle at 80% 20%, rgb(64 185 135 / 24%), transparent 32%), linear-gradient(150deg, #072b21, #114c3a); color: white; }
 .marca-clara { align-self: flex-start; }
+.recorte-logo-acceso { width: 290px; height: 200px; border-radius: 20px; box-shadow: 0 14px 35px rgb(0 0 0 / 18%); }
+.recorte-logo-acceso img { width: 300px; transform: translate(-5px, -47px); }
 .acceso-presentacion h1 { max-width: 620px; margin: 10px 0 18px; font-size: clamp(42px, 5vw, 68px); line-height: 1.04; letter-spacing: -2.2px; }
 .acceso-presentacion > div:last-child > p:last-child { max-width: 520px; color: #add0c1; font-size: 17px; line-height: 1.6; }
 .acceso-formulario { display: grid; place-items: center; padding: 40px; background: #f8f9fc; }
@@ -234,10 +236,14 @@ td small { margin-top: 4px; color: var(--texto-suave); font-size: 11px; }
     .grilla-resumen-cuenta { grid-template-columns: 1fr; }
     .grilla-formulario.tres { grid-template-columns: repeat(2, 1fr); }
     .acceso-presentacion { padding: 45px; }
+    .recorte-logo-lateral { height: 130px; }
+    .recorte-logo-lateral img { width: 180px; transform: translate(-5px, -23px); }
 }
 
 @media (max-width: 760px) {
     .barra-lateral { position: static; width: 100%; min-height: auto; padding: 15px; }
+    .recorte-logo-lateral { width: 155px; height: 112px; margin: 0 auto; }
+    .recorte-logo-lateral img { width: 155px; transform: translateY(-20px); }
     .navegacion { grid-template-columns: repeat(4, 1fr); margin-top: 15px; overflow-x: auto; }
     .navegacion a { justify-content: center; padding: 9px; font-size: 11px; }
     .navegacion a span { display: none; }

@@ -7,14 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sistema de gestión integral Villafañe Wifi">
     <title>{% block titulo %}Villafañe Wifi{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'img/logo-villafane-wifi.png' %}">
     <link rel="stylesheet" href="{% static 'css/panel.css' %}">
 </head>
 <body class="{% if request.user.is_authenticated %}con-panel{% else %}sin-panel{% endif %}">
     {% if request.user.is_authenticated %}
     <aside class="barra-lateral">
         <a class="marca" href="{% url 'usuarios:inicio' %}" aria-label="Ir al inicio">
-            <span class="marca-icono">VW</span>
-            <span><strong>Villafañe</strong><small>Wifi · Gestión</small></span>
+            <span class="recorte-logo recorte-logo-lateral">
+                <img src="{% static 'img/logo-villafane-wifi.png' %}" alt="Villafañe Wifi">
+            </span>
         </a>
         <nav class="navegacion" aria-label="Navegación principal">
             <a href="{% url 'usuarios:inicio' %}" class="{% block nav_inicio %}{% endblock %}">
