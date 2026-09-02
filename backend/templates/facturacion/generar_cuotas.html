@@ -1,0 +1,7 @@
+{# Facturación mensual en bloque de servicios activos. #}
+{% extends "base.html" %}
+{% block titulo %}Generar cuotas | Villafañe Wifi{% endblock %}
+{% block nav_cuentas %}activo{% endblock %}
+{% block encabezado %}Generar cuotas mensuales{% endblock %}
+{% block acciones_encabezado %}<a class="boton boton-secundario" href="{% url 'facturacion-panel:lista' %}">Cancelar</a>{% endblock %}
+{% block contenido %}<form method="post" class="formulario-panel estrecho">{% csrf_token %}<section class="tarjeta seccion-formulario"><span class="numero-seccion">1</span><div class="contenido-seccion"><div class="cabecera-formulario"><h2>Período a facturar</h2><p>Se generará una sola cuota por servicio activo. Si ya existe, no se duplicará.</p></div>{% if form.non_field_errors %}<div class="mensaje mensaje-error">{{ form.non_field_errors }}</div>{% endif %}{% for campo in form %}{% include "componentes/campo_formulario.html" with campo=campo %}{% endfor %}</div></section><div class="acciones-formulario"><a class="boton boton-secundario" href="{% url 'facturacion-panel:lista' %}">Cancelar</a><button class="boton boton-primario" type="submit">Generar cuotas</button></div></form>{% endblock %}

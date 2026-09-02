@@ -35,6 +35,11 @@
                 <span>⌁</span> Servicios
             </a>
             {% endif %}
+            {% if "consultar_cuentas" in acciones_habilitadas %}
+            <a href="{% url 'facturacion-panel:lista' %}" class="{% block nav_cuentas %}{% endblock %}">
+                <span>$</span> Cuenta corriente
+            </a>
+            {% endif %}
         </nav>
         <div class="usuario-lateral">
             <span class="avatar">{{ request.user.nombre_usuario|slice:":1"|upper }}</span>

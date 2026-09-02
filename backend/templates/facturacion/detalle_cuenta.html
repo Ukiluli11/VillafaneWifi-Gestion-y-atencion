@@ -1,0 +1,22 @@
+{# Cuenta corriente, cuotas e historial de pagos de un cliente. #}
+{% extends "base.html" %}
+{% block titulo %}Cuenta de {{ cliente.nombre_razon_social }} | Villafañe Wifi{% endblock %}
+{% block nav_cuentas %}activo{% endblock %}
+{% block encabezado %}Cuenta corriente{% endblock %}
+{% block acciones_encabezado %}
+<a class="boton boton-secundario" href="{% url 'facturacion-panel:lista' %}">← Volver</a>
+{% if "gestionar_pagos" in acciones_habilitadas and resumen.cantidad_pendientes and hay_cuentas_activas %}<a class="boton boton-primario" href="{% url 'facturacion-panel:registrar-pago' cliente.pk %}">Registrar pago</a>{% endif %}
+{% endblock %}
+{% block contenido %}
+<section class="cabecera-ficha tarjeta"><div class="avatar-grande">$</div><div class="ficha-titulo"><p class="etiqueta">Cliente #{{ cliente.pk }}</p><h2>{{ cliente.nombre_razon_social }}</h2><p>{{ cliente.tipo_documento }} {{ cliente.numero_documento }}</p></div><span class="estado estado-{{ resumen.estado|lower }}">{{ resumen.estado_mostrado }}</span></section>
+<section class="grilla-resumen-cuenta">
+    <article class="tarjeta resumen-cuenta"><small>Total pendiente</small><strong>${{ resumen.total_pendiente|floatformat:2 }}</strong><span>{{ resumen.cantidad_pendientes }} cuota{{ resumen.cantidad_pendientes|pluralize }}</span></article>
+    <article class="tarjeta resumen-cuenta deuda"><small>Deuda vencida</small><strong>${{ resumen.total_vencido|floatformat:2 }}</strong><span>{{ resumen.cantidad_vencidas }} vencida{{ resumen.cantidad_vencidas|pluralize }}</span></article>
+    <article class="tarjeta resumen-cuenta"><small>Próximo vencimiento</small><strong>{{ resumen.proximo_vencimiento|date:"d/m/Y"|default:"—" }}</strong><span>Según cada servicio</span></article>
+</section>
+{% if "gestionar_pagos" in acciones_habilitadas and resumen.cantidad_pendientes and not hay_cuentas_activas %}<div class="mensaje mensaje-advertencia">Antes de registrar un pago tenés que <a href="{% url 'facturacion-panel:alta-cuenta-receptora' %}">crear una cuenta receptora</a>.</div>{% endif %}
+<section class="tarjeta seccion-historial"><div class="cabecera-tarjeta"><div><p class="etiqueta">RF-05</p><h3>Cuotas del cliente</h3></div></div>
+{% if cuotas %}<div class="tabla-responsive"><table><thead><tr><th>Período</th><th>Servicio</th><th>Plan</th><th>Emisión</th><th>Vencimiento</th><th>Importe</th><th>Estado</th></tr></thead><tbody>{% for cuota in cuotas %}<tr><td><strong>{{ cuota.periodo }}</strong></td><td>#{{ cuota.servicio_id }}</td><td>{{ cuota.servicio.plan.nombre }}</td><td>{{ cuota.fecha_emision|date:"d/m/Y" }}</td><td>{{ cuota.fecha_vencimiento|date:"d/m/Y" }}</td><td>${{ cuota.monto|floatformat:2 }}</td><td><span class="estado estado-{{ cuota.estado_calculado|lower }}">{{ cuota.estado_mostrado }}</span></td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="estado-vacio compacto"><p>Aún no se generaron cuotas para este cliente.</p></div>{% endif %}</section>
+<section class="tarjeta seccion-historial"><div class="cabecera-tarjeta"><div><p class="etiqueta">RF-06</p><h3>Historial de pagos</h3></div></div>
+{% if pagos %}<div class="tabla-responsive"><table><thead><tr><th>Pago</th><th>Fecha</th><th>Medio</th><th>Cuenta receptora</th><th>Cuotas canceladas</th><th>Total</th></tr></thead><tbody>{% for pago in pagos %}<tr><td>#{{ pago.pk }}</td><td>{{ pago.fecha|date:"d/m/Y H:i" }}</td><td>{{ pago.get_medio_pago_display }}</td><td>{{ pago.cuenta.nombre }}</td><td>{% for cuota in pago.cuotas.all %}<span class="etiqueta-dato">{{ cuota.periodo }} · S{{ cuota.servicio_id }}</span>{% endfor %}</td><td><strong>${{ pago.monto_total|floatformat:2 }}</strong></td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="estado-vacio compacto"><p>Todavía no hay pagos registrados.</p></div>{% endif %}</section>
+{% endblock %}

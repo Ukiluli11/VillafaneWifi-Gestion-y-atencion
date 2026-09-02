@@ -1,0 +1,28 @@
+{# Listado de clientes con su situación de cuenta corriente calculada. #}
+{% extends "base.html" %}
+{% block titulo %}Cuentas corrientes | Villafañe Wifi{% endblock %}
+{% block nav_cuentas %}activo{% endblock %}
+{% block encabezado %}Cuentas corrientes{% endblock %}
+{% block acciones_encabezado %}
+{% if "gestionar_pagos" in acciones_habilitadas %}<a class="boton boton-secundario" href="{% url 'facturacion-panel:cuentas-receptoras' %}">Cuentas receptoras</a>{% endif %}
+{% if "gestionar_cuentas" in acciones_habilitadas %}<a class="boton boton-primario" href="{% url 'facturacion-panel:generar-cuotas' %}">Generar cuotas</a>{% endif %}
+{% endblock %}
+{% block contenido %}
+<section class="tarjeta">
+    <div class="barra-herramientas">
+        <form class="buscador" method="get"><span>⌕</span><input name="buscar" value="{{ buscar }}" placeholder="Buscar por cliente o documento"><button class="boton boton-secundario" type="submit">Buscar</button></form>
+        <span class="contador">{{ cuentas|length }} cuenta{{ cuentas|length|pluralize }}</span>
+    </div>
+    {% if cuentas %}
+    <div class="tabla-responsive"><table><thead><tr><th>Cliente</th><th>Servicios</th><th>Pendiente</th><th>Vencido</th><th>Próximo vencimiento</th><th>Situación</th><th></th></tr></thead><tbody>
+        {% for cliente, resumen in cuentas %}<tr>
+            <td><a class="nombre-tabla" href="{% url 'facturacion-panel:detalle' cliente.pk %}">{{ cliente.nombre_razon_social }}</a><small>{{ cliente.tipo_documento }} {{ cliente.numero_documento }}</small></td>
+            <td>{{ cliente.servicios.count }}</td><td>${{ resumen.total_pendiente|floatformat:2 }}</td><td>${{ resumen.total_vencido|floatformat:2 }}</td>
+            <td>{{ resumen.proximo_vencimiento|date:"d/m/Y"|default:"—" }}</td>
+            <td><span class="estado estado-{{ resumen.estado|lower }}">{{ resumen.estado_mostrado }}</span></td>
+            <td><a class="boton-tabla" href="{% url 'facturacion-panel:detalle' cliente.pk %}">Ver cuenta →</a></td>
+        </tr>{% endfor %}
+    </tbody></table></div>
+    {% else %}<div class="estado-vacio"><span class="estado-icono">$</span><h3>No se encontraron cuentas</h3><p>Probá con otro nombre o número de documento.</p></div>{% endif %}
+</section>
+{% endblock %}

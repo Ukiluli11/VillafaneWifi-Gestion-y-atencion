@@ -52,6 +52,9 @@
         {% if "gestionar_planes" in acciones_habilitadas %}
         <a href="{% url 'servicios-panel:alta-plan' %}"><span>◇</span><strong>Nuevo plan</strong><small>Actualizar el catálogo</small></a>
         {% endif %}
+        {% if "consultar_cuentas" in acciones_habilitadas %}
+        <a href="{% url 'facturacion-panel:lista' %}"><span>$</span><strong>Cuenta corriente</strong><small>Consultar deuda e historial</small></a>
+        {% endif %}
     </div>
 </section>
 {% endblock %}

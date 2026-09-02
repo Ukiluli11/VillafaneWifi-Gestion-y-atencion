@@ -55,6 +55,8 @@ Las reglas de idioma, documentación y POO están definidas en
 - **RF-02:** consulta, edición y baja lógica de clientes implementadas.
 - **RF-03:** búsqueda por documento, nombre, WhatsApp o localidad implementada.
 - **RF-04:** catálogo de planes y asignación a conexiones implementados.
+- **RF-05:** cuenta corriente calculada, deuda y próximos vencimientos implementados.
+- **RF-06:** historial de cuotas y pagos con imputación a varios servicios implementado.
 - **RF-29:** autenticación, cierre de sesión y protección del panel implementados.
 - **RF-30:** matriz de acceso por subtipo y área implementada mediante políticas POO.
 
@@ -65,7 +67,7 @@ acciones permitidas sin modificar este modelo conceptual.
 ## Panel web actual
 
 El panel personalizado ya permite iniciar sesión, consultar indicadores y completar
-los flujos visuales de clientes, planes y servicios. Después de ejecutar el servidor,
+los flujos visuales de clientes, planes, servicios y cuentas corrientes. Después de ejecutar el servidor,
 se accede desde `http://127.0.0.1:8000/iniciar-sesion/`.
 
 La navegación y cada pantalla respetan la misma matriz de acceso que la API. Por
@@ -85,7 +87,7 @@ sistema desplegado y las verificaciones de integración utilizarán PostgreSQL.
 
 1. Usuarios y accesos.
 2. Clientes, planes y servicios.
-3. Cuotas y cuenta corriente.
+3. Cuotas y cuenta corriente. **Implementado.**
 4. Conversaciones y mensajes.
 5. Comprobantes y conciliación de pagos.
 6. Tickets y notas internas.

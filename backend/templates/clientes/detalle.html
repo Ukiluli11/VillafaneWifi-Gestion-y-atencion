@@ -5,6 +5,7 @@
 {% block encabezado %}Detalle del cliente{% endblock %}
 {% block acciones_encabezado %}
 <a class="boton boton-secundario" href="{% url 'clientes-panel:lista' %}">← Volver</a>
+{% if "consultar_cuentas" in acciones_habilitadas %}<a class="boton boton-secundario" href="{% url 'facturacion-panel:detalle' cliente.pk %}">Cuenta corriente</a>{% endif %}
 {% if "gestionar_clientes" in acciones_habilitadas %}<a class="boton boton-primario" href="{% url 'clientes-panel:editar' cliente.pk %}">Editar cliente</a>{% endif %}
 {% endblock %}
 
