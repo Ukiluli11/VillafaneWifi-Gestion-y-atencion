@@ -17,14 +17,14 @@
 <section class="grilla-indicadores">
     {% if resumen.clientes is not None %}
     <a class="tarjeta-indicador" href="{% url 'clientes-panel:lista' %}">
-        <span class="indicador-icono azul">◎</span>
+        <span class="indicador-icono principal">◎</span>
         <span><small>Clientes activos</small><strong>{{ resumen.clientes }}</strong></span>
         <span class="flecha">→</span>
     </a>
     {% endif %}
     {% if resumen.planes is not None %}
     <a class="tarjeta-indicador" href="{% url 'servicios-panel:planes' %}">
-        <span class="indicador-icono violeta">◇</span>
+        <span class="indicador-icono oliva">◇</span>
         <span><small>Planes activos</small><strong>{{ resumen.planes }}</strong></span>
         <span class="flecha">→</span>
     </a>
