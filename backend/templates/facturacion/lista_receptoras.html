@@ -1,7 +1,0 @@
-{# Catálogo de cuentas utilizadas para recibir cobranzas. #}
-{% extends "base.html" %}
-{% block titulo %}Cuentas receptoras | Villafañe Wifi{% endblock %}
-{% block nav_cuentas %}activo{% endblock %}
-{% block encabezado %}Cuentas receptoras{% endblock %}
-{% block acciones_encabezado %}<a class="boton boton-secundario" href="{% url 'facturacion-panel:lista' %}">← Volver</a><a class="boton boton-primario" href="{% url 'facturacion-panel:alta-cuenta-receptora' %}">＋ Nueva cuenta</a>{% endblock %}
-{% block contenido %}<section class="tarjeta"><div class="barra-herramientas"><div><p class="etiqueta">Acreditaciones</p><h3>{{ cuentas_receptoras|length }} cuenta{{ cuentas_receptoras|length|pluralize }}</h3></div></div>{% if cuentas_receptoras %}<div class="tabla-responsive"><table><thead><tr><th>Nombre</th><th>Tipo</th><th>Identificador</th><th>Estado</th></tr></thead><tbody>{% for cuenta in cuentas_receptoras %}<tr><td class="nombre-tabla">{{ cuenta.nombre }}</td><td>{{ cuenta.get_tipo_display }}</td><td>{{ cuenta.identificador }}</td><td><span class="estado estado-{{ cuenta.estado|lower }}">{{ cuenta.get_estado_display }}</span></td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="estado-vacio"><span class="estado-icono">$</span><h3>No hay cuentas receptoras</h3><p>Registrá una cuenta bancaria, billetera o caja para poder cobrar cuotas.</p></div>{% endif %}</section>{% endblock %}

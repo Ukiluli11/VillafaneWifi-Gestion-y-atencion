@@ -1,9 +1,0 @@
-{# Formulario para cancelar una o más cuotas completas. #}
-{% extends "base.html" %}
-{% block titulo %}Registrar pago | Villafañe Wifi{% endblock %}
-{% block nav_cuentas %}activo{% endblock %}
-{% block encabezado %}Registrar pago{% endblock %}
-{% block acciones_encabezado %}<a class="boton boton-secundario" href="{% url 'facturacion-panel:detalle' cliente.pk %}">Cancelar</a>{% endblock %}
-{% block contenido %}
-<form method="post" class="formulario-panel estrecho">{% csrf_token %}<section class="tarjeta seccion-formulario"><div class="contenido-seccion ancho"><div class="cabecera-formulario"><p class="etiqueta">{{ cliente.nombre_razon_social }}</p><h2>Imputación del pago</h2><p>Podés incluir varias cuotas y servicios del mismo cliente. Siempre se cancelará el importe completo.</p></div>{% if form.non_field_errors %}<div class="mensaje mensaje-error">{{ form.non_field_errors }}</div>{% endif %}<div class="grilla-formulario dos">{% for campo in form %}<div class="{% if campo.name == 'cuotas' %}columna-completa lista-seleccion-cuotas{% endif %}">{% include "componentes/campo_formulario.html" with campo=campo %}</div>{% endfor %}</div></div></section><div class="acciones-formulario"><a class="boton boton-secundario" href="{% url 'facturacion-panel:detalle' cliente.pk %}">Cancelar</a><button class="boton boton-primario" type="submit">Confirmar pago</button></div></form>
-{% endblock %}

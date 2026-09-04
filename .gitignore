@@ -1,21 +1,23 @@
-.venv/
-node_modules/
-__pycache__/
-*.py[cod]
-*.sqlite3
-.env
-.pytest_cache/
-.ruff_cache/
-.coverage
-htmlcov/
-media/
-staticfiles/
+# Dependencias y configuración local del sistema
+sistema/.env
+sistema/.env.*
+!sistema/.env.example
+sistema/vendor/
+sistema/node_modules/
+sistema/public/build/
+sistema/public/hot
+sistema/storage/*.key
+sistema/storage/logs/*.log
+sistema/.phpunit.result.cache
+
+# Configuración de editores y sistema operativo
 .idea/
 .vscode/
+.DS_Store
+Thumbs.db
 *.log
 *.bkp
 
-# Resultados temporales de revisión y renderizado local
+# Resultados temporales
 qa/
-qa_objetivos_alcance/
 outputs/

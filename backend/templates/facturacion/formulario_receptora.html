@@ -1,7 +1,0 @@
-{# Alta de una cuenta habilitada para recibir pagos. #}
-{% extends "base.html" %}
-{% block titulo %}Nueva cuenta receptora | Villafañe Wifi{% endblock %}
-{% block nav_cuentas %}activo{% endblock %}
-{% block encabezado %}Nueva cuenta receptora{% endblock %}
-{% block acciones_encabezado %}<a class="boton boton-secundario" href="{% url 'facturacion-panel:cuentas-receptoras' %}">Cancelar</a>{% endblock %}
-{% block contenido %}<form method="post" class="formulario-panel estrecho">{% csrf_token %}<section class="tarjeta seccion-formulario"><div class="contenido-seccion ancho"><div class="cabecera-formulario"><h2>Datos de acreditación</h2><p>Puede ser una cuenta bancaria, billetera virtual o caja de efectivo.</p></div>{% if form.non_field_errors %}<div class="mensaje mensaje-error">{{ form.non_field_errors }}</div>{% endif %}<div class="grilla-formulario dos">{% for campo in form %}{% include "componentes/campo_formulario.html" with campo=campo %}{% endfor %}</div></div></section><div class="acciones-formulario"><a class="boton boton-secundario" href="{% url 'facturacion-panel:cuentas-receptoras' %}">Cancelar</a><button class="boton boton-primario" type="submit">Guardar cuenta</button></div></form>{% endblock %}

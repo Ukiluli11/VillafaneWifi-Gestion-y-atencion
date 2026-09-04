@@ -1,94 +1,65 @@
 # Sistema de Gestión Integral Villafañe Wifi
 
-Proyecto de Seminario de Integración de la Licenciatura en Sistemas de Información.
+Proyecto de Seminario de Integración de la Licenciatura en Sistemas de
+Información. El repositorio está dividido en dos áreas:
 
-## Arquitectura inicial
+- `sistema/`: aplicación ejecutable y código fuente.
+- `teoria/`: documentación, diagramas y planificación vigentes.
 
-El backend se implementa como un **monolito modular** con Django y Django REST
-Framework. Cada aplicación representa un área funcional del negocio y se comunica
-con las demás mediante servicios de aplicación bien definidos.
+## Stack vigente
 
-Los módulos iniciales son:
+PHP 8.3 o superior, Laravel 13, Blade, JavaScript, CSS, Vite y MariaDB 11.8.
+La aplicación es un monolito modular con panel web, API REST, autenticación,
+permisos, Eloquent ORM y migraciones.
 
-- `usuarios`: autenticación, empleados y administradores.
-- `clientes`: clientes y medios de contacto.
-- `servicios`: planes y conexiones contratadas.
-- `conversaciones`: conversaciones y mensajes de WhatsApp.
-- `facturacion`: cuotas, cuenta corriente y pagos acreditados.
-- `pagos`: comprobantes, OCR y conciliación.
-- `soporte`: tickets y notas internas.
-- `reportes`: dashboard, reportes y alertas.
-- `integraciones`: adaptadores para Meta, OCR, LLM y tareas externas.
-- `comun`: componentes transversales sin reglas de negocio específicas.
+## Alcance implementado
 
-## Preparación local
+- Usuarios, autenticación y permisos por especialización.
+- Clientes: alta, búsqueda, consulta, edición y baja lógica.
+- Planes y servicios: alta, edición, asignación, suspensión y reactivación.
+- Cuenta corriente: cuotas, deuda, vencimientos y pagos.
+- Cuentas receptoras.
+- Panel web y API REST versionada en `/api/v1`.
 
-Requisitos: Python 3.12, PostgreSQL y Redis.
+Las entidades futuras continúan en los diagramas, pero todavía no tienen tablas
+ni pantallas.
+
+## Iniciar en esta PC
+
+Desde la raíz del repositorio:
 
 ```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements\dev.txt
+powershell -ExecutionPolicy Bypass -File sistema\tools\windows\iniciar-aplicacion.ps1
+```
+
+El panel queda disponible en `http://127.0.0.1:8000/iniciar-sesion`.
+
+## Preparar en otra PC
+
+```powershell
+Set-Location sistema
 Copy-Item .env.example .env
+composer install
+php artisan key:generate
+npm install
+npm run build
+php artisan migrate --seed
+php artisan test
+php artisan serve
 ```
 
-Crear en PostgreSQL una base llamada `villafane_wifi` y ajustar `DATABASE_URL`
-en `.env`. Luego ejecutar:
+Antes de ejecutar las migraciones se debe crear la base `villafane_wifi`,
+completar las variables `DB_*` y definir las credenciales iniciales mediante
+`ADMIN_INICIAL_*`.
 
-```powershell
-Set-Location backend
-python manage.py makemigrations usuarios
-python manage.py migrate
-python manage.py createsuperuser
-python manage.py runserver
-```
+## Documentación vigente
 
-El endpoint `http://127.0.0.1:8000/health/` permite comprobar que el backend está activo.
+- `teoria/documentacion/Informe_general_Villafane_Wifi.docx`.
+- `teoria/documentacion/CONTEXTO_PARA_CONTINUAR_EN_OTRA_PC.md`.
+- `teoria/documentacion/TRAZABILIDAD_MODELO_DATOS_Y_CLASES.md`.
+- `teoria/diagramas/` para las fuentes editables y vistas previas vigentes.
+- `teoria/planificacion/Cronograma_Gantt.xlsx`.
 
-Las reglas de idioma, documentación y POO están definidas en
-[`docs/CONVENCIONES_CODIGO.md`](docs/CONVENCIONES_CODIGO.md).
-
-## Estado de implementación
-
-- **RF-01:** alta integral de cliente, teléfonos y servicios implementada.
-- **RF-02:** consulta, edición y baja lógica de clientes implementadas.
-- **RF-03:** búsqueda por documento, nombre, WhatsApp o localidad implementada.
-- **RF-04:** catálogo de planes y asignación a conexiones implementados.
-- **RF-05:** cuenta corriente calculada, deuda y próximos vencimientos implementados.
-- **RF-06:** historial de cuotas y pagos con imputación a varios servicios implementado.
-- **RF-29:** autenticación, cierre de sesión y protección del panel implementados.
-- **RF-30:** matriz de acceso por subtipo y área implementada mediante políticas POO.
-
-El proyecto no define una entidad `Rol`: `Usuario` se especializa de forma total y
-disjunta en `Empleado` o `Administrador`. Las áreas de los empleados determinan sus
-acciones permitidas sin modificar este modelo conceptual.
-
-## Panel web actual
-
-El panel personalizado ya permite iniciar sesión, consultar indicadores y completar
-los flujos visuales de clientes, planes, servicios y cuentas corrientes. Después de ejecutar el servidor,
-se accede desde `http://127.0.0.1:8000/iniciar-sesion/`.
-
-La navegación y cada pantalla respetan la misma matriz de acceso que la API. Por
-ejemplo, soporte puede consultar clientes y conexiones, pero no modificar el catálogo
-comercial ni registrar clientes.
-
-## Pruebas automatizadas
-
-Las pruebas rápidas utilizan SQLite en memoria únicamente para aislar la lógica. El
-sistema desplegado y las verificaciones de integración utilizarán PostgreSQL.
-
-```powershell
-.\.venv\Scripts\python.exe -m pytest -q
-```
-
-## Orden de implementación sugerido
-
-1. Usuarios y accesos.
-2. Clientes, planes y servicios.
-3. Cuotas y cuenta corriente. **Implementado.**
-4. Conversaciones y mensajes.
-5. Comprobantes y conciliación de pagos.
-6. Tickets y notas internas.
-7. Reportes e integraciones externas.
+No se conserva el prototipo anterior en Django ni las versiones intermedias de
+los diagramas. Git mantiene el historial de los archivos que estuvieron
+versionados.
