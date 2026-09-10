@@ -1,6 +1,10 @@
 # Trazabilidad del modelo de datos y clases
 
-## Criterio vigente
+## Criterio vigente al 09/09/2026
+
+La decisión tecnológica definitiva es **PHP 8.3 o superior, Laravel 13 y
+MariaDB 11.8**. El panel utiliza Blade y la persistencia se realiza con
+Eloquent.
 
 Los diagramas entregados por el equipo definen el alcance conceptual y se
 preservan en `teoria/diagramas/`. Para el alcance actual, las clases
@@ -28,8 +32,32 @@ participación opcional indicada en el dominio.
 | Cuota | `App\\Models\\Cuota` | `cuota` | Implementada |
 
 La tabla `migrations` es infraestructura de Laravel y no una entidad del
-negocio. Por eso el esquema operativo contiene nueve tablas de dominio y una
-tabla técnica.
+negocio. Por eso el DER lógico conserva las nueve tablas de dominio relacionadas
+y esta tabla técnica se documenta separadamente. En una base migrada, el esquema
+operativo contiene nueve tablas de dominio y `migrations`.
+
+## Resultado de la comparación
+
+Se compararon la migración
+`2026_09_03_062716_create_modulo_uno_tables.php`, los nueve modelos Eloquent,
+`DER_logico.mwb`, `Diagrama_de_clases.drawio` y sus diccionarios. Se corrigieron:
+
+1. `servicio.ip` a `servicio.ipv4`.
+2. La nulabilidad de `pago.id_comprobante` y `cuota.id_pago`.
+3. Los atributos opcionales de Servicio y Empleado.
+4. El estado persistido de Cuota.
+5. Los valores vigentes de los enumerados de Cliente, Administrador, Cuenta
+   receptora y Pago.
+6. La representación de Usuario-Empleado-Administrador en el diagrama de clases:
+   son modelos Eloquent asociados 1:1 mediante PK/FK compartida, no herencia de
+   clases PHP.
+7. Los métodos de las nueve clases persistentes para que coincidan con sus
+   modelos actuales.
+
+El diagrama de clases es un modelo de dominio: representa las entidades y
+servicios relevantes, no todas las clases de infraestructura provistas por
+Laravel ni cada controlador, solicitud, recurso, enum o middleware. Esos
+componentes se inventarían en la documentación técnica y en el código.
 
 ## Entidades futuras preservadas
 

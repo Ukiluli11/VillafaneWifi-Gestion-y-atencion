@@ -60,6 +60,6 @@ completar las variables `DB_*` y definir las credenciales iniciales mediante
 - `teoria/diagramas/` para las fuentes editables y vistas previas vigentes.
 - `teoria/planificacion/Cronograma_Gantt.xlsx`.
 
-No se conserva el prototipo anterior en Django ni las versiones intermedias de
-los diagramas. Git mantiene el historial de los archivos que estuvieron
+No se conservan prototipos anteriores ni versiones intermedias de los
+diagramas. Git mantiene el historial de los archivos que estuvieron
 versionados.
