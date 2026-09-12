@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\AutenticacionController;
 use App\Http\Controllers\Web\ClienteController;
+use App\Http\Controllers\Web\ConversacionController;
 use App\Http\Controllers\Web\CuentaCorrienteController;
 use App\Http\Controllers\Web\CuentaReceptoraController;
 use App\Http\Controllers\Web\CuotaController;
@@ -64,4 +65,9 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/usuarios', [UsuarioController::class, 'index'])->middleware('accion:gestionar_usuarios')->name('usuarios.index');
     Route::post('/usuarios', [UsuarioController::class, 'store'])->middleware('accion:gestionar_usuarios')->name('usuarios.store');
     Route::delete('/usuarios/{usuario}', [UsuarioController::class, 'destroy'])->middleware('accion:gestionar_usuarios')->name('usuarios.destroy');
+
+    Route::middleware('accion:consultar_conversaciones')->group(function (): void {
+        Route::get('/conversaciones', [ConversacionController::class, 'index'])->name('conversaciones.index');
+        Route::get('/conversaciones/{conversacion}', [ConversacionController::class, 'show'])->name('conversaciones.show');
+    });
 });

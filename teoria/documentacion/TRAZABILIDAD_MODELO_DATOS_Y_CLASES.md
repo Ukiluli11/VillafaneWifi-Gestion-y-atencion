@@ -8,9 +8,9 @@ Eloquent.
 
 Los diagramas entregados por el equipo definen el alcance conceptual y se
 preservan en `teoria/diagramas/`. Para el alcance actual, las clases
-Eloquent, la migración Laravel y el esquema MariaDB deben coincidir con las
-entidades marcadas como actuales. Las cinco entidades futuras permanecen en los
-diagramas sin crear tablas prematuramente.
+Eloquent, las migraciones Laravel y el esquema MariaDB deben coincidir con las
+entidades implementadas. El 10/09/2026 comenzó el Módulo 2 con la persistencia
+de conversaciones y mensajes.
 
 Se tomó la clave identificadora simple de cada entidad, tal como expresa el
 diagrama de clases. Los campos que el archivo de Workbench mostraba
@@ -30,11 +30,13 @@ participación opcional indicada en el dominio.
 | Cuenta receptora | `App\\Models\\CuentaReceptora` | `cuenta_receptora` | Implementada |
 | Pago | `App\\Models\\Pago` | `pago` | Implementada |
 | Cuota | `App\\Models\\Cuota` | `cuota` | Implementada |
+| Conversación | `App\\Models\\Conversacion` | `conversacion` | Implementada |
+| Mensaje | `App\\Models\\Mensaje` | `mensaje` | Implementada |
 
 La tabla `migrations` es infraestructura de Laravel y no una entidad del
-negocio. Por eso el DER lógico conserva las nueve tablas de dominio relacionadas
-y esta tabla técnica se documenta separadamente. En una base migrada, el esquema
-operativo contiene nueve tablas de dominio y `migrations`.
+negocio. Por eso se documenta separadamente de las tablas de dominio. En una
+base migrada, el esquema operativo contiene once tablas de dominio y
+`migrations`.
 
 ## Resultado de la comparación
 
@@ -59,18 +61,30 @@ servicios relevantes, no todas las clases de infraestructura provistas por
 Laravel ni cada controlador, solicitud, recurso, enum o middleware. Esos
 componentes se inventarían en la documentación técnica y en el código.
 
-## Entidades futuras preservadas
+## Entidades pendientes de implementar
 
 | Entidad | Finalidad prevista | Estado |
 |---|---|---|
-| Conversación | Atención por WhatsApp y transferencia a una persona. | Futura |
-| Mensaje | Mensajes, archivos y emisor de una conversación. | Futura |
 | Comprobante | OCR, duplicados y validación de pagos. | Futura |
 | Ticket | Reclamos, cola y responsable de atención. | Futura |
 | Nota interna | Seguimiento interno de tickets. | Futura |
 
 `pago.id_comprobante` existe como campo nullable, pero no tiene clave foránea
 hasta implementar `comprobante`.
+
+## Decisiones del Módulo 2
+
+1. Una conversación pertenece a un cliente y conserva el número de WhatsApp
+   utilizado en el contacto.
+2. La atención humana referencia a `usuario`, porque tanto un empleado como un
+   administrador pueden tomar la conversación según RF-15.
+3. Cada mensaje pertenece a una conversación. El usuario interno es opcional
+   porque los mensajes del cliente y del bot no pertenecen a una cuenta del
+   panel.
+4. `id_mensaje_externo` evita procesar dos veces el mismo evento entregado por
+   Meta.
+5. El estado de envío distingue recepción, espera, envío, entrega, lectura y
+   fallo para conservar la trazabilidad real de WhatsApp.
 
 ## Reglas alineadas
 
@@ -95,6 +109,7 @@ hasta implementar `comprobante`.
 - `teoria/diagramas/Diagrama_de_clases.drawio`.
 - `teoria/diagramas/Diagrama_casos_de_uso.drawio`.
 - `sistema/database/migrations/2026_09_03_062716_create_modulo_uno_tables.php`.
+- `sistema/database/migrations/2026_09_10_000000_create_conversaciones_y_mensajes_tables.php`.
 - `sistema/app/Models/` y `sistema/app/Dominio/`.
 - `sistema/tests/`.
 

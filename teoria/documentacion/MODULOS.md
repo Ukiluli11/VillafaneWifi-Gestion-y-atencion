@@ -38,3 +38,11 @@ comun → utilidades compartidas por todos
 
 Antes de programarlo se revisarán los RF asociados, sus casos de uso y las tablas del
 DER lógico. No es necesario terminar todos los diagramas del sistema para comenzar.
+
+## Estado al 10/09/2026
+
+- El Módulo 1 se encuentra implementado y probado.
+- El Módulo 2 comenzó con las tablas, modelos, enumerados, relaciones y servicio de
+  dominio de Conversación y Mensaje.
+- La conexión al webhook de Meta, la clasificación de intención y la interfaz de
+  atención humana corresponden a los incrementos siguientes.

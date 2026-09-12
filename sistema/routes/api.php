@@ -4,8 +4,14 @@ use App\Http\Controllers\Api\V1\ClienteController;
 use App\Http\Controllers\Api\V1\CuentaCorrienteController;
 use App\Http\Controllers\Api\V1\PlanController;
 use App\Http\Controllers\Api\V1\ServicioController;
+use App\Http\Controllers\Api\WebhookWhatsappController;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/webhooks/whatsapp', [WebhookWhatsappController::class, 'verificar'])
+    ->name('webhooks.whatsapp.verificar');
+Route::post('/webhooks/whatsapp', [WebhookWhatsappController::class, 'recibir'])
+    ->name('webhooks.whatsapp.recibir');
 
 Route::prefix('v1')->middleware(AuthenticateWithBasicAuth::using('web', 'nombre_usuario'))->group(function (): void {
     Route::get('/clientes', [ClienteController::class, 'index'])->middleware('accion:consultar_clientes');

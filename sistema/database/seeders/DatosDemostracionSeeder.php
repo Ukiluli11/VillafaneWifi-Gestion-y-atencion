@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use App\Enums\EstadoCuota;
 use App\Models\Cliente;
+use App\Models\Conversacion;
 use App\Models\CuentaReceptora;
 use App\Models\Cuota;
+use App\Models\Mensaje;
 use App\Models\Pago;
 use App\Models\Plan;
 use App\Models\Servicio;
@@ -27,6 +29,7 @@ class DatosDemostracionSeeder extends Seeder
             $servicios = $this->crearServicios($clientes, $planes);
 
             $this->crearCuotasYPagos($servicios, $cuentas);
+            $this->crearConversaciones($clientes);
         });
     }
 
@@ -179,5 +182,66 @@ class DatosDemostracionSeeder extends Seeder
             ? Pago::create($datosPago)
             : tap(Pago::findOrFail($cuota->id_pago))->update($datosPago);
         $cuota->update(['id_pago' => $pago->id_pago, 'estado' => EstadoCuota::Pagada->value]);
+    }
+
+    /**
+     * Crea historiales ficticios para revisar la pantalla de conversaciones.
+     * Los identificadores externos evitan duplicar mensajes al repetir el seed.
+     *
+     * @param  array<string, Cliente>  $clientes
+     */
+    private function crearConversaciones(array $clientes): void
+    {
+        $ejemplos = [
+            [
+                'cliente' => $clientes['ana'],
+                'inicio' => '2026-09-10 09:15:00',
+                'estado' => 'abierta',
+                'mensajes' => [
+                    ['wamid.demo.ana.1', '2026-09-10 09:15:00', 'cliente', 'Hola, quiero consultar mi cuenta', 'recibido'],
+                    ['wamid.demo.ana.2', '2026-09-10 09:15:03', 'bot', "Hola, Ana Gómez. Soy el asistente virtual de Villafañe Wifi.\n\nElegí una opción respondiendo con su número:\n1. Consultar estado de cuenta\n2. Informar un pago\n3. Registrar un reclamo\n4. Solicitar atención humana", 'entregado'],
+                ],
+            ],
+            [
+                'cliente' => $clientes['lapacho'],
+                'inicio' => '2026-09-09 16:40:00',
+                'estado' => 'cerrada',
+                'mensajes' => [
+                    ['wamid.demo.lapacho.1', '2026-09-09 16:40:00', 'cliente', 'Buenas tardes, necesito informar un pago', 'recibido'],
+                    ['wamid.demo.lapacho.2', '2026-09-09 16:40:02', 'bot', 'Recibimos tu mensaje. Te ayudaremos a registrar el pago.', 'leido'],
+                ],
+            ],
+        ];
+
+        foreach ($ejemplos as $ejemplo) {
+            $conversacion = Conversacion::firstOrCreate(
+                [
+                    'id_cliente' => $ejemplo['cliente']->id_cliente,
+                    'fecha_hora_inicio' => $ejemplo['inicio'],
+                ],
+                [
+                    'numero_whatsapp' => $ejemplo['cliente']->telefono_whatsapp,
+                    'fecha_hora_cierre' => $ejemplo['estado'] === 'cerrada' ? '2026-09-09 16:45:00' : null,
+                    'estado' => $ejemplo['estado'],
+                    'modo_atencion' => 'bot',
+                ],
+            );
+
+            foreach ($ejemplo['mensajes'] as [$identificador, $fecha, $emisor, $contenido, $estado]) {
+                Mensaje::updateOrCreate(
+                    ['id_mensaje_externo' => $identificador],
+                    [
+                        'id_conversacion' => $conversacion->id_conversacion,
+                        'id_usuario' => null,
+                        'fecha_hora' => $fecha,
+                        'tipo' => 'texto',
+                        'contenido' => $contenido,
+                        'archivo_adjunto' => null,
+                        'tipo_emisor' => $emisor,
+                        'estado_envio' => $estado,
+                    ],
+                );
+            }
+        }
     }
 }

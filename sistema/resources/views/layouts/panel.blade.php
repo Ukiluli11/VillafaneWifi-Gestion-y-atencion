@@ -26,7 +26,7 @@
                     <span>Resumen</span>
                 </a>
 
-                @if ($navegacionPermitida['clientes'] || $navegacionPermitida['servicios'])
+                @if ($navegacionPermitida['clientes'] || $navegacionPermitida['servicios'] || $navegacionPermitida['conversaciones'])
                     <span class="grupo-navegacion">Operaciones</span>
                 @endif
                 @if ($navegacionPermitida['clientes'])
@@ -39,6 +39,12 @@
                     <a class="enlace-navegacion {{ request()->routeIs('servicios.*') ? 'activo' : '' }}" href="{{ route('servicios.index') }}">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14 0M8.5 16a6 6 0 0 1 7 0M12 20h.01M2 9a16 16 0 0 1 20 0"/></svg>
                         <span>Servicios</span>
+                    </a>
+                @endif
+                @if ($navegacionPermitida['conversaciones'])
+                    <a class="enlace-navegacion {{ request()->routeIs('conversaciones.*') ? 'activo' : '' }}" href="{{ route('conversaciones.index') }}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4zM8 9h8M8 12h5"/></svg>
+                        <span>Conversaciones</span>
                     </a>
                 @endif
 
