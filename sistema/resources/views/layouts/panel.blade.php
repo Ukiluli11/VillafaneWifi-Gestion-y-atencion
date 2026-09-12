@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#123f36">
     <title>@yield('titulo', 'Panel') · Villafañe Wifi</title>
+    <script>
+        (() => {
+            const temaGuardado = localStorage.getItem('tema-panel');
+            const prefiereOscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.dataset.tema = temaGuardado ?? (prefiereOscuro ? 'oscuro' : 'claro');
+
+            if (localStorage.getItem('barra-lateral-colapsada') === 'true') {
+                document.documentElement.classList.add('lateral-colapsada-inicial');
+            }
+        })();
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="@auth con-sesion @else sin-sesion @endauth">
@@ -88,11 +99,18 @@
                 <button class="abrir-menu" type="button" data-abrir-menu aria-controls="barra-lateral" aria-expanded="false" aria-label="Abrir menú">
                     <span></span><span></span><span></span>
                 </button>
+                <button class="alternar-lateral" type="button" data-alternar-lateral aria-controls="barra-lateral" aria-pressed="false" title="Achicar barra lateral" aria-label="Achicar barra lateral">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM9 5v14M15 9l-3 3 3 3"/></svg>
+                </button>
                 <div class="titulo-superior">
                     <small>Panel administrativo</small>
                     <strong>@yield('titulo', 'Resumen')</strong>
                 </div>
                 <span class="estado-sistema"><i></i>Sistema operativo</span>
+                <button class="alternar-tema" type="button" data-alternar-tema aria-pressed="false" title="Activar modo oscuro" aria-label="Activar modo oscuro">
+                    <svg class="icono-luna" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.3A8.5 8.5 0 0 1 8.7 3.8 8.5 8.5 0 1 0 20.2 15.3z"/></svg>
+                    <svg class="icono-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+                </button>
             </header>
             <main class="contenedor">
                 @if (session('exito'))
