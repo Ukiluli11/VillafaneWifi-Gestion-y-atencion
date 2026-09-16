@@ -29,6 +29,8 @@ class ServicioEnvioWhatsapp
      */
     public function enviarTextoDelBot(Conversacion $conversacion, string $contenido): Mensaje
     {
+        $contenido = $this->agregarSaludoEIdentidad($contenido);
+
         $mensaje = $this->conversaciones->registrarSaliente(
             $conversacion,
             TipoEmisorMensaje::Bot,
@@ -53,5 +55,26 @@ class ServicioEnvioWhatsapp
         }
 
         return $mensaje->refresh();
+    }
+
+    /**
+     * Garantiza que cada respuesta se presente como el servicio de la empresa.
+     * Conserva los mensajes que ya incluyen ambos elementos para no duplicarlos.
+     */
+    private function agregarSaludoEIdentidad(string $contenido): string
+    {
+        $textoNormalizado = mb_strtolower(trim($contenido));
+        $tieneSaludo = str_starts_with($textoNormalizado, 'hola')
+            || str_starts_with($textoNormalizado, 'buen día')
+            || str_starts_with($textoNormalizado, 'buen dia')
+            || str_starts_with($textoNormalizado, 'buenas tardes')
+            || str_starts_with($textoNormalizado, 'buenas noches');
+        $identificaEmpresa = str_contains($textoNormalizado, 'villafañe wifi');
+
+        if ($tieneSaludo && $identificaEmpresa) {
+            return $contenido;
+        }
+
+        return "Hola. Te atiende el servicio virtual de Villafañe Wifi.\n\n".$contenido;
     }
 }

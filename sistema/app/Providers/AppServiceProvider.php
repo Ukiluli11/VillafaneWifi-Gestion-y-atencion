@@ -44,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
                 'cobranza' => $puede(AccionSistema::ConsultarCuentas),
                 'gestionar_cobranza' => $puede(AccionSistema::GestionarCuentas),
                 'gestionar_pagos' => $puede(AccionSistema::GestionarPagos),
+                'comprobantes' => $puede(AccionSistema::ConsultarPagos),
                 'conversaciones' => $puede(AccionSistema::ConsultarConversaciones),
                 'usuarios' => $puede(AccionSistema::GestionarUsuarios),
             ]);

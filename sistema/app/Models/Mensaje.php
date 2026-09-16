@@ -9,6 +9,7 @@ use Database\Factories\MensajeFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Mensaje extends Model
 {
@@ -44,6 +45,11 @@ class Mensaje extends Model
     public function usuario(): BelongsTo
     {
         return $this->belongsTo(Usuario::class, 'id_usuario', 'id_usuario');
+    }
+
+    public function comprobante(): HasOne
+    {
+        return $this->hasOne(Comprobante::class, 'id_mensaje', 'id_mensaje');
     }
 
     public function marcarComoEntregado(): void

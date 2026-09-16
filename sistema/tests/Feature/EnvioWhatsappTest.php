@@ -72,7 +72,7 @@ class EnvioWhatsappTest extends TestCase
         } catch (RequestException) {
             $this->assertDatabaseHas('mensaje', [
                 'id_conversacion' => $conversacion->id_conversacion,
-                'contenido' => 'Mensaje de prueba',
+                'contenido' => "Hola. Te atiende el servicio virtual de Villafañe Wifi.\n\nMensaje de prueba",
                 'estado_envio' => 'fallido',
             ]);
         }

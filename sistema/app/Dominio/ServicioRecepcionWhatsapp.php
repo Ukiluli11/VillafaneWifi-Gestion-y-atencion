@@ -3,6 +3,7 @@
 namespace App\Dominio;
 
 use App\Enums\EstadoEnvioMensaje;
+use App\Enums\EstadoFlujoWhatsapp;
 use App\Enums\TipoMensaje;
 use App\Models\Cliente;
 use App\Models\Conversacion;
@@ -22,6 +23,8 @@ class ServicioRecepcionWhatsapp
     public function __construct(
         private readonly ServicioConversaciones $conversaciones,
         private readonly ServicioAtencionInicialWhatsapp $atencionInicial,
+        private readonly ServicioMenuWhatsapp $menu,
+        private readonly ServicioRegistroComprobanteWhatsapp $registroComprobante,
     ) {}
 
     /**
@@ -129,7 +132,54 @@ class ServicioRecepcionWhatsapp
             }
             if ($esPrimerMensaje && $mensaje->wasRecentlyCreated) {
                 $this->saludarIdentificado($conversacion, $cliente, $resultado);
+            } elseif ($mensaje->wasRecentlyCreated
+                && $conversacion->estado_flujo === EstadoFlujoWhatsapp::EsperandoComprobante) {
+                $this->procesarComprobante($conversacion, $mensaje, $resultado);
+            } elseif ($mensaje->wasRecentlyCreated && $tipo === TipoMensaje::Texto) {
+                $this->responderSegunMenu($conversacion, $cliente, $mensaje->contenido, $resultado);
             }
+        }
+    }
+
+    /**
+     * Continúa el flujo de pago cuando la conversación espera un archivo.
+     *
+     * @param  array{mensajes_procesados: int, clientes_no_identificados: int, respuestas_enviadas: int, respuestas_fallidas: int, estados_actualizados: int}  $resultado
+     */
+    private function procesarComprobante(
+        Conversacion $conversacion,
+        Mensaje $mensaje,
+        array &$resultado,
+    ): void {
+        try {
+            $this->registroComprobante->recibirComprobante($conversacion, $mensaje);
+            $resultado['respuestas_enviadas']++;
+        } catch (Throwable $error) {
+            report($error);
+            $resultado['respuestas_fallidas']++;
+        }
+    }
+
+    /**
+     * Procesa una elección del menú sin impedir la recepción del webhook si
+     * el proveedor externo no se encuentra disponible.
+     *
+     * @param  array{mensajes_procesados: int, clientes_no_identificados: int, respuestas_enviadas: int, respuestas_fallidas: int, estados_actualizados: int}  $resultado
+     */
+    private function responderSegunMenu(
+        Conversacion $conversacion,
+        Cliente $cliente,
+        ?string $contenido,
+        array &$resultado,
+    ): void {
+        try {
+            $respuesta = $this->menu->responder($conversacion, $cliente, $contenido);
+            if ($respuesta !== null) {
+                $resultado['respuestas_enviadas']++;
+            }
+        } catch (Throwable $error) {
+            report($error);
+            $resultado['respuestas_fallidas']++;
         }
     }
 
@@ -235,7 +285,13 @@ class ServicioRecepcionWhatsapp
             return null;
         }
 
-        $identificador = Arr::get($mensaje, $tipo->value.'.id');
+        $campoProveedor = match ($tipo) {
+            TipoMensaje::Imagen => 'image',
+            TipoMensaje::Audio => 'audio',
+            TipoMensaje::Documento => 'document',
+            TipoMensaje::Texto => 'text',
+        };
+        $identificador = Arr::get($mensaje, $campoProveedor.'.id');
 
         return is_string($identificador) && $identificador !== '' ? 'meta-media:'.$identificador : null;
     }

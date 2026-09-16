@@ -24,11 +24,19 @@ class ServicioAtencionInicialWhatsapp
     public function saludarCliente(Conversacion $conversacion, Cliente $cliente): Mensaje
     {
         $nombre = trim($cliente->nombre_razon_social);
-        $saludo = "Hola, {$nombre}. Soy el asistente virtual de Villafañe Wifi.\n\n"
+        $saludo = "Hola, {$nombre}. Te atiende el servicio virtual de Villafañe Wifi.\n\n"
             ."Elegí una opción respondiendo con su número:\n"
             .$this->crearMenu();
 
         return $this->envio->enviarTextoDelBot($conversacion, $saludo);
+    }
+
+    /** Vuelve a mostrar las opciones cuando el cliente escribe "menú". */
+    public function mostrarMenu(Conversacion $conversacion): Mensaje
+    {
+        $contenido = "Menú principal:\n".$this->crearMenu();
+
+        return $this->envio->enviarTextoDelBot($conversacion, $contenido);
     }
 
     /**
@@ -47,7 +55,8 @@ class ServicioAtencionInicialWhatsapp
      */
     public function informarClienteNoIdentificado(string $numeroWhatsapp): string
     {
-        $respuesta = 'Hola. No pudimos identificarte como cliente de Villafañe Wifi con este número. '
+        $respuesta = 'Hola. Te atiende el servicio virtual de Villafañe Wifi. '
+            .'No pudimos identificarte como cliente con este número. '
             .'Por favor, comunicate con administración para actualizar o registrar tu número de WhatsApp.';
 
         return $this->puertaEnlace->enviarTexto($numeroWhatsapp, $respuesta);

@@ -20,8 +20,9 @@ class DatosDemostracionSeederTest extends TestCase
         $this->assertDatabaseCount('cuenta_receptora', 2);
         $this->assertDatabaseCount('cuota', 18);
         $this->assertDatabaseCount('pago', 2);
-        $this->assertDatabaseCount('conversacion', 2);
-        $this->assertDatabaseCount('mensaje', 4);
+        $this->assertDatabaseCount('conversacion', 6);
+        $this->assertDatabaseCount('mensaje', 22);
+        $this->assertDatabaseCount('comprobante', 2);
         $this->assertDatabaseHas('cliente', ['nombre_razon_social' => 'Kiosco El Lapacho']);
         $this->assertDatabaseHas('cuota', ['estado' => 'pagada']);
 
@@ -30,7 +31,8 @@ class DatosDemostracionSeederTest extends TestCase
         $this->assertDatabaseCount('cliente', 6);
         $this->assertDatabaseCount('cuota', 18);
         $this->assertDatabaseCount('pago', 2);
-        $this->assertDatabaseCount('conversacion', 2);
-        $this->assertDatabaseCount('mensaje', 4);
+        $this->assertDatabaseCount('conversacion', 6);
+        $this->assertDatabaseCount('mensaje', 22);
+        $this->assertDatabaseCount('comprobante', 2);
     }
 }

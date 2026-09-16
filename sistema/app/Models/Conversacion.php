@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\EstadoConversacion;
+use App\Enums\EstadoFlujoWhatsapp;
 use App\Enums\ModoAtencion;
 use Database\Factories\ConversacionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,12 +24,13 @@ class Conversacion extends Model
 
     protected $fillable = [
         'id_cliente', 'id_usuario_atencion', 'numero_whatsapp', 'fecha_hora_inicio',
-        'fecha_hora_cierre', 'estado', 'modo_atencion', 'inicio_atencion', 'fin_atencion',
+        'fecha_hora_cierre', 'estado', 'modo_atencion', 'estado_flujo', 'inicio_atencion', 'fin_atencion',
     ];
 
     protected $attributes = [
         'estado' => 'abierta',
         'modo_atencion' => 'bot',
+        'estado_flujo' => 'menu',
     ];
 
     protected function casts(): array
@@ -36,6 +38,7 @@ class Conversacion extends Model
         return [
             'estado' => EstadoConversacion::class,
             'modo_atencion' => ModoAtencion::class,
+            'estado_flujo' => EstadoFlujoWhatsapp::class,
             'fecha_hora_inicio' => 'datetime',
             'fecha_hora_cierre' => 'datetime',
             'inicio_atencion' => 'datetime',

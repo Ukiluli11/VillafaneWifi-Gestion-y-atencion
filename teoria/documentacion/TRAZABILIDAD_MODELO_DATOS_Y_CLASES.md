@@ -9,8 +9,9 @@ Eloquent.
 Los diagramas entregados por el equipo definen el alcance conceptual y se
 preservan en `teoria/diagramas/`. Para el alcance actual, las clases
 Eloquent, las migraciones Laravel y el esquema MariaDB deben coincidir con las
-entidades implementadas. El 10/09/2026 comenzó el Módulo 2 con la persistencia
-de conversaciones y mensajes.
+entidades implementadas. El Módulo 2 persiste conversaciones, mensajes y
+comprobantes y, al 16/09/2026, permite consultar la cuenta corriente e informar
+un pago mediante el bot.
 
 Se tomó la clave identificadora simple de cada entidad, tal como expresa el
 diagrama de clases. Los campos que el archivo de Workbench mostraba
@@ -32,16 +33,17 @@ participación opcional indicada en el dominio.
 | Cuota | `App\\Models\\Cuota` | `cuota` | Implementada |
 | Conversación | `App\\Models\\Conversacion` | `conversacion` | Implementada |
 | Mensaje | `App\\Models\\Mensaje` | `mensaje` | Implementada |
+| Comprobante | `App\\Models\\Comprobante` | `comprobante` | Implementada parcialmente: recepción y cola |
 
 La tabla `migrations` es infraestructura de Laravel y no una entidad del
 negocio. Por eso se documenta separadamente de las tablas de dominio. En una
-base migrada, el esquema operativo contiene once tablas de dominio y
+base migrada, el esquema operativo contiene doce tablas de dominio y
 `migrations`.
 
 ## Resultado de la comparación
 
 Se compararon la migración
-`2026_09_03_062716_create_modulo_uno_tables.php`, los nueve modelos Eloquent,
+`2026_09_03_062716_create_modulo_uno_tables.php`, los modelos Eloquent,
 `DER_logico.mwb`, `Diagrama_de_clases.drawio` y sus diccionarios. Se corrigieron:
 
 1. `servicio.ip` a `servicio.ipv4`.
@@ -65,12 +67,11 @@ componentes se inventarían en la documentación técnica y en el código.
 
 | Entidad | Finalidad prevista | Estado |
 |---|---|---|
-| Comprobante | OCR, duplicados y validación de pagos. | Futura |
 | Ticket | Reclamos, cola y responsable de atención. | Futura |
 | Nota interna | Seguimiento interno de tickets. | Futura |
 
-`pago.id_comprobante` existe como campo nullable, pero no tiene clave foránea
-hasta implementar `comprobante`.
+`pago.id_comprobante` es nullable y posee una clave foránea hacia
+`comprobante`; permanece vacío mientras el archivo espera validación.
 
 ## Decisiones del Módulo 2
 
@@ -85,6 +86,16 @@ hasta implementar `comprobante`.
    Meta.
 5. El estado de envío distingue recepción, espera, envío, entrega, lectura y
    fallo para conservar la trazabilidad real de WhatsApp.
+6. La opción `1` y las expresiones equivalentes consultan la misma cuenta
+   corriente disponible en el panel; no duplican saldos ni reglas de cálculo.
+7. Antes de responder, el servicio de facturación actualiza las cuotas vencidas.
+   La respuesta enumera servicios vigentes, cuotas impagas, total pendiente,
+   total vencido y próximo vencimiento.
+8. La opción `2` cambia el estado del flujo de la conversación. Solo una imagen
+   o un documento genera un comprobante pendiente y cada mensaje admite como
+   máximo un comprobante.
+9. La referencia `meta-media` se conserva hasta descargar el archivo; luego se
+   calculará su hash y se ejecutará OCR y control de duplicados.
 
 ## Reglas alineadas
 
@@ -110,6 +121,7 @@ hasta implementar `comprobante`.
 - `teoria/diagramas/Diagrama_casos_de_uso.drawio`.
 - `sistema/database/migrations/2026_09_03_062716_create_modulo_uno_tables.php`.
 - `sistema/database/migrations/2026_09_10_000000_create_conversaciones_y_mensajes_tables.php`.
+- `sistema/database/migrations/2026_09_16_000000_create_comprobantes_table.php`.
 - `sistema/app/Models/` y `sistema/app/Dominio/`.
 - `sistema/tests/`.
 

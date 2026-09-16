@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Dominio\ServicioConsultaCuentaWhatsapp;
 use App\Enums\EstadoCuota;
 use App\Models\Cliente;
+use App\Models\Comprobante;
 use App\Models\Conversacion;
 use App\Models\CuentaReceptora;
 use App\Models\Cuota;
@@ -192,6 +194,14 @@ class DatosDemostracionSeeder extends Seeder
      */
     private function crearConversaciones(array $clientes): void
     {
+        $presentacionBot = "Hola. Te atiende el servicio virtual de Villafañe Wifi.\n\n";
+        $respuestaCuentaAna = $presentacionBot
+            .app(ServicioConsultaCuentaWhatsapp::class)->crearRespuesta($clientes['ana']);
+        $respuestaCuentaRoberto = $presentacionBot
+            .app(ServicioConsultaCuentaWhatsapp::class)->crearRespuesta($clientes['roberto']);
+        $menu = "Elegí una opción respondiendo con su número:\n"
+            ."1. Consultar estado de cuenta\n2. Informar un pago\n"
+            ."3. Registrar un reclamo\n4. Solicitar atención humana";
         $ejemplos = [
             [
                 'cliente' => $clientes['ana'],
@@ -199,16 +209,62 @@ class DatosDemostracionSeeder extends Seeder
                 'estado' => 'abierta',
                 'mensajes' => [
                     ['wamid.demo.ana.1', '2026-09-10 09:15:00', 'cliente', 'Hola, quiero consultar mi cuenta', 'recibido'],
-                    ['wamid.demo.ana.2', '2026-09-10 09:15:03', 'bot', "Hola, Ana Gómez. Soy el asistente virtual de Villafañe Wifi.\n\nElegí una opción respondiendo con su número:\n1. Consultar estado de cuenta\n2. Informar un pago\n3. Registrar un reclamo\n4. Solicitar atención humana", 'entregado'],
+                    ['wamid.demo.ana.2', '2026-09-10 09:15:03', 'bot', "Hola, Ana Gómez. Te atiende el servicio virtual de Villafañe Wifi.\n\n{$menu}", 'entregado'],
+                    ['wamid.demo.ana.3', '2026-09-10 09:15:20', 'cliente', '1', 'recibido'],
+                    ['wamid.demo.ana.4', '2026-09-10 09:15:22', 'bot', $respuestaCuentaAna, 'entregado'],
                 ],
             ],
             [
                 'cliente' => $clientes['lapacho'],
                 'inicio' => '2026-09-09 16:40:00',
                 'estado' => 'cerrada',
+                'cierre' => '2026-09-09 16:45:00',
                 'mensajes' => [
                     ['wamid.demo.lapacho.1', '2026-09-09 16:40:00', 'cliente', 'Buenas tardes, necesito informar un pago', 'recibido'],
-                    ['wamid.demo.lapacho.2', '2026-09-09 16:40:02', 'bot', 'Recibimos tu mensaje. Te ayudaremos a registrar el pago.', 'leido'],
+                    ['wamid.demo.lapacho.2', '2026-09-09 16:40:02', 'bot', $presentacionBot.'Para informar el pago, enviá ahora una foto o un archivo PDF del comprobante.', 'leido'],
+                ],
+            ],
+            [
+                'cliente' => $clientes['roberto'],
+                'inicio' => '2026-09-12 11:20:00',
+                'estado' => 'abierta',
+                'mensajes' => [
+                    ['wamid.demo.roberto.1', '2026-09-12 11:20:00', 'cliente', 'Buen día', 'recibido'],
+                    ['wamid.demo.roberto.2', '2026-09-12 11:20:02', 'bot', "Hola, Roberto Díaz. Te atiende el servicio virtual de Villafañe Wifi.\n\n{$menu}", 'leido'],
+                    ['wamid.demo.roberto.3', '2026-09-12 11:21:00', 'cliente', 'Quiero ver mi deuda', 'recibido'],
+                    ['wamid.demo.roberto.4', '2026-09-12 11:21:02', 'bot', $respuestaCuentaRoberto, 'entregado'],
+                ],
+            ],
+            [
+                'cliente' => $clientes['norte'],
+                'inicio' => '2026-09-13 08:35:00',
+                'estado' => 'cerrada',
+                'cierre' => '2026-09-13 08:38:00',
+                'mensajes' => [
+                    ['wamid.demo.norte.1', '2026-09-13 08:35:00', 'cliente', 'Hola, necesito conocer las opciones', 'recibido'],
+                    ['wamid.demo.norte.2', '2026-09-13 08:35:02', 'bot', $presentacionBot.$menu, 'leido'],
+                ],
+            ],
+            [
+                'cliente' => $clientes['marta'],
+                'inicio' => '2026-09-14 18:05:00',
+                'estado' => 'abierta',
+                'mensajes' => [
+                    ['wamid.demo.marta.1', '2026-09-14 18:05:00', 'cliente', 'Hola, acabo de pagar', 'recibido'],
+                    ['wamid.demo.marta.2', '2026-09-14 18:05:02', 'bot', "Hola, Marta Benítez. Te atiende el servicio virtual de Villafañe Wifi.\n\n{$menu}", 'leido'],
+                    ['wamid.demo.marta.3', '2026-09-14 18:05:20', 'cliente', '2', 'recibido'],
+                    ['wamid.demo.marta.4', '2026-09-14 18:05:22', 'bot', $presentacionBot.'Para informar el pago, enviá ahora una foto o un archivo PDF del comprobante.', 'entregado'],
+                ],
+            ],
+            [
+                'cliente' => $clientes['panaderia'],
+                'inicio' => '2026-09-15 07:50:00',
+                'estado' => 'abierta',
+                'mensajes' => [
+                    ['wamid.demo.panaderia.1', '2026-09-15 07:50:00', 'cliente', 'Hola', 'recibido'],
+                    ['wamid.demo.panaderia.2', '2026-09-15 07:50:02', 'bot', "Hola, Panadería La Estación. Te atiende el servicio virtual de Villafañe Wifi.\n\n{$menu}", 'leido'],
+                    ['wamid.demo.panaderia.3', '2026-09-15 07:51:00', 'cliente', 'menú', 'recibido'],
+                    ['wamid.demo.panaderia.4', '2026-09-15 07:51:02', 'bot', $presentacionBot."Menú principal:\n".$menu, 'entregado'],
                 ],
             ],
         ];
@@ -221,7 +277,7 @@ class DatosDemostracionSeeder extends Seeder
                 ],
                 [
                     'numero_whatsapp' => $ejemplo['cliente']->telefono_whatsapp,
-                    'fecha_hora_cierre' => $ejemplo['estado'] === 'cerrada' ? '2026-09-09 16:45:00' : null,
+                    'fecha_hora_cierre' => $ejemplo['cierre'] ?? null,
                     'estado' => $ejemplo['estado'],
                     'modo_atencion' => 'bot',
                 ],
@@ -239,6 +295,52 @@ class DatosDemostracionSeeder extends Seeder
                         'archivo_adjunto' => null,
                         'tipo_emisor' => $emisor,
                         'estado_envio' => $estado,
+                    ],
+                );
+            }
+
+            if ($ejemplo['cliente']->is($clientes['lapacho'])) {
+                $mensajeComprobante = Mensaje::updateOrCreate(
+                    ['id_mensaje_externo' => 'wamid.demo.lapacho.3'],
+                    [
+                        'id_conversacion' => $conversacion->id_conversacion,
+                        'id_usuario' => null,
+                        'fecha_hora' => '2026-09-09 16:41:00',
+                        'tipo' => 'imagen',
+                        'contenido' => 'Transferencia de septiembre',
+                        'archivo_adjunto' => 'meta-media:demo-comprobante-lapacho',
+                        'tipo_emisor' => 'cliente',
+                        'estado_envio' => 'recibido',
+                    ],
+                );
+                Comprobante::updateOrCreate(
+                    ['id_mensaje' => $mensajeComprobante->id_mensaje],
+                    [
+                        'fecha_recepcion' => $mensajeComprobante->fecha_hora,
+                        'estado_validacion' => 'pendiente',
+                    ],
+                );
+            }
+
+            if ($ejemplo['cliente']->is($clientes['marta'])) {
+                $mensajeComprobante = Mensaje::updateOrCreate(
+                    ['id_mensaje_externo' => 'wamid.demo.marta.5'],
+                    [
+                        'id_conversacion' => $conversacion->id_conversacion,
+                        'id_usuario' => null,
+                        'fecha_hora' => '2026-09-14 18:06:00',
+                        'tipo' => 'documento',
+                        'contenido' => 'Comprobante de pago en PDF',
+                        'archivo_adjunto' => 'meta-media:demo-comprobante-marta',
+                        'tipo_emisor' => 'cliente',
+                        'estado_envio' => 'recibido',
+                    ],
+                );
+                Comprobante::updateOrCreate(
+                    ['id_mensaje' => $mensajeComprobante->id_mensaje],
+                    [
+                        'fecha_recepcion' => $mensajeComprobante->fecha_hora,
+                        'estado_validacion' => 'pendiente',
                     ],
                 );
             }

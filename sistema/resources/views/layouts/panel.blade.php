@@ -74,6 +74,12 @@
                         <span>Cobranza</span>
                     </a>
                 @endif
+                @if ($navegacionPermitida['comprobantes'])
+                    <a class="enlace-navegacion {{ request()->routeIs('comprobantes.*') ? 'activo' : '' }}" href="{{ route('comprobantes.index') }}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6zM9 8h6M9 12h6M9 16h4M4 6h2M18 6h2"/></svg>
+                        <span>Comprobantes</span>
+                    </a>
+                @endif
                 @if ($navegacionPermitida['usuarios'])
                     <a class="enlace-navegacion {{ request()->routeIs('usuarios.*') ? 'activo' : '' }}" href="{{ route('usuarios.index') }}">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 8a7 7 0 0 0-14 0M19 8v6M22 11h-6"/></svg>

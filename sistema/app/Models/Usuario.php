@@ -59,6 +59,11 @@ class Usuario extends Authenticatable
         return $this->hasMany(Mensaje::class, 'id_usuario', 'id_usuario');
     }
 
+    public function comprobantesValidados(): HasMany
+    {
+        return $this->hasMany(Comprobante::class, 'id_usuario', 'id_usuario');
+    }
+
     public function autenticar(string $contrasena): bool
     {
         return $this->estado === EstadoUsuario::Activo && Hash::check($contrasena, $this->credencial);
