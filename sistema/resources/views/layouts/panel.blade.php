@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#123f36">
     <title>@yield('titulo', 'Panel') · Villafañe Wifi</title>
+    <script>
+        (() => {
+            const temaGuardado = localStorage.getItem('tema-panel');
+            const prefiereOscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.dataset.tema = temaGuardado ?? (prefiereOscuro ? 'oscuro' : 'claro');
+
+            if (localStorage.getItem('barra-lateral-colapsada') === 'true') {
+                document.documentElement.classList.add('lateral-colapsada-inicial');
+            }
+        })();
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="@auth con-sesion @else sin-sesion @endauth">
@@ -26,7 +37,7 @@
                     <span>Resumen</span>
                 </a>
 
-                @if ($navegacionPermitida['clientes'] || $navegacionPermitida['servicios'])
+                @if ($navegacionPermitida['clientes'] || $navegacionPermitida['servicios'] || $navegacionPermitida['conversaciones'])
                     <span class="grupo-navegacion">Operaciones</span>
                 @endif
                 @if ($navegacionPermitida['clientes'])
@@ -39,6 +50,12 @@
                     <a class="enlace-navegacion {{ request()->routeIs('servicios.*') ? 'activo' : '' }}" href="{{ route('servicios.index') }}">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14 0M8.5 16a6 6 0 0 1 7 0M12 20h.01M2 9a16 16 0 0 1 20 0"/></svg>
                         <span>Servicios</span>
+                    </a>
+                @endif
+                @if ($navegacionPermitida['conversaciones'])
+                    <a class="enlace-navegacion {{ request()->routeIs('conversaciones.*') ? 'activo' : '' }}" href="{{ route('conversaciones.index') }}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4zM8 9h8M8 12h5"/></svg>
+                        <span>Conversaciones</span>
                     </a>
                 @endif
 
@@ -55,6 +72,12 @@
                     <a class="enlace-navegacion {{ request()->routeIs('cuentas-receptoras.*') ? 'activo' : '' }}" href="{{ route('cuentas-receptoras.index') }}">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18v12H3zM3 10h18M7 16h4M17 4l-5-2-5 2"/></svg>
                         <span>Cobranza</span>
+                    </a>
+                @endif
+                @if ($navegacionPermitida['comprobantes'])
+                    <a class="enlace-navegacion {{ request()->routeIs('comprobantes.*') ? 'activo' : '' }}" href="{{ route('comprobantes.index') }}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6zM9 8h6M9 12h6M9 16h4M4 6h2M18 6h2"/></svg>
+                        <span>Comprobantes</span>
                     </a>
                 @endif
                 @if ($navegacionPermitida['usuarios'])
@@ -82,11 +105,18 @@
                 <button class="abrir-menu" type="button" data-abrir-menu aria-controls="barra-lateral" aria-expanded="false" aria-label="Abrir menú">
                     <span></span><span></span><span></span>
                 </button>
+                <button class="alternar-lateral" type="button" data-alternar-lateral aria-controls="barra-lateral" aria-pressed="false" title="Achicar barra lateral" aria-label="Achicar barra lateral">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM9 5v14M15 9l-3 3 3 3"/></svg>
+                </button>
                 <div class="titulo-superior">
                     <small>Panel administrativo</small>
                     <strong>@yield('titulo', 'Resumen')</strong>
                 </div>
                 <span class="estado-sistema"><i></i>Sistema operativo</span>
+                <button class="alternar-tema" type="button" data-alternar-tema aria-pressed="false" title="Activar modo oscuro" aria-label="Activar modo oscuro">
+                    <svg class="icono-luna" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.3A8.5 8.5 0 0 1 8.7 3.8 8.5 8.5 0 1 0 20.2 15.3z"/></svg>
+                    <svg class="icono-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+                </button>
             </header>
             <main class="contenedor">
                 @if (session('exito'))

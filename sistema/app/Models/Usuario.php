@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\EstadoUsuario;
 use Database\Factories\UsuarioFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
@@ -46,6 +47,21 @@ class Usuario extends Authenticatable
     public function administrador(): HasOne
     {
         return $this->hasOne(Administrador::class, 'id_administrador', 'id_usuario');
+    }
+
+    public function conversacionesAtendidas(): HasMany
+    {
+        return $this->hasMany(Conversacion::class, 'id_usuario_atencion', 'id_usuario');
+    }
+
+    public function mensajesEnviados(): HasMany
+    {
+        return $this->hasMany(Mensaje::class, 'id_usuario', 'id_usuario');
+    }
+
+    public function comprobantesValidados(): HasMany
+    {
+        return $this->hasMany(Comprobante::class, 'id_usuario', 'id_usuario');
     }
 
     public function autenticar(string $contrasena): bool

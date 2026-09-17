@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Autorizacion\ServicioAutorizacion;
+use App\Contratos\PuertaEnlaceWhatsapp;
 use App\Enums\AccionSistema;
+use App\Infraestructura\Whatsapp\ClienteMetaWhatsapp;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -17,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(PuertaEnlaceWhatsapp::class, ClienteMetaWhatsapp::class);
     }
 
     /**
@@ -42,6 +44,8 @@ class AppServiceProvider extends ServiceProvider
                 'cobranza' => $puede(AccionSistema::ConsultarCuentas),
                 'gestionar_cobranza' => $puede(AccionSistema::GestionarCuentas),
                 'gestionar_pagos' => $puede(AccionSistema::GestionarPagos),
+                'comprobantes' => $puede(AccionSistema::ConsultarPagos),
+                'conversaciones' => $puede(AccionSistema::ConsultarConversaciones),
                 'usuarios' => $puede(AccionSistema::GestionarUsuarios),
             ]);
         });

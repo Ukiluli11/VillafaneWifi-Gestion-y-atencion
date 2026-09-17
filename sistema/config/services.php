@@ -35,4 +35,13 @@ return [
         ],
     ],
 
+    'whatsapp' => [
+        'url_base' => env('WHATSAPP_URL_BASE', 'https://graph.facebook.com'),
+        'token_verificacion' => env('WHATSAPP_TOKEN_VERIFICACION'),
+        'secreto_aplicacion' => env('WHATSAPP_SECRETO_APLICACION'),
+        'token_acceso' => env('WHATSAPP_TOKEN_ACCESO'),
+        'id_numero_telefono' => env('WHATSAPP_ID_NUMERO_TELEFONO'),
+        'version_api' => env('WHATSAPP_VERSION_API', 'v23.0'),
+    ],
+
 ];

@@ -57,6 +57,11 @@ class Cliente extends Model
         return $this->hasMany(Servicio::class, 'id_cliente', 'id_cliente');
     }
 
+    public function conversaciones(): HasMany
+    {
+        return $this->hasMany(Conversacion::class, 'id_cliente', 'id_cliente');
+    }
+
     public function darDeAlta(): void
     {
         $this->update(['estado' => EstadoCliente::Activo]);
