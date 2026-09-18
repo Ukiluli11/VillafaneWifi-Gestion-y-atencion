@@ -14,18 +14,19 @@ class DatosDemostracionSeederTest extends TestCase
     {
         $this->seed(DatosDemostracionSeeder::class);
 
-        $this->assertDatabaseCount('cliente', 6);
+        $this->assertDatabaseCount('cliente', 7);
         $this->assertDatabaseCount('plan', 3);
-        $this->assertDatabaseCount('servicio', 6);
+        $this->assertDatabaseCount('servicio', 7);
         $this->assertDatabaseCount('cuenta_receptora', 2);
-        $this->assertDatabaseCount('cuota', 18);
+        $this->assertDatabaseCount('cuota', 21);
         $this->assertDatabaseCount('pago', 2);
-        $this->assertDatabaseCount('conversacion', 9);
-        $this->assertDatabaseCount('mensaje', 32);
+        $this->assertDatabaseCount('conversacion', 12);
+        $this->assertDatabaseCount('mensaje', 56);
         $this->assertDatabaseCount('comprobante', 2);
         $this->assertDatabaseCount('ticket', 2);
         $this->assertDatabaseCount('aviso_vencimiento', 2);
         $this->assertDatabaseHas('cliente', ['nombre_razon_social' => 'Kiosco El Lapacho']);
+        $this->assertDatabaseHas('cliente', ['nombre_razon_social' => 'Lucía Fernández']);
         $this->assertDatabaseHas('cuota', ['estado' => 'pagada']);
         $this->assertDatabaseHas('conversacion', ['id_cliente' => null, 'estado_flujo' => 'esperando_nombre_registro']);
         $this->assertDatabaseHas('conversacion', ['estado' => 'escalada', 'modo_atencion' => 'usuario_interno']);
@@ -35,14 +36,16 @@ class DatosDemostracionSeederTest extends TestCase
         ]);
         $this->assertDatabaseHas('ticket', ['tipo' => 'tecnico', 'estado' => 'abierto']);
         $this->assertDatabaseHas('aviso_vencimiento', ['tipo' => 'vencido', 'estado' => 'enviado']);
+        $this->assertDatabaseHas('mensaje', ['id_mensaje_externo' => 'wamid.demo.estados.6', 'estado_envio' => 'fallido']);
+        $this->assertDatabaseHas('mensaje', ['id_mensaje_externo' => 'wamid.demo.roberto.reclamo.confirmacion']);
 
         $this->seed(DatosDemostracionSeeder::class);
 
-        $this->assertDatabaseCount('cliente', 6);
-        $this->assertDatabaseCount('cuota', 18);
+        $this->assertDatabaseCount('cliente', 7);
+        $this->assertDatabaseCount('cuota', 21);
         $this->assertDatabaseCount('pago', 2);
-        $this->assertDatabaseCount('conversacion', 9);
-        $this->assertDatabaseCount('mensaje', 32);
+        $this->assertDatabaseCount('conversacion', 12);
+        $this->assertDatabaseCount('mensaje', 56);
         $this->assertDatabaseCount('comprobante', 2);
         $this->assertDatabaseCount('ticket', 2);
         $this->assertDatabaseCount('aviso_vencimiento', 2);

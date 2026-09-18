@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ResponderConversacionRequest;
 use App\Models\Conversacion;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -47,7 +49,18 @@ class ConversacionController extends Controller
         Request $request,
         ServicioAtencionHumanaWhatsapp $servicio,
     ): RedirectResponse {
-        $resultado = $servicio->tomar($conversacion, $request->user());
+        try {
+            $resultado = $servicio->tomar($conversacion, $request->user());
+        } catch (ConnectionException|RequestException $error) {
+            report($error);
+
+            return redirect()
+                ->route('conversaciones.show', $conversacion)
+                ->withErrors([
+                    'whatsapp' => 'La conversación quedó asignada, pero no se pudo enviar la presentación por WhatsApp. Revisá que el destinatario esté autorizado y que la conexión con Meta esté disponible.',
+                ]);
+        }
+
         $mensaje = $resultado->nuevaAsignacion
             ? 'Tomaste la conversación y el cliente recibió tu presentación.'
             : 'La conversación ya estaba asignada a tu usuario.';
@@ -65,11 +78,22 @@ class ConversacionController extends Controller
         ResponderConversacionRequest $request,
         ServicioAtencionHumanaWhatsapp $servicio,
     ): RedirectResponse {
-        $servicio->responder(
-            $conversacion,
-            $request->user(),
-            $request->string('contenido')->toString(),
-        );
+        try {
+            $servicio->responder(
+                $conversacion,
+                $request->user(),
+                $request->string('contenido')->toString(),
+            );
+        } catch (ConnectionException|RequestException $error) {
+            report($error);
+
+            return redirect()
+                ->route('conversaciones.show', $conversacion)
+                ->withInput()
+                ->withErrors([
+                    'whatsapp' => 'No se pudo entregar la respuesta por WhatsApp. El intento quedó registrado como fallido para su revisión.',
+                ]);
+        }
 
         return redirect()
             ->route('conversaciones.show', $conversacion)
@@ -84,7 +108,17 @@ class ConversacionController extends Controller
         Request $request,
         ServicioAtencionHumanaWhatsapp $servicio,
     ): RedirectResponse {
-        $servicio->cerrar($conversacion, $request->user());
+        try {
+            $servicio->cerrar($conversacion, $request->user());
+        } catch (ConnectionException|RequestException $error) {
+            report($error);
+
+            return redirect()
+                ->route('conversaciones.show', $conversacion)
+                ->withErrors([
+                    'whatsapp' => 'No se pudo avisar el cierre por WhatsApp. La conversación permanece abierta para evitar perder la atención.',
+                ]);
+        }
 
         return redirect()
             ->route('conversaciones.show', $conversacion)

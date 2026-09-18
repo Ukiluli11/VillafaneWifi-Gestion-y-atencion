@@ -65,6 +65,7 @@ class DatosDemostracionSeeder extends Seeder
             'norte' => ['tipo_documento' => 'CUIT', 'numero_documento' => '30765432109', 'nombre_razon_social' => 'Librería Norte', 'tipo_cliente' => 'comercio', 'calle_contacto' => 'Rivadavia', 'numero_contacto' => '411', 'localidad_contacto' => 'Pirané', 'telefono_whatsapp' => '5493704123404', 'estado' => 'suspendido'],
             'marta' => ['tipo_documento' => 'DNI', 'numero_documento' => '33456789', 'nombre_razon_social' => 'Marta Benítez', 'tipo_cliente' => 'particular', 'calle_contacto' => 'Moreno', 'numero_contacto' => '87', 'localidad_contacto' => 'Villa Dos Trece', 'telefono_whatsapp' => '5493718123405', 'estado' => 'activo'],
             'panaderia' => ['tipo_documento' => 'CUIT', 'numero_documento' => '30678901234', 'nombre_razon_social' => 'Panadería La Estación', 'tipo_cliente' => 'comercio', 'calle_contacto' => 'Mitre', 'numero_contacto' => '930', 'localidad_contacto' => 'Villafañe', 'telefono_whatsapp' => '5493718123406', 'estado' => 'activo'],
+            'lucia' => ['tipo_documento' => 'DNI', 'numero_documento' => '35111222', 'nombre_razon_social' => 'Lucía Fernández', 'tipo_cliente' => 'particular', 'calle_contacto' => 'España', 'numero_contacto' => '315', 'localidad_contacto' => 'Villafañe', 'telefono_whatsapp' => '5493704000098', 'estado' => 'activo'],
         ];
 
         return collect($datos)->mapWithKeys(function (array $cliente, string $clave): array {
@@ -109,6 +110,7 @@ class DatosDemostracionSeeder extends Seeder
             'norte' => [$clientes['norte'], $planes['plus'], 'Rivadavia', '411', 'Pirané', 12, '192.168.10.14', '02:00:00:00:00:14', 'suspendido'],
             'marta' => [$clientes['marta'], $planes['hogar'], 'Moreno', '87', 'Villa Dos Trece', 20, '192.168.10.15', '02:00:00:00:00:15', 'activo'],
             'panaderia' => [$clientes['panaderia'], $planes['comercio'], 'Mitre', '930', 'Villafañe', 8, '192.168.10.16', '02:00:00:00:00:16', 'activo'],
+            'lucia' => [$clientes['lucia'], $planes['hogar'], 'España', '315', 'Villafañe', 12, '192.168.10.17', '02:00:00:00:00:17', 'activo'],
         ];
 
         return collect($datos)->mapWithKeys(function (array $servicio, string $clave): array {
@@ -277,6 +279,52 @@ class DatosDemostracionSeeder extends Seeder
                     ['wamid.demo.panaderia.6', '2026-09-15 07:52:02', 'bot', $presentacionBot.'Derivamos tu consulta al primer empleado disponible. La atención continuará por este mismo chat.', 'entregado'],
                 ],
             ],
+            [
+                'cliente' => $clientes['lucia'],
+                'inicio' => '2026-09-16 09:00:00',
+                'estado' => 'cerrada',
+                'cierre' => '2026-09-16 09:05:30',
+                'mensajes' => [
+                    ['wamid.demo.lucia.registro.1', '2026-09-16 09:00:00', 'cliente', 'Hola, quiero contratar Internet', 'recibido'],
+                    ['wamid.demo.lucia.registro.2', '2026-09-16 09:00:02', 'bot', $presentacionBot.'No encontramos un cliente asociado a este número. Escribí tu DNI para identificarte o comenzar el registro.', 'entregado'],
+                    ['wamid.demo.lucia.registro.3', '2026-09-16 09:00:30', 'cliente', '35111222', 'recibido'],
+                    ['wamid.demo.lucia.registro.4', '2026-09-16 09:00:32', 'bot', $presentacionBot.'Ese DNI no está registrado. Para darte de alta, escribí tu nombre y apellido completos.', 'entregado'],
+                    ['wamid.demo.lucia.registro.5', '2026-09-16 09:01:00', 'cliente', 'Lucía Fernández', 'recibido'],
+                    ['wamid.demo.lucia.registro.6', '2026-09-16 09:01:02', 'bot', $presentacionBot.'Indicá tu domicilio de contacto con el formato calle | número | localidad.', 'entregado'],
+                    ['wamid.demo.lucia.registro.7', '2026-09-16 09:01:30', 'cliente', 'España | 315 | Villafañe', 'recibido'],
+                    ['wamid.demo.lucia.registro.8', '2026-09-16 09:01:32', 'bot', $presentacionBot."Elegí el plan para tu nuevo servicio:\n1. Hogar 20 - 20 Mbps - $18.000\n2. Hogar Plus 50 - 50 Mbps - $26.000\n3. Comercio 100 - 100 Mbps - $42.000", 'entregado'],
+                    ['wamid.demo.lucia.registro.9', '2026-09-16 09:02:00', 'cliente', '1', 'recibido'],
+                    ['wamid.demo.lucia.registro.10', '2026-09-16 09:02:02', 'bot', $presentacionBot.'Indicá el domicilio de instalación con el formato calle | número | localidad.', 'entregado'],
+                    ['wamid.demo.lucia.registro.11', '2026-09-16 09:02:30', 'cliente', 'España | 315 | Villafañe', 'recibido'],
+                    ['wamid.demo.lucia.registro.12', '2026-09-16 09:02:32', 'bot', $presentacionBot.'Elegí el día de vencimiento mensual, entre 1 y 28.', 'entregado'],
+                    ['wamid.demo.lucia.registro.13', '2026-09-16 09:03:00', 'cliente', '12', 'recibido'],
+                    ['wamid.demo.lucia.registro.14', '2026-09-16 09:03:02', 'bot', $presentacionBot.'Registro completado. Se creó el cliente Lucía Fernández con el plan Hogar 20 y vencimiento el día 12.', 'leido'],
+                ],
+            ],
+            [
+                'cliente' => $clientes['roberto'],
+                'inicio' => '2026-09-16 10:10:00',
+                'estado' => 'cerrada',
+                'cierre' => '2026-09-16 10:13:00',
+                'mensajes' => [
+                    ['wamid.demo.roberto.ticket.1', '2026-09-16 10:10:00', 'cliente', 'Hola, quiero registrar un reclamo', 'recibido'],
+                    ['wamid.demo.roberto.ticket.2', '2026-09-16 10:10:02', 'bot', "Hola, Roberto Díaz. Te atiende el servicio virtual de Villafañe Wifi.\n\nDescribí brevemente el problema con tu servicio.", 'entregado'],
+                ],
+            ],
+            [
+                'cliente' => $clientes['norte'],
+                'inicio' => '2026-09-16 15:30:00',
+                'estado' => 'cerrada',
+                'cierre' => '2026-09-16 15:35:00',
+                'mensajes' => [
+                    ['wamid.demo.estados.1', '2026-09-16 15:30:00', 'cliente', 'Necesito revisar el seguimiento de mensajes', 'recibido'],
+                    ['wamid.demo.estados.2', '2026-09-16 15:30:05', 'bot', $presentacionBot.'Mensaje preparado para envío.', 'pendiente'],
+                    ['wamid.demo.estados.3', '2026-09-16 15:31:00', 'bot', $presentacionBot.'Mensaje aceptado por Meta.', 'enviado'],
+                    ['wamid.demo.estados.4', '2026-09-16 15:32:00', 'bot', $presentacionBot.'Mensaje entregado al dispositivo.', 'entregado'],
+                    ['wamid.demo.estados.5', '2026-09-16 15:33:00', 'bot', $presentacionBot.'Mensaje leído por el destinatario.', 'leido'],
+                    ['wamid.demo.estados.6', '2026-09-16 15:34:00', 'bot', $presentacionBot.'Ejemplo controlado de un envío fallido.', 'fallido'],
+                ],
+            ],
         ];
 
         foreach ($ejemplos as $ejemplo) {
@@ -405,7 +453,8 @@ class DatosDemostracionSeeder extends Seeder
                 'cliente' => $clientes['roberto'],
                 'servicio' => $servicios['roberto'],
                 'mensaje' => 'wamid.demo.roberto.reclamo',
-                'fecha' => '2026-09-12 11:25:00',
+                'fecha' => '2026-09-16 10:11:00',
+                'inicio_conversacion' => '2026-09-16 10:10:00',
                 'tipo' => 'tecnico',
                 'descripcion' => 'La conexión se corta varias veces durante la tarde.',
                 'estado' => 'abierto',
@@ -423,10 +472,11 @@ class DatosDemostracionSeeder extends Seeder
         ];
 
         foreach ($escenarios as $escenario) {
-            $conversacion = Conversacion::query()
-                ->where('id_cliente', $escenario['cliente']->id_cliente)
-                ->oldest('fecha_hora_inicio')
-                ->firstOrFail();
+            $consultaConversacion = Conversacion::query()
+                ->where('id_cliente', $escenario['cliente']->id_cliente);
+            $conversacion = isset($escenario['inicio_conversacion'])
+                ? $consultaConversacion->where('fecha_hora_inicio', $escenario['inicio_conversacion'])->firstOrFail()
+                : $consultaConversacion->oldest('fecha_hora_inicio')->firstOrFail();
             $mensaje = Mensaje::updateOrCreate(
                 ['id_mensaje_externo' => $escenario['mensaje']],
                 [
@@ -440,7 +490,7 @@ class DatosDemostracionSeeder extends Seeder
                     'estado_envio' => 'recibido',
                 ],
             );
-            Ticket::updateOrCreate(
+            $ticket = Ticket::updateOrCreate(
                 [
                     'id_conversacion' => $conversacion->id_conversacion,
                     'id_servicio' => $escenario['servicio']->id_servicio,
@@ -453,6 +503,20 @@ class DatosDemostracionSeeder extends Seeder
                     'estado' => $escenario['estado'],
                     'fecha_resolucion' => $escenario['fecha_resolucion'] ?? null,
                     'fecha_asignacion' => null,
+                ],
+            );
+
+            Mensaje::updateOrCreate(
+                ['id_mensaje_externo' => $escenario['mensaje'].'.confirmacion'],
+                [
+                    'id_conversacion' => $conversacion->id_conversacion,
+                    'id_usuario' => null,
+                    'fecha_hora' => CarbonImmutable::parse($escenario['fecha'])->addSeconds(2),
+                    'tipo' => 'texto',
+                    'contenido' => "Hola. Te atiende el servicio virtual de Villafañe Wifi. Registramos el reclamo con el ticket #{$ticket->id_ticket}. Será atendido por orden de llegada.",
+                    'archivo_adjunto' => null,
+                    'tipo_emisor' => 'bot',
+                    'estado_envio' => 'entregado',
                 ],
             );
         }

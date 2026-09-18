@@ -40,7 +40,7 @@ class ClienteMetaWhatsapp implements PuertaEnlaceWhatsapp
      */
     public function enviarTexto(string $numeroDestino, string $contenido): string
     {
-        $numeroNormalizado = preg_replace('/\D+/', '', $numeroDestino) ?? '';
+        $numeroNormalizado = $this->normalizarNumeroDestino($numeroDestino);
         if ($numeroNormalizado === '' || blank($contenido)) {
             throw ValidationException::withMessages([
                 'mensaje' => 'El destino y el contenido del mensaje son obligatorios.',
@@ -73,6 +73,24 @@ class ClienteMetaWhatsapp implements PuertaEnlaceWhatsapp
         return $identificador;
     }
 
+    /**
+     * Adapta el identificador de WhatsApp al formato que Meta exige al enviar.
+     *
+     * Los webhooks de celulares argentinos informan el WA ID con el prefijo
+     * móvil 9 (549...), mientras que el destinatario autorizado por Cloud API
+     * debe enviarse como 54 seguido por los diez dígitos nacionales.
+     */
+    private function normalizarNumeroDestino(string $numeroDestino): string
+    {
+        $numeroNormalizado = preg_replace('/\D+/', '', $numeroDestino) ?? '';
+
+        if (preg_match('/^549(\d{10})$/', $numeroNormalizado, $coincidencias) === 1) {
+            return '54'.$coincidencias[1];
+        }
+
+        return $numeroNormalizado;
+    }
+
     /** @return array{token: string, id_numero: string, version: string, url: string} */
     private function configuracion(): array
     {
@@ -100,10 +118,24 @@ class ClienteMetaWhatsapp implements PuertaEnlaceWhatsapp
      */
     private function solicitud(string $token): PendingRequest
     {
-        return Http::acceptJson()
+        $solicitud = Http::acceptJson()
             ->asJson()
             ->withToken($token)
             ->timeout(15)
             ->retry(2, 200);
+
+        $rutaCertificado = trim((string) config('services.whatsapp.certificado_ca'));
+
+        if ($rutaCertificado !== '') {
+            if (! is_file($rutaCertificado)) {
+                throw ValidationException::withMessages([
+                    'whatsapp' => 'La ruta del certificado HTTPS de WhatsApp no existe.',
+                ]);
+            }
+
+            $solicitud->withOptions(['verify' => $rutaCertificado]);
+        }
+
+        return $solicitud;
     }
 }

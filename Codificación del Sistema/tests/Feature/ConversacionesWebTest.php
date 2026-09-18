@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Contratos\PuertaEnlaceWhatsapp;
 use App\Dominio\ServicioUsuarios;
 use App\Models\AvisoVencimiento;
 use App\Models\Cliente;
@@ -9,6 +10,7 @@ use App\Models\Conversacion;
 use App\Models\Mensaje;
 use App\Models\Usuario;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
@@ -130,7 +132,7 @@ class ConversacionesWebTest extends TestCase
         $presentacion = Mensaje::query()->latest('id_mensaje')->firstOrFail();
         $this->assertStringContainsString($usuario->nombre_usuario, $presentacion->contenido);
         $this->assertStringContainsString('Villafañe Wifi', $presentacion->contenido);
-        Http::assertSent(fn (Request $solicitud): bool => $solicitud['to'] === '5493704123456'
+        Http::assertSent(fn (Request $solicitud): bool => $solicitud['to'] === '543704123456'
             && str_contains($solicitud['text']['body'], $usuario->nombre_usuario));
     }
 
@@ -147,6 +149,33 @@ class ConversacionesWebTest extends TestCase
 
         $this->assertSame($primero->id_usuario, $conversacion->refresh()->id_usuario_atencion);
         Http::assertSentCount(1);
+    }
+
+    public function test_error_de_meta_no_rompe_la_pantalla_al_tomar_conversacion(): void
+    {
+        $this->mock(PuertaEnlaceWhatsapp::class, function ($puertaEnlace): void {
+            $puertaEnlace->shouldReceive('enviarTexto')
+                ->once()
+                ->andThrow(new ConnectionException('Meta no está disponible.'));
+        });
+
+        $usuario = $this->crearUsuario('empleado', 'meta-no-disponible');
+        $conversacion = Conversacion::factory()->create([
+            'numero_whatsapp' => '5493704999999',
+        ]);
+
+        $this->actingAs($usuario)
+            ->post(route('conversaciones.tomar', $conversacion))
+            ->assertRedirect(route('conversaciones.show', $conversacion))
+            ->assertSessionHasErrors('whatsapp');
+
+        $this->assertSame($usuario->id_usuario, $conversacion->refresh()->id_usuario_atencion);
+        $this->assertDatabaseHas('mensaje', [
+            'id_conversacion' => $conversacion->id_conversacion,
+            'id_usuario' => $usuario->id_usuario,
+            'tipo_emisor' => 'usuario_interno',
+            'estado_envio' => 'fallido',
+        ]);
     }
 
     public function test_responsable_responde_y_mensaje_queda_en_historial(): void

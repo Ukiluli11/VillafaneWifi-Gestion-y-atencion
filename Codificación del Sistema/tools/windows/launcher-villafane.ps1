@@ -8,7 +8,27 @@ Set-StrictMode -Version Latest
 $directorioAplicacion = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $directorioRepositorio = (Resolve-Path (Join-Path $directorioAplicacion '..')).Path
 $ejecutablePhp = Join-Path $env:LOCALAPPDATA 'Programs\PHP-8.5\php.exe'
-$ejecutablePnpm = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.cmd'
+$comandoNode = Get-Command 'node.exe' -ErrorAction SilentlyContinue
+$ejecutableNode = if ($null -ne $comandoNode) {
+    $comandoNode.Source
+}
+else {
+    @(
+        (Join-Path $env:ProgramFiles 'nodejs\node.exe')
+        (Join-Path $env:LOCALAPPDATA 'Programs\nodejs\node.exe')
+        (Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe')
+    ) | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
+}
+$comandoPnpm = Get-Command 'pnpm.cmd' -ErrorAction SilentlyContinue
+$ejecutablePnpm = if ($null -ne $comandoPnpm) {
+    $comandoPnpm.Source
+}
+else {
+    @(
+        (Join-Path $env:APPDATA 'npm\pnpm.cmd')
+        (Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.cmd')
+    ) | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
+}
 $archivoCertificados = @(
     'C:\Program Files\Git\mingw64\etc\ssl\certs\ca-bundle.crt'
     'C:\Program Files\Git\usr\ssl\certs\ca-bundle.crt'
@@ -212,12 +232,19 @@ function Invoke-ComandoAplicacion {
 }
 
 function Build-Interfaz {
-    if (-not (Test-Path -LiteralPath $ejecutablePnpm)) {
+    if ([string]::IsNullOrWhiteSpace($ejecutableNode) -or -not (Test-Path -LiteralPath $ejecutableNode)) {
+        throw 'No se encontro Node.js. Instala Node.js 20.19 o superior y vuelve a iniciar el sistema.'
+    }
+
+    if ([string]::IsNullOrWhiteSpace($ejecutablePnpm) -or -not (Test-Path -LiteralPath $ejecutablePnpm)) {
         Write-Registro 'No se encontro pnpm; se conservara la ultima compilacion disponible.'
 
         return
     }
 
+    $rutaEntornoOriginal = $env:PATH
+    $directorioNode = Split-Path -Parent $ejecutableNode
+    $env:PATH = "$directorioNode;$rutaEntornoOriginal"
     Push-Location $directorioAplicacion
 
     try {
@@ -250,6 +277,7 @@ function Build-Interfaz {
     }
     finally {
         Pop-Location
+        $env:PATH = $rutaEntornoOriginal
     }
 }
 
@@ -386,7 +414,8 @@ if ($Validar) {
         Aplicacion = $directorioAplicacion
         Php = Test-Path -LiteralPath $ejecutablePhp
         MariaDb = $null -ne $herramientasMariaDb
-        Pnpm = Test-Path -LiteralPath $ejecutablePnpm
+        Node = (-not [string]::IsNullOrWhiteSpace($ejecutableNode)) -and (Test-Path -LiteralPath $ejecutableNode)
+        Pnpm = (-not [string]::IsNullOrWhiteSpace($ejecutablePnpm)) -and (Test-Path -LiteralPath $ejecutablePnpm)
         LauncherValido = (Test-Path -LiteralPath $ejecutablePhp) -and ($null -ne $herramientasMariaDb)
     } | ConvertTo-Json
 

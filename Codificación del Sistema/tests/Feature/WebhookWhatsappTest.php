@@ -118,7 +118,7 @@ class WebhookWhatsappTest extends TestCase
         $this->assertStringContainsString('3. Registrar un reclamo', $mensajes[1]->contenido);
         $this->assertStringContainsString('4. Solicitar atención humana', $mensajes[1]->contenido);
 
-        Http::assertSent(fn (Request $solicitud): bool => $solicitud['to'] === '5493704123456'
+        Http::assertSent(fn (Request $solicitud): bool => $solicitud['to'] === '543704123456'
             && str_contains($solicitud['text']['body'], '1. Consultar estado de cuenta')
             && str_contains($solicitud['text']['body'], '4. Solicitar atención humana'));
     }
@@ -161,7 +161,7 @@ class WebhookWhatsappTest extends TestCase
         $this->assertSame('esperando_documento', $conversacion->estado_flujo->value);
         $this->assertSame(2, Mensaje::count());
         $this->assertSame(0, Cliente::count());
-        Http::assertSent(fn (Request $solicitud): bool => $solicitud['to'] === '5493704123456'
+        Http::assertSent(fn (Request $solicitud): bool => $solicitud['to'] === '543704123456'
             && str_contains($solicitud['text']['body'], 'Escribí tu DNI'));
     }
 
