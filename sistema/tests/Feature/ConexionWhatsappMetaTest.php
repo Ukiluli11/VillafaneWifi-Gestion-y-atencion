@@ -63,6 +63,30 @@ class ConexionWhatsappMetaTest extends TestCase
         ])->expectsOutputToContain('wamid.prueba-real')->assertSuccessful();
 
         Http::assertSent(fn (Request $solicitud): bool => str_ends_with($solicitud->url(), '/messages')
-            && $solicitud['to'] === '5493704111111');
+            && $solicitud['to'] === '543704111111');
+    }
+
+    public function test_conserva_sin_cambios_un_destino_que_no_es_movil_argentino(): void
+    {
+        Http::fake(function (Request $solicitud) {
+            if (str_ends_with($solicitud->url(), '/messages')) {
+                return Http::response(['messages' => [['id' => 'wamid.internacional']]]);
+            }
+
+            return Http::response([
+                'id' => '123456789',
+                'display_phone_number' => '+1 555 000 0000',
+                'verified_name' => 'Número de prueba',
+                'quality_rating' => 'GREEN',
+            ]);
+        });
+
+        $this->artisan('whatsapp:probar-conexion', [
+            'numero' => '+1 555 123 4567',
+            '--enviar' => true,
+        ])->assertSuccessful();
+
+        Http::assertSent(fn (Request $solicitud): bool => str_ends_with($solicitud->url(), '/messages')
+            && $solicitud['to'] === '15551234567');
     }
 }

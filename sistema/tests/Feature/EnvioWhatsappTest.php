@@ -56,7 +56,7 @@ class EnvioWhatsappTest extends TestCase
         Http::assertSent(function (Request $solicitud): bool {
             return $solicitud->url() === 'https://graph.facebook.com/v23.0/123456789/messages'
                 && $solicitud->hasHeader('Authorization', 'Bearer token-de-prueba')
-                && $solicitud['to'] === '5493704123456'
+                && $solicitud['to'] === '543704123456'
                 && $solicitud['text']['body'] === 'Hola, soy el asistente virtual de Villafañe Wifi.';
         });
     }

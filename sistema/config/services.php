@@ -45,6 +45,7 @@ return [
         'token_acceso' => env('WHATSAPP_TOKEN_ACCESO'),
         'id_numero_telefono' => env('WHATSAPP_ID_NUMERO_TELEFONO'),
         'version_api' => env('WHATSAPP_VERSION_API', 'v23.0'),
+        'certificado_ca' => env('WHATSAPP_CERTIFICADO_CA'),
     ],
 
     'gemini' => [

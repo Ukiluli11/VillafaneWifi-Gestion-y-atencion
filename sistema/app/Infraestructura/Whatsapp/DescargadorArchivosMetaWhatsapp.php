@@ -83,9 +83,23 @@ class DescargadorArchivosMetaWhatsapp implements DescargadorArchivosWhatsapp
 
     private function solicitud(string $token): PendingRequest
     {
-        return Http::acceptJson()
+        $solicitud = Http::acceptJson()
             ->withToken($token)
             ->timeout(20)
             ->retry(2, 250);
+
+        $rutaCertificado = trim((string) config('services.whatsapp.certificado_ca'));
+
+        if ($rutaCertificado !== '') {
+            if (! is_file($rutaCertificado)) {
+                throw ValidationException::withMessages([
+                    'whatsapp' => 'La ruta del certificado HTTPS de WhatsApp no existe.',
+                ]);
+            }
+
+            $solicitud->withOptions(['verify' => $rutaCertificado]);
+        }
+
+        return $solicitud;
     }
 }
