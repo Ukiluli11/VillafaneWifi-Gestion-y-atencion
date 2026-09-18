@@ -52,7 +52,27 @@ Las dependencias PHP se declaran en `sistema/composer.json` y las dependencias
 del frontend en `sistema/package.json`. Las carpetas `vendor` y `node_modules`
 no se guardan en Git: se reconstruyen durante la instalación.
 
-## Instalación
+## Inicio rápido con el launcher
+
+Desde la raíz del repositorio, hacé doble clic en el archivo:
+
+```text
+Iniciar Villafane Wifi.bat
+```
+
+El launcher prepara la configuración local, inicia MariaDB, aplica las
+migraciones, carga los datos de demostración, compila la interfaz y abre el
+panel. También puede iniciarse directamente con PowerShell:
+
+```powershell
+powershell -ExecutionPolicy Bypass -STA -File sistema\tools\windows\launcher-villafane.ps1
+```
+
+El panel queda disponible en `http://127.0.0.1:8000/iniciar-sesion`.
+La primera preparación crea el usuario `admin` con la contraseña local
+`Villafane2026!`; debe cambiarse antes de cualquier despliegue real.
+
+## Instalación manual
 
 ### 1. Clonar el repositorio
 

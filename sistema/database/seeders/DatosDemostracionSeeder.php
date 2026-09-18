@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Dominio\ServicioConsultaCuentaWhatsapp;
 use App\Enums\EstadoCuota;
+use App\Models\AvisoVencimiento;
 use App\Models\Cliente;
 use App\Models\Comprobante;
 use App\Models\Conversacion;
@@ -13,6 +14,7 @@ use App\Models\Mensaje;
 use App\Models\Pago;
 use App\Models\Plan;
 use App\Models\Servicio;
+use App\Models\Ticket;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -32,6 +34,8 @@ class DatosDemostracionSeeder extends Seeder
 
             $this->crearCuotasYPagos($servicios, $cuentas);
             $this->crearConversaciones($clientes);
+            $this->crearReclamos($clientes, $servicios);
+            $this->crearAvisosVencimiento($clientes, $servicios);
         });
     }
 
@@ -206,7 +210,8 @@ class DatosDemostracionSeeder extends Seeder
             [
                 'cliente' => $clientes['ana'],
                 'inicio' => '2026-09-10 09:15:00',
-                'estado' => 'abierta',
+                'estado' => 'cerrada',
+                'cierre' => '2026-09-10 09:16:00',
                 'mensajes' => [
                     ['wamid.demo.ana.1', '2026-09-10 09:15:00', 'cliente', 'Hola, quiero consultar mi cuenta', 'recibido'],
                     ['wamid.demo.ana.2', '2026-09-10 09:15:03', 'bot', "Hola, Ana Gómez. Te atiende el servicio virtual de Villafañe Wifi.\n\n{$menu}", 'entregado'],
@@ -227,7 +232,8 @@ class DatosDemostracionSeeder extends Seeder
             [
                 'cliente' => $clientes['roberto'],
                 'inicio' => '2026-09-12 11:20:00',
-                'estado' => 'abierta',
+                'estado' => 'cerrada',
+                'cierre' => '2026-09-12 11:22:00',
                 'mensajes' => [
                     ['wamid.demo.roberto.1', '2026-09-12 11:20:00', 'cliente', 'Buen día', 'recibido'],
                     ['wamid.demo.roberto.2', '2026-09-12 11:20:02', 'bot', "Hola, Roberto Díaz. Te atiende el servicio virtual de Villafañe Wifi.\n\n{$menu}", 'leido'],
@@ -248,7 +254,8 @@ class DatosDemostracionSeeder extends Seeder
             [
                 'cliente' => $clientes['marta'],
                 'inicio' => '2026-09-14 18:05:00',
-                'estado' => 'abierta',
+                'estado' => 'cerrada',
+                'cierre' => '2026-09-14 18:06:05',
                 'mensajes' => [
                     ['wamid.demo.marta.1', '2026-09-14 18:05:00', 'cliente', 'Hola, acabo de pagar', 'recibido'],
                     ['wamid.demo.marta.2', '2026-09-14 18:05:02', 'bot', "Hola, Marta Benítez. Te atiende el servicio virtual de Villafañe Wifi.\n\n{$menu}", 'leido'],
@@ -259,18 +266,21 @@ class DatosDemostracionSeeder extends Seeder
             [
                 'cliente' => $clientes['panaderia'],
                 'inicio' => '2026-09-15 07:50:00',
-                'estado' => 'abierta',
+                'estado' => 'escalada',
+                'modo_atencion' => 'usuario_interno',
                 'mensajes' => [
                     ['wamid.demo.panaderia.1', '2026-09-15 07:50:00', 'cliente', 'Hola', 'recibido'],
                     ['wamid.demo.panaderia.2', '2026-09-15 07:50:02', 'bot', "Hola, Panadería La Estación. Te atiende el servicio virtual de Villafañe Wifi.\n\n{$menu}", 'leido'],
                     ['wamid.demo.panaderia.3', '2026-09-15 07:51:00', 'cliente', 'menú', 'recibido'],
                     ['wamid.demo.panaderia.4', '2026-09-15 07:51:02', 'bot', $presentacionBot."Menú principal:\n".$menu, 'entregado'],
+                    ['wamid.demo.panaderia.5', '2026-09-15 07:52:00', 'cliente', '4', 'recibido'],
+                    ['wamid.demo.panaderia.6', '2026-09-15 07:52:02', 'bot', $presentacionBot.'Derivamos tu consulta al primer empleado disponible. La atención continuará por este mismo chat.', 'entregado'],
                 ],
             ],
         ];
 
         foreach ($ejemplos as $ejemplo) {
-            $conversacion = Conversacion::firstOrCreate(
+            $conversacion = Conversacion::updateOrCreate(
                 [
                     'id_cliente' => $ejemplo['cliente']->id_cliente,
                     'fecha_hora_inicio' => $ejemplo['inicio'],
@@ -279,7 +289,9 @@ class DatosDemostracionSeeder extends Seeder
                     'numero_whatsapp' => $ejemplo['cliente']->telefono_whatsapp,
                     'fecha_hora_cierre' => $ejemplo['cierre'] ?? null,
                     'estado' => $ejemplo['estado'],
-                    'modo_atencion' => 'bot',
+                    'modo_atencion' => $ejemplo['modo_atencion'] ?? 'bot',
+                    'estado_flujo' => 'menu',
+                    'intentos_intencion' => 0,
                 ],
             );
 
@@ -344,6 +356,174 @@ class DatosDemostracionSeeder extends Seeder
                     ],
                 );
             }
+        }
+
+        $registro = Conversacion::updateOrCreate(
+            ['numero_whatsapp' => '5493704000099', 'fecha_hora_inicio' => '2026-09-17 12:00:00'],
+            [
+                'id_cliente' => null,
+                'estado' => 'abierta',
+                'modo_atencion' => 'bot',
+                'estado_flujo' => 'esperando_nombre_registro',
+                'datos_registro' => ['tipo_documento' => 'DNI', 'numero_documento' => '35111222'],
+                'intentos_intencion' => 0,
+            ],
+        );
+        $mensajesRegistro = [
+            ['wamid.demo.registro.1', '2026-09-17 12:00:00', 'cliente', 'Hola, quiero contratar Internet', 'recibido'],
+            ['wamid.demo.registro.2', '2026-09-17 12:00:02', 'bot', $presentacionBot.'No encontramos un cliente asociado a este número. Escribí tu DNI para identificarte o comenzar el registro.', 'entregado'],
+            ['wamid.demo.registro.3', '2026-09-17 12:00:20', 'cliente', '35111222', 'recibido'],
+            ['wamid.demo.registro.4', '2026-09-17 12:00:22', 'bot', $presentacionBot.'Ese DNI no está registrado. Para darte de alta, escribí tu nombre y apellido completos.', 'entregado'],
+        ];
+        foreach ($mensajesRegistro as [$identificador, $fecha, $emisor, $contenido, $estado]) {
+            Mensaje::updateOrCreate(
+                ['id_mensaje_externo' => $identificador],
+                [
+                    'id_conversacion' => $registro->id_conversacion,
+                    'id_usuario' => null,
+                    'fecha_hora' => $fecha,
+                    'tipo' => 'texto',
+                    'contenido' => $contenido,
+                    'archivo_adjunto' => null,
+                    'tipo_emisor' => $emisor,
+                    'estado_envio' => $estado,
+                ],
+            );
+        }
+    }
+
+    /**
+     * Agrega reclamos técnicos y administrativos en distintos estados.
+     *
+     * @param  array<string, Cliente>  $clientes
+     * @param  array<string, Servicio>  $servicios
+     */
+    private function crearReclamos(array $clientes, array $servicios): void
+    {
+        $escenarios = [
+            [
+                'cliente' => $clientes['roberto'],
+                'servicio' => $servicios['roberto'],
+                'mensaje' => 'wamid.demo.roberto.reclamo',
+                'fecha' => '2026-09-12 11:25:00',
+                'tipo' => 'tecnico',
+                'descripcion' => 'La conexión se corta varias veces durante la tarde.',
+                'estado' => 'abierto',
+            ],
+            [
+                'cliente' => $clientes['norte'],
+                'servicio' => $servicios['norte'],
+                'mensaje' => 'wamid.demo.norte.reclamo',
+                'fecha' => '2026-09-13 08:36:00',
+                'tipo' => 'administrativo',
+                'descripcion' => 'Solicita revisar el estado suspendido del servicio.',
+                'estado' => 'resuelto',
+                'fecha_resolucion' => '2026-09-13 10:20:00',
+            ],
+        ];
+
+        foreach ($escenarios as $escenario) {
+            $conversacion = Conversacion::query()
+                ->where('id_cliente', $escenario['cliente']->id_cliente)
+                ->oldest('fecha_hora_inicio')
+                ->firstOrFail();
+            $mensaje = Mensaje::updateOrCreate(
+                ['id_mensaje_externo' => $escenario['mensaje']],
+                [
+                    'id_conversacion' => $conversacion->id_conversacion,
+                    'id_usuario' => null,
+                    'fecha_hora' => $escenario['fecha'],
+                    'tipo' => 'texto',
+                    'contenido' => $escenario['descripcion'],
+                    'archivo_adjunto' => null,
+                    'tipo_emisor' => 'cliente',
+                    'estado_envio' => 'recibido',
+                ],
+            );
+            Ticket::updateOrCreate(
+                [
+                    'id_conversacion' => $conversacion->id_conversacion,
+                    'id_servicio' => $escenario['servicio']->id_servicio,
+                    'descripcion' => $escenario['descripcion'],
+                ],
+                [
+                    'id_empleado' => null,
+                    'fecha_creacion' => $mensaje->fecha_hora,
+                    'tipo' => $escenario['tipo'],
+                    'estado' => $escenario['estado'],
+                    'fecha_resolucion' => $escenario['fecha_resolucion'] ?? null,
+                    'fecha_asignacion' => null,
+                ],
+            );
+        }
+    }
+
+    /**
+     * Crea un aviso próximo y otro vencido sin contactar servicios externos.
+     *
+     * @param  array<string, Cliente>  $clientes
+     * @param  array<string, Servicio>  $servicios
+     */
+    private function crearAvisosVencimiento(array $clientes, array $servicios): void
+    {
+        $periodo = CarbonImmutable::today()->format('Y-m');
+        $escenarios = [
+            [
+                'cliente' => $clientes['ana'],
+                'cuota' => Cuota::where('id_servicio', $servicios['ana']->id_servicio)->where('periodo', $periodo)->firstOrFail(),
+                'tipo' => 'vencido',
+                'identificador' => 'wamid.demo.aviso.ana',
+                'fecha' => '2026-09-17 09:00:00',
+                'contenido' => 'Hola. Te atiende el servicio virtual de Villafañe Wifi. La cuota del período actual se encuentra vencida y continúa pendiente.',
+            ],
+            [
+                'cliente' => $clientes['marta'],
+                'cuota' => Cuota::where('id_servicio', $servicios['marta']->id_servicio)->where('periodo', $periodo)->firstOrFail(),
+                'tipo' => 'proximo',
+                'identificador' => 'wamid.demo.aviso.marta',
+                'fecha' => '2026-09-17 09:05:00',
+                'contenido' => 'Hola. Te atiende el servicio virtual de Villafañe Wifi. Te recordamos que la cuota del período actual vence próximamente.',
+            ],
+        ];
+
+        foreach ($escenarios as $escenario) {
+            $mensaje = Mensaje::where('id_mensaje_externo', $escenario['identificador'])->first();
+            $conversacion = $mensaje?->conversacion;
+            if ($conversacion === null) {
+                $conversacion = Conversacion::create([
+                    'id_cliente' => $escenario['cliente']->id_cliente,
+                    'numero_whatsapp' => $escenario['cliente']->telefono_whatsapp,
+                    'fecha_hora_inicio' => $escenario['fecha'],
+                    'fecha_hora_cierre' => $escenario['fecha'],
+                    'estado' => 'cerrada',
+                    'modo_atencion' => 'bot',
+                    'estado_flujo' => 'menu',
+                    'intentos_intencion' => 0,
+                ]);
+                $mensaje = Mensaje::create([
+                    'id_conversacion' => $conversacion->id_conversacion,
+                    'id_usuario' => null,
+                    'id_mensaje_externo' => $escenario['identificador'],
+                    'fecha_hora' => $escenario['fecha'],
+                    'tipo' => 'texto',
+                    'contenido' => $escenario['contenido'],
+                    'archivo_adjunto' => null,
+                    'tipo_emisor' => 'bot',
+                    'estado_envio' => 'entregado',
+                ]);
+            }
+
+            AvisoVencimiento::updateOrCreate(
+                ['id_cuota' => $escenario['cuota']->id_cuota, 'tipo' => $escenario['tipo']],
+                [
+                    'id_conversacion' => $conversacion->id_conversacion,
+                    'id_mensaje' => $mensaje->id_mensaje,
+                    'estado' => 'enviado',
+                    'fecha_hora_ultimo_intento' => $escenario['fecha'],
+                    'fecha_hora_envio' => $escenario['fecha'],
+                    'detalle_error' => null,
+                ],
+            );
         }
     }
 }

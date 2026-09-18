@@ -26,7 +26,10 @@
         <tbody>
         @forelse ($conversaciones as $conversacion)
             <tr>
-                <td class="celda-principal"><strong>{{ $conversacion->cliente->nombre_razon_social }}</strong><small>{{ $conversacion->cliente->tipo_documento->value }} {{ $conversacion->cliente->numero_documento }}</small></td>
+                <td class="celda-principal">
+                    <strong>{{ $conversacion->cliente?->nombre_razon_social ?? 'Registro en curso' }}</strong>
+                    <small>{{ $conversacion->cliente ? $conversacion->cliente->tipo_documento->value.' '.$conversacion->cliente->numero_documento : 'Cliente aún no identificado' }}</small>
+                </td>
                 <td>{{ $conversacion->numero_whatsapp }}</td>
                 <td>{{ $conversacion->fecha_hora_inicio->format('d/m/Y H:i') }}</td>
                 <td>{{ $conversacion->modo_atencion->value === 'bot' ? 'Bot' : ($conversacion->usuarioAtencion?->nombre_usuario ?? 'Usuario interno') }}</td>

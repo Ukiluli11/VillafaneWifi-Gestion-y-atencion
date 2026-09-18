@@ -46,6 +46,8 @@ class ServicioConsultaConversaciones
         return $conversacion->load([
             'cliente',
             'usuarioAtencion',
+            'tickets.servicio',
+            'avisosVencimiento.cuota.servicio.plan',
             'mensajes' => fn ($consulta) => $consulta
                 ->with('usuario')
                 ->orderBy('fecha_hora')

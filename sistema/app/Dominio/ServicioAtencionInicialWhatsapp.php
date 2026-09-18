@@ -39,6 +39,16 @@ class ServicioAtencionInicialWhatsapp
         return $this->envio->enviarTextoDelBot($conversacion, $contenido);
     }
 
+    /** Confirma el alta y deja disponible el menú del bot. */
+    public function confirmarRegistro(Conversacion $conversacion, Cliente $cliente): Mensaje
+    {
+        $contenido = "El registro de {$cliente->nombre_razon_social} y la contratación del servicio se completaron correctamente.\n\n"
+            ."Ya podés usar estas opciones:\n"
+            .$this->crearMenu();
+
+        return $this->envio->enviarTextoDelBot($conversacion, $contenido);
+    }
+
     /**
      * Construye el menú desde el enumerado para mantener las opciones en un
      * único lugar y reutilizarlas cuando se interprete la respuesta.

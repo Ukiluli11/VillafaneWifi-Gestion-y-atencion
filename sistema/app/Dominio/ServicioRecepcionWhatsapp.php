@@ -2,8 +2,10 @@
 
 namespace App\Dominio;
 
+use App\Contratos\DescargadorArchivosWhatsapp;
 use App\Enums\EstadoEnvioMensaje;
 use App\Enums\EstadoFlujoWhatsapp;
+use App\Enums\ModoAtencion;
 use App\Enums\TipoMensaje;
 use App\Models\Cliente;
 use App\Models\Conversacion;
@@ -25,6 +27,9 @@ class ServicioRecepcionWhatsapp
         private readonly ServicioAtencionInicialWhatsapp $atencionInicial,
         private readonly ServicioMenuWhatsapp $menu,
         private readonly ServicioRegistroComprobanteWhatsapp $registroComprobante,
+        private readonly ServicioRegistroReclamoWhatsapp $registroReclamo,
+        private readonly ServicioRegistroClienteWhatsapp $registroCliente,
+        private readonly DescargadorArchivosWhatsapp $descargadorArchivos,
     ) {}
 
     /**
@@ -104,16 +109,21 @@ class ServicioRecepcionWhatsapp
             }
 
             $numeroWhatsapp = $this->normalizarTelefono((string) Arr::get($datosMensaje, 'from', ''));
-            $cliente = Cliente::query()->where('telefono_whatsapp', $numeroWhatsapp)->first();
-            if ($cliente === null) {
-                $resultado['clientes_no_identificados']++;
-                $this->responderNoIdentificado($numeroWhatsapp, $resultado);
-
+            $tipo = $this->obtenerTipoMensaje((string) Arr::get($datosMensaje, 'type', ''));
+            if ($tipo === null) {
                 continue;
             }
 
-            $tipo = $this->obtenerTipoMensaje((string) Arr::get($datosMensaje, 'type', ''));
-            if ($tipo === null) {
+            $cliente = Cliente::query()->where('telefono_whatsapp', $numeroWhatsapp)->first();
+            if ($cliente === null) {
+                $resultado['clientes_no_identificados']++;
+                $this->procesarClienteNoIdentificado(
+                    $numeroWhatsapp,
+                    $datosMensaje,
+                    $tipo,
+                    $resultado,
+                );
+
                 continue;
             }
 
@@ -130,14 +140,65 @@ class ServicioRecepcionWhatsapp
             if ($mensaje->wasRecentlyCreated) {
                 $resultado['mensajes_procesados']++;
             }
-            if ($esPrimerMensaje && $mensaje->wasRecentlyCreated) {
+            if ($mensaje->wasRecentlyCreated
+                && $conversacion->modo_atencion === ModoAtencion::UsuarioInterno) {
+                continue;
+            } elseif ($esPrimerMensaje && $mensaje->wasRecentlyCreated) {
                 $this->saludarIdentificado($conversacion, $cliente, $resultado);
             } elseif ($mensaje->wasRecentlyCreated
                 && $conversacion->estado_flujo === EstadoFlujoWhatsapp::EsperandoComprobante) {
                 $this->procesarComprobante($conversacion, $mensaje, $resultado);
+            } elseif ($mensaje->wasRecentlyCreated
+                && $conversacion->estado_flujo === EstadoFlujoWhatsapp::EsperandoDescripcionReclamo) {
+                $this->procesarReclamo($conversacion, $cliente, $mensaje, $resultado);
             } elseif ($mensaje->wasRecentlyCreated && $tipo === TipoMensaje::Texto) {
                 $this->responderSegunMenu($conversacion, $cliente, $mensaje->contenido, $resultado);
             }
+        }
+    }
+
+    /**
+     * Conserva el mensaje de un contacto desconocido y continúa su alta.
+     *
+     * @param  array<string, mixed>  $datosMensaje
+     * @param  array{mensajes_procesados: int, clientes_no_identificados: int, respuestas_enviadas: int, respuestas_fallidas: int, estados_actualizados: int}  $resultado
+     */
+    private function procesarClienteNoIdentificado(
+        string $numeroWhatsapp,
+        array $datosMensaje,
+        TipoMensaje $tipo,
+        array &$resultado,
+    ): void {
+        $conversacion = $this->conversaciones->obtenerOIniciarNoIdentificada($numeroWhatsapp);
+        $esPrimerMensaje = $conversacion->mensajes()->doesntExist();
+        $mensaje = $this->conversaciones->registrarEntrante(
+            $conversacion,
+            $tipo,
+            $this->obtenerContenido($datosMensaje, $tipo),
+            $this->obtenerReferenciaArchivo($datosMensaje, $tipo),
+            Arr::get($datosMensaje, 'id'),
+            $this->obtenerFechaHora(Arr::get($datosMensaje, 'timestamp')),
+        );
+
+        if (! $mensaje->wasRecentlyCreated) {
+            return;
+        }
+
+        $resultado['mensajes_procesados']++;
+        if ($conversacion->modo_atencion === ModoAtencion::UsuarioInterno) {
+            return;
+        }
+
+        try {
+            if ($esPrimerMensaje) {
+                $this->registroCliente->iniciar($conversacion);
+            } else {
+                $this->registroCliente->procesar($conversacion, $mensaje);
+            }
+            $resultado['respuestas_enviadas']++;
+        } catch (Throwable $error) {
+            report($error);
+            $resultado['respuestas_fallidas']++;
         }
     }
 
@@ -153,6 +214,26 @@ class ServicioRecepcionWhatsapp
     ): void {
         try {
             $this->registroComprobante->recibirComprobante($conversacion, $mensaje);
+            $resultado['respuestas_enviadas']++;
+        } catch (Throwable $error) {
+            report($error);
+            $resultado['respuestas_fallidas']++;
+        }
+    }
+
+    /**
+     * Continúa el reclamo cuando el bot espera la descripción del problema.
+     *
+     * @param  array{mensajes_procesados: int, clientes_no_identificados: int, respuestas_enviadas: int, respuestas_fallidas: int, estados_actualizados: int}  $resultado
+     */
+    private function procesarReclamo(
+        Conversacion $conversacion,
+        Cliente $cliente,
+        Mensaje $mensaje,
+        array &$resultado,
+    ): void {
+        try {
+            $this->registroReclamo->registrar($conversacion, $cliente, $mensaje);
             $resultado['respuestas_enviadas']++;
         } catch (Throwable $error) {
             report($error);
@@ -200,21 +281,6 @@ class ServicioRecepcionWhatsapp
     }
 
     /**
-     * Responde al número desconocido sin inventar un registro de cliente.
-     *
-     * @param  array{mensajes_procesados: int, clientes_no_identificados: int, respuestas_enviadas: int, respuestas_fallidas: int, estados_actualizados: int}  $resultado
-     */
-    private function responderNoIdentificado(string $numeroWhatsapp, array &$resultado): void
-    {
-        try {
-            $this->atencionInicial->informarClienteNoIdentificado($numeroWhatsapp);
-            $resultado['respuestas_enviadas']++;
-        } catch (Throwable) {
-            $resultado['respuestas_fallidas']++;
-        }
-    }
-
-    /**
      * Actualiza el seguimiento de los mensajes que fueron enviados por el sistema.
      *
      * @param  array<string, mixed>  $valor
@@ -238,10 +304,12 @@ class ServicioRecepcionWhatsapp
                 continue;
             }
 
-            $actualizados = Mensaje::query()
+            $mensaje = Mensaje::query()
                 ->where('id_mensaje_externo', Arr::get($datosEstado, 'id'))
-                ->update(['estado_envio' => $estado->value]);
-            $resultado['estados_actualizados'] += $actualizados;
+                ->first();
+            if ($mensaje?->actualizarEstadoDesdeMeta($estado)) {
+                $resultado['estados_actualizados']++;
+            }
         }
     }
 
@@ -293,7 +361,17 @@ class ServicioRecepcionWhatsapp
         };
         $identificador = Arr::get($mensaje, $campoProveedor.'.id');
 
-        return is_string($identificador) && $identificador !== '' ? 'meta-media:'.$identificador : null;
+        if (! is_string($identificador) || $identificador === '') {
+            return null;
+        }
+
+        try {
+            return $this->descargadorArchivos->descargar($identificador);
+        } catch (Throwable $error) {
+            report($error);
+
+            return 'meta-media:'.$identificador;
+        }
     }
 
     /**

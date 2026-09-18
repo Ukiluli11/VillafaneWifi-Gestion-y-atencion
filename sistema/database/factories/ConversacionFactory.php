@@ -22,6 +22,8 @@ class ConversacionFactory extends Factory
             'fecha_hora_cierre' => null,
             'estado' => 'abierta',
             'modo_atencion' => 'bot',
+            'intentos_intencion' => 0,
+            'datos_registro' => null,
             'inicio_atencion' => null,
             'fin_atencion' => null,
         ];

@@ -8,6 +8,7 @@ use Database\Factories\EmpleadoFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Empleado extends Model
 {
@@ -32,5 +33,11 @@ class Empleado extends Model
     public function usuario(): BelongsTo
     {
         return $this->belongsTo(Usuario::class, 'id_empleado', 'id_usuario');
+    }
+
+    /** Tickets que este empleado tomó para su atención. */
+    public function ticketsAsignados(): HasMany
+    {
+        return $this->hasMany(Ticket::class, 'id_empleado', 'id_empleado');
     }
 }

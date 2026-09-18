@@ -16,6 +16,7 @@ class ServicioRegistroComprobanteWhatsapp
 {
     public function __construct(
         private readonly ServicioEnvioWhatsapp $envioWhatsapp,
+        private readonly ServicioConversaciones $conversaciones,
     ) {}
 
     /**
@@ -56,10 +57,15 @@ class ServicioRegistroComprobanteWhatsapp
 
         $conversacion->update(['estado_flujo' => EstadoFlujoWhatsapp::Menu]);
 
-        return $this->envioWhatsapp->enviarTextoDelBot(
+        $respuesta = $this->envioWhatsapp->enviarTextoDelBot(
             $conversacion,
             "Recibimos tu comprobante correctamente. Quedó pendiente de validación.\n"
-            .'Te avisaremos por este medio cuando sea aprobado o si necesitamos que lo reenvíes.',
+            .'Te avisaremos por este medio cuando sea aprobado o si necesitamos que lo reenvíes. '
+            .'Esta conversación queda finalizada.',
         );
+
+        $this->conversaciones->cerrar($conversacion->refresh());
+
+        return $respuesta;
     }
 }

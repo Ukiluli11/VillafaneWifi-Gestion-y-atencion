@@ -20,6 +20,7 @@ class ServicioConsultaCuentaWhatsapp
         private readonly ServicioFacturacion $facturacion,
         private readonly ServicioCuentaCorriente $cuentaCorriente,
         private readonly ServicioEnvioWhatsapp $envio,
+        private readonly ServicioConversaciones $conversaciones,
     ) {}
 
     /** Actualiza la deuda y conserva la respuesta dentro de la conversación. */
@@ -27,10 +28,14 @@ class ServicioConsultaCuentaWhatsapp
     {
         $this->facturacion->actualizarEstadosVencidos();
 
-        return $this->envio->enviarTextoDelBot(
+        $mensaje = $this->envio->enviarTextoDelBot(
             $conversacion,
             $this->crearRespuesta($cliente),
         );
+
+        $this->conversaciones->cerrar($conversacion->refresh());
+
+        return $mensaje;
     }
 
     /** Construye un resumen legible de servicios, cuotas y vencimientos. */
@@ -56,7 +61,7 @@ class ServicioConsultaCuentaWhatsapp
         ];
 
         return implode("\n\n", $secciones)
-            ."\n\nPodés volver al menú escribiendo la palabra *menú*.";
+            ."\n\nLa consulta quedó finalizada. Si necesitás otra gestión, escribinos nuevamente.";
     }
 
     /** Enumera los servicios vigentes junto con el plan contratado. */

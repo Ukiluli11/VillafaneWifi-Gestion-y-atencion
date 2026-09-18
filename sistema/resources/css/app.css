@@ -38,7 +38,7 @@
 * { box-sizing: border-box; }
 html { min-height: 100%; }
 body { min-height: 100vh; margin: 0; background: var(--fondo); }
-button, input, select { font: inherit; }
+button, input, select, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 a { color: var(--verde-700); }
 
@@ -156,9 +156,10 @@ td { font-size: .86rem; }
 .formulario.fila { display: flex; flex-flow: row wrap; align-items: flex-end; }
 .formulario label { display: flex; min-width: 0; flex-direction: column; gap: 7px; color: #425a53; font-size: .78rem; font-weight: 750; }
 .formulario .ancho { grid-column: 1 / -1; }
-input, select { min-height: 44px; padding: 10px 12px; border: 1px solid #bed0c9; border-radius: 10px; color: var(--texto); background: #fff; transition: border .15s, box-shadow .15s; }
+input, select, textarea { min-height: 44px; padding: 10px 12px; border: 1px solid #bed0c9; border-radius: 10px; color: var(--texto); background: #fff; transition: border .15s, box-shadow .15s; }
+textarea { width: 100%; resize: vertical; }
 input::placeholder { color: #9aa9a4; }
-input:focus, select:focus { border-color: var(--verde-500); outline: 0; box-shadow: 0 0 0 4px rgba(33,168,117,.12); }
+input:focus, select:focus, textarea:focus { border-color: var(--verde-500); outline: 0; box-shadow: 0 0 0 4px rgba(33,168,117,.12); }
 input[type="checkbox"] { width: 17px; min-height: 17px; accent-color: var(--verde-600); }
 button, .boton { display: inline-flex; min-height: 43px; align-items: center; justify-content: center; gap: 8px; padding: 9px 17px; border: 1px solid transparent; border-radius: 10px; color: #fff; background: var(--verde-600); font-weight: 780; text-decoration: none; cursor: pointer; transition: background .16s, transform .16s, box-shadow .16s; }
 button:hover, .boton:hover { background: var(--verde-700); box-shadow: 0 7px 18px rgba(22,132,94,.16); transform: translateY(-1px); }
@@ -173,14 +174,17 @@ button:hover, .boton:hover { background: var(--verde-700); box-shadow: 0 7px 18p
 .estado { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 999px; color: #4d615b; background: #e9efed; font-size: .72rem; font-weight: 750; }
 .estado::before { width: 6px; height: 6px; border-radius: 50%; background: currentColor; content: ""; opacity: .7; }
 .estado.activo, .estado.activa, .estado.pagada { color: #12643f; background: #dff5e8; }
+.estado.enviado { color: #12643f; background: #dff5e8; }
 .estado.abierta { color: #12643f; background: #dff5e8; }
 .estado.escalada { color: #825f08; background: #fff1c9; }
 .estado.cerrada { color: #52635e; background: #e9efed; }
 .estado.suspendido, .estado.pendiente { color: #825f08; background: #fff1c9; }
 .estado.baja, .estado.inactivo, .estado.inactiva, .estado.vencida { color: #923c3c; background: #f8e2e2; }
+.estado.fallido { color: #923c3c; background: #f8e2e2; }
 .alerta { margin-bottom: 20px; padding: 14px 17px; border: 1px solid; border-radius: 12px; }
 .alerta.exito { border-color: #b7e1cc; color: #12633f; background: #e4f6ed; }
 .alerta.error { border-color: #efc9c9; color: #842d2d; background: #fceaea; }
+.alerta.informacion { border-color: #b9d9cc; color: #235c49; background: #edf8f3; }
 .alerta ul { margin: 6px 0 0; padding-left: 20px; }
 dl { display: grid; grid-template-columns: 150px 1fr; gap: 10px 18px; }
 dt { color: #61756e; font-weight: 750; }
@@ -202,6 +206,8 @@ dd { margin: 0; }
 .mensaje-chat p { margin: 7px 0 4px; white-space: normal; }
 .archivo-mensaje { display: block; margin-top: 7px; color: var(--verde-700); overflow-wrap: anywhere; }
 .estado-envio { display: block; margin-top: 6px; color: var(--texto-suave); font-size: .63rem; text-align: right; }
+.panel-atencion-humana { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.panel-atencion-humana p { margin: 7px 0 0; color: var(--texto-suave); }
 
 .pagina-acceso { position: relative; display: grid; min-height: 100vh; place-items: center; overflow: hidden; padding: 28px; background: radial-gradient(circle at 15% 20%, rgba(64,190,132,.24), transparent 30%), radial-gradient(circle at 85% 80%, rgba(25,109,86,.18), transparent 32%), linear-gradient(145deg, #eef8f4, #f8faf9); }
 .pagina-acceso::before { position: absolute; top: -90px; right: -70px; width: 300px; height: 300px; border: 70px solid rgba(23,107,85,.06); border-radius: 50%; content: ""; }
@@ -232,7 +238,8 @@ nav[aria-label="Paginación"] span, nav[aria-label="Paginación"] a { border-col
 :root[data-tema="oscuro"] td { border-bottom-color: #2a3b35; }
 :root[data-tema="oscuro"] tbody tr:hover { background: #1a2824; }
 :root[data-tema="oscuro"] input,
-:root[data-tema="oscuro"] select { color: var(--texto); background: #111c18; }
+:root[data-tema="oscuro"] select,
+:root[data-tema="oscuro"] textarea { color: var(--texto); background: #111c18; }
 :root[data-tema="oscuro"] .boton.secundario { color: #c9ddd5; background: #20312b; }
 :root[data-tema="oscuro"] .boton.secundario:hover { background: #293d36; }
 :root[data-tema="oscuro"] .mensaje-chat { background: #1b2925; }
@@ -302,6 +309,7 @@ nav[aria-label="Paginación"] span, nav[aria-label="Paginación"] a { border-col
     .filtros-conversaciones select { width: 100%; }
     .resumen-conversacion { grid-template-columns: 1fr; }
     .mensaje-chat { width: 92%; }
+    .panel-atencion-humana { align-items: stretch; flex-direction: column; }
     .tarjeta { padding: 20px; border-radius: 15px; }
     .acceso { padding: 28px 23px; }
     dl { grid-template-columns: 1fr; gap: 3px; }

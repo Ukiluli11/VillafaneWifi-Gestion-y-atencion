@@ -14,6 +14,28 @@ use RuntimeException;
 class ClienteMetaWhatsapp implements PuertaEnlaceWhatsapp
 {
     /**
+     * Consulta el número configurado para validar token, permisos y activo.
+     *
+     * @return array{id: string, display_phone_number: string, verified_name: string, quality_rating: string|null}
+     */
+    public function consultarNumeroConfigurado(): array
+    {
+        $configuracion = $this->configuracion();
+        $respuesta = $this->solicitud($configuracion['token'])->get(
+            "{$configuracion['url']}/{$configuracion['version']}/{$configuracion['id_numero']}",
+            ['fields' => 'id,display_phone_number,verified_name,quality_rating'],
+        );
+        $respuesta->throw();
+
+        return [
+            'id' => (string) $respuesta->json('id'),
+            'display_phone_number' => (string) $respuesta->json('display_phone_number'),
+            'verified_name' => (string) $respuesta->json('verified_name'),
+            'quality_rating' => $respuesta->json('quality_rating'),
+        ];
+    }
+
+    /**
      * Envía texto plano al número indicado y devuelve el ID externo del mensaje.
      */
     public function enviarTexto(string $numeroDestino, string $contenido): string
@@ -25,19 +47,10 @@ class ClienteMetaWhatsapp implements PuertaEnlaceWhatsapp
             ]);
         }
 
-        $token = (string) config('services.whatsapp.token_acceso');
-        $idNumeroTelefono = (string) config('services.whatsapp.id_numero_telefono');
-        $version = (string) config('services.whatsapp.version_api');
-        $urlBase = rtrim((string) config('services.whatsapp.url_base'), '/');
+        $configuracion = $this->configuracion();
 
-        if ($token === '' || $idNumeroTelefono === '' || $version === '' || $urlBase === '') {
-            throw ValidationException::withMessages([
-                'whatsapp' => 'Falta completar la configuración para enviar mensajes por WhatsApp.',
-            ]);
-        }
-
-        $respuesta = $this->solicitud($token)->post(
-            "{$urlBase}/{$version}/{$idNumeroTelefono}/messages",
+        $respuesta = $this->solicitud($configuracion['token'])->post(
+            "{$configuracion['url']}/{$configuracion['version']}/{$configuracion['id_numero']}/messages",
             [
                 'messaging_product' => 'whatsapp',
                 'recipient_type' => 'individual',
@@ -58,6 +71,28 @@ class ClienteMetaWhatsapp implements PuertaEnlaceWhatsapp
         }
 
         return $identificador;
+    }
+
+    /** @return array{token: string, id_numero: string, version: string, url: string} */
+    private function configuracion(): array
+    {
+        $token = (string) config('services.whatsapp.token_acceso');
+        $idNumero = (string) config('services.whatsapp.id_numero_telefono');
+        $version = (string) config('services.whatsapp.version_api');
+        $url = rtrim((string) config('services.whatsapp.url_base'), '/');
+
+        if ($token === '' || $idNumero === '' || $version === '' || $url === '') {
+            throw ValidationException::withMessages([
+                'whatsapp' => 'Falta completar la configuración para conectar con WhatsApp.',
+            ]);
+        }
+
+        return [
+            'token' => $token,
+            'id_numero' => $idNumero,
+            'version' => $version,
+            'url' => $url,
+        ];
     }
 
     /**

@@ -7,6 +7,7 @@ use Database\Factories\CuotaFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cuota extends Model
 {
@@ -44,6 +45,12 @@ class Cuota extends Model
     public function pago(): BelongsTo
     {
         return $this->belongsTo(Pago::class, 'id_pago', 'id_pago');
+    }
+
+    /** Avisos automáticos enviados por el vencimiento de esta cuota. */
+    public function avisosVencimiento(): HasMany
+    {
+        return $this->hasMany(AvisoVencimiento::class, 'id_cuota', 'id_cuota');
     }
 
     public function marcarComoPagada(Pago $pago): void

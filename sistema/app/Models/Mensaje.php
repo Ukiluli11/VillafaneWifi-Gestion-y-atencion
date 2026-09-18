@@ -66,4 +66,18 @@ class Mensaje extends Model
     {
         $this->update(['estado_envio' => EstadoEnvioMensaje::Fallido]);
     }
+
+    /** Aplica un estado de Meta solamente cuando representa un avance real. */
+    public function actualizarEstadoDesdeMeta(EstadoEnvioMensaje $nuevoEstado): bool
+    {
+        if ($this->estado_envio === $nuevoEstado
+            || $this->estado_envio === EstadoEnvioMensaje::Fallido
+            || $nuevoEstado->ordenSeguimiento() <= $this->estado_envio->ordenSeguimiento()) {
+            return false;
+        }
+
+        $this->update(['estado_envio' => $nuevoEstado]);
+
+        return true;
+    }
 }

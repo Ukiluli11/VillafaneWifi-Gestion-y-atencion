@@ -24,13 +24,15 @@ class Conversacion extends Model
 
     protected $fillable = [
         'id_cliente', 'id_usuario_atencion', 'numero_whatsapp', 'fecha_hora_inicio',
-        'fecha_hora_cierre', 'estado', 'modo_atencion', 'estado_flujo', 'inicio_atencion', 'fin_atencion',
+        'fecha_hora_cierre', 'estado', 'modo_atencion', 'estado_flujo', 'intentos_intencion',
+        'datos_registro', 'inicio_atencion', 'fin_atencion',
     ];
 
     protected $attributes = [
         'estado' => 'abierta',
         'modo_atencion' => 'bot',
         'estado_flujo' => 'menu',
+        'intentos_intencion' => 0,
     ];
 
     protected function casts(): array
@@ -39,6 +41,8 @@ class Conversacion extends Model
             'estado' => EstadoConversacion::class,
             'modo_atencion' => ModoAtencion::class,
             'estado_flujo' => EstadoFlujoWhatsapp::class,
+            'intentos_intencion' => 'integer',
+            'datos_registro' => 'array',
             'fecha_hora_inicio' => 'datetime',
             'fecha_hora_cierre' => 'datetime',
             'inicio_atencion' => 'datetime',
@@ -59,6 +63,18 @@ class Conversacion extends Model
     public function mensajes(): HasMany
     {
         return $this->hasMany(Mensaje::class, 'id_conversacion', 'id_conversacion');
+    }
+
+    /** Tickets generados a partir de esta conversación. */
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class, 'id_conversacion', 'id_conversacion');
+    }
+
+    /** Avisos de vencimiento documentados mediante esta conversación. */
+    public function avisosVencimiento(): HasMany
+    {
+        return $this->hasMany(AvisoVencimiento::class, 'id_conversacion', 'id_conversacion');
     }
 
     public function estaActiva(): bool

@@ -17,6 +17,10 @@ class ServicioMenuWhatsapp
         private readonly ServicioConsultaCuentaWhatsapp $consultaCuenta,
         private readonly ServicioAtencionInicialWhatsapp $atencionInicial,
         private readonly ServicioRegistroComprobanteWhatsapp $registroComprobante,
+        private readonly ServicioRegistroReclamoWhatsapp $registroReclamo,
+        private readonly ServicioReconocimientoIntencionWhatsapp $reconocimientoIntencion,
+        private readonly ServicioEnvioWhatsapp $envioWhatsapp,
+        private readonly ServicioConversaciones $conversaciones,
     ) {}
 
     /**
@@ -27,15 +31,55 @@ class ServicioMenuWhatsapp
     {
         $textoNormalizado = Str::of((string) $contenido)->ascii()->lower()->squish()->toString();
         if ($textoNormalizado === 'menu') {
+            $this->conversaciones->reiniciarIntentosIntencion($conversacion);
+
             return $this->atencionInicial->mostrarMenu($conversacion);
         }
 
-        $opcion = OpcionMenuWhatsapp::desdeMensaje($contenido);
+        $resultado = $this->reconocimientoIntencion->reconocer($contenido);
+        $opcion = $resultado->intencion->opcionMenu();
+        if ($opcion === null) {
+            return $this->responderIntencionNoReconocida($conversacion);
+        }
+
+        $this->conversaciones->reiniciarIntentosIntencion($conversacion);
 
         return match ($opcion) {
             OpcionMenuWhatsapp::ConsultarEstadoCuenta => $this->consultaCuenta->responder($conversacion, $cliente),
             OpcionMenuWhatsapp::InformarPago => $this->registroComprobante->solicitarComprobante($conversacion),
-            default => null,
+            OpcionMenuWhatsapp::RegistrarReclamo => $this->registroReclamo->solicitarDescripcion($conversacion, $cliente),
+            OpcionMenuWhatsapp::SolicitarAtencionHumana => $this->derivarAAtencionHumana($conversacion),
         };
+    }
+
+    /** Solicita una reformulación y deriva en el segundo intento fallido. */
+    private function responderIntencionNoReconocida(Conversacion $conversacion): Mensaje
+    {
+        $intentos = $this->conversaciones->registrarIntentoIntencionNoReconocida($conversacion);
+
+        if ($intentos === 1) {
+            return $this->envioWhatsapp->enviarTextoDelBot(
+                $conversacion,
+                'No logré identificar qué necesitás. Reformulá tu consulta o respondé con una opción del 1 al 4.',
+            );
+        }
+
+        return $this->derivarAAtencionHumana(
+            $conversacion,
+            'No pude identificar tu consulta después de dos intentos. '
+                .'La derivé a atención humana y el primer empleado disponible continuará por este chat.',
+        );
+    }
+
+    /** Informa la derivación antes de detener las respuestas automáticas. */
+    private function derivarAAtencionHumana(
+        Conversacion $conversacion,
+        string $mensaje = 'Derivamos tu conversación a atención humana. '
+            .'El primer empleado disponible continuará por este chat.',
+    ): Mensaje {
+        $respuesta = $this->envioWhatsapp->enviarTextoDelBot($conversacion, $mensaje);
+        $this->conversaciones->derivarAColaAtencion($conversacion->refresh());
+
+        return $respuesta;
     }
 }

@@ -8,6 +8,7 @@ use App\Enums\TipoEmisorMensaje;
 use App\Enums\TipoMensaje;
 use App\Models\Conversacion;
 use App\Models\Mensaje;
+use App\Models\Usuario;
 use Throwable;
 
 /**
@@ -36,6 +37,41 @@ class ServicioEnvioWhatsapp
             TipoEmisorMensaje::Bot,
             TipoMensaje::Texto,
             $contenido,
+        );
+
+        try {
+            $identificadorExterno = $this->puertaEnlace->enviarTexto(
+                $conversacion->numero_whatsapp,
+                $contenido,
+            );
+
+            $mensaje->update([
+                'id_mensaje_externo' => $identificadorExterno,
+                'estado_envio' => EstadoEnvioMensaje::Enviado,
+            ]);
+        } catch (Throwable $error) {
+            $mensaje->marcarComoFallido();
+
+            throw $error;
+        }
+
+        return $mensaje->refresh();
+    }
+
+    /**
+     * Registra y envía una respuesta escrita por el usuario responsable.
+     */
+    public function enviarTextoDeUsuario(
+        Conversacion $conversacion,
+        Usuario $usuario,
+        string $contenido,
+    ): Mensaje {
+        $mensaje = $this->conversaciones->registrarSaliente(
+            $conversacion,
+            TipoEmisorMensaje::UsuarioInterno,
+            TipoMensaje::Texto,
+            $contenido,
+            usuario: $usuario,
         );
 
         try {

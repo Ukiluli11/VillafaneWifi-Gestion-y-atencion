@@ -57,6 +57,12 @@
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4zM8 9h8M8 12h5"/></svg>
                         <span>Conversaciones</span>
                     </a>
+                    @if (config('services.whatsapp.modo_simulacion') && $navegacionPermitida['gestionar_conversaciones'])
+                        <a class="enlace-navegacion {{ request()->routeIs('simulador-whatsapp.*') ? 'activo' : '' }}" href="{{ route('simulador-whatsapp.create') }}">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 12h5M8 16h3"/></svg>
+                            <span>Simulador WhatsApp</span>
+                        </a>
+                    @endif
                 @endif
 
                 @if ($navegacionPermitida['planes'] || $navegacionPermitida['cobranza'])

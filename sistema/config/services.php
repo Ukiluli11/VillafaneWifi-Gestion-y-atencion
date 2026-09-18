@@ -36,12 +36,22 @@ return [
     ],
 
     'whatsapp' => [
+        'modo_simulacion' => env('WHATSAPP_MODO_SIMULACION', env('APP_ENV', 'production') === 'local'),
+        'descargar_archivos' => env('WHATSAPP_DESCARGAR_ARCHIVOS', true),
+        'tamano_maximo_archivo_kb' => env('WHATSAPP_TAMANO_MAXIMO_ARCHIVO_KB', 10240),
         'url_base' => env('WHATSAPP_URL_BASE', 'https://graph.facebook.com'),
         'token_verificacion' => env('WHATSAPP_TOKEN_VERIFICACION'),
         'secreto_aplicacion' => env('WHATSAPP_SECRETO_APLICACION'),
         'token_acceso' => env('WHATSAPP_TOKEN_ACCESO'),
         'id_numero_telefono' => env('WHATSAPP_ID_NUMERO_TELEFONO'),
         'version_api' => env('WHATSAPP_VERSION_API', 'v23.0'),
+    ],
+
+    'gemini' => [
+        'url_base' => env('GEMINI_URL_BASE', 'https://generativelanguage.googleapis.com'),
+        'clave_api' => env('GEMINI_API_KEY'),
+        'modelo' => env('GEMINI_MODEL', 'gemini-3.5-flash-lite'),
+        'umbral_confianza' => env('GEMINI_UMBRAL_CONFIANZA', 0.65),
     ],
 
 ];

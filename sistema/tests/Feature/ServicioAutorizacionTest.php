@@ -22,6 +22,7 @@ class ServicioAutorizacionTest extends TestCase
         return [
             'administración gestiona planes' => [AreaEmpleado::Administracion, AccionSistema::GestionarPlanes, true],
             'soporte consulta servicios' => [AreaEmpleado::Soporte, AccionSistema::ConsultarServicios, true],
+            'soporte gestiona conversaciones' => [AreaEmpleado::Soporte, AccionSistema::GestionarConversaciones, true],
             'soporte no gestiona clientes' => [AreaEmpleado::Soporte, AccionSistema::GestionarClientes, false],
             'atención consulta cuentas' => [AreaEmpleado::AtencionCliente, AccionSistema::ConsultarCuentas, true],
             'atención no gestiona pagos' => [AreaEmpleado::AtencionCliente, AccionSistema::GestionarPagos, false],

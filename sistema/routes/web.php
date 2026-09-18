@@ -11,6 +11,7 @@ use App\Http\Controllers\Web\InicioController;
 use App\Http\Controllers\Web\PagoController;
 use App\Http\Controllers\Web\PlanController;
 use App\Http\Controllers\Web\ServicioController;
+use App\Http\Controllers\Web\SimuladorWhatsappController;
 use App\Http\Controllers\Web\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -71,5 +72,17 @@ Route::middleware('auth')->group(function (): void {
     Route::middleware('accion:consultar_conversaciones')->group(function (): void {
         Route::get('/conversaciones', [ConversacionController::class, 'index'])->name('conversaciones.index');
         Route::get('/conversaciones/{conversacion}', [ConversacionController::class, 'show'])->name('conversaciones.show');
+    });
+    Route::middleware('accion:gestionar_conversaciones')->group(function (): void {
+        Route::get('/simulador-whatsapp', [SimuladorWhatsappController::class, 'create'])
+            ->name('simulador-whatsapp.create');
+        Route::post('/simulador-whatsapp', [SimuladorWhatsappController::class, 'store'])
+            ->name('simulador-whatsapp.store');
+        Route::post('/conversaciones/{conversacion}/tomar', [ConversacionController::class, 'tomar'])
+            ->name('conversaciones.tomar');
+        Route::post('/conversaciones/{conversacion}/respuestas', [ConversacionController::class, 'responder'])
+            ->name('conversaciones.responder');
+        Route::post('/conversaciones/{conversacion}/cerrar', [ConversacionController::class, 'cerrar'])
+            ->name('conversaciones.cerrar');
     });
 });
