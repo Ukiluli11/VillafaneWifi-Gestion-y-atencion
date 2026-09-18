@@ -1,0 +1,963 @@
+<mxfile host="Electron" agent="Codex" pages="2">
+  <diagram id="full" name="DER completo con atributos">
+    <mxGraphModel dx="5150" dy="7530" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="7000" pageHeight="4400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="full-entity-plan" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" value="PLAN" vertex="1">
+          <mxGeometry height="80" width="220" x="270" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="full-entity-servicio" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" value="SERVICIO" vertex="1">
+          <mxGeometry height="80" width="220" x="1410" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="full-entity-cliente" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" value="CLIENTE" vertex="1">
+          <mxGeometry height="80" width="220" x="2700" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="full-entity-conversacion" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" value="CONVERSACIÓN" vertex="1">
+          <mxGeometry height="80" width="220" x="4070" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="full-entity-usuario" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" value="USUARIO" vertex="1">
+          <mxGeometry height="80" width="220" x="6320" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="full-entity-empleado" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#2e7d32;strokeWidth=3;fontStyle=1;fontSize=18;" value="EMPLEADO" vertex="1">
+          <mxGeometry height="80" width="220" x="6080" y="-500" as="geometry" />
+        </mxCell>
+        <mxCell id="full-entity-administrador" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#2e7d32;strokeWidth=3;fontStyle=1;fontSize=18;" value="ADMINISTRADOR" vertex="1">
+          <mxGeometry height="80" width="220" x="6580" y="-500" as="geometry" />
+        </mxCell>
+        <mxCell id="full-entity-mensaje" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" value="MENSAJE" vertex="1">
+          <mxGeometry height="80" width="220" x="4070" y="1400" as="geometry" />
+        </mxCell>
+        <mxCell id="full-entity-cuota" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" value="CUOTA" vertex="1">
+          <mxGeometry height="80" width="220" x="1410" y="2560" as="geometry" />
+        </mxCell>
+        <mxCell id="full-entity-comprobante" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" value="COMPROBANTE" vertex="1">
+          <mxGeometry height="80" width="220" x="2700" y="2000" as="geometry" />
+        </mxCell>
+        <mxCell id="full-entity-pago" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" value="PAGO" vertex="1">
+          <mxGeometry height="80" width="220" x="4050" y="2560" as="geometry" />
+        </mxCell>
+        <mxCell id="full-entity-cuenta" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" value="CUENTA RECEPTORA" vertex="1">
+          <mxGeometry height="80" width="220" x="6090" y="2770" as="geometry" />
+        </mxCell>
+        <mxCell id="full-entity-ticket" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" value="TICKET" vertex="1">
+          <mxGeometry height="80" width="220" x="4060" y="3585" as="geometry" />
+        </mxCell>
+        <mxCell id="full-entity-nota" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" value="NOTA INTERNA" vertex="1">
+          <mxGeometry height="80" width="220" x="6500" y="3585" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-plan-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" value="ID plan" vertex="1">
+          <mxGeometry height="60" width="220" x="300" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-1" edge="1" parent="1" source="full-entity-plan" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-plan-0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-plan-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Nombre" vertex="1">
+          <mxGeometry height="60" width="220" x="40" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-2" edge="1" parent="1" source="full-entity-plan" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-plan-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-plan-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Velocidad" vertex="1">
+          <mxGeometry height="60" width="220" x="40" y="735" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-3" edge="1" parent="1" source="full-entity-plan" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-plan-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-plan-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Precio vigente" vertex="1">
+          <mxGeometry height="60" width="220" x="300" y="855" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-4" edge="1" parent="1" source="full-entity-plan" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-plan-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-plan-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Estado" vertex="1">
+          <mxGeometry height="60" width="220" x="555" y="735" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-5" edge="1" parent="1" source="full-entity-plan" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-plan-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-servicio-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" value="ID servicio" vertex="1">
+          <mxGeometry height="60" width="220" x="1440" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-6" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-servicio-0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-servicio-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Calle de instalación" vertex="1">
+          <mxGeometry height="60" width="220" x="1130" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-7" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-servicio-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-servicio-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Número de instalación" vertex="1">
+          <mxGeometry height="60" width="220" x="1140" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-8" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-servicio-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-servicio-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Localidad de instalación" vertex="1">
+          <mxGeometry height="60" width="220" x="1240" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-9" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-servicio-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-servicio-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;" value="Próximo vencimiento" vertex="1">
+          <mxGeometry height="60" width="220" x="1680" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-10" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-servicio-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-servicio-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Día de vencimiento" vertex="1">
+          <mxGeometry height="60" width="220" x="1690" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-11" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-servicio-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-servicio-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha de alta" vertex="1">
+          <mxGeometry height="60" width="220" x="1110" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-12" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-servicio-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-servicio-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="IP" vertex="1">
+          <mxGeometry height="60" width="220" x="1300" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-13" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-servicio-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-servicio-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="MAC" vertex="1">
+          <mxGeometry height="60" width="220" x="1540" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-14" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-servicio-8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-servicio-9" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Estado" vertex="1">
+          <mxGeometry height="60" width="220" x="1780" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-15" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-servicio-9" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cliente-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" value="ID cliente" vertex="1">
+          <mxGeometry height="60" width="220" x="2700" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-16" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cliente-0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cliente-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Tipo de documento" vertex="1">
+          <mxGeometry height="60" width="220" x="2440" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-17" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cliente-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cliente-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Número de documento" vertex="1">
+          <mxGeometry height="60" width="220" x="2470" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-18" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cliente-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cliente-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Nombre o razón social" vertex="1">
+          <mxGeometry height="60" width="220" x="2960" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-19" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cliente-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cliente-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Tipo de cliente" vertex="1">
+          <mxGeometry height="60" width="220" x="3190" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-20" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cliente-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-21" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="3170" y="581.0638297872341" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="full-attr-cliente-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Calle de contacto" vertex="1">
+          <mxGeometry height="60" width="220" x="2420" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-22" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cliente-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cliente-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Número de contacto" vertex="1">
+          <mxGeometry height="60" width="220" x="2570" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-23" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cliente-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cliente-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Localidad de contacto" vertex="1">
+          <mxGeometry height="60" width="220" x="2740" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-24" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cliente-8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cliente-9" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Estado" vertex="1">
+          <mxGeometry height="60" width="220" x="2960" y="855" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-25" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cliente-9" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-conversacion-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" value="ID conversación" vertex="1">
+          <mxGeometry height="60" width="220" x="4050" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-26" edge="1" parent="1" source="full-entity-conversacion" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-conversacion-0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-conversacion-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Número de WhatsApp" vertex="1">
+          <mxGeometry height="60" width="220" x="3810" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-27" edge="1" parent="1" source="full-entity-conversacion" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-conversacion-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-conversacion-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha y hora de inicio" vertex="1">
+          <mxGeometry height="60" width="220" x="4300" y="275" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-28" edge="1" parent="1" source="full-entity-conversacion" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-conversacion-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-conversacion-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha y hora de cierre" vertex="1">
+          <mxGeometry height="60" width="220" x="4410" y="405" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-29" edge="1" parent="1" source="full-entity-conversacion" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-conversacion-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-conversacion-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Estado" vertex="1">
+          <mxGeometry height="60" width="220" x="4250" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-30" edge="1" parent="1" source="full-entity-conversacion" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-conversacion-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-conversacion-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Modo de atención" vertex="1">
+          <mxGeometry height="60" width="220" x="3820" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-31" edge="1" parent="1" source="full-entity-conversacion" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-conversacion-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-usuario-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" value="ID usuario" vertex="1">
+          <mxGeometry height="60" width="220" x="6660" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-usuario-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Nombre de usuario" vertex="1">
+          <mxGeometry height="60" width="220" x="6010" y="225" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-33" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-usuario-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-usuario-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Credencial" vertex="1">
+          <mxGeometry height="60" width="220" x="6520" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-34" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-usuario-2" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="6540" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="full-attr-usuario-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Estado" vertex="1">
+          <mxGeometry height="60" width="220" x="6640" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-35" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-usuario-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-empleado-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Área" vertex="1">
+          <mxGeometry height="60" width="220" x="6080" y="-640" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-36" edge="1" parent="1" source="full-entity-empleado" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-empleado-0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-mensaje-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" value="ID mensaje" vertex="1">
+          <mxGeometry height="60" width="220" x="3890" y="1260" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-37" edge="1" parent="1" source="full-entity-mensaje" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-mensaje-0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-mensaje-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha y hora" vertex="1">
+          <mxGeometry height="60" width="220" x="3790" y="1350" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-38" edge="1" parent="1" source="full-entity-mensaje" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-mensaje-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-mensaje-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Tipo" vertex="1">
+          <mxGeometry height="60" width="220" x="4210" y="1240" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-39" edge="1" parent="1" source="full-entity-mensaje" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-mensaje-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-mensaje-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Contenido" vertex="1">
+          <mxGeometry height="60" width="220" x="4370" y="1340" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-40" edge="1" parent="1" source="full-entity-mensaje" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-mensaje-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-mensaje-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Archivo adjunto" vertex="1">
+          <mxGeometry height="60" width="220" x="4320" y="1510" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-41" edge="1" parent="1" source="full-entity-mensaje" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-mensaje-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-mensaje-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Tipo de emisor" vertex="1">
+          <mxGeometry height="60" width="220" x="3860" y="1510" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-42" edge="1" parent="1" source="full-entity-mensaje" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-mensaje-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-mensaje-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Estado de envío" vertex="1">
+          <mxGeometry height="60" width="220" x="4070" y="1560" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-43" edge="1" parent="1" source="full-entity-mensaje" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-mensaje-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cuota-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" value="ID cuota" vertex="1">
+          <mxGeometry height="60" width="220" x="1600" y="2420" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-44" edge="1" parent="1" source="full-entity-cuota" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cuota-0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cuota-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Período" vertex="1">
+          <mxGeometry height="60" width="220" x="1010" y="2570" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-45" edge="1" parent="1" source="full-entity-cuota" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cuota-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cuota-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Monto" vertex="1">
+          <mxGeometry height="60" width="220" x="1180" y="2420" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-46" edge="1" parent="1" source="full-entity-cuota" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cuota-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cuota-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha de emisión" vertex="1">
+          <mxGeometry height="60" width="220" x="1130" y="2660" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-47" edge="1" parent="1" source="full-entity-cuota" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cuota-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cuota-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha de vencimiento" vertex="1">
+          <mxGeometry height="60" width="220" x="1430" y="2730" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-48" edge="1" parent="1" source="full-entity-cuota" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cuota-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cuota-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Estado" vertex="1">
+          <mxGeometry height="60" width="220" x="1780" y="2495" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-49" edge="1" parent="1" source="full-entity-cuota" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cuota-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-comprobante-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" value="ID comprobante" vertex="1">
+          <mxGeometry height="60" width="220" x="2460" y="1840" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-50" edge="1" parent="1" source="full-entity-comprobante" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-comprobante-0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-comprobante-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Hash de archivo (único)" vertex="1">
+          <mxGeometry height="60" width="220" x="3010" y="1690" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-51" edge="1" parent="1" source="full-entity-comprobante" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-comprobante-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-comprobante-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha de recepción" vertex="1">
+          <mxGeometry height="60" width="220" x="3230" y="1840" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-52" edge="1" parent="1" source="full-entity-comprobante" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-comprobante-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-comprobante-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="N.º de operación" vertex="1">
+          <mxGeometry height="60" width="220" x="2280" y="2240" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-53" edge="1" parent="1" source="full-entity-comprobante" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-comprobante-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-comprobante-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Monto OCR" vertex="1">
+          <mxGeometry height="60" width="220" x="2535" y="2360" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-54" edge="1" parent="1" source="full-entity-comprobante" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-comprobante-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-comprobante-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha OCR" vertex="1">
+          <mxGeometry height="60" width="220" x="2810" y="2360" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-55" edge="1" parent="1" source="full-entity-comprobante" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-comprobante-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-comprobante-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Confianza OCR" vertex="1">
+          <mxGeometry height="60" width="220" x="3070" y="2300" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-56" edge="1" parent="1" source="full-entity-comprobante" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-comprobante-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-comprobante-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Estado de validación" vertex="1">
+          <mxGeometry height="60" width="220" x="3230" y="2160" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-57" edge="1" parent="1" source="full-entity-comprobante" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-comprobante-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-comprobante-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Motivo de rechazo" vertex="1">
+          <mxGeometry height="60" width="220" x="3180" y="1940" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-58" edge="1" parent="1" source="full-entity-comprobante" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-comprobante-8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-pago-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" value="ID pago" vertex="1">
+          <mxGeometry height="60" width="220" x="4330" y="2440" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-59" edge="1" parent="1" source="full-entity-pago" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-pago-0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-pago-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha" vertex="1">
+          <mxGeometry height="60" width="220" x="3810" y="2460" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-60" edge="1" parent="1" source="full-entity-pago" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-pago-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-pago-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Monto total" vertex="1">
+          <mxGeometry height="60" width="220" x="4150" y="2340" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-61" edge="1" parent="1" source="full-entity-pago" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-pago-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-pago-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Medio de pago" vertex="1">
+          <mxGeometry height="60" width="220" x="4340" y="2690" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-62" edge="1" parent="1" source="full-entity-pago" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-pago-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cuenta-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" value="ID cuenta" vertex="1">
+          <mxGeometry height="60" width="220" x="6170" y="2535" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-63" edge="1" parent="1" source="full-entity-cuenta" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cuenta-0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cuenta-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Nombre" vertex="1">
+          <mxGeometry height="60" width="220" x="6320" y="2670" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-64" edge="1" parent="1" source="full-entity-cuenta" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cuenta-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cuenta-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Tipo" vertex="1">
+          <mxGeometry height="60" width="220" x="5970" y="2570" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-65" edge="1" parent="1" source="full-entity-cuenta" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cuenta-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cuenta-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Identificador" vertex="1">
+          <mxGeometry height="60" width="220" x="6110" y="2920" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-66" edge="1" parent="1" source="full-entity-cuenta" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cuenta-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-cuenta-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Estado" vertex="1">
+          <mxGeometry height="60" width="220" x="5840" y="2660" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-67" edge="1" parent="1" source="full-entity-cuenta" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cuenta-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-ticket-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" value="ID ticket" vertex="1">
+          <mxGeometry height="60" width="220" x="3790" y="3480" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-68" edge="1" parent="1" source="full-entity-ticket" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-ticket-0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-ticket-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha de creación" vertex="1">
+          <mxGeometry height="60" width="220" x="3850" y="3350" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-69" edge="1" parent="1" source="full-entity-ticket" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-ticket-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-ticket-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Tipo" vertex="1">
+          <mxGeometry height="60" width="220" x="4240" y="3440" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-70" edge="1" parent="1" source="full-entity-ticket" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-ticket-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-ticket-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Descripción" vertex="1">
+          <mxGeometry height="60" width="220" x="3640" y="3770" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-71" edge="1" parent="1" source="full-entity-ticket" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-ticket-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-ticket-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Estado" vertex="1">
+          <mxGeometry height="60" width="220" x="4050" y="3850" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-72" edge="1" parent="1" source="full-entity-ticket" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-ticket-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-ticket-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha de resolución" vertex="1">
+          <mxGeometry height="60" width="220" x="4450" y="3770" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-73" edge="1" parent="1" source="full-entity-ticket" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-ticket-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-nota-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" value="ID nota" vertex="1">
+          <mxGeometry height="60" width="220" x="6360" y="3435" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-74" edge="1" parent="1" source="full-entity-nota" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-nota-0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-nota-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha y hora" vertex="1">
+          <mxGeometry height="60" width="220" x="6280" y="3495" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-75" edge="1" parent="1" source="full-entity-nota" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-nota-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-nota-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Contenido" vertex="1">
+          <mxGeometry height="60" width="220" x="6640" y="3440" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-76" edge="1" parent="1" source="full-entity-nota" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-nota-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-plan-servicio" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="SE ASIGNA A / TIENE ASIGNADO" vertex="1">
+          <mxGeometry height="110" width="240" x="875" y="595" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-77" edge="1" parent="1" source="full-entity-plan" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-plan-servicio" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-78" edge="1" parent="1" source="full-relation-plan-servicio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-servicio" value="N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-servicio-cliente" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ES CONTRATADO POR / CONTRATA" vertex="1">
+          <mxGeometry height="110" width="240" x="2080" y="595" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-79" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-servicio-cliente" value="N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-80" edge="1" parent="1" source="full-relation-servicio-cliente" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-cliente" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-cliente-conversacion" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="INICIA / ES INICIADA POR" vertex="1">
+          <mxGeometry height="110" width="240" x="3425" y="595" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-81" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-cliente-conversacion" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-82" edge="1" parent="1" source="full-relation-cliente-conversacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-conversacion" value="N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-servicio-cuota" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="GENERA / ES GENERADA POR" vertex="1">
+          <mxGeometry height="110" width="240" x="1400" y="1500" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-83" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-servicio-cuota" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-84" edge="1" parent="1" source="full-relation-servicio-cuota" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-cuota" value="N">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1530" y="2440" />
+              <mxPoint x="1530" y="2440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="full-relation-conversacion-mensaje" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="CONTIENE / PERTENECE A" vertex="1">
+          <mxGeometry height="110" width="240" x="4060" y="930" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-85" edge="1" parent="1" source="full-entity-conversacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-conversacion-mensaje" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-86" edge="1" parent="1" source="full-relation-conversacion-mensaje" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-mensaje" value="N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-usuario-mensaje" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ENVÍA / ES ENVIADO POR" vertex="1">
+          <mxGeometry height="110" width="240" x="5920" y="1445" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-87" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" target="full-relation-usuario-mensaje" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-88" edge="1" parent="1" source="full-relation-usuario-mensaje" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-mensaje" value="N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-mensaje-comprobante" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ADJUNTA / ES ADJUNTADO EN" vertex="1">
+          <mxGeometry height="110" width="240" x="2690" y="1385" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-89" edge="1" parent="1" source="full-entity-mensaje" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-mensaje-comprobante" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-90" edge="1" parent="1" source="full-relation-mensaje-comprobante" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-comprobante" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-comprobante-pago" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ORIGINA / SE ORIGINA EN" vertex="1">
+          <mxGeometry height="110" width="240" x="3410" y="2370" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-91" edge="1" parent="1" source="full-entity-comprobante" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-comprobante-pago" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-92" edge="1" parent="1" source="full-relation-comprobante-pago" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-pago" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-pago-cuota" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="CANCELA / ES CANCELADA POR" vertex="1">
+          <mxGeometry height="110" width="240" x="2650" y="2545" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-93" edge="1" parent="1" source="full-entity-pago" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-pago-cuota" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-94" edge="1" parent="1" source="full-relation-pago-cuota" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-cuota" value="N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-cuenta-pago" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="RECIBE / SE RECIBE EN" vertex="1">
+          <mxGeometry height="110" width="240" x="5590" y="2550" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-95" edge="1" parent="1" source="full-entity-cuenta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-cuenta-pago" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-96" edge="1" parent="1" source="full-relation-cuenta-pago" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-pago" value="N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-conversacion-ticket" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="GENERA / ES GENERADO EN" vertex="1">
+          <mxGeometry height="110" width="240" x="4500" y="2820" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-97" edge="1" parent="1" source="full-entity-conversacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-conversacion-ticket" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-98" edge="1" parent="1" source="full-relation-conversacion-ticket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-ticket" value="N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-servicio-ticket" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ES AFECTADO POR / AFECTA" vertex="1">
+          <mxGeometry height="110" width="240" x="2030" y="3190" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-99" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" target="full-relation-servicio-ticket" value="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1820" y="670" />
+              <mxPoint x="1820" y="760" />
+              <mxPoint x="2150" y="760" />
+              <mxPoint x="2150" y="3180" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-full-100" edge="1" parent="1" source="full-relation-servicio-ticket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="full-entity-ticket" value="N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-usuario-conversacion" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ATIENDE / ES ATENDIDA POR" vertex="1">
+          <mxGeometry height="110" width="240" x="5090" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-101" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.25;exitDx=0;exitDy=0;" target="full-relation-usuario-conversacion" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-102" edge="1" parent="1" source="full-relation-usuario-conversacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="full-entity-conversacion" value="N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-usuario-conversacion-attr-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Inicio de atención" vertex="1">
+          <mxGeometry height="54" width="190" x="4950" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-103" edge="1" parent="1" source="full-relation-usuario-conversacion" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="full-relation-usuario-conversacion-attr-0" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="5660.73419908028" y="613.6271061358584" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="full-relation-usuario-conversacion-attr-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fin de atención" vertex="1">
+          <mxGeometry height="54" width="190" x="5290" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-104" edge="1" parent="1" source="full-relation-usuario-conversacion" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-relation-usuario-conversacion-attr-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-usuario-comprobante" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="VALIDA / ES VALIDADO POR" vertex="1">
+          <mxGeometry height="110" width="240" x="5760" y="1960" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-105" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.75;exitDx=0;exitDy=0;" target="full-relation-usuario-comprobante" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-106" edge="1" parent="1" source="full-relation-usuario-comprobante" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="full-entity-comprobante" value="N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-usuario-comprobante-attr-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha y hora de validación" vertex="1">
+          <mxGeometry height="54" width="190" x="5590" y="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-107" edge="1" parent="1" source="full-relation-usuario-comprobante" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-relation-usuario-comprobante-attr-0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-usuario-ticket" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="GESTIONA / ES GESTIONADO POR" vertex="1">
+          <mxGeometry height="110" width="240" x="5420" y="2930" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-108" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" value="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="6520" y="405" as="sourcePoint" />
+            <mxPoint x="5540" y="2925" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-full-109" edge="1" parent="1" source="full-relation-usuario-ticket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="full-entity-ticket" value="N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-usuario-ticket-attr-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha de asignación" vertex="1">
+          <mxGeometry height="54" width="190" x="5245" y="3120" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-110" edge="1" parent="1" source="full-relation-usuario-ticket" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-relation-usuario-ticket-attr-0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-ticket-nota" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="CONTIENE / PERTENECE A" vertex="1">
+          <mxGeometry height="110" width="240" x="5680" y="3570" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-111" edge="1" parent="1" source="full-entity-ticket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-ticket-nota" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-112" edge="1" parent="1" source="full-relation-ticket-nota" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-nota" value="N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-usuario-nota" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="REDACTA / ES REDACTADA POR" vertex="1">
+          <mxGeometry height="110" width="240" x="6490" y="3010" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-113" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-usuario-nota" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-114" edge="1" parent="1" source="full-relation-usuario-nota" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-nota" value="N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-empleado-usuario" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ES" vertex="1">
+          <mxGeometry height="110" width="240" x="6070" y="-200" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-115" edge="1" parent="1" source="full-entity-empleado" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-empleado-usuario" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-116" edge="1" parent="1" source="full-relation-empleado-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="full-entity-usuario" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-administrador-usuario" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ES" vertex="1">
+          <mxGeometry height="110" width="240" x="6570" y="-200" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-117" edge="1" parent="1" source="full-entity-administrador" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-administrador-usuario" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-full-118" edge="1" parent="1" source="full-relation-administrador-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="full-entity-usuario" value="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontSize=25;" value="DER conceptual — Sistema de Gestión Villafañe Wifi" vertex="1">
+          <mxGeometry height="50" width="2000" x="2100" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="0Z_ZCfTyEGHBfO9qXr5i-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Numero deTeléfono" vertex="1">
+          <mxGeometry height="60" width="220" x="3170" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="0Z_ZCfTyEGHBfO9qXr5i-4" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="full-attr-usuario-0" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="6513" y="370" as="sourcePoint" />
+            <mxPoint x="6599" y="318" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="overview" name="Vista general de relaciones">
+    <mxGraphModel dx="2050" dy="1150" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2050" pageHeight="1150" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="overview-entity-plan" value="PLAN" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="40" y="90" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-entity-servicio" value="SERVICIO" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="270" y="90" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-entity-cliente" value="CLIENTE" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="510" y="90" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-entity-conversacion" value="CONVERSACIÓN" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="780" y="90" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-entity-mensaje" value="MENSAJE" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="90" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-entity-cuota" value="CUOTA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="270" y="390" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-entity-comprobante" value="COMPROBANTE" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="510" y="390" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-entity-pago" value="PAGO" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="780" y="390" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-entity-cuenta" value="CUENTA RECEPTORA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="390" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-entity-ticket" value="TICKET" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="780" y="720" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-entity-nota" value="NOTA INTERNA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="720" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-entity-usuario" value="USUARIO" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="1550" y="730" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-entity-empleado" value="EMPLEADO" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#2e7d32;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="470" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-entity-administrador" value="ADMINISTRADOR" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#2e7d32;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="1690" y="470" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-plan-servicio" value="SE ASIGNA A / TIENE ASIGNADO" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="92" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-1" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-plan" target="overview-relation-ov-plan-servicio">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-2" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-plan-servicio" target="overview-entity-servicio">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-servicio-cliente" value="ES CONTRATADO POR / CONTRATA" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="92" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-3" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-servicio" target="overview-relation-ov-servicio-cliente">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-4" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-servicio-cliente" target="overview-entity-cliente">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-cliente-conversacion" value="INICIA / ES INICIADA POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="92" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-5" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-cliente" target="overview-relation-ov-cliente-conversacion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-6" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-cliente-conversacion" target="overview-entity-conversacion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-conversacion-mensaje" value="CONTIENE / PERTENECE A" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="930" y="92" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-7" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-conversacion" target="overview-relation-ov-conversacion-mensaje">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-8" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-conversacion-mensaje" target="overview-entity-mensaje">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-servicio-cuota" value="GENERA / ES GENERADA POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="240" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-9" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-servicio" target="overview-relation-ov-servicio-cuota">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-10" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-servicio-cuota" target="overview-entity-cuota">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-mensaje-comprobante" value="ADJUNTA / ES ADJUNTADO EN" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="810" y="240" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-11" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-mensaje" target="overview-relation-ov-mensaje-comprobante">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-12" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-mensaje-comprobante" target="overview-entity-comprobante">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-comprobante-pago" value="ORIGINA / SE ORIGINA EN" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="392" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-13" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-comprobante" target="overview-relation-ov-comprobante-pago">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-14" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-comprobante-pago" target="overview-entity-pago">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-pago-cuota" value="CANCELA / ES CANCELADA POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="520" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-15" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-pago" target="overview-relation-ov-pago-cuota">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-16" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-pago-cuota" target="overview-entity-cuota">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-cuenta-pago" value="RECIBE / SE RECIBE EN" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="930" y="392" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-17" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-cuenta" target="overview-relation-ov-cuenta-pago">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-18" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-cuenta-pago" target="overview-entity-pago">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-conversacion-ticket" value="GENERA / ES GENERADO EN" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="570" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-19" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-conversacion" target="overview-relation-ov-conversacion-ticket">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-20" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-conversacion-ticket" target="overview-entity-ticket">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-servicio-ticket" value="ES AFECTADO POR / AFECTA" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="680" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-21" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-servicio" target="overview-relation-ov-servicio-ticket">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-22" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-servicio-ticket" target="overview-entity-ticket">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-usuario-mensaje" value="ENVÍA / ES ENVIADO POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="250" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-23" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-mensaje">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-24" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-mensaje" target="overview-entity-mensaje">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-usuario-conversacion" value="ATIENDE / ES ATENDIDA POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="120" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-25" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-conversacion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-26" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-conversacion" target="overview-entity-conversacion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-usuario-comprobante" value="VALIDA / ES VALIDADO POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="390" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-27" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-comprobante">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-28" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-comprobante" target="overview-entity-comprobante">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-usuario-ticket" value="GESTIONA / ES GESTIONADO POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="610" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-29" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-ticket">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-30" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-ticket" target="overview-entity-ticket">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-ticket-nota" value="CONTIENE / PERTENECE A" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="722" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-31" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-ticket" target="overview-relation-ov-ticket-nota">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-32" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-ticket-nota" target="overview-entity-nota">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-usuario-nota" value="REDACTA / ES REDACTADA POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="700" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-33" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-nota">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-34" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-nota" target="overview-entity-nota">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-empleado-usuario" value="ES" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="580" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-35" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-empleado" target="overview-relation-ov-empleado-usuario">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-36" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-empleado-usuario" target="overview-entity-usuario">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-ov-administrador-usuario" value="ES" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1690" y="580" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-37" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-administrador" target="overview-relation-ov-administrador-usuario">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-overview-38" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-administrador-usuario" target="overview-entity-usuario">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-specialization-label" value="Restricción: especialización total y disjunta" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1410" y="890" width="430" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-title" value="DER conceptual — Sistema de Gestión Villafañe Wifi" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontSize=25;" vertex="1" parent="1">
+          <mxGeometry x="400" y="10" width="900" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-note" value="Vista general. La primera página contiene todos los atributos." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#d97706;fontSize=13;align=left;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="950" width="500" height="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

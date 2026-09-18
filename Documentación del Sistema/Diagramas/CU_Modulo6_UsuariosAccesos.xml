@@ -1,0 +1,94 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram id="cu-modulo6" name="CU Módulo 6 - Usuarios y Accesos">
+    <mxGraphModel dx="1090" dy="704" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="text;html=1;strokeColor=#333;fillColor=#fafafa;align=center;verticalAlign=top;whiteSpace=wrap;overflow=hidden;fontStyle=1;fontSize=13;" value="Sistema de Gestión Villafañe Wifi — Módulo 6: Usuarios y Accesos" vertex="1">
+          <mxGeometry height="850" width="1200" x="195" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f0f0f0;strokeColor=#666666;" value="Iniciar sesión al sistema" vertex="1">
+          <mxGeometry height="65" width="200" x="540" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f0f0f0;strokeColor=#666666;" value="Cerrar sesión" vertex="1">
+          <mxGeometry height="65" width="200" x="940" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="5" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Registrar nuevo usuario" vertex="1">
+          <mxGeometry height="65" width="200" x="220" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="6" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Editar datos de usuario" vertex="1">
+          <mxGeometry height="65" width="200" x="890" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="7" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Listar usuarios del sistema" vertex="1">
+          <mxGeometry height="65" width="200" x="1180" y="668" as="geometry" />
+        </mxCell>
+        <mxCell id="8" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Asignar tipo de usuario y nivel de acceso" vertex="1">
+          <mxGeometry height="65" width="200" x="220" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="9" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Buscar usuario" vertex="1">
+          <mxGeometry height="65" width="200" x="680" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="10" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Desactivar usuario del sistema" vertex="1">
+          <mxGeometry height="65" width="200" x="1000" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="11" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Asignar área de trabajo" vertex="1">
+          <mxGeometry height="65" width="200" x="220" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="12" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Cambiar contraseña" vertex="1">
+          <mxGeometry height="65" width="200" x="630" y="255" as="geometry" />
+        </mxCell>
+        <mxCell id="13" parent="1" style="shape=umlActor;whiteSpace=wrap;html=1;verticalLabelPosition=bottom;verticalAlign=top;fontSize=12;fontStyle=1;fillColor=#f5f5f5;strokeColor=#333;" value="Empleado" vertex="1">
+          <mxGeometry height="75" width="55" x="50" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="14" parent="1" style="shape=umlActor;whiteSpace=wrap;html=1;verticalLabelPosition=bottom;verticalAlign=top;fontSize=12;fontStyle=1;fillColor=#f5f5f5;strokeColor=#333;" value="Dueño / Administrador" vertex="1">
+          <mxGeometry height="75" width="55" x="1460" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="15" edge="1" parent="1" source="13" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="16" edge="1" parent="1" source="13" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="17" edge="1" parent="1" source="13" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="12" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="18" edge="1" parent="1" source="14" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="19" edge="1" parent="1" source="14" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="20" edge="1" parent="1" source="14" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="21" edge="1" parent="1" source="14" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="22" edge="1" parent="1" source="14" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="23" edge="1" parent="1" source="14" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="10" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="24" edge="1" parent="1" source="14" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="12" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="25" edge="1" parent="1" source="5" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="8" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="26" edge="1" parent="1" source="6" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="9" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="27" edge="1" parent="1" source="11" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="8" value="«extend» [el tipo de usuario es Empleado]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="28" edge="1" parent="1" source="12" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="6" value="«extend» [el admin necesita cambiar la contraseña de otro usuario]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="29" edge="1" parent="1" source="10" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="6" value="«extend» [el usuario debe ser inhabilitado]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
