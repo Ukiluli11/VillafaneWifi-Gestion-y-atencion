@@ -102,6 +102,33 @@ function Get-HerramientasMariaDb {
     throw 'No se encontro MariaDB. Instala MariaDB o XAMPP antes de iniciar el sistema.'
 }
 
+function Invoke-ClienteMariaDb {
+    param(
+        [Parameter(Mandatory)]
+        [object] $Herramientas,
+        [Parameter(Mandatory)]
+        [string[]] $Argumentos
+    )
+
+    # MariaDB informa los fallos transitorios de handshake por stderr. El
+    # launcher usa ErrorActionPreference=Stop, por lo que debemos capturarlos
+    # aqui y devolver su codigo de salida para poder reintentar.
+    $preferenciaAnterior = $ErrorActionPreference
+
+    try {
+        $ErrorActionPreference = 'Continue'
+        $salida = & $Herramientas.Cliente @Argumentos 2>&1
+
+        return [pscustomobject]@{
+            CodigoSalida = $LASTEXITCODE
+            Salida = ($salida -join ' ')
+        }
+    }
+    finally {
+        $ErrorActionPreference = $preferenciaAnterior
+    }
+}
+
 function Set-VariableEntorno {
     param(
         [Parameter(Mandatory)]
@@ -199,6 +226,33 @@ function Start-MariaDb {
         throw 'MariaDB no pudo iniciarse en el puerto 3306.'
     }
 
+    # Que el puerto responda no garantiza que MariaDB haya terminado el
+    # handshake. Esperamos una consulta real antes de invocar Laravel.
+    $conexionLista = $false
+    foreach ($intentoConexion in 1..40) {
+        $argumentosPrueba = @(
+            '--protocol=tcp',
+            '--host=127.0.0.1',
+            '--port=3306',
+            '--user=root',
+            '--connect-timeout=2',
+            '--execute=SELECT 1;'
+        )
+        $resultadoPrueba = Invoke-ClienteMariaDb -Herramientas $herramientas -Argumentos $argumentosPrueba
+
+        if ($resultadoPrueba.CodigoSalida -eq 0) {
+            $conexionLista = $true
+            break
+        }
+
+        Start-Sleep -Milliseconds 500
+        [System.Windows.Forms.Application]::DoEvents()
+    }
+
+    if (-not $conexionLista) {
+        throw 'MariaDB abrio el puerto 3306, pero no logro aceptar conexiones.'
+    }
+
     Write-Registro 'MariaDB esta disponible.'
     $consulta = 'CREATE DATABASE IF NOT EXISTS villafane_wifi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
     $argumentosCliente = @(
@@ -206,11 +260,26 @@ function Start-MariaDb {
         '--host=127.0.0.1',
         '--port=3306',
         '--user=root',
+        '--connect-timeout=5',
         "--execute=$consulta"
     )
-    $salida = & $herramientas.Cliente @argumentosCliente 2>&1
+    $basePreparada = $false
+    $salida = $null
+    foreach ($intentoBase in 1..10) {
+        $resultadoBase = Invoke-ClienteMariaDb -Herramientas $herramientas -Argumentos $argumentosCliente
+        $salida = $resultadoBase.Salida
 
-    if ($LASTEXITCODE -ne 0) {
+        if ($resultadoBase.CodigoSalida -eq 0) {
+            $basePreparada = $true
+            break
+        }
+
+        Write-Registro "MariaDB aun esta finalizando su inicio; esperando para preparar la base ($intentoBase/10)..."
+        Start-Sleep -Seconds 1
+        [System.Windows.Forms.Application]::DoEvents()
+    }
+
+    if (-not $basePreparada) {
         throw "No se pudo preparar la base villafane_wifi. $salida"
     }
 }
@@ -319,7 +388,31 @@ function Start-Sistema {
             }
 
             Invoke-ComandoAplicacion -Argumentos @('artisan', 'config:clear') -Descripcion 'Actualizando la configuracion...'
-            Invoke-ComandoAplicacion -Argumentos @('artisan', 'migrate', '--force') -Descripcion 'Aplicando las migraciones pendientes...'
+
+            # XAMPP puede informar el puerto abierto unos instantes antes de
+            # aceptar conexiones de PHP. Reintentamos para evitar un falso
+            # error de inicio por una condicion transitoria de MariaDB.
+            $migracionAplicada = $false
+            foreach ($intentoMigracion in 1..3) {
+                try {
+                    Invoke-ComandoAplicacion -Argumentos @('artisan', 'migrate', '--force') -Descripcion 'Aplicando las migraciones pendientes...'
+                    $migracionAplicada = $true
+                    break
+                }
+                catch {
+                    if ($intentoMigracion -eq 3) {
+                        throw
+                    }
+
+                    Write-Registro "MariaDB aun se esta preparando; reintentando ($intentoMigracion/3)..."
+                    Start-Sleep -Seconds 2
+                    Start-MariaDb
+                }
+            }
+
+            if (-not $migracionAplicada) {
+                throw 'No se pudieron aplicar las migraciones.'
+            }
 
             if ($primeraPreparacion) {
                 Invoke-ComandoAplicacion -Argumentos @('artisan', 'db:seed', '--force') -Descripcion 'Cargando los datos de demostracion...'
@@ -336,7 +429,10 @@ function Start-Sistema {
             New-Item -ItemType Directory -Path $directorioRegistros -Force | Out-Null
             $parametrosAplicacion = @{
                 FilePath = $ejecutablePhp
-                ArgumentList = $argumentosPhpSeguro + @('artisan', 'serve', '--host=127.0.0.1', '--port=8000')
+                # El servidor local no realiza solicitudes HTTPS; omitir aqui
+                # curl.cainfo evita que una ruta con espacios (Program Files)
+                # se divida incorrectamente al iniciar el proceso en Windows.
+                ArgumentList = @('artisan', 'serve', '--host=127.0.0.1', '--port=8000')
                 WorkingDirectory = $directorioAplicacion
                 RedirectStandardOutput = (Join-Path $directorioRegistros 'launcher-laravel.log')
                 RedirectStandardError = (Join-Path $directorioRegistros 'launcher-laravel-error.log')
