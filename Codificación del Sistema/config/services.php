@@ -44,7 +44,7 @@ return [
         'secreto_aplicacion' => env('WHATSAPP_SECRETO_APLICACION'),
         'token_acceso' => env('WHATSAPP_TOKEN_ACCESO'),
         'id_numero_telefono' => env('WHATSAPP_ID_NUMERO_TELEFONO'),
-        'version_api' => env('WHATSAPP_VERSION_API', 'v23.0'),
+        'version_api' => env('WHATSAPP_VERSION_API', 'v25.0'),
         'certificado_ca' => env('WHATSAPP_CERTIFICADO_CA'),
     ],
 

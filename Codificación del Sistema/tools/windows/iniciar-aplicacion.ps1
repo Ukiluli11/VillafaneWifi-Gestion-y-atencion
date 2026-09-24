@@ -10,7 +10,7 @@ if (-not (Test-Path -LiteralPath $ejecutablePhp)) {
 }
 
 if (-not (Test-Path -LiteralPath (Join-Path $directorioAplicacion '.env'))) {
-    throw 'Falta sistema\.env. Copia .env.example y completa la configuracion.'
+    throw 'Falta el archivo .env en la carpeta de la aplicacion. Copia .env.example y completa la configuracion.'
 }
 
 Push-Location $directorioAplicacion

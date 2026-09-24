@@ -48,8 +48,9 @@ Para ejecutar el proyecto en otra computadora se necesita:
 - MariaDB 11.8 o una versión compatible.
 - Node.js 20.19 o superior y npm.
 
-Las dependencias PHP se declaran en `sistema/composer.json` y las dependencias
-del frontend en `sistema/package.json`. Las carpetas `vendor` y `node_modules`
+Las dependencias PHP se declaran en `Codificación del Sistema/composer.json` y
+las dependencias del frontend en `Codificación del Sistema/package.json`. Las
+carpetas `vendor` y `node_modules`
 no se guardan en Git: se reconstruyen durante la instalación.
 
 ## Inicio rápido con el launcher
@@ -65,7 +66,7 @@ migraciones, carga los datos de demostración, compila la interfaz y abre el
 panel. También puede iniciarse directamente con PowerShell:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -STA -File sistema\tools\windows\launcher-villafane.ps1
+powershell -ExecutionPolicy Bypass -STA -File "Codificación del Sistema\tools\windows\launcher-villafane.ps1"
 ```
 
 El panel queda disponible en `http://127.0.0.1:8000/iniciar-sesion`.
@@ -80,7 +81,7 @@ La primera preparación crea el usuario `admin` con la contraseña local
 git clone https://github.com/Ukiluli11/VillafaneWifi-Gestion-y-atencion.git
 Set-Location VillafaneWifi-Gestion-y-atencion
 git switch modulo-2-conversaciones
-Set-Location sistema
+Set-Location 'Codificación del Sistema'
 ```
 
 ### 2. Instalar las dependencias
@@ -171,11 +172,15 @@ La conexión real con Meta requiere completar estas variables de `.env`:
 
 ```dotenv
 WHATSAPP_URL_BASE=https://graph.facebook.com
+WHATSAPP_MODO_SIMULACION=true
+WHATSAPP_DESCARGAR_ARCHIVOS=true
+WHATSAPP_TAMANO_MAXIMO_ARCHIVO_KB=10240
 WHATSAPP_TOKEN_VERIFICACION=
 WHATSAPP_SECRETO_APLICACION=
 WHATSAPP_TOKEN_ACCESO=
 WHATSAPP_ID_NUMERO_TELEFONO=
-WHATSAPP_VERSION_API=v23.0
+WHATSAPP_VERSION_API=v25.0
+WHATSAPP_CERTIFICADO_CA=
 ```
 
 Mientras estas credenciales no estén configuradas, las pruebas automatizadas y
@@ -196,14 +201,14 @@ Aplicar el formato establecido para PHP:
 vendor\bin\pint
 ```
 
-En el estado actual, el proyecto posee **46 pruebas automatizadas** con
-**189 verificaciones**.
+En el estado actual, el proyecto posee **81 pruebas automatizadas** con
+**442 verificaciones**.
 
 ## Organización del repositorio
 
 ```text
 VillafaneWifi-Gestion-y-atencion/
-├── sistema/                       Aplicación Laravel ejecutable
+├── Codificación del Sistema/        Aplicación Laravel ejecutable
 │   ├── app/Dominio/               Reglas y servicios del negocio
 │   ├── app/Models/                Entidades Eloquent
 │   ├── app/Autorizacion/          Permisos orientados a objetos
@@ -212,19 +217,17 @@ VillafaneWifi-Gestion-y-atencion/
 │   ├── database/seeders/          Datos iniciales y demostrativos
 │   ├── resources/views/           Pantallas Blade
 │   └── tests/                     Pruebas unitarias y funcionales
-└── teoria/
-    ├── documentacion/              Informes y trazabilidad
-    ├── diagramas/                  DER y diagramas UML
-    └── planificacion/              Cronograma del proyecto
+└── Documentación del Sistema/
+    ├── Documentación/             Informes, entrevistas y manuales
+    └── Diagramas/                 DER, UML y cronograma de Gantt
 ```
 
 ## Documentación relacionada
 
-- `teoria/documentacion/Informe_general_Villafane_Wifi.docx`.
-- `teoria/documentacion/TRAZABILIDAD_MODELO_DATOS_Y_CLASES.md`.
-- `teoria/documentacion/MODULOS.md`.
-- `teoria/diagramas/` para las fuentes editables de los diagramas.
-- `teoria/planificacion/Cronograma_Gantt.xlsx`.
+- `Documentación del Sistema/Documentación/Informe Del Sistema.docx`.
+- `Documentación del Sistema/Documentación/Manuales/` para los manuales de usuario.
+- `Documentación del Sistema/Documentación/Entrevistas/` para el relevamiento.
+- `Documentación del Sistema/Diagramas/` para los diagramas y el cronograma.
 
 ## Integrantes
 

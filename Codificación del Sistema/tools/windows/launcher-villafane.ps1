@@ -248,9 +248,24 @@ function Build-Interfaz {
     Push-Location $directorioAplicacion
 
     try {
-        if (-not (Test-Path -LiteralPath (Join-Path $directorioAplicacion 'node_modules'))) {
-            Write-Registro 'Instalando dependencias de la interfaz...'
-            & $ejecutablePnpm install --frozen-lockfile 2>&1 | Out-Null
+        $paqueteVite = Join-Path $directorioAplicacion 'node_modules\vite\package.json'
+        # pnpm guarda las dependencias transitivas dentro de .pnpm; por eso
+        # rolldown no necesariamente aparece en node_modules como carpeta directa.
+        $directorioRolldown = Get-ChildItem -LiteralPath (Join-Path $directorioAplicacion 'node_modules\.pnpm') `
+            -Directory -Filter 'rolldown@*' -ErrorAction SilentlyContinue | Select-Object -First 1
+        $paqueteRolldown = if ($null -ne $directorioRolldown) {
+            Join-Path $directorioRolldown.FullName 'node_modules\rolldown\package.json'
+        }
+        else {
+            $null
+        }
+
+        if ((-not (Test-Path -LiteralPath (Join-Path $directorioAplicacion 'node_modules'))) -or
+            (-not (Test-Path -LiteralPath $paqueteVite)) -or
+            ([string]::IsNullOrWhiteSpace($paqueteRolldown)) -or
+            (-not (Test-Path -LiteralPath $paqueteRolldown))) {
+            Write-Registro 'Reparando dependencias de la interfaz...'
+            & $ejecutablePnpm install --force --no-frozen-lockfile 2>&1 | Out-Null
             if ($LASTEXITCODE -ne 0) {
                 throw 'No se pudieron instalar las dependencias de la interfaz.'
             }

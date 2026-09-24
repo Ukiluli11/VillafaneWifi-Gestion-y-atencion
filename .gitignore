@@ -1,14 +1,17 @@
-# Dependencias y configuración local del sistema
-sistema/.env
-sistema/.env.*
-!sistema/.env.example
-sistema/vendor/
-sistema/node_modules/
-sistema/public/build/
-sistema/public/hot
-sistema/storage/*.key
-sistema/storage/logs/*.log
-sistema/.phpunit.result.cache
+# Dependencias y configuración local de la aplicación Laravel
+Codificación del Sistema/.env
+Codificación del Sistema/.env.*
+!Codificación del Sistema/.env.example
+Codificación del Sistema/vendor/
+Codificación del Sistema/node_modules/
+Codificación del Sistema/public/build/
+Codificación del Sistema/public/hot
+Codificación del Sistema/storage/*.key
+Codificación del Sistema/storage/logs/*.log
+Codificación del Sistema/.phpunit.result.cache
+
+# Restos locales de la estructura anterior (no forman parte del repositorio)
+/sistema/
 
 # Herramientas portátiles locales para desarrollo en Windows
 runtime/php-8.5/

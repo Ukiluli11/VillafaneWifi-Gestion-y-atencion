@@ -14,4 +14,4 @@ Implementación vigente del sistema con Laravel 13, PHP, JavaScript y MariaDB.
 - `tests`: pruebas funcionales y de dominio.
 
 La preparación completa se explica en el `README.md` de la raíz. El alcance,
-los diagramas y la trazabilidad se encuentran en `../teoria/`.
+los diagramas y la documentación se encuentran en `../Documentación del Sistema/`.
