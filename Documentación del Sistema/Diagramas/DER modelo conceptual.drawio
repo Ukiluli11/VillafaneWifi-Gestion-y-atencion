@@ -1,7 +1,6 @@
-<?xml version='1.0' encoding='utf-8'?>
-<mxfile host="Electron" agent="Codex" pages="2">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6" pages="2">
   <diagram id="full" name="DER completo con atributos">
-    <mxGraphModel dx="5150" dy="7530" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="7000" pageHeight="4400" math="0" shadow="0">
+    <mxGraphModel dx="1464" dy="4967" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="7000" pageHeight="4400" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -202,12 +201,6 @@
         <mxCell id="e-full-26" edge="1" parent="1" source="full-entity-conversacion" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-conversacion-0" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="full-attr-conversacion-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Número de WhatsApp" vertex="1">
-          <mxGeometry height="60" width="220" x="3810" y="460" as="geometry" />
-        </mxCell>
-        <mxCell id="e-full-27" edge="1" parent="1" source="full-entity-conversacion" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-conversacion-1" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="full-attr-conversacion-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha y hora de inicio" vertex="1">
           <mxGeometry height="60" width="220" x="4300" y="275" as="geometry" />
         </mxCell>
@@ -261,7 +254,11 @@
           <mxGeometry height="60" width="220" x="6080" y="-640" as="geometry" />
         </mxCell>
         <mxCell id="e-full-36" edge="1" parent="1" source="full-entity-empleado" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-empleado-0" value="">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="6190" y="-540" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="full-attr-mensaje-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" value="ID mensaje" vertex="1">
           <mxGeometry height="60" width="220" x="3890" y="1260" as="geometry" />
@@ -718,7 +715,7 @@
         <mxCell id="full-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontSize=25;" value="DER conceptual — Sistema de Gestión Villafañe Wifi" vertex="1">
           <mxGeometry height="50" width="2000" x="2100" y="10" as="geometry" />
         </mxCell>
-        <mxCell id="0Z_ZCfTyEGHBfO9qXr5i-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Numero deTeléfono" vertex="1">
+        <mxCell id="0Z_ZCfTyEGHBfO9qXr5i-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Numero deTeléfono/WhatsApp" vertex="1">
           <mxGeometry height="60" width="220" x="3170" y="550" as="geometry" />
         </mxCell>
         <mxCell id="0Z_ZCfTyEGHBfO9qXr5i-4" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="full-attr-usuario-0" value="">
@@ -728,71 +725,65 @@
             <mxPoint x="6599" y="318" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="full-entity-aviso-vencimiento" value="AVISO DE VENCIMIENTO" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" parent="1" vertex="1">
-          <mxGeometry x="2700" y="2560" width="260" height="80" as="geometry" />
+        <mxCell id="b9nU3vHdcPNg7P3tgddn-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha de ingreso" vertex="1">
+          <mxGeometry height="60" width="220" x="5820" y="-590" as="geometry" />
         </mxCell>
-        <mxCell id="full-attr-aviso-0" value="&lt;u&gt;ID aviso vencimiento&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#64748b;strokeWidth=2;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="2500" y="2700" width="160" height="50" as="geometry" />
+        <mxCell id="b9nU3vHdcPNg7P3tgddn-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Cargo" vertex="1">
+          <mxGeometry height="60" width="220" x="5780" y="-490" as="geometry" />
         </mxCell>
-        <mxCell id="edge-full-attr-aviso-0" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#64748b;strokeWidth=1;" parent="1" vertex="1" edge="1" source="full-entity-aviso-vencimiento" target="full-attr-aviso-0">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="b9nU3vHdcPNg7P3tgddn-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Turno" vertex="1">
+          <mxGeometry height="60" width="220" x="5800" y="-690" as="geometry" />
         </mxCell>
-        <mxCell id="full-attr-aviso-1" value="Tipo" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#64748b;strokeWidth=2;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="2680" y="2720" width="130" height="45" as="geometry" />
+        <mxCell id="b9nU3vHdcPNg7P3tgddn-4" edge="1" parent="1" source="full-entity-empleado" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="b9nU3vHdcPNg7P3tgddn-3" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="6200" y="-490" as="sourcePoint" />
+            <mxPoint x="6200" y="-570" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="edge-full-attr-aviso-1" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#64748b;strokeWidth=1;" parent="1" vertex="1" edge="1" source="full-entity-aviso-vencimiento" target="full-attr-aviso-1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="b9nU3vHdcPNg7P3tgddn-5" edge="1" parent="1" source="full-entity-empleado" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="b9nU3vHdcPNg7P3tgddn-2" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="6039.2" y="-370" as="sourcePoint" />
+            <mxPoint x="6039.2" y="-450" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="full-attr-aviso-2" value="Estado" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#64748b;strokeWidth=2;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="2830" y="2720" width="130" height="45" as="geometry" />
+        <mxCell id="b9nU3vHdcPNg7P3tgddn-6" edge="1" parent="1" source="full-entity-empleado" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;" target="b9nU3vHdcPNg7P3tgddn-1" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="6210" y="-480" as="sourcePoint" />
+            <mxPoint x="6210" y="-560" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="edge-full-attr-aviso-2" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#64748b;strokeWidth=1;" parent="1" vertex="1" edge="1" source="full-entity-aviso-vencimiento" target="full-attr-aviso-2">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="b9nU3vHdcPNg7P3tgddn-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Puede gestionar usuarios" vertex="1">
+          <mxGeometry height="60" width="220" x="6600" y="-690" as="geometry" />
         </mxCell>
-        <mxCell id="full-attr-aviso-3" value="Fecha y hora de envío" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#64748b;strokeWidth=2;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="2980" y="2700" width="160" height="50" as="geometry" />
+        <mxCell id="b9nU3vHdcPNg7P3tgddn-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Nivel de acceso" vertex="1">
+          <mxGeometry height="60" width="220" x="6370" y="-680" as="geometry" />
         </mxCell>
-        <mxCell id="edge-full-attr-aviso-3" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#64748b;strokeWidth=1;" parent="1" vertex="1" edge="1" source="full-entity-aviso-vencimiento" target="full-attr-aviso-3">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="b9nU3vHdcPNg7P3tgddn-11" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Puede configurar planes" vertex="1">
+          <mxGeometry height="60" width="220" x="6850" y="-680" as="geometry" />
         </mxCell>
-        <mxCell id="full-attr-aviso-4" value="Último intento" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#64748b;strokeWidth=2;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="2550" y="2430" width="140" height="45" as="geometry" />
+        <mxCell id="b9nU3vHdcPNg7P3tgddn-12" edge="1" parent="1" source="full-entity-administrador" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;exitX=0.471;exitY=0.005;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="b9nU3vHdcPNg7P3tgddn-7" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="6710" y="-550" as="sourcePoint" />
+            <mxPoint x="6710" y="-630" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="edge-full-attr-aviso-4" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#64748b;strokeWidth=1;" parent="1" vertex="1" edge="1" source="full-entity-aviso-vencimiento" target="full-attr-aviso-4">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="b9nU3vHdcPNg7P3tgddn-13" edge="1" parent="1" source="full-entity-administrador" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;" target="b9nU3vHdcPNg7P3tgddn-11" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="6694" y="-490" as="sourcePoint" />
+            <mxPoint x="6720" y="-620" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="full-attr-aviso-5" value="Detalle de error" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#64748b;strokeWidth=2;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="2850" y="2430" width="140" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="edge-full-attr-aviso-5" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#64748b;strokeWidth=1;" parent="1" vertex="1" edge="1" source="full-entity-aviso-vencimiento" target="full-attr-aviso-5">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="full-relation-cuota-aviso" value="GENERA / ES GENERADA POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" parent="1" vertex="1">
-          <mxGeometry x="2050" y="2550" width="240" height="100" as="geometry" />
-        </mxCell>
-        <mxCell id="edge-cuota-rel-aviso" value="(1,1)" style="endArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" parent="1" vertex="1" edge="1" source="full-entity-cuota" target="full-relation-cuota-aviso">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="edge-rel-aviso-entity" value="(0,N)" style="endArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" parent="1" vertex="1" edge="1" source="full-relation-cuota-aviso" target="full-entity-aviso-vencimiento">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="full-relation-conversacion-aviso" value="CANALIZA / SE CANALIZA EN" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" parent="1" vertex="1">
-          <mxGeometry x="3400" y="1800" width="250" height="100" as="geometry" />
-        </mxCell>
-        <mxCell id="edge-conv-rel-aviso" value="(0,N)" style="endArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" parent="1" vertex="1" edge="1" source="full-entity-conversacion" target="full-relation-conversacion-aviso">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="edge-rel-aviso-conv" value="(0,1)" style="endArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" parent="1" vertex="1" edge="1" source="full-relation-conversacion-aviso" target="full-entity-aviso-vencimiento">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="full-relation-aviso-mensaje" value="SE NOTIFICA CON / ES MENSAJE DE" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="3430" y="2230" width="270" height="100" as="geometry" />
-        </mxCell>
-        <mxCell id="edge-mensaje-rel-aviso-a" value="(0,N)" style="endArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="full-entity-mensaje" target="full-relation-aviso-mensaje">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="edge-mensaje-rel-aviso-b" value="(0,1)" style="endArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="full-entity-aviso-vencimiento" target="full-relation-aviso-mensaje">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="b9nU3vHdcPNg7P3tgddn-14" edge="1" parent="1" source="full-entity-administrador" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="b9nU3vHdcPNg7P3tgddn-8" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="6365" y="-458" as="sourcePoint" />
+            <mxPoint x="6540" y="-580" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
@@ -1023,36 +1014,6 @@
         </mxCell>
         <mxCell id="overview-note" value="Vista general. La primera página contiene todos los atributos." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#d97706;fontSize=13;align=left;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="50" y="950" width="500" height="120" as="geometry" />
-        </mxCell>
-        <mxCell id="overview-entity-aviso" value="AVISO DE VENCIMIENTO" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" parent="1" vertex="1">
-          <mxGeometry x="530" y="390" width="220" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="overview-relation-cuota-aviso" value="GENERA" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" parent="1" vertex="1">
-          <mxGeometry x="430" y="320" width="140" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="overview-edge-cuota-aviso-1" value="1" style="endArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" parent="1" vertex="1" edge="1" source="overview-entity-cuota" target="overview-relation-cuota-aviso">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="overview-edge-cuota-aviso-2" value="N" style="endArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" parent="1" vertex="1" edge="1" source="overview-relation-cuota-aviso" target="overview-entity-aviso">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="overview-relation-conversacion-aviso" value="CANALIZA" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" parent="1" vertex="1">
-          <mxGeometry x="720" y="260" width="140" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="overview-edge-conv-aviso-1" value="1" style="endArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" parent="1" vertex="1" edge="1" source="overview-entity-conversacion" target="overview-relation-conversacion-aviso">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="overview-edge-conv-aviso-2" value="N" style="endArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" parent="1" vertex="1" edge="1" source="overview-relation-conversacion-aviso" target="overview-entity-aviso">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="overview-relation-aviso-mensaje" value="SE NOTIFICA CON" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="860" y="520" width="170" height="70" as="geometry" />
-        </mxCell>
-        <mxCell id="overview-edge-mensaje-aviso-a" value="0..N" style="endArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="overview-entity-mensaje" target="overview-relation-aviso-mensaje">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="overview-edge-mensaje-aviso-b" value="0..1" style="endArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="overview-entity-aviso" target="overview-relation-aviso-mensaje">
-          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
