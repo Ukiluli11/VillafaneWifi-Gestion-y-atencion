@@ -4,13 +4,13 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="2" parent="1" style="text;html=1;strokeColor=#333;fillColor=#fafafa;align=center;verticalAlign=top;whiteSpace=wrap;overflow=hidden;fontStyle=1;fontSize=13;" value="Sistema de Gestión Villafañe Wifi — Módulo 1: Gestión de Clientes" vertex="1">
+        <mxCell id="2" parent="1" style="text;html=1;strokeColor=#333;fillColor=#fafafa;align=center;verticalAlign=top;whiteSpace=wrap;overflow=hidden;fontStyle=1;fontSize=13;" value="Sistema de Gestión Villafañe Wifi — Módulo 1: Clientes, Servicios y Cuenta Corriente" vertex="1">
           <mxGeometry height="1310" width="1960" x="210" y="35" as="geometry" />
         </mxCell>
-        <mxCell id="3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Registrar cliente y servicio" vertex="1">
+        <mxCell id="3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Registrar cliente" vertex="1">
           <mxGeometry height="65" width="200" x="200" y="80" as="geometry" />
         </mxCell>
-        <mxCell id="4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Asignar plan al servicio" vertex="1">
+        <mxCell id="4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Registrar servicio y asignar plan" vertex="1">
           <mxGeometry height="65" width="200" x="270" y="270" as="geometry" />
         </mxCell>
         <mxCell id="5" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Registrar datos de conexión (IP, MAC)" vertex="1">
