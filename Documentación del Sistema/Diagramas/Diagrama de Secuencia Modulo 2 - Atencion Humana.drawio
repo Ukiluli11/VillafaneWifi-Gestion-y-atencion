@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" modified="2026-09-26T00:00:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="m2" name="Derivación a atención humana, respuesta y cierre">
+    <mxGraphModel dx="1840" dy="1450" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1840" pageHeight="1450" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Diagrama de Secuencia — Módulo 2&#10;Derivación a atención humana, respuesta y cierre" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontSize=18;fontColor=#263238;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="12" width="1780" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="p0" value="Cliente" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#455a64;strokeColor=#455a64;fontColor=#ffffff;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="30" y="95" width="175" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="life0" style="endArrow=none;startArrow=none;dashed=1;dashPattern=6 6;strokeColor=#90a4ae;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="117" y="155" as="sourcePoint" />
+            <mxPoint x="117" y="1280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p1" value="Meta WhatsApp&#10;Cloud API" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#2e7d32;strokeColor=#2e7d32;fontColor=#ffffff;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="250" y="95" width="175" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="life1" style="endArrow=none;startArrow=none;dashed=1;dashPattern=6 6;strokeColor=#90a4ae;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="337" y="155" as="sourcePoint" />
+            <mxPoint x="337" y="1280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p2" value="Webhook / Panel&#10;Controller" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#1565c0;strokeColor=#1565c0;fontColor=#ffffff;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="470" y="95" width="175" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="life2" style="endArrow=none;startArrow=none;dashed=1;dashPattern=6 6;strokeColor=#90a4ae;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="557" y="155" as="sourcePoint" />
+            <mxPoint x="557" y="1280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p3" value="ServicioMenu /&#10;AtenciónHumana" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#1565c0;strokeColor=#1565c0;fontColor=#ffffff;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="690" y="95" width="175" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="life3" style="endArrow=none;startArrow=none;dashed=1;dashPattern=6 6;strokeColor=#90a4ae;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="777" y="155" as="sourcePoint" />
+            <mxPoint x="777" y="1280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p4" value="Servicio&#10;Conversaciones" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#6a1b9a;strokeColor=#6a1b9a;fontColor=#ffffff;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="910" y="95" width="175" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="life4" style="endArrow=none;startArrow=none;dashed=1;dashPattern=6 6;strokeColor=#90a4ae;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="997" y="155" as="sourcePoint" />
+            <mxPoint x="997" y="1280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p5" value="BD: Conversación /&#10;Mensaje" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#37474f;strokeColor=#37474f;fontColor=#ffffff;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="95" width="175" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="life5" style="endArrow=none;startArrow=none;dashed=1;dashPattern=6 6;strokeColor=#90a4ae;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1217" y="155" as="sourcePoint" />
+            <mxPoint x="1217" y="1280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p6" value="Empleado /&#10;Administrador" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#00838f;strokeColor=#00838f;fontColor=#ffffff;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="95" width="175" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="life6" style="endArrow=none;startArrow=none;dashed=1;dashPattern=6 6;strokeColor=#90a4ae;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1437" y="155" as="sourcePoint" />
+            <mxPoint x="1437" y="1280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p7" value="ServicioEnvio&#10;Whatsapp" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#ef6c00;strokeColor=#ef6c00;fontColor=#ffffff;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1570" y="95" width="175" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="life7" style="endArrow=none;startArrow=none;dashed=1;dashPattern=6 6;strokeColor=#90a4ae;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1657" y="155" as="sourcePoint" />
+            <mxPoint x="1657" y="1280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg0" value="solicita humano o falla reconocimiento" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p0" target="p1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="117" y="190" as="sourcePoint" />
+            <mxPoint x="337" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg1" value="webhook entrante" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p1" target="p2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="337" y="248" as="sourcePoint" />
+            <mxPoint x="557" y="248" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg2" value="procesar texto y contar fallos" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p2" target="p3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="557" y="306" as="sourcePoint" />
+            <mxPoint x="777" y="306" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg3" value="primer fallo: registrar intento=1" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p3" target="p5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="777" y="364" as="sourcePoint" />
+            <mxPoint x="1217" y="364" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg4" value="pedir reformulación / menú" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p3" target="p7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="777" y="422" as="sourcePoint" />
+            <mxPoint x="1657" y="422" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg5" value="segundo fallo o solicitud explícita: derivar a cola" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p3" target="p4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="777" y="480" as="sourcePoint" />
+            <mxPoint x="997" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg6" value="estado=escalada; modo=usuario_interno; limpiar contador" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p4" target="p5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="997" y="538" as="sourcePoint" />
+            <mxPoint x="1217" y="538" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg7" value="avisar derivación al cliente" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p3" target="p7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="777" y="596" as="sourcePoint" />
+            <mxPoint x="1657" y="596" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg8" value="toma conversación desde la cola" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p6" target="p2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1437" y="654" as="sourcePoint" />
+            <mxPoint x="557" y="654" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg9" value="validar usuario habilitado" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p2" target="p3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="557" y="712" as="sourcePoint" />
+            <mxPoint x="777" y="712" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg10" value="asignar con bloqueo; rechazar doble toma" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p3" target="p4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="777" y="770" as="sourcePoint" />
+            <mxPoint x="997" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg11" value="persistir id_usuario_atencion" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p4" target="p5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="997" y="828" as="sourcePoint" />
+            <mxPoint x="1217" y="828" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg12" value="presentación del empleado" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p3" target="p7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="777" y="886" as="sourcePoint" />
+            <mxPoint x="1657" y="886" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg13" value="mensaje saliente vía Meta" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p7" target="p1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1657" y="944" as="sourcePoint" />
+            <mxPoint x="337" y="944" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg14" value="responde o cierra desde panel" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p6" target="p2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1437" y="1002" as="sourcePoint" />
+            <mxPoint x="557" y="1002" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg15" value="autorizar responsable (o admin al cerrar)" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p2" target="p3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="557" y="1060" as="sourcePoint" />
+            <mxPoint x="777" y="1060" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg16" value="guardar mensaje y estado" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p3" target="p5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="777" y="1118" as="sourcePoint" />
+            <mxPoint x="1217" y="1118" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg17" value="enviar respuesta/cierre" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p3" target="p7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="777" y="1176" as="sourcePoint" />
+            <mxPoint x="1657" y="1176" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg18" value="cerrar conversación" style="endArrow=block;endFill=1;html=1;rounded=0;strokeWidth=1.4;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="p4" target="p5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="997" y="1234" as="sourcePoint" />
+            <mxPoint x="1217" y="1234" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="note" value="Mientras modo_atencion=usuario_interno el bot deja de responder. El sistema bloquea la toma concurrente; responde solo el usuario responsable. El cierre lo realiza el responsable o un administrador y la conversación se marca cerrada." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#d6b656;fontSize=10;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1300" width="1760" height="100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

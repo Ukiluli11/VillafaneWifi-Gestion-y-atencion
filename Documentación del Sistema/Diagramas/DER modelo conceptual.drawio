@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6" pages="2">
   <diagram id="full" name="DER completo con atributos">
     <mxGraphModel dx="1464" dy="4967" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="7000" pageHeight="4400" math="0" shadow="0">
@@ -43,7 +44,7 @@
         <mxCell id="full-entity-ticket" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" value="TICKET" vertex="1">
           <mxGeometry height="80" width="220" x="4060" y="3585" as="geometry" />
         </mxCell>
-        <mxCell id="full-entity-nota" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" value="NOTA INTERNA" vertex="1">
+        <mxCell id="full-entity-nota" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=3;fontStyle=1;fontSize=18;" value="NOTA INTERNA&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;(pendiente — RF-32)&lt;/font&gt;" vertex="1">
           <mxGeometry height="80" width="220" x="6500" y="3585" as="geometry" />
         </mxCell>
         <mxCell id="full-attr-plan-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" value="ID plan" vertex="1">
@@ -165,11 +166,6 @@
         </mxCell>
         <mxCell id="e-full-20" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-attr-cliente-4" value="">
           <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e-full-21" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" value="">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="3170" y="581.0638297872341" as="targetPoint" />
-          </mxGeometry>
         </mxCell>
         <mxCell id="full-attr-cliente-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Calle de contacto" vertex="1">
           <mxGeometry height="60" width="220" x="2420" y="700" as="geometry" />
@@ -503,37 +499,37 @@
         <mxCell id="full-relation-plan-servicio" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="SE ASIGNA A / TIENE ASIGNADO" vertex="1">
           <mxGeometry height="110" width="240" x="875" y="595" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-77" edge="1" parent="1" source="full-entity-plan" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-plan-servicio" value="1">
+        <mxCell id="e-full-77" edge="1" parent="1" source="full-entity-plan" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-plan-servicio" value="0..N">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-78" edge="1" parent="1" source="full-relation-plan-servicio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-servicio" value="N">
+        <mxCell id="e-full-78" edge="1" parent="1" source="full-relation-plan-servicio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-servicio" value="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="full-relation-servicio-cliente" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ES CONTRATADO POR / CONTRATA" vertex="1">
           <mxGeometry height="110" width="240" x="2080" y="595" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-79" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-servicio-cliente" value="N">
+        <mxCell id="e-full-79" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-servicio-cliente" value="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-80" edge="1" parent="1" source="full-relation-servicio-cliente" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-cliente" value="1">
+        <mxCell id="e-full-80" edge="1" parent="1" source="full-relation-servicio-cliente" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-cliente" value="0..N">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="full-relation-cliente-conversacion" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="INICIA / ES INICIADA POR" vertex="1">
           <mxGeometry height="110" width="240" x="3425" y="595" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-81" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-cliente-conversacion" value="1">
+        <mxCell id="e-full-81" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-cliente-conversacion" value="0..N">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-82" edge="1" parent="1" source="full-relation-cliente-conversacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-conversacion" value="N">
+        <mxCell id="e-full-82" edge="1" parent="1" source="full-relation-cliente-conversacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-conversacion" value="0..1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="full-relation-servicio-cuota" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="GENERA / ES GENERADA POR" vertex="1">
           <mxGeometry height="110" width="240" x="1400" y="1500" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-83" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-servicio-cuota" value="1">
+        <mxCell id="e-full-83" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-servicio-cuota" value="0..N">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-84" edge="1" parent="1" source="full-relation-servicio-cuota" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-cuota" value="N">
+        <mxCell id="e-full-84" edge="1" parent="1" source="full-relation-servicio-cuota" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-cuota" value="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1530" y="2440" />
@@ -544,25 +540,25 @@
         <mxCell id="full-relation-conversacion-mensaje" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="CONTIENE / PERTENECE A" vertex="1">
           <mxGeometry height="110" width="240" x="4060" y="930" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-85" edge="1" parent="1" source="full-entity-conversacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-conversacion-mensaje" value="1">
+        <mxCell id="e-full-85" edge="1" parent="1" source="full-entity-conversacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-conversacion-mensaje" value="0..N">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-86" edge="1" parent="1" source="full-relation-conversacion-mensaje" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-mensaje" value="N">
+        <mxCell id="e-full-86" edge="1" parent="1" source="full-relation-conversacion-mensaje" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-mensaje" value="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="full-relation-usuario-mensaje" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ENVÍA / ES ENVIADO POR" vertex="1">
           <mxGeometry height="110" width="240" x="5920" y="1445" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-87" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" target="full-relation-usuario-mensaje" value="1">
+        <mxCell id="e-full-87" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" target="full-relation-usuario-mensaje" value="0..N">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-88" edge="1" parent="1" source="full-relation-usuario-mensaje" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-mensaje" value="N">
+        <mxCell id="e-full-88" edge="1" parent="1" source="full-relation-usuario-mensaje" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-mensaje" value="0..1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="full-relation-mensaje-comprobante" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ADJUNTA / ES ADJUNTADO EN" vertex="1">
           <mxGeometry height="110" width="240" x="2690" y="1385" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-89" edge="1" parent="1" source="full-entity-mensaje" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-mensaje-comprobante" value="1">
+        <mxCell id="e-full-89" edge="1" parent="1" source="full-entity-mensaje" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-mensaje-comprobante" value="0..1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="e-full-90" edge="1" parent="1" source="full-relation-mensaje-comprobante" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-comprobante" value="1">
@@ -571,43 +567,43 @@
         <mxCell id="full-relation-comprobante-pago" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ORIGINA / SE ORIGINA EN" vertex="1">
           <mxGeometry height="110" width="240" x="3410" y="2370" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-91" edge="1" parent="1" source="full-entity-comprobante" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-comprobante-pago" value="1">
+        <mxCell id="e-full-91" edge="1" parent="1" source="full-entity-comprobante" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-comprobante-pago" value="0..1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-92" edge="1" parent="1" source="full-relation-comprobante-pago" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-pago" value="1">
+        <mxCell id="e-full-92" edge="1" parent="1" source="full-relation-comprobante-pago" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-pago" value="0..1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="full-relation-pago-cuota" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="CANCELA / ES CANCELADA POR" vertex="1">
           <mxGeometry height="110" width="240" x="2650" y="2545" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-93" edge="1" parent="1" source="full-entity-pago" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-pago-cuota" value="1">
+        <mxCell id="e-full-93" edge="1" parent="1" source="full-entity-pago" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-pago-cuota" value="1..N">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-94" edge="1" parent="1" source="full-relation-pago-cuota" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-cuota" value="N">
+        <mxCell id="e-full-94" edge="1" parent="1" source="full-relation-pago-cuota" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-cuota" value="0..1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="full-relation-cuenta-pago" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="RECIBE / SE RECIBE EN" vertex="1">
           <mxGeometry height="110" width="240" x="5590" y="2550" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-95" edge="1" parent="1" source="full-entity-cuenta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-cuenta-pago" value="1">
+        <mxCell id="e-full-95" edge="1" parent="1" source="full-entity-cuenta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-cuenta-pago" value="0..N">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-96" edge="1" parent="1" source="full-relation-cuenta-pago" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-pago" value="N">
+        <mxCell id="e-full-96" edge="1" parent="1" source="full-relation-cuenta-pago" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-pago" value="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="full-relation-conversacion-ticket" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="GENERA / ES GENERADO EN" vertex="1">
           <mxGeometry height="110" width="240" x="4500" y="2820" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-97" edge="1" parent="1" source="full-entity-conversacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-conversacion-ticket" value="1">
+        <mxCell id="e-full-97" edge="1" parent="1" source="full-entity-conversacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-conversacion-ticket" value="0..N">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-98" edge="1" parent="1" source="full-relation-conversacion-ticket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-ticket" value="N">
+        <mxCell id="e-full-98" edge="1" parent="1" source="full-relation-conversacion-ticket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-ticket" value="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="full-relation-servicio-ticket" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ES AFECTADO POR / AFECTA" vertex="1">
           <mxGeometry height="110" width="240" x="2030" y="3190" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-99" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" target="full-relation-servicio-ticket" value="1">
+        <mxCell id="e-full-99" edge="1" parent="1" source="full-entity-servicio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" target="full-relation-servicio-ticket" value="0..N">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1820" y="670" />
@@ -617,16 +613,16 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="e-full-100" edge="1" parent="1" source="full-relation-servicio-ticket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="full-entity-ticket" value="N">
+        <mxCell id="e-full-100" edge="1" parent="1" source="full-relation-servicio-ticket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="full-entity-ticket" value="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="full-relation-usuario-conversacion" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ATIENDE / ES ATENDIDA POR" vertex="1">
           <mxGeometry height="110" width="240" x="5090" y="610" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-101" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.25;exitDx=0;exitDy=0;" target="full-relation-usuario-conversacion" value="1">
+        <mxCell id="e-full-101" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.25;exitDx=0;exitDy=0;" target="full-relation-usuario-conversacion" value="0..N">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-102" edge="1" parent="1" source="full-relation-usuario-conversacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="full-entity-conversacion" value="N">
+        <mxCell id="e-full-102" edge="1" parent="1" source="full-relation-usuario-conversacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="full-entity-conversacion" value="0..1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="full-relation-usuario-conversacion-attr-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Inicio de atención" vertex="1">
@@ -646,10 +642,10 @@
         <mxCell id="full-relation-usuario-comprobante" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="VALIDA / ES VALIDADO POR" vertex="1">
           <mxGeometry height="110" width="240" x="5760" y="1960" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-105" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.75;exitDx=0;exitDy=0;" target="full-relation-usuario-comprobante" value="1">
+        <mxCell id="e-full-105" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.75;exitDx=0;exitDy=0;" target="full-relation-usuario-comprobante" value="0..N">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-106" edge="1" parent="1" source="full-relation-usuario-comprobante" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="full-entity-comprobante" value="N">
+        <mxCell id="e-full-106" edge="1" parent="1" source="full-relation-usuario-comprobante" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="full-entity-comprobante" value="0..1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="full-relation-usuario-comprobante-attr-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha y hora de validación" vertex="1">
@@ -658,16 +654,16 @@
         <mxCell id="e-full-107" edge="1" parent="1" source="full-relation-usuario-comprobante" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-relation-usuario-comprobante-attr-0" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="full-relation-usuario-ticket" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="GESTIONA / ES GESTIONADO POR" vertex="1">
+        <mxCell id="full-relation-usuario-ticket" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ATIENDE / SE ASIGNA A" vertex="1">
           <mxGeometry height="110" width="240" x="5420" y="2930" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-108" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" value="1">
+        <mxCell id="e-full-108" edge="1" parent="1" source="full-entity-empleado" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" value="0..N" target="full-relation-usuario-ticket">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="6520" y="405" as="sourcePoint" />
             <mxPoint x="5540" y="2925" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="e-full-109" edge="1" parent="1" source="full-relation-usuario-ticket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="full-entity-ticket" value="N">
+        <mxCell id="e-full-109" edge="1" parent="1" source="full-relation-usuario-ticket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="full-entity-ticket" value="0..1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="full-relation-usuario-ticket-attr-0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;" value="Fecha de asignación" vertex="1">
@@ -676,7 +672,7 @@
         <mxCell id="e-full-110" edge="1" parent="1" source="full-relation-usuario-ticket" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#94a3b8;strokeWidth=1;" target="full-relation-usuario-ticket-attr-0" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="full-relation-ticket-nota" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="CONTIENE / PERTENECE A" vertex="1">
+        <mxCell id="full-relation-ticket-nota" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;dashed=1;strokeColor=#d6b656;dashed=1;strokeColor=#d6b656;" value="CONTIENE / PERTENECE A" vertex="1">
           <mxGeometry height="110" width="240" x="5680" y="3570" as="geometry" />
         </mxCell>
         <mxCell id="e-full-111" edge="1" parent="1" source="full-entity-ticket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-ticket-nota" value="1">
@@ -685,7 +681,7 @@
         <mxCell id="e-full-112" edge="1" parent="1" source="full-relation-ticket-nota" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-nota" value="N">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="full-relation-usuario-nota" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="REDACTA / ES REDACTADA POR" vertex="1">
+        <mxCell id="full-relation-usuario-nota" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;dashed=1;strokeColor=#d6b656;dashed=1;strokeColor=#d6b656;" value="REDACTA / ES REDACTADA POR" vertex="1">
           <mxGeometry height="110" width="240" x="6490" y="3010" as="geometry" />
         </mxCell>
         <mxCell id="e-full-113" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-usuario-nota" value="1">
@@ -785,6 +781,54 @@
             <mxPoint x="6540" y="-580" as="targetPoint" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="full-entity-aviso" value="AVISO DE VENCIMIENTO" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="5200" y="1450" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-aviso-0" value="ID aviso" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="5100" y="1580" width="150" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="full-edge-aviso-attr-0" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#64748b;strokeWidth=1.5;" edge="1" parent="1" source="full-entity-aviso" target="full-attr-aviso-0">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-aviso-1" value="Tipo" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="5240" y="1580" width="150" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="full-edge-aviso-attr-1" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#64748b;strokeWidth=1.5;" edge="1" parent="1" source="full-entity-aviso" target="full-attr-aviso-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-attr-aviso-2" value="Estado" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="5380" y="1580" width="150" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="full-edge-aviso-attr-2" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#64748b;strokeWidth=1.5;" edge="1" parent="1" source="full-entity-aviso" target="full-attr-aviso-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-aviso-cuota" value="SE GENERA PARA / CORRESPONDE A" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="3000" y="2380" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="full-edge-aviso-cuota-a" value="0..2" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="full-entity-cuota" target="full-relation-aviso-cuota">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-edge-aviso-cuota-b" value="1" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="full-relation-aviso-cuota" target="full-entity-aviso">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-aviso-conversacion" value="SE REGISTRA EN / DOCUMENTA" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="4700" y="1780" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="full-edge-aviso-conversacion-a" value="0..N" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="full-entity-conversacion" target="full-relation-aviso-conversacion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-edge-aviso-conversacion-b" value="0..1" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="full-relation-aviso-conversacion" target="full-entity-aviso">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-relation-aviso-mensaje" value="SE ENVÍA COMO / REPRESENTA" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="4600" y="1420" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="full-edge-aviso-mensaje-a" value="0..N" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="full-entity-mensaje" target="full-relation-aviso-mensaje">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="full-edge-aviso-mensaje-b" value="0..1" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="full-relation-aviso-mensaje" target="full-entity-aviso">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
@@ -823,7 +867,7 @@
         <mxCell id="overview-entity-ticket" value="TICKET" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
           <mxGeometry x="780" y="720" width="220" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="overview-entity-nota" value="NOTA INTERNA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+        <mxCell id="overview-entity-nota" value="NOTA INTERNA&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;pendiente RF-32&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
           <mxGeometry x="1080" y="720" width="220" height="80" as="geometry" />
         </mxCell>
         <mxCell id="overview-entity-usuario" value="USUARIO" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
@@ -838,52 +882,52 @@
         <mxCell id="overview-relation-ov-plan-servicio" value="SE ASIGNA A / TIENE ASIGNADO" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="190" y="92" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-1" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-plan" target="overview-relation-ov-plan-servicio">
+        <mxCell id="e-overview-1" value="0..N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-plan" target="overview-relation-ov-plan-servicio">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-2" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-plan-servicio" target="overview-entity-servicio">
+        <mxCell id="e-overview-2" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-plan-servicio" target="overview-entity-servicio">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="overview-relation-ov-servicio-cliente" value="ES CONTRATADO POR / CONTRATA" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="430" y="92" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-3" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-servicio" target="overview-relation-ov-servicio-cliente">
+        <mxCell id="e-overview-3" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-servicio" target="overview-relation-ov-servicio-cliente">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-4" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-servicio-cliente" target="overview-entity-cliente">
+        <mxCell id="e-overview-4" value="0..N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-servicio-cliente" target="overview-entity-cliente">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="overview-relation-ov-cliente-conversacion" value="INICIA / ES INICIADA POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="690" y="92" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-5" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-cliente" target="overview-relation-ov-cliente-conversacion">
+        <mxCell id="e-overview-5" value="0..N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-cliente" target="overview-relation-ov-cliente-conversacion">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-6" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-cliente-conversacion" target="overview-entity-conversacion">
+        <mxCell id="e-overview-6" value="0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-cliente-conversacion" target="overview-entity-conversacion">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="overview-relation-ov-conversacion-mensaje" value="CONTIENE / PERTENECE A" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="930" y="92" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-7" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-conversacion" target="overview-relation-ov-conversacion-mensaje">
+        <mxCell id="e-overview-7" value="0..N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-conversacion" target="overview-relation-ov-conversacion-mensaje">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-8" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-conversacion-mensaje" target="overview-entity-mensaje">
+        <mxCell id="e-overview-8" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-conversacion-mensaje" target="overview-entity-mensaje">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="overview-relation-ov-servicio-cuota" value="GENERA / ES GENERADA POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="290" y="240" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-9" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-servicio" target="overview-relation-ov-servicio-cuota">
+        <mxCell id="e-overview-9" value="0..N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-servicio" target="overview-relation-ov-servicio-cuota">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-10" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-servicio-cuota" target="overview-entity-cuota">
+        <mxCell id="e-overview-10" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-servicio-cuota" target="overview-entity-cuota">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="overview-relation-ov-mensaje-comprobante" value="ADJUNTA / ES ADJUNTADO EN" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="810" y="240" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-11" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-mensaje" target="overview-relation-ov-mensaje-comprobante">
+        <mxCell id="e-overview-11" value="0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-mensaje" target="overview-relation-ov-mensaje-comprobante">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="e-overview-12" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-mensaje-comprobante" target="overview-entity-comprobante">
@@ -892,82 +936,82 @@
         <mxCell id="overview-relation-ov-comprobante-pago" value="ORIGINA / SE ORIGINA EN" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="690" y="392" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-13" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-comprobante" target="overview-relation-ov-comprobante-pago">
+        <mxCell id="e-overview-13" value="0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-comprobante" target="overview-relation-ov-comprobante-pago">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-14" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-comprobante-pago" target="overview-entity-pago">
+        <mxCell id="e-overview-14" value="0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-comprobante-pago" target="overview-entity-pago">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="overview-relation-ov-pago-cuota" value="CANCELA / ES CANCELADA POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="430" y="520" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-15" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-pago" target="overview-relation-ov-pago-cuota">
+        <mxCell id="e-overview-15" value="1..N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-pago" target="overview-relation-ov-pago-cuota">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-16" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-pago-cuota" target="overview-entity-cuota">
+        <mxCell id="e-overview-16" value="0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-pago-cuota" target="overview-entity-cuota">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="overview-relation-ov-cuenta-pago" value="RECIBE / SE RECIBE EN" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="930" y="392" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-17" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-cuenta" target="overview-relation-ov-cuenta-pago">
+        <mxCell id="e-overview-17" value="0..N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-cuenta" target="overview-relation-ov-cuenta-pago">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-18" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-cuenta-pago" target="overview-entity-pago">
+        <mxCell id="e-overview-18" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-cuenta-pago" target="overview-entity-pago">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="overview-relation-ov-conversacion-ticket" value="GENERA / ES GENERADO EN" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="800" y="570" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-19" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-conversacion" target="overview-relation-ov-conversacion-ticket">
+        <mxCell id="e-overview-19" value="0..N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-conversacion" target="overview-relation-ov-conversacion-ticket">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-20" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-conversacion-ticket" target="overview-entity-ticket">
+        <mxCell id="e-overview-20" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-conversacion-ticket" target="overview-entity-ticket">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="overview-relation-ov-servicio-ticket" value="ES AFECTADO POR / AFECTA" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="520" y="680" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-21" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-servicio" target="overview-relation-ov-servicio-ticket">
+        <mxCell id="e-overview-21" value="0..N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-servicio" target="overview-relation-ov-servicio-ticket">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-22" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-servicio-ticket" target="overview-entity-ticket">
+        <mxCell id="e-overview-22" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-servicio-ticket" target="overview-entity-ticket">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="overview-relation-ov-usuario-mensaje" value="ENVÍA / ES ENVIADO POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="1280" y="250" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-23" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-mensaje">
+        <mxCell id="e-overview-23" value="0..N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-mensaje">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-24" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-mensaje" target="overview-entity-mensaje">
+        <mxCell id="e-overview-24" value="0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-mensaje" target="overview-entity-mensaje">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="overview-relation-ov-usuario-conversacion" value="ATIENDE / ES ATENDIDA POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="1210" y="120" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-25" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-conversacion">
+        <mxCell id="e-overview-25" value="0..N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-conversacion">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-26" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-conversacion" target="overview-entity-conversacion">
+        <mxCell id="e-overview-26" value="0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-conversacion" target="overview-entity-conversacion">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="overview-relation-ov-usuario-comprobante" value="VALIDA / ES VALIDADO POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="1240" y="390" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-27" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-comprobante">
+        <mxCell id="e-overview-27" value="0..N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-comprobante">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-28" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-comprobante" target="overview-entity-comprobante">
+        <mxCell id="e-overview-28" value="0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-comprobante" target="overview-entity-comprobante">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview-relation-ov-usuario-ticket" value="GESTIONA / ES GESTIONADO POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+        <mxCell id="overview-relation-ov-usuario-ticket" value="ATIENDE / SE ASIGNA A" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="1230" y="610" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-29" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-ticket">
+        <mxCell id="e-overview-29" value="0..N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-empleado" target="overview-relation-ov-usuario-ticket">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-30" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-ticket" target="overview-entity-ticket">
+        <mxCell id="e-overview-30" value="0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-ticket" target="overview-entity-ticket">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="overview-relation-ov-ticket-nota" value="CONTIENE / PERTENECE A" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
@@ -1012,8 +1056,56 @@
         <mxCell id="overview-title" value="DER conceptual — Sistema de Gestión Villafañe Wifi" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontSize=25;" vertex="1" parent="1">
           <mxGeometry x="400" y="10" width="900" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="overview-note" value="Vista general. La primera página contiene todos los atributos." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#d97706;fontSize=13;align=left;spacing=10;" vertex="1" parent="1">
+        <mxCell id="overview-note" value="Vista de negocio. NotaInterna corresponde al RF-32 y aún no existe como tabla en la implementación; el detalle estructural se encuentra en la primera página." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#d97706;fontSize=13;align=left;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="50" y="950" width="500" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-entity-aviso" value="AVISO DE VENCIMIENTO" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#245a9b;strokeWidth=3;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="790" y="650" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-attr-aviso-0" value="ID aviso" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="690" y="780" width="150" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-edge-aviso-attr-0" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#64748b;strokeWidth=1.5;" edge="1" parent="1" source="overview-entity-aviso" target="overview-attr-aviso-0">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-attr-aviso-1" value="Tipo" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="830" y="780" width="150" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-edge-aviso-attr-1" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#64748b;strokeWidth=1.5;" edge="1" parent="1" source="overview-entity-aviso" target="overview-attr-aviso-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-attr-aviso-2" value="Estado" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=2;fontSize=13;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="970" y="780" width="150" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-edge-aviso-attr-2" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#64748b;strokeWidth=1.5;" edge="1" parent="1" source="overview-entity-aviso" target="overview-attr-aviso-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-aviso-cuota" value="SE GENERA PARA" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="600" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-edge-aviso-cuota-a" value="0..2" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="overview-entity-cuota" target="overview-relation-aviso-cuota">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-edge-aviso-cuota-b" value="1" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="overview-relation-aviso-cuota" target="overview-entity-aviso">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-aviso-conversacion" value="SE REGISTRA EN" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="790" y="300" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-edge-aviso-conversacion-a" value="0..N" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="overview-entity-conversacion" target="overview-relation-aviso-conversacion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-edge-aviso-conversacion-b" value="0..1" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="overview-relation-aviso-conversacion" target="overview-entity-aviso">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-relation-aviso-mensaje" value="SE ENVÍA COMO" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="300" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-edge-aviso-mensaje-a" value="0..N" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="overview-entity-mensaje" target="overview-relation-aviso-mensaje">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="overview-edge-aviso-mensaje-b" value="0..1" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#245a9b;strokeWidth=2;fontSize=14;fontStyle=1;" edge="1" parent="1" source="overview-relation-aviso-mensaje" target="overview-entity-aviso">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
