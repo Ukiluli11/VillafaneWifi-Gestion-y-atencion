@@ -26,41 +26,47 @@
         <mxCell id="actor-ai" value="Proveedor IA opcional&#10;(Gemini)" style="shape=umlActor;whiteSpace=wrap;html=1;verticalLabelPosition=bottom;verticalAlign=top;fontSize=12;fontStyle=1;fillColor=#f5f5f5;strokeColor=#333333;" vertex="1" parent="1">
           <mxGeometry x="2020" y="1110" width="90" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="uc-receive" value="Recibir mensaje&#10;y crear/recuperar conversación" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="360" y="185" width="260" height="82" as="geometry" />
+        <mxCell id="uc-receive" value="RF-10 · Recibir mensaje y&#10;responder automáticamente" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="360" y="185" width="270" height="82" as="geometry" />
         </mxCell>
-        <mxCell id="uc-identify" value="Identificar cliente o&#10;conducir alta guiada" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="690" y="185" width="260" height="82" as="geometry" />
+        <mxCell id="uc-intent" value="RF-11 · Reconocer intención&#10;por IA y pedir reformulación" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#d5e8d4;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="690" y="185" width="270" height="82" as="geometry" />
         </mxCell>
-        <mxCell id="uc-menu" value="Mostrar menú y&#10;reconocer intención" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#d5e8d4;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="1020" y="185" width="260" height="82" as="geometry" />
+        <mxCell id="uc-identify" value="RF-12 · Identificar por teléfono/DNI;&#10;registrar cliente y contratar servicio" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="185" width="300" height="82" as="geometry" />
         </mxCell>
-        <mxCell id="uc-account" value="Consultar estado de cuenta&#10;y datos de pago" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#d5e8d4;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="1360" y="185" width="260" height="82" as="geometry" />
+        <mxCell id="uc-account" value="RF-13 · Consultar estado de cuenta,&#10;mora y próximo vencimiento" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#d5e8d4;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="185" width="310" height="82" as="geometry" />
         </mxCell>
-        <mxCell id="uc-receipt" value="Recibir comprobante&#10;y dejarlo pendiente de validación" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#f8cecc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="uc-claim" value="RF-14 · Registrar reclamo&#10;y generar ticket" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#f8cecc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="360" y="390" width="280" height="88" as="geometry" />
         </mxCell>
-        <mxCell id="uc-claim" value="Registrar reclamo&#10;y generar ticket" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#f8cecc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="720" y="390" width="260" height="88" as="geometry" />
+        <mxCell id="uc-human" value="RF-15 · Escalar y tomar control&#10;de la conversación" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="720" y="390" width="290" height="88" as="geometry" />
         </mxCell>
-        <mxCell id="uc-human" value="Derivar a atención humana&#10;por solicitud o falta de comprensión" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="1060" y="390" width="290" height="88" as="geometry" />
+        <mxCell id="uc-history" value="RF-16 · Conservar historial&#10;cronológico de mensajes" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="390" width="280" height="88" as="geometry" />
         </mxCell>
-        <mxCell id="uc-send" value="Enviar respuesta y&#10;registrar mensaje/estado" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="1430" y="390" width="260" height="88" as="geometry" />
+        <mxCell id="uc-close" value="RF-17 · Cerrar conversación&#10;al resolver o finalizar atención" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1450" y="390" width="290" height="88" as="geometry" />
         </mxCell>
-        <mxCell id="uc-queue" value="Consultar cola y&#10;tomar conversación" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="390" y="680" width="250" height="82" as="geometry" />
+        <mxCell id="uc-receipt" value="RF-19 · Recibir comprobante&#10;(alcance complementario)" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#f8cecc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="360" y="555" width="280" height="82" as="geometry" />
         </mxCell>
-        <mxCell id="uc-answer" value="Responder al cliente&#10;y cerrar conversación" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="720" y="680" width="250" height="82" as="geometry" />
+        <mxCell id="uc-send" value="Enviar respuesta y actualizar&#10;estado de entrega en Meta" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="720" y="555" width="290" height="82" as="geometry" />
         </mxCell>
-        <mxCell id="uc-review" value="Revisar comprobante&#10;pendiente" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#f8cecc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="1050" y="680" width="250" height="82" as="geometry" />
+        <mxCell id="uc-queue" value="RF-15 · Consultar cola y&#10;tomar conversación" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="390" y="740" width="260" height="82" as="geometry" />
         </mxCell>
-        <mxCell id="uc-remind" value="Detectar cuotas próximas&#10;o vencidas y notificar" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#d5e8d4;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="390" y="1000" width="280" height="88" as="geometry" />
+        <mxCell id="uc-answer" value="Responder al cliente&#10;como usuario interno" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="720" y="740" width="260" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-review" value="RF-23 · Revisar comprobante&#10;pendiente (complementario)" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#f8cecc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="740" width="280" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-remind" value="RF-18 · Detectar cuotas próximas&#10;o vencidas y notificar" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#d5e8d4;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="390" y="1000" width="290" height="88" as="geometry" />
         </mxCell>
         <mxCell id="uc-audit" value="Registrar resultado del aviso&#10;(intentos, envío o error)" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#d5e8d4;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="760" y="1000" width="280" height="88" as="geometry" />
@@ -71,10 +77,10 @@
         <mxCell id="client-uc-receive" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#455a64;strokeWidth=1.4;" edge="1" parent="1" source="actor-client" target="uc-receive">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="client-uc-identify" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#455a64;strokeWidth=1.4;" edge="1" parent="1" source="actor-client" target="uc-identify">
+        <mxCell id="client-uc-intent" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#455a64;strokeWidth=1.4;" edge="1" parent="1" source="actor-client" target="uc-intent">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="client-uc-menu" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#455a64;strokeWidth=1.4;" edge="1" parent="1" source="actor-client" target="uc-menu">
+        <mxCell id="client-uc-identify" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#455a64;strokeWidth=1.4;" edge="1" parent="1" source="actor-client" target="uc-identify">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="client-uc-account" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#455a64;strokeWidth=1.4;" edge="1" parent="1" source="actor-client" target="uc-account">
@@ -107,19 +113,25 @@
         <mxCell id="agent-uc-review" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#455a64;strokeWidth=1.4;" edge="1" parent="1" source="actor-agent" target="uc-review">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="agent-uc-history" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#455a64;strokeWidth=1.4;" edge="1" parent="1" source="actor-agent" target="uc-history">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agent-uc-close" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#455a64;strokeWidth=1.4;" edge="1" parent="1" source="actor-agent" target="uc-close">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="scheduler-uc-remind" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#455a64;strokeWidth=1.4;" edge="1" parent="1" source="actor-scheduler" target="uc-remind">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="scheduler-uc-audit" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#455a64;strokeWidth=1.4;" edge="1" parent="1" source="actor-scheduler" target="uc-audit">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ai-menu" value="solo si está configurado; hay alternativa local" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="actor-ai" target="uc-menu">
+        <mxCell id="ai-intent" value="Gemini configurable; respaldo local" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="actor-ai" target="uc-intent">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="rel-uc-receive-uc-send" value="responder según el flujo" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="uc-receive" target="uc-send">
+        <mxCell id="rel-uc-receive-uc-send" value="respuesta automática; RF-10" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="uc-receive" target="uc-send">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="rel-uc-receipt-uc-send" value="confirmar recepción" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="uc-receipt" target="uc-send">
+        <mxCell id="rel-uc-receipt-uc-send" value="confirmar recepción; RF-19" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="uc-receipt" target="uc-send">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="rel-uc-claim-uc-send" value="informar ticket" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="uc-claim" target="uc-send">
@@ -128,7 +140,19 @@
         <mxCell id="rel-uc-human-uc-queue" value="queda en cola" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="uc-human" target="uc-queue">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="rel-uc-answer-uc-send" value="responder por WhatsApp" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="uc-answer" target="uc-send">
+        <mxCell id="rel-uc-answer-uc-send" value="respuesta por WhatsApp" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="uc-answer" target="uc-send">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-uc-account-uc-close" value="bot cierra al resolver; RF-17" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="uc-account" target="uc-close">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-uc-claim-uc-close" value="cierre del flujo concluido" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="uc-claim" target="uc-close">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-uc-history-uc-receive" value="registra mensajes entrantes/salientes; RF-16" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="uc-history" target="uc-receive">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-uc-close-uc-history" value="conserva historial al cerrar" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="uc-close" target="uc-history">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="rel-uc-remind-uc-audit" value="persistir resultado" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="uc-remind" target="uc-audit">
@@ -137,8 +161,8 @@
         <mxCell id="rel-uc-send-uc-delivery" value="webhook de estados" style="endArrow=open;startArrow=none;dashed=1;html=1;strokeColor=#607d8b;strokeWidth=1.2;fontSize=10;" edge="1" parent="1" source="uc-send" target="uc-delivery">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="note-scope" value="El OCR automático y la aprobación/rechazo del comprobante no forman parte del flujo implementado en este incremento: el archivo se registra pendiente para revisión humana. La IA externa es opcional; el sistema dispone de un clasificador local alternativo." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#d6b656;fontSize=11;align=left;" vertex="1" parent="1">
-          <mxGeometry x="1100" y="1230" width="610" height="125" as="geometry" />
+        <mxCell id="note-scope" value="RF-19+ (comprobante) se muestra como alcance complementario: se recibe y deja pendiente; OCR, aprobación/rechazo y conciliación aún no están implementados. RF-11 usa Gemini si está configurado y un clasificador local de respaldo." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#d6b656;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="1230" width="680" height="125" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
