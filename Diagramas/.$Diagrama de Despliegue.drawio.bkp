@@ -1,0 +1,112 @@
+<mxfile version="22.0.8" type="device">
+  <diagram id="deployment_diagram_final" name="Deploy_Produccion_Total">
+    <mxGraphModel dx="1600" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Titulo -->
+        <mxCell id="title" value="Diagrama de Despliegue - Arquitectura de Produccion (Sistema Integral)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="20" width="1360" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Nodos Cliente -->
+        <mxCell id="browser" value="&lt;b&gt;&amp;lt;&amp;lt;device&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;Navegador Web&lt;br&gt;(Administradores / Empleados)" style="shape=mxgraph.uml.node;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="50" y="120" width="240" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phone" value="&lt;b&gt;&amp;lt;&amp;lt;device&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;Smartphone con WhatsApp&lt;br&gt;(Cliente Final)" style="shape=mxgraph.uml.node;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="120" width="240" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Servidor Principal -->
+        <mxCell id="app_server" value="&lt;b&gt;&amp;lt;&amp;lt;executionEnvironment&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;Servidor de Alojamiento (Entorno de Produccion)" style="shape=mxgraph.uml.node;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#555555;verticalAlign=top;spacingTop=12;" vertex="1" parent="1">
+          <mxGeometry x="220" y="300" width="1020" height="420" as="geometry" />
+        </mxCell>
+        
+        <!-- Componentes internos del Servidor -->
+        <mxCell id="nginx" value="&lt;b&gt;&amp;lt;&amp;lt;component&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;Servidor Web&lt;br&gt;(Apache / Nginx)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="250" y="370" width="220" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="php" value="&lt;b&gt;&amp;lt;&amp;lt;executionEnvironment&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;Entorno PHP 8.3+" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="500" y="370" width="220" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="queue" value="&lt;b&gt;&amp;lt;&amp;lt;component&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;Procesos de Cola (Workers)&lt;br&gt;Tareas Asincronas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="750" y="370" width="220" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Artifact Laravel -->
+        <mxCell id="laravel" value="&lt;b&gt;&amp;lt;&amp;lt;artifact&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;Aplicacion Monolitica Laravel 13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="250" y="480" width="720" height="210" as="geometry" />
+        </mxCell>
+        
+        <!-- Sub Artifacts dentro de Laravel -->
+        <mxCell id="blade" value="Panel Web (Blade / UI)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fffde7;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="270" y="540" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="api_rest" value="API REST (Core Bussines)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fffde7;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="450" y="540" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="webhook_ctrl" value="Controlador Webhooks" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fffde7;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="630" y="540" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="jobs" value="Jobs &amp; Eventos" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fffde7;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="800" y="540" width="150" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Base de Datos -->
+        <mxCell id="db" value="&lt;b&gt;&amp;lt;&amp;lt;database&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;Instancia MariaDB 11.8" style="shape=mxgraph.uml.node;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="450" y="800" width="370" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Servicios Externos Cloud -->
+        <mxCell id="meta" value="&lt;b&gt;&amp;lt;&amp;lt;cloudService&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;Meta WhatsApp Cloud API" style="shape=mxgraph.uml.node;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="280" width="240" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="llm" value="&lt;b&gt;&amp;lt;&amp;lt;cloudService&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;API IA (Ej: Gemini/OpenAI)" style="shape=mxgraph.uml.node;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="410" width="240" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ocr" value="&lt;b&gt;&amp;lt;&amp;lt;cloudService&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;Servicio OCR (Comprobantes)" style="shape=mxgraph.uml.node;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="540" width="240" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="storage" value="&lt;b&gt;&amp;lt;&amp;lt;cloudService&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;Almacenamiento de Objetos (S3)" style="shape=mxgraph.uml.node;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="670" width="240" height="90" as="geometry" />
+        </mxCell>
+        
+        <!-- Conexiones -->
+        <mxCell id="e1" value="HTTPS 443" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;" edge="1" source="browser" target="nginx" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="e2" value="Protocolo App WhatsApp" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;" edge="1" source="phone" target="meta" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="e3" value="Webhooks (HTTPS POST)" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;dashed=1;" edge="1" source="meta" target="app_server" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1240" y="325" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        
+        <mxCell id="e_db" value="TCP 3306 (PDO / Eloquent)" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#b85450;" edge="1" source="laravel" target="db" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="e_llm" value="Peticiones API (REST / JSON)" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#FF8000;dashed=1;" edge="1" source="app_server" target="llm" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1240" y="455" as="sourcePoint"/></mxGeometry>
+        </mxCell>
+        
+        <mxCell id="e_ocr" value="Procesamiento Asincrono (API)" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#FF8000;dashed=1;" edge="1" source="app_server" target="ocr" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1240" y="585" as="sourcePoint"/></mxGeometry>
+        </mxCell>
+        
+        <mxCell id="e_storage" value="Carga de Archivos (HTTPS / S3)" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#FF8000;dashed=1;" edge="1" source="app_server" target="storage" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1240" y="715" as="sourcePoint"/></mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
