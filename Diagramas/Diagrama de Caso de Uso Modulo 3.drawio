@@ -1,0 +1,233 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram id="cu-modulo3" name="CU Módulo 3 - Gestión de Pagos y Comprobantes">
+    <mxGraphModel dx="2491" dy="1609" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2600" pageHeight="1800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Límites del sistema -->
+        <mxCell id="2" parent="1" style="text;html=1;strokeColor=#333;fillColor=#fafafa;align=center;verticalAlign=top;whiteSpace=wrap;overflow=hidden;fontStyle=1;fontSize=13;" value="Sistema de Gestión Villafañe Wifi — Módulo 3: Gestión de Pagos y Comprobantes" vertex="1">
+          <mxGeometry height="1250" width="2040" x="190" y="35" as="geometry" />
+        </mxCell>
+
+        <!-- ACTORES -->
+        <!-- Actor Cliente -->
+        <mxCell id="actor_cliente" parent="1" style="shape=umlActor;whiteSpace=wrap;html=1;verticalLabelPosition=bottom;verticalAlign=top;fontSize=12;fontStyle=1;fillColor=#f5f5f5;strokeColor=#333;" value="Cliente" vertex="1">
+          <mxGeometry height="75" width="55" x="50" y="310" as="geometry" />
+        </mxCell>
+
+        <!-- Actor Billetera Virtual (Sistema Externo - Mercado Pago) -->
+        <mxCell id="actor_billetera" parent="1" style="shape=umlActor;whiteSpace=wrap;html=1;verticalLabelPosition=bottom;verticalAlign=top;fontSize=12;fontStyle=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;&lt;external&gt;&gt;&#xa;Billetera Virtual&#xa;(Mercado Pago)" vertex="1">
+          <mxGeometry height="75" width="55" x="50" y="680" as="geometry" />
+        </mxCell>
+
+        <!-- Actor Empleado -->
+        <mxCell id="actor_empleado" parent="1" style="shape=umlActor;whiteSpace=wrap;html=1;verticalLabelPosition=bottom;verticalAlign=top;fontSize=12;fontStyle=1;fillColor=#f5f5f5;strokeColor=#333;" value="Empleado" vertex="1">
+          <mxGeometry height="75" width="55" x="2270" y="460" as="geometry" />
+        </mxCell>
+
+        <!-- Actor Administrador -->
+        <mxCell id="actor_admin" parent="1" style="shape=umlActor;whiteSpace=wrap;html=1;verticalLabelPosition=bottom;verticalAlign=top;fontSize=12;fontStyle=1;fillColor=#f5f5f5;strokeColor=#333;" value="Dueño / Administrador" vertex="1">
+          <mxGeometry height="75" width="55" x="2270" y="830" as="geometry" />
+        </mxCell>
+
+        <!-- CASOS DE USO: RECEPCIÓN Y BOT (Celestes) -->
+        <mxCell id="cu_enviar_comp" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" value="Enviar comprobante de pago" vertex="1">
+          <mxGeometry height="65" width="210" x="260" y="315" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_procesar_ocr" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Procesar comprobante mediante OCR" vertex="1">
+          <mxGeometry height="65" width="210" x="560" y="210" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_verificar_dup" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Verificar duplicidad de comprobante&#xa;(Hash SHA-256)" vertex="1">
+          <mxGeometry height="65" width="210" x="560" y="400" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_solicitar_reenvio" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Solicitar reenvío de comprobante" vertex="1">
+          <mxGeometry height="65" width="210" x="870" y="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_alertar_duplicado" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Alertar comprobante duplicado&#xa;(Aviso a Cliente y Empleado)" vertex="1">
+          <mxGeometry height="65" width="210" x="870" y="400" as="geometry" />
+        </mxCell>
+
+        <!-- CASOS DE USO: BILLETERA VIRTUAL (Lavanda/Externo) -->
+        <mxCell id="cu_emitir_comp" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Emitir comprobante de transferencia" vertex="1">
+          <mxGeometry height="65" width="210" x="260" y="685" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_proporcionar_trans" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Proporcionar datos de transacción&#xa;(N.º operación, fecha, monto)" vertex="1">
+          <mxGeometry height="65" width="210" x="560" y="685" as="geometry" />
+        </mxCell>
+
+        <!-- CASOS DE USO: CONCILIACIÓN Y GESTIÓN (Verdes y Amarillos) -->
+        <mxCell id="cu_visualizar_bandeja" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" value="Visualizar bandeja de conciliación&#xa;de comprobantes" vertex="1">
+          <mxGeometry height="65" width="220" x="1230" y="550" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_validar_comp" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#d5e8d4;strokeColor=#82b366;" value="Validar comprobante de pago" vertex="1">
+          <mxGeometry height="65" width="220" x="1530" y="550" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_aprobar_pago" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" value="Aprobar comprobante y registrar pago" vertex="1">
+          <mxGeometry height="65" width="220" x="1820" y="410" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_rechazar_comp" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;" value="Rechazar comprobante de pago" vertex="1">
+          <mxGeometry height="65" width="220" x="1820" y="690" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_imputar_cuotas" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Imputar pago a cuotas pendientes" vertex="1">
+          <mxGeometry height="65" width="220" x="1530" y="270" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_actualizar_saldo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Actualizar saldo en cuenta corriente" vertex="1">
+          <mxGeometry height="65" width="220" x="1230" y="180" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_notif_aprobado" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#d5e8d4;strokeColor=#82b366;" value="Notificar acreditación de pago&#xa;por WhatsApp" vertex="1">
+          <mxGeometry height="65" width="220" x="1230" y="370" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_notif_rechazo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Notificar rechazo con motivo&#xa;por WhatsApp" vertex="1">
+          <mxGeometry height="65" width="220" x="1230" y="730" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_motivo_rechazo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Registrar motivo de rechazo" vertex="1">
+          <mxGeometry height="65" width="220" x="1530" y="800" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_consultar_historial" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#d5e8d4;strokeColor=#82b366;" value="Consultar historial de pagos&#xa;y comprobantes" vertex="1">
+          <mxGeometry height="65" width="220" x="1820" y="920" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_gestionar_cuentas" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Gestionar cuentas receptoras" vertex="1">
+          <mxGeometry height="65" width="220" x="1820" y="1080" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_registrar_cuenta" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Registrar cuenta bancaria / virtual" vertex="1">
+          <mxGeometry height="65" width="220" x="1450" y="1080" as="geometry" />
+        </mxCell>
+
+        <!-- CONEXIONES ACTORES -->
+        <!-- Cliente -> Enviar comprobante -->
+        <mxCell id="edge_act_cliente" edge="1" parent="1" source="actor_cliente" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_enviar_comp" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Billetera Virtual -> Emitir comprobante -->
+        <mxCell id="edge_act_billetera" edge="1" parent="1" source="actor_billetera" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_emitir_comp" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Empleado -> Visualizar bandeja -->
+        <mxCell id="edge_emp_bandeja" edge="1" parent="1" source="actor_empleado" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_visualizar_bandeja" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Empleado -> Validar comprobante -->
+        <mxCell id="edge_emp_validar" edge="1" parent="1" source="actor_empleado" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_validar_comp" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Empleado -> Historial -->
+        <mxCell id="edge_emp_hist" edge="1" parent="1" source="actor_empleado" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_consultar_historial" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin -> Bandeja -->
+        <mxCell id="edge_adm_bandeja" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_visualizar_bandeja" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin -> Validar -->
+        <mxCell id="edge_adm_validar" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_validar_comp" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin -> Historial -->
+        <mxCell id="edge_adm_hist" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_consultar_historial" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin -> Gestionar cuentas -->
+        <mxCell id="edge_adm_cuentas" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_gestionar_cuentas" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- RELACIONES INCLUDE / EXTEND -->
+        <!-- Enviar comp -> «include» -> Procesar OCR -->
+        <mxCell id="edge_inc_ocr" edge="1" parent="1" source="cu_enviar_comp" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_procesar_ocr" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Enviar comp -> «include» -> Verificar dup -->
+        <mxCell id="edge_inc_dup" edge="1" parent="1" source="cu_enviar_comp" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_verificar_dup" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Solicitar reenvio -> «extend» -> Procesar OCR -->
+        <mxCell id="edge_ext_reenvio" edge="1" parent="1" source="cu_solicitar_reenvio" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="cu_procesar_ocr" value="«extend» [OCR no concluyente / baja confianza]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Alertar duplicado -> «extend» -> Verificar dup -->
+        <mxCell id="edge_ext_alerta_dup" edge="1" parent="1" source="cu_alertar_duplicado" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="cu_verificar_dup" value="«extend» [hash SHA-256 ya registrado]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Emitir comp -> «include» -> Proporcionar datos -->
+        <mxCell id="edge_inc_billetera_datos" edge="1" parent="1" source="cu_emitir_comp" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_proporcionar_trans" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Validar comp -> «include» -> Visualizar bandeja -->
+        <mxCell id="edge_inc_validar_bandeja" edge="1" parent="1" source="cu_validar_comp" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_visualizar_bandeja" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Aprobar pago -> «extend» -> Validar comp -->
+        <mxCell id="edge_ext_aprobar" edge="1" parent="1" source="cu_aprobar_pago" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="cu_validar_comp" value="«extend» [comprobante verificado y legítimo]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Rechazar comp -> «extend» -> Validar comp -->
+        <mxCell id="edge_ext_rechazar" edge="1" parent="1" source="cu_rechazar_comp" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="cu_validar_comp" value="«extend» [comprobante inválido, apócrifo o inconsistente]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Aprobar pago -> «include» -> Imputar cuotas -->
+        <mxCell id="edge_inc_imputar" edge="1" parent="1" source="cu_aprobar_pago" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_imputar_cuotas" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Imputar cuotas -> «include» -> Actualizar saldo -->
+        <mxCell id="edge_inc_saldo" edge="1" parent="1" source="cu_imputar_cuotas" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_actualizar_saldo" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Aprobar pago -> «include» -> Notif aprobado -->
+        <mxCell id="edge_inc_notif_aprob" edge="1" parent="1" source="cu_aprobar_pago" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_notif_aprobado" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Rechazar comp -> «include» -> Motivo de rechazo -->
+        <mxCell id="edge_inc_motivo" edge="1" parent="1" source="cu_rechazar_comp" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_motivo_rechazo" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Rechazar comp -> «include» -> Notif rechazo -->
+        <mxCell id="edge_inc_notif_rech" edge="1" parent="1" source="cu_rechazar_comp" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_notif_rechazo" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Gestionar cuentas -> «include» -> Registrar cuenta -->
+        <mxCell id="edge_inc_reg_cuenta" edge="1" parent="1" source="cu_gestionar_cuentas" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_registrar_cuenta" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
