@@ -16,13 +16,18 @@ class PoliticaEmpleado implements PoliticaAcceso
             AccionSistema::ConsultarServicios, AccionSistema::GestionarServicios,
             AccionSistema::ConsultarCuentas, AccionSistema::GestionarCuentas,
             AccionSistema::ConsultarPagos, AccionSistema::GestionarPagos,
+            AccionSistema::ConsultarConversaciones,
+            AccionSistema::GestionarConversaciones,
         ],
         AreaEmpleado::Soporte->value => [
             AccionSistema::ConsultarClientes, AccionSistema::ConsultarServicios,
+            AccionSistema::ConsultarConversaciones,
+            AccionSistema::GestionarConversaciones,
         ],
         AreaEmpleado::AtencionCliente->value => [
             AccionSistema::ConsultarClientes, AccionSistema::ConsultarCuentas,
-            AccionSistema::ConsultarPagos,
+            AccionSistema::ConsultarPagos, AccionSistema::ConsultarConversaciones,
+            AccionSistema::GestionarConversaciones,
         ],
     ];
 

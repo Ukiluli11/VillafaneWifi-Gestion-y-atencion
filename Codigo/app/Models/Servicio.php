@@ -52,6 +52,11 @@ class Servicio extends Model
         return $this->hasMany(Cuota::class, 'id_servicio', 'id_servicio');
     }
 
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class, 'id_servicio', 'id_servicio');
+    }
+
     public function suspender(): void
     {
         $this->update(['estado' => EstadoServicio::Suspendido]);

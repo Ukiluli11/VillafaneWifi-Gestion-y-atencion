@@ -219,3 +219,29 @@ nav[aria-label="Paginación"] span, nav[aria-label="Paginación"] a { border-col
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
+
+
+textarea { width: 100%; min-height: 110px; resize: vertical; padding: 11px 12px; border: 1px solid #bed0c9; border-radius: 10px; color: var(--texto); background: #fff; font: inherit; }
+textarea:focus { border-color: var(--verde-500); outline: 0; box-shadow: 0 0 0 4px rgba(33,168,117,.12); }
+.estado.escalada { color: #923c3c; background: #f8e2e2; }
+.estado.en_atencion { color: #155f82; background: #dff1f8; }
+.estado.cerrada { color: #4d615b; background: #e9efed; }
+.grilla-conversacion { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, .65fr); gap: 20px; align-items: start; }
+.chat-panel { min-width: 0; }
+.historial-chat { display: flex; max-height: 58vh; flex-direction: column; gap: 11px; overflow-y: auto; padding: 18px; border: 1px solid var(--borde); border-radius: 14px; background: #f5f8f7; }
+.mensaje-chat { width: min(82%, 640px); padding: 11px 14px; border: 1px solid var(--borde); border-radius: 14px 14px 14px 4px; background: #fff; }
+.mensaje-chat.bot, .mensaje-chat.usuario_interno, .mensaje-chat.sistema { align-self: flex-end; border-color: #b8dfce; border-radius: 14px 14px 4px 14px; background: #e5f6ee; }
+.mensaje-chat > div { display: flex; justify-content: space-between; gap: 12px; }
+.mensaje-chat strong { font-size: .76rem; }
+.mensaje-chat small { color: var(--texto-suave); font-size: .65rem; }
+.mensaje-chat p { margin: 5px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.respuesta-chat { margin-top: 17px; }
+
+@media (max-width: 1050px) {
+    .grilla-conversacion { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+    .mensaje-chat { width: 92%; }
+    .mensaje-chat > div { flex-direction: column; gap: 2px; }
+}
