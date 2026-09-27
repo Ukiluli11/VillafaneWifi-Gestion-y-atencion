@@ -1,0 +1,7 @@
+@extends('layouts.panel')
+@section('titulo', 'Cuentas receptoras')
+@section('contenido')
+<div class="encabezado"><div><p class="sobrelinea">Cobranza</p><h1>Cuentas receptoras</h1></div></div>
+@if ($navegacionPermitida['gestionar_cobranza'])<section class="tarjeta"><div class="tarjeta-cabecera"><div><h2>Nueva cuenta</h2><p>Agregá un destino habilitado para registrar cobros.</p></div></div><form class="formulario fila" method="POST" action="{{ route('cuentas-receptoras.store') }}">@csrf<label>Nombre<input name="nombre" required></label><label>Tipo<select name="tipo">@foreach(['banco'=>'Banco','mercado_pago'=>'Mercado Pago','uala'=>'Ualá','otro'=>'Otro'] as $valor=>$etiqueta)<option value="{{ $valor }}">{{ $etiqueta }}</option>@endforeach</select></label><label>Identificador<input name="identificador" required></label><button>Agregar cuenta</button></form></section>@endif
+<div class="tabla-contenedor"><table><thead><tr><th>Nombre</th><th>Tipo</th><th>Identificador</th><th>Estado</th></tr></thead><tbody>@forelse($cuentas as $cuenta)<tr><td class="celda-principal"><strong>{{ $cuenta->nombre }}</strong><small>Cuenta de cobro</small></td><td>{{ ucfirst(str_replace('_',' ',$cuenta->tipo->value)) }}</td><td>{{ $cuenta->identificador }}</td><td><span class="estado {{ $cuenta->estado->value }}">{{ ucfirst($cuenta->estado->value) }}</span></td></tr>@empty<tr><td class="vacio" colspan="4">No hay cuentas receptoras.</td></tr>@endforelse</tbody></table></div>
+@endsection
