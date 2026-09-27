@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Cliente extends Model
 {
@@ -55,6 +56,16 @@ class Cliente extends Model
     public function servicios(): HasMany
     {
         return $this->hasMany(Servicio::class, 'id_cliente', 'id_cliente');
+    }
+
+    public function comprobantes(): HasMany
+    {
+        return $this->hasMany(Comprobante::class, 'id_cliente', 'id_cliente');
+    }
+
+    public function cuotas(): HasManyThrough
+    {
+        return $this->hasManyThrough(Cuota::class, Servicio::class, 'id_cliente', 'id_servicio');
     }
 
     public function darDeAlta(): void
