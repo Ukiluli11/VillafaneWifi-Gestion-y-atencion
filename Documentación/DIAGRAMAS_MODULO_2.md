@@ -4,18 +4,14 @@
 
 Esta actualización documenta el comportamiento previsto para los requerimientos RF-10 a RF-19. El caso de uso muestra las funciones disponibles y sus actores, mientras que los diagramas de secuencia describen la colaboración temporal entre WhatsApp Cloud API, los controladores, los servicios del dominio y la base de datos.
 
-## Archivos creados
+## Archivos creados (Estructura Unificada)
 
-| Diagrama | Fuente editable | Exportación |
+| Diagrama | Archivo fuente editable | Descripción |
 |---|---|---|
-| Caso de uso específico | `CU_Modulo2_AtencionWhatsApp.xml` | `CU_Modulo2_AtencionWhatsApp.png` |
-| Recepción, identificación, interpretación y escalado | `Secuencia_Modulo2_Recepcion_Identificacion_Escalado.xml` | `Secuencia_Modulo2_Recepcion_Identificacion_Escalado.png` |
-| Consulta de estado de cuenta | `Secuencia_Modulo2_Consulta_Estado_Cuenta.xml` | `Secuencia_Modulo2_Consulta_Estado_Cuenta.png` |
-| Registro de reclamo y ticket | `Secuencia_Modulo2_Registro_Reclamo.xml` | `Secuencia_Modulo2_Registro_Reclamo.png` |
-| Notificación de vencimientos | `Secuencia_Modulo2_Notificacion_Vencimiento.xml` | `Secuencia_Modulo2_Notificacion_Vencimiento.png` |
-| Envío y resguardo de comprobante | `Secuencia_Modulo2_Envio_Comprobante.xml` | `Secuencia_Modulo2_Envio_Comprobante.png` |
+| **Caso de Uso Módulo 2** | `Diagrama de Caso de Uso Modulo 2.drawio` | Diagrama unificado del Módulo 2 con actores, límite del sistema y todos los casos de uso (RF-10 a RF-19). Estilo y estándar homogéneo con Módulos 1 y 6. |
+| **Secuencia Módulo 2** | `Diagrama de Secuencia Modulo 2.drawio` | Diagrama de secuencia unificado con arquitectura BCE (`Boundary-Control-Entity`) y marcos `alt`/`loop` que cubre recepción, identificación, IA, consulta de saldo, reclamos, comprobantes y cierre. |
 
-Las fuentes XML utilizan el formato editable de diagrams.net y siguen la estructura visual de los diagramas existentes del proyecto.
+Los diagramas utilizan el formato estándar editable de diagrams.net (.drawio) y siguen fielmente la estructura visual, paleta pastel y organización de los Módulos 1 y 6 del proyecto.
 
 ## Trazabilidad de requerimientos
 

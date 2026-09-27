@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram id="seq-m2-consolidado" name="Secuencia M2 - Atención por WhatsApp">
+    <mxGraphModel dx="2600" dy="3400" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1950" pageHeight="3300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TÍTULO -->
+        <mxCell id="title" parent="1" style="text;html=1;fontSize=13;fontStyle=1;align=center;fillColor=none;strokeColor=none;fontColor=default;" value="Diagrama de Secuencia — Módulo 2&#xa;Casos de uso: Atención, Asistencia con IA y Escalado por WhatsApp (RF-10 al RF-19)" vertex="1">
+          <mxGeometry height="48" width="1860" x="40" y="8" as="geometry" />
+        </mxCell>
+
+        <!-- LIFELINES (CABECERAS) -->
+        <mxCell id="p_cli" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;verticalAlign=middle;" value="Cliente&#xa;(Actor)" vertex="1">
+          <mxGeometry height="54" width="170" x="10" y="62" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p_wa" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#2E7D32;strokeColor=#2E7D32;fontColor=#FFFFFF;verticalAlign=middle;" value="WhatsApp Cloud API&#xa;(Gateway Externo)" vertex="1">
+          <mxGeometry height="54" width="170" x="245" y="62" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p_ctrl" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;verticalAlign=middle;" value="WebhookWhatsappController&#xa;(Boundary / Control)" vertex="1">
+          <mxGeometry height="54" width="170" x="490" y="62" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p_conv" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;verticalAlign=middle;" value="ServicioConversaciones&#xa;(Dominio / Control)" vertex="1">
+          <mxGeometry height="54" width="170" x="735" y="62" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p_ident" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#B28900;strokeColor=#B28900;fontColor=#FFFFFF;verticalAlign=middle;" value="ServicioIdentificacion&#xa;(Dominio / Control)" vertex="1">
+          <mxGeometry height="54" width="170" x="980" y="62" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p_ia" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#6A1B9A;strokeColor=#6A1B9A;fontColor=#FFFFFF;verticalAlign=middle;" value="IAService&#xa;(Adaptador Externo)" vertex="1">
+          <mxGeometry height="54" width="170" x="1225" y="62" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p_bd" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#37474F;strokeColor=#37474F;fontColor=#FFFFFF;verticalAlign=middle;" value="Base de Datos&#xa;(MariaDB / Persistencia)" vertex="1">
+          <mxGeometry height="54" width="170" x="1470" y="62" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p_emp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#C62828;strokeColor=#C62828;fontColor=#FFFFFF;verticalAlign=middle;" value="Empleado / Admin&#xa;(Panel Web)" vertex="1">
+          <mxGeometry height="54" width="170" x="1715" y="62" as="geometry" />
+        </mxCell>
+
+        <!-- LÍNEAS DE VIDA (LIFELINE DASHED) -->
+        <mxCell id="line_cli" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="95" y="116" as="sourcePoint" /><mxPoint x="95" y="3180" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="line_wa" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="116" as="sourcePoint" /><mxPoint x="330" y="3180" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="line_ctrl" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="116" as="sourcePoint" /><mxPoint x="575" y="3180" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="line_conv" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="116" as="sourcePoint" /><mxPoint x="820" y="3180" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="line_ident" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1065" y="116" as="sourcePoint" /><mxPoint x="1065" y="3180" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="line_ia" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1310" y="116" as="sourcePoint" /><mxPoint x="1310" y="3180" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="line_bd" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="116" as="sourcePoint" /><mxPoint x="1555" y="3180" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="line_emp" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1800" y="116" as="sourcePoint" /><mxPoint x="1800" y="3180" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- SECCIÓN 1: RECEPCIÓN, HISTORIAL E IDENTIFICACIÓN (RF-10, RF-12, RF-16) -->
+        <mxCell id="sec1_banner" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=11;fontStyle=1;align=left;spacingLeft=10;" value="1. Recepción de mensaje, registro de historial e identificación de cliente (RF-10, RF-12, RF-16)" vertex="1">
+          <mxGeometry height="26" width="1860" x="40" y="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m_1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#333;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="envía mensaje de texto por WhatsApp">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="95" y="180" as="sourcePoint" /><mxPoint x="330" y="180" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_2" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="POST /webhook/whatsapp {entry: [{changes: [messages: [...]]}]}">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="225" as="sourcePoint" /><mxPoint x="575" y="225" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_3" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="procesarEntrada(eventoWebhook)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="270" as="sourcePoint" /><mxPoint x="820" y="270" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="obtenerOCrearConversacion(telefonoWhatsapp)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="315" as="sourcePoint" /><mxPoint x="1555" y="315" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_5" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: conversacionActiva (id: 45, estado: &apos;abierta&apos;)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="355" as="sourcePoint" /><mxPoint x="820" y="355" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_6" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="registrarMensaje(idConv, &apos;cliente&apos;, texto, NOW()) [RF-16]">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="395" as="sourcePoint" /><mxPoint x="1555" y="395" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_7" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="identificarCliente(telefono, textoMensaje)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="440" as="sourcePoint" /><mxPoint x="1065" y="440" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_8" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="SELECT * FROM cliente WHERE telefono_whatsapp = :tel OR numero_documento = :dni [RF-12]">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1065" y="480" as="sourcePoint" /><mxPoint x="1555" y="480" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_9" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: objetoCliente | null">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="520" as="sourcePoint" /><mxPoint x="1065" y="520" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- ALT IDENTIFICACIÓN -->
+        <mxCell id="box_alt_ident" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#B28900;strokeWidth=1.5;" value="" vertex="1">
+          <mxGeometry height="160" width="1860" x="40" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_alt_ident" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B28900;strokeColor=#B28900;fontColor=#FFFFFF;fontSize=11;fontStyle=1;align=center;" value="alt" vertex="1">
+          <mxGeometry height="22" width="40" x="40" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="cond_no_reg" parent="1" style="text;html=1;fontSize=10;fontStyle=2;fillColor=none;strokeColor=none;align=left;fontColor=#B28900;" value="[cliente == null — Número no registrado como cliente en el sistema]" vertex="1">
+          <mxGeometry height="20" width="550" x="90" y="540" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m_10" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="ofrecerRegistroYPlanes(): enviarMensaje(tel, &apos;¡Bienvenido! ¿Deseas contratar un plan?&apos;) [RF-12]">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1065" y="590" as="sourcePoint" /><mxPoint x="330" y="590" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_11" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="entrega opciones de catálogo y registro a cliente">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="630" as="sourcePoint" /><mxPoint x="95" y="630" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_12" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: flujo registro iniciado / detener procesamiento">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1065" y="670" as="sourcePoint" /><mxPoint x="820" y="670" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- SECCIÓN 2: INTERPRETACIÓN DE INTENCIÓN CON IA (RF-11) -->
+        <mxCell id="sec2_banner" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=11;fontStyle=1;align=left;spacingLeft=10;" value="2. Reconocimiento de intención mediante IA (RF-11)" vertex="1">
+          <mxGeometry height="26" width="1860" x="40" y="730" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m_13" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#6A1B9A;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="interpretarIntencion(mensajeTexto, contextoConversacion) [RF-11]">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="780" as="sourcePoint" /><mxPoint x="1310" y="780" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_14" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#6A1B9A;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: {intencion: &apos;consulta_deuda&apos; | &apos;reclamo&apos; | &apos;envio_pago&apos; | &apos;desconocida&apos;, confianza: 0.94}">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1310" y="825" as="sourcePoint" /><mxPoint x="820" y="825" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- SECCIÓN 3: ALTERNATIVAS DE ATENCIÓN SEGÚN INTENCIÓN (RF-13, RF-14, RF-19) -->
+        <mxCell id="box_alt_intenciones" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#1565C0;strokeWidth=1.5;" value="" vertex="1">
+          <mxGeometry height="1140" width="1860" x="40" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_alt_int" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;fontSize=11;fontStyle=1;align=center;" value="alt" vertex="1">
+          <mxGeometry height="22" width="40" x="40" y="870" as="geometry" />
+        </mxCell>
+
+        <!-- CASO 1: CONSULTA DE ESTADO DE CUENTA (RF-13) -->
+        <mxCell id="cond_cuenta" parent="1" style="text;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=none;align=left;fontColor=#2E7D32;" value="[CASO 1: intencion == &apos;consulta_deuda&apos; — RF-13]" vertex="1">
+          <mxGeometry height="20" width="500" x="90" y="870" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m_c1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="consultarEstadoCuenta(idCliente): SELECT c.* FROM cuota c JOIN servicio s ON c.id_servicio=s.id WHERE s.id_cliente=:id">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="920" as="sourcePoint" /><mxPoint x="1555" y="920" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_c2" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: {cuotasPendientes: 1, montoTotal: $12500, proximoVencimiento: &apos;10/10/2026&apos;, estado: &apos;al_dia&apos;}">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="960" as="sourcePoint" /><mxPoint x="820" y="960" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_c3" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarMensajeWhatsApp(tel, &apos;Tu estado es AL DÍA. Próximo vencimiento 10/10 por $12.500.&apos;)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1005" as="sourcePoint" /><mxPoint x="330" y="1005" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_c4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="entrega información de estado de cuenta en el chat">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="1045" as="sourcePoint" /><mxPoint x="95" y="1045" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- LÍNEA SEPARADORA 1 -->
+        <mxCell id="sep_alt_1" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#888888;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="40" y="1090" as="sourcePoint" /><mxPoint x="1900" y="1090" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- CASO 2: REGISTRO DE RECLAMO Y GENERACIÓN DE TICKET (RF-14) -->
+        <mxCell id="cond_reclamo" parent="1" style="text;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=none;align=left;fontColor=#C62828;" value="[CASO 2: intencion == &apos;reclamo_soporte&apos; — RF-14]" vertex="1">
+          <mxGeometry height="20" width="500" x="90" y="1100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m_r1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="crearTicketReclamo(idConv, idServicio, descripcion): INSERT INTO ticket (id_conv, id_serv, tipo=&apos;tecnico&apos;, estado=&apos;pendiente&apos;)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1150" as="sourcePoint" /><mxPoint x="1555" y="1150" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_r2" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: idTicket (#1042 generado con éxito)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="1195" as="sourcePoint" /><mxPoint x="820" y="1195" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_r3" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarMensajeWhatsApp(tel, &apos;Tu reclamo fue registrado bajo el Ticket #1042. El área técnica lo revisará.&apos;)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1240" as="sourcePoint" /><mxPoint x="330" y="1240" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_r4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="entrega confirmación de ticket al cliente">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="1280" as="sourcePoint" /><mxPoint x="95" y="1280" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- LÍNEA SEPARADORA 2 -->
+        <mxCell id="sep_alt_2" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#888888;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="40" y="1325" as="sourcePoint" /><mxPoint x="1900" y="1325" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- CASO 3: ENVÍO Y RESGUARDO DE COMPROBANTE DE PAGO (RF-19) -->
+        <mxCell id="cond_pago" parent="1" style="text;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=none;align=left;fontColor=#E65100;" value="[CASO 3: intencion == &apos;envio_pago&apos; — Cliente envía imagen o PDF de comprobante — RF-19]" vertex="1">
+          <mxGeometry height="20" width="600" x="90" y="1335" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m_p1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#333;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="envía archivo adjunto (imagen JPG/PNG o PDF)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="95" y="1385" as="sourcePoint" /><mxPoint x="330" y="1385" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_p2" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="POST /webhook/whatsapp {messages: [{type: &apos;image&apos;, id: &apos;media_123&apos;}]}">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="1425" as="sourcePoint" /><mxPoint x="575" y="1425" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_p3" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="descargarYValidarFormato(mediaId): valida mimetype JPG/PNG/PDF y calcula hash SHA-256">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="1470" as="sourcePoint" /><mxPoint x="820" y="1470" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_p4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="resguardarArchivo(ruta, hash): INSERT INTO comprobante (id_mensaje, ruta_archivo, hash, estado=&apos;pendiente&apos;)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1515" as="sourcePoint" /><mxPoint x="1555" y="1515" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_p5" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: comprobante guardado (id: 88, estado: &apos;pendiente&apos;)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="1555" as="sourcePoint" /><mxPoint x="820" y="1555" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_p6" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarMensajeWhatsApp(tel, &apos;¡Comprobante recibido con éxito! Ha sido guardado para verificación.&apos;)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1600" as="sourcePoint" /><mxPoint x="330" y="1600" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_p7" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="entrega confirmación de recepción a cliente">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="1640" as="sourcePoint" /><mxPoint x="95" y="1640" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- LÍNEA SEPARADORA 3 -->
+        <mxCell id="sep_alt_3" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#888888;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="40" y="1685" as="sourcePoint" /><mxPoint x="1900" y="1685" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- CASO 4: CIERRE POR BOT (RF-17) -->
+        <mxCell id="cond_cierre_bot" parent="1" style="text;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=none;align=left;fontColor=#455A64;" value="[CASO 4: Trámite resuelto por bot — Cierre automático de sesión — RF-17]" vertex="1">
+          <mxGeometry height="20" width="550" x="90" y="1695" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m_cb1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#455A64;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="finalizarSesionBot(): UPDATE conversacion SET estado=&apos;resuelta&apos;, fecha_cierre=NOW() WHERE id=:id">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1745" as="sourcePoint" /><mxPoint x="1555" y="1745" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_cb2" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: conversacion marcada como resuelta">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="1785" as="sourcePoint" /><mxPoint x="820" y="1785" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_cb3" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarMensajeWhatsApp(tel, &apos;¿Hay algo más en lo que pueda ayudarte? ¡Gracias por comunicarte!&apos;)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1830" as="sourcePoint" /><mxPoint x="330" y="1830" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_cb4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="recibe mensaje de despedida y cierre en WhatsApp">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="1870" as="sourcePoint" /><mxPoint x="95" y="1870" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- SECCIÓN 4: FALLO DE IA, ESCALADO A USUARIO INTERNO Y CIERRE (RF-11, RF-15, RF-17) -->
+        <mxCell id="sec4_banner" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=11;fontStyle=1;align=left;spacingLeft=10;" value="3. Manejo de fallos de interpretación, escalado a atención humana y cierre (RF-11, RF-15, RF-17)" vertex="1">
+          <mxGeometry height="26" width="1860" x="40" y="1930" as="geometry" />
+        </mxCell>
+
+        <mxCell id="box_alt_fallos" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#C62828;strokeWidth=1.5;" value="" vertex="1">
+          <mxGeometry height="650" width="1860" x="40" y="1970" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_alt_fallos" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C62828;strokeColor=#C62828;fontColor=#FFFFFF;fontSize=11;fontStyle=1;align=center;" value="alt" vertex="1">
+          <mxGeometry height="22" width="40" x="40" y="1970" as="geometry" />
+        </mxCell>
+
+        <!-- SUB-CASO: PRIMER INTENTO FALLIDO -->
+        <mxCell id="cond_primer_fallo" parent="1" style="text;html=1;fontSize=10;fontStyle=2;fillColor=none;strokeColor=none;align=left;fontColor=#C62828;" value="[intentosInterpretacion == 1 — Primer fallo de IA: solicitar reformulación — RF-11]" vertex="1">
+          <mxGeometry height="20" width="550" x="90" y="1970" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m_f1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="incrementarIntentos(idConv): UPDATE conversacion SET intentos = intentos + 1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2015" as="sourcePoint" /><mxPoint x="1555" y="2015" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_f2" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarMensajeWhatsApp(tel, &apos;No logré entender tu mensaje. ¿Podrías indicarme con otras palabras?&apos;)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2060" as="sourcePoint" /><mxPoint x="330" y="2060" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_f3" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="solicita reformular consulta al cliente">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="2100" as="sourcePoint" /><mxPoint x="95" y="2100" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- LÍNEA SEPARADORA FALLO -->
+        <mxCell id="sep_fallo" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#888888;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="40" y="2140" as="sourcePoint" /><mxPoint x="1900" y="2140" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- SUB-CASO: SEGUNDO FALLO O DERIVACIÓN -->
+        <mxCell id="cond_segundo_fallo" parent="1" style="text;html=1;fontSize=10;fontStyle=2;fillColor=none;strokeColor=none;align=left;fontColor=#C62828;" value="[intentosInterpretacion &gt;= 2 o cliente solicita hablar con humano — Derivación automática — RF-11, RF-15]" vertex="1">
+          <mxGeometry height="20" width="700" x="90" y="2145" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m_e1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="escalarConversacion(idConv): UPDATE conversacion SET modo_atencion=&apos;humano&apos;, estado=&apos;escalada&apos;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2190" as="sourcePoint" /><mxPoint x="1555" y="2190" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_e2" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarMensajeWhatsApp(tel, &apos;Te transferimos con un operador. Un asesor responderá a la brevedad.&apos;)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2235" as="sourcePoint" /><mxPoint x="330" y="2235" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_e3" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="notificarPanelWeb(&apos;Alerta: conversación escalada esperando atención&apos;)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2280" as="sourcePoint" /><mxPoint x="1800" y="2280" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_e4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="tomarControlConversacion(idConv): POST /web/conversaciones/{id}/tomar [RF-15]">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1800" y="2330" as="sourcePoint" /><mxPoint x="575" y="2330" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_e5" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="asignarOperador(idConv, idUsuario): UPDATE conversacion SET id_usuario_atencion=:id">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="2375" as="sourcePoint" /><mxPoint x="1555" y="2375" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_e6" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="responderDesdePanel(idConv, texto): POST /web/conversaciones/{id}/mensajes">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1800" y="2425" as="sourcePoint" /><mxPoint x="575" y="2425" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_e7" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarMensajeManual(tel, texto): registrarMensaje(emisor=&apos;empleado&apos;) y enviar vía API">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="2470" as="sourcePoint" /><mxPoint x="330" y="2470" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_e8" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="recibe respuesta humana directa del empleado">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="2510" as="sourcePoint" /><mxPoint x="95" y="2510" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_e9" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="cerrarAtencionEscalada(idConv): POST /web/conversaciones/{id}/cerrar [RF-17]">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1800" y="2555" as="sourcePoint" /><mxPoint x="575" y="2555" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_e10" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="cerrarConversacion(): UPDATE conversacion SET estado=&apos;cerrada&apos;, fin_atencion=NOW()">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="2595" as="sourcePoint" /><mxPoint x="1555" y="2595" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- SECCIÓN 5: PROCESO PROGRAMADO DE NOTIFICACIÓN DE VENCIMIENTOS (RF-18) -->
+        <mxCell id="sec5_banner" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#B28900;fontSize=11;fontStyle=1;align=left;spacingLeft=10;" value="4. Proceso programado: Notificación automática de vencimientos por WhatsApp (RF-18)" vertex="1">
+          <mxGeometry height="26" width="1860" x="40" y="2650" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m_v1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="cron: notificar-vencimientos diario (php artisan app:notificar-vencimientos) [RF-18]">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="2700" as="sourcePoint" /><mxPoint x="820" y="2700" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_v2" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="buscarCuotasPorVencerOVencidas(): SELECT c.*, cl.telefono_whatsapp FROM cuota c JOIN servicio s ON c.id_servicio=s.id JOIN cliente cl ON s.id_cliente=cl.id WHERE c.estado != &apos;pagada&apos; AND c.fecha_vencimiento &lt;= CURDATE() + 3">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2745" as="sourcePoint" /><mxPoint x="1555" y="2745" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_v3" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: listaCuotasANotificar">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="2790" as="sourcePoint" /><mxPoint x="820" y="2790" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="box_loop_notif" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#B28900;strokeWidth=1.5;" value="" vertex="1">
+          <mxGeometry height="160" width="1860" x="40" y="2820" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_loop_notif" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B28900;strokeColor=#B28900;fontColor=#FFFFFF;fontSize=11;fontStyle=1;align=center;" value="loop" vertex="1">
+          <mxGeometry height="22" width="40" x="40" y="2820" as="geometry" />
+        </mxCell>
+        <mxCell id="cond_loop_notif" parent="1" style="text;html=1;fontSize=10;fontStyle=2;fillColor=none;strokeColor=none;align=left;fontColor=#B28900;" value="[por cada cliente con cuota próxima a vencer o vencida]" vertex="1">
+          <mxGeometry height="20" width="450" x="90" y="2820" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m_v4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarPlantillaWhatsApp(tel, &apos;Tu servicio de Villafañe Wifi tiene una cuota por vencer el DD/MM por $MONTO.&apos;)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2875" as="sourcePoint" /><mxPoint x="330" y="2875" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_v5" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="entrega notificación automática de aviso de vencimiento en WhatsApp">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="2915" as="sourcePoint" /><mxPoint x="95" y="2915" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_v6" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="registrarMensaje(emisor=&apos;sistema&apos;, tipo=&apos;notificacion_vencimiento&apos;)">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2955" as="sourcePoint" /><mxPoint x="1555" y="2955" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- NOTA AL PIE METODOLÓGICA (ARQUITECTURA BCE) -->
+        <mxCell id="nota_bce" parent="1" style="text;html=1;fontSize=9;fontStyle=2;fillColor=#F5F5F5;strokeColor=#CCCCCC;align=left;spacing=8;whiteSpace=wrap;" value="Nota Metodológica de Arquitectura BCE (Boundary - Control - Entity) para el Módulo 2:&#xa;• Boundary: WebhookWhatsappController recibe y valida las solicitudes entrantes de la API oficial de WhatsApp Cloud API, y el Panel Web permite la interacción del Empleado.&#xa;• Control / Dominio: ServicioConversaciones, ServicioIdentificacion y IAService encapsulan las reglas de negocio (orquestación del chat, identificación de clientes, clasificación de intenciones y derivación humana).&#xa;• Entity: La Base de Datos MariaDB persiste las entidades Conversación, Mensaje, Cliente, Cuota, Ticket y Comprobante, manteniendo la integridad referencial y trazabilidad requerida por los requerimientos RF-10 al RF-19." vertex="1">
+          <mxGeometry height="95" width="1860" x="40" y="3030" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

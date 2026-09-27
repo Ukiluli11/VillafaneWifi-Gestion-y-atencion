@@ -29,7 +29,7 @@
         <mxCell id="c-employee-sep" value="" style="line;strokeColor=#37474F;fillColor=none;" vertex="1" parent="c-employee">
           <mxGeometry x="0" y="144" width="350" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="c-employee-m" value="+ usuario() : Usuario" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-employee">
+        <mxCell id="c-employee-m" value="+ consultarTicketsAsignados() : List&lt;Ticket&gt;&lt;br&gt;+ atenderConversacion(c: Conversacion) : void" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-employee">
           <mxGeometry x="0" y="152" width="350" height="52" as="geometry" />
         </mxCell>
         <mxCell id="c-admin" value="Administrador" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#37474F;strokeColor=#37474F;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
@@ -41,7 +41,7 @@
         <mxCell id="c-admin-sep" value="" style="line;strokeColor=#37474F;fillColor=none;" vertex="1" parent="c-admin">
           <mxGeometry x="0" y="124" width="350" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="c-admin-m" value="+ usuario() : Usuario" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-admin">
+        <mxCell id="c-admin-m" value="+ gestionarUsuarios() : void&lt;br&gt;+ configurarPlanes() : void" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-admin">
           <mxGeometry x="0" y="132" width="350" height="52" as="geometry" />
         </mxCell>
         <mxCell id="c-client" value="Cliente" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#B28900;strokeColor=#B28900;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
@@ -59,7 +59,7 @@
         <mxCell id="c-service" value="Servicio" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#B28900;strokeColor=#B28900;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
           <mxGeometry x="500" y="720" width="350" height="286" as="geometry" />
         </mxCell>
-        <mxCell id="c-service-a" value="- idServicio : int&lt;br&gt;- idPlan : int&lt;br&gt;- idCliente : int&lt;br&gt;- domicilioInstalacion : String&lt;br&gt;- diaVencimiento : int&lt;br&gt;- proximoVencimiento : Date?&lt;br&gt;- ipv4 : String?&lt;br&gt;- mac : String?&lt;br&gt;- estado : String" style="text;strokeColor=none;fillColor=#FFF8E1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-service">
+        <mxCell id="c-service-a" value="- idServicio : int&lt;br&gt;- domicilioInstalacion : String&lt;br&gt;- diaVencimiento : int&lt;br&gt;- proximoVencimiento : Date?&lt;br&gt;- ipv4 : String?&lt;br&gt;- mac : String?&lt;br&gt;- estado : String" style="text;strokeColor=none;fillColor=#FFF8E1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-service">
           <mxGeometry x="0" y="30" width="350" height="194" as="geometry" />
         </mxCell>
         <mxCell id="c-service-sep" value="" style="line;strokeColor=#B28900;fillColor=none;" vertex="1" parent="c-service">
@@ -83,7 +83,7 @@
         <mxCell id="c-installment" value="Cuota" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#2E7D32;strokeColor=#2E7D32;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
           <mxGeometry x="900" y="1240" width="350" height="266" as="geometry" />
         </mxCell>
-        <mxCell id="c-installment-a" value="- idCuota : int&lt;br&gt;- idServicio : int&lt;br&gt;- idPago : int?&lt;br&gt;- periodo : String&lt;br&gt;- monto : BigDecimal&lt;br&gt;- fechaEmision : Date&lt;br&gt;- fechaVencimiento : Date&lt;br&gt;- estado : String" style="text;strokeColor=none;fillColor=#E8F5E9;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-installment">
+        <mxCell id="c-installment-a" value="- idCuota : int&lt;br&gt;- periodo : String&lt;br&gt;- monto : BigDecimal&lt;br&gt;- fechaEmision : Date&lt;br&gt;- fechaVencimiento : Date&lt;br&gt;- estado : String" style="text;strokeColor=none;fillColor=#E8F5E9;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-installment">
           <mxGeometry x="0" y="30" width="350" height="174" as="geometry" />
         </mxCell>
         <mxCell id="c-installment-sep" value="" style="line;strokeColor=#2E7D32;fillColor=none;" vertex="1" parent="c-installment">
@@ -95,7 +95,7 @@
         <mxCell id="c-conversation" value="Conversacion" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
           <mxGeometry x="1350" y="160" width="380" height="466" as="geometry" />
         </mxCell>
-        <mxCell id="c-conversation-a" value="- idConversacion : int&lt;br&gt;- idCliente : int?&lt;br&gt;- idUsuarioAtencion : int?&lt;br&gt;- numeroWhatsapp : String&lt;br&gt;- fechaHoraInicio : DateTime&lt;br&gt;- fechaHoraCierre : DateTime?&lt;br&gt;- estado : String&lt;br&gt;- modoAtencion : String&lt;br&gt;- intencionActual : String?&lt;br&gt;- pasoActual : String?&lt;br&gt;- intentosInterpretacion : int&lt;br&gt;- inicioAtencion : DateTime?&lt;br&gt;- finAtencion : DateTime?" style="text;strokeColor=none;fillColor=#E3F2FD;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-conversation">
+        <mxCell id="c-conversation-a" value="- idConversacion : int&lt;br&gt;- numeroWhatsapp : String&lt;br&gt;- fechaHoraInicio : DateTime&lt;br&gt;- fechaHoraCierre : DateTime?&lt;br&gt;- estado : String&lt;br&gt;- modoAtencion : String&lt;br&gt;- intencionActual : String?&lt;br&gt;- pasoActual : String?&lt;br&gt;- intentosInterpretacion : int&lt;br&gt;- inicioAtencion : DateTime?&lt;br&gt;- finAtencion : DateTime?" style="text;strokeColor=none;fillColor=#E3F2FD;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-conversation">
           <mxGeometry x="0" y="30" width="380" height="274" as="geometry" />
         </mxCell>
         <mxCell id="c-conversation-sep" value="" style="line;strokeColor=#1565C0;fillColor=none;" vertex="1" parent="c-conversation">
@@ -107,7 +107,7 @@
         <mxCell id="c-message" value="Mensaje" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
           <mxGeometry x="1350" y="760" width="380" height="306" as="geometry" />
         </mxCell>
-        <mxCell id="c-message-a" value="- idMensaje : int&lt;br&gt;- idConversacion : int&lt;br&gt;- idMensajeExterno : String?&lt;br&gt;- idUsuario : int?&lt;br&gt;- fechaHora : DateTime&lt;br&gt;- tipo : String&lt;br&gt;- contenido : String?&lt;br&gt;- archivoAdjunto : String?&lt;br&gt;- tipoEmisor : String&lt;br&gt;- estadoEnvio : String" style="text;strokeColor=none;fillColor=#E3F2FD;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-message">
+        <mxCell id="c-message-a" value="- idMensaje : int&lt;br&gt;- idMensajeExterno : String?&lt;br&gt;- fechaHora : DateTime&lt;br&gt;- tipo : String&lt;br&gt;- contenido : String?&lt;br&gt;- archivoAdjunto : String?&lt;br&gt;- tipoEmisor : String&lt;br&gt;- estadoEnvio : String" style="text;strokeColor=none;fillColor=#E3F2FD;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-message">
           <mxGeometry x="0" y="30" width="380" height="214" as="geometry" />
         </mxCell>
         <mxCell id="c-message-sep" value="" style="line;strokeColor=#1565C0;fillColor=none;" vertex="1" parent="c-message">
@@ -119,7 +119,7 @@
         <mxCell id="c-receipt" value="Comprobante" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#2E7D32;strokeColor=#2E7D32;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
           <mxGeometry x="1350" y="1260" width="380" height="346" as="geometry" />
         </mxCell>
-        <mxCell id="c-receipt-a" value="- idComprobante : int&lt;br&gt;- idMensaje : int&lt;br&gt;- idUsuario : int?&lt;br&gt;- hashArchivo : String?&lt;br&gt;- fechaRecepcion : DateTime&lt;br&gt;- numeroOperacion : String?&lt;br&gt;- montoOcr : BigDecimal?&lt;br&gt;- fechaOcr : Date?&lt;br&gt;- confianzaOcr : double?&lt;br&gt;- estadoValidacion : String&lt;br&gt;- motivoRechazo : String?" style="text;strokeColor=none;fillColor=#E8F5E9;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-receipt">
+        <mxCell id="c-receipt-a" value="- idComprobante : int&lt;br&gt;- hashArchivo : String?&lt;br&gt;- fechaRecepcion : DateTime&lt;br&gt;- numeroOperacion : String?&lt;br&gt;- montoOcr : BigDecimal?&lt;br&gt;- fechaOcr : Date?&lt;br&gt;- confianzaOcr : double?&lt;br&gt;- estadoValidacion : String&lt;br&gt;- motivoRechazo : String?" style="text;strokeColor=none;fillColor=#E8F5E9;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-receipt">
           <mxGeometry x="0" y="30" width="380" height="234" as="geometry" />
         </mxCell>
         <mxCell id="c-receipt-sep" value="" style="line;strokeColor=#2E7D32;fillColor=none;" vertex="1" parent="c-receipt">
@@ -131,7 +131,7 @@
         <mxCell id="c-ticket" value="Ticket" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#C62828;strokeColor=#C62828;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
           <mxGeometry x="1820" y="160" width="380" height="366" as="geometry" />
         </mxCell>
-        <mxCell id="c-ticket-a" value="- idTicket : int&lt;br&gt;- idConversacion : int&lt;br&gt;- idServicio : int&lt;br&gt;- idUsuarioAsignado : int?&lt;br&gt;- fechaCreacion : DateTime&lt;br&gt;- tipo : String&lt;br&gt;- descripcion : String&lt;br&gt;- estado : String&lt;br&gt;- fechaAsignacion : DateTime?&lt;br&gt;- fechaResolucion : DateTime?" style="text;strokeColor=none;fillColor=#FFEBEE;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-ticket">
+        <mxCell id="c-ticket-a" value="- idTicket : int&lt;br&gt;- fechaCreacion : DateTime&lt;br&gt;- tipo : String&lt;br&gt;- descripcion : String&lt;br&gt;- estado : String&lt;br&gt;- fechaAsignacion : DateTime?&lt;br&gt;- fechaResolucion : DateTime?" style="text;strokeColor=none;fillColor=#FFEBEE;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-ticket">
           <mxGeometry x="0" y="30" width="380" height="214" as="geometry" />
         </mxCell>
         <mxCell id="c-ticket-sep" value="" style="line;strokeColor=#C62828;fillColor=none;" vertex="1" parent="c-ticket">
@@ -143,7 +143,7 @@
         <mxCell id="c-note" value="NotaInterna" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#C62828;strokeColor=#C62828;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
           <mxGeometry x="1820" y="760" width="380" height="204" as="geometry" />
         </mxCell>
-        <mxCell id="c-note-a" value="- idNota : int&lt;br&gt;- idTicket : int&lt;br&gt;- idUsuario : int&lt;br&gt;- fechaHora : DateTime&lt;br&gt;- contenido : String" style="text;strokeColor=none;fillColor=#FFEBEE;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-note">
+        <mxCell id="c-note-a" value="- idNota : int&lt;br&gt;- fechaHora : DateTime&lt;br&gt;- contenido : String" style="text;strokeColor=none;fillColor=#FFEBEE;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-note">
           <mxGeometry x="0" y="30" width="380" height="114" as="geometry" />
         </mxCell>
         <mxCell id="c-note-sep" value="" style="line;strokeColor=#C62828;fillColor=none;" vertex="1" parent="c-note">
@@ -155,7 +155,7 @@
         <mxCell id="c-payment" value="Pago" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#2E7D32;strokeColor=#2E7D32;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
           <mxGeometry x="1820" y="1260" width="380" height="224" as="geometry" />
         </mxCell>
-        <mxCell id="c-payment-a" value="- idPago : int&lt;br&gt;- idComprobante : int?&lt;br&gt;- idCuenta : int&lt;br&gt;- fecha : Date&lt;br&gt;- montoTotal : BigDecimal&lt;br&gt;- medioPago : String" style="text;strokeColor=none;fillColor=#E8F5E9;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-payment">
+        <mxCell id="c-payment-a" value="- idPago : int&lt;br&gt;- fecha : Date&lt;br&gt;- montoTotal : BigDecimal&lt;br&gt;- medioPago : String" style="text;strokeColor=none;fillColor=#E8F5E9;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-payment">
           <mxGeometry x="0" y="30" width="380" height="134" as="geometry" />
         </mxCell>
         <mxCell id="c-payment-sep" value="" style="line;strokeColor=#2E7D32;fillColor=none;" vertex="1" parent="c-payment">
@@ -376,6 +376,14 @@
               <mxPoint x="2820" y="700" />
               <mxPoint x="2010" y="700" />
               <mxPoint x="2010" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=0;strokeWidth=2;" edge="1" parent="1" source="c-notify" target="c-external">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="3075" y="400" />
+              <mxPoint x="2840" y="400" />
             </Array>
           </mxGeometry>
         </mxCell>
