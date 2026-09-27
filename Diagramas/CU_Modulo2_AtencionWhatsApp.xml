@@ -1,0 +1,296 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="Electron" agent="Codex" version="29.6.6">
+  <diagram id="cu-modulo2" name="CU Módulo 2 - Atención por WhatsApp">
+    <mxGraphModel dx="3000" dy="1700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="1700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Caso de uso específico — Módulo 2: Atención por WhatsApp" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=26;fontColor=#263238;" vertex="1" parent="1">
+          <mxGeometry x="500" y="20" width="2000" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="system" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#455A64;strokeWidth=3;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="300" y="100" width="2400" height="1500" as="geometry" />
+        </mxCell>
+        <mxCell id="g-core" value="Recepción, identificación e intención" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingTop=12;spacingLeft=15;fontStyle=1;fontSize=17;strokeWidth=2;arcSize=8;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="360" y="350" width="1080" height="570" as="geometry" />
+        </mxCell>
+        <mxCell id="g-actions" value="Acciones del bot" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingTop=12;spacingLeft=15;fontStyle=1;fontSize=17;strokeWidth=2;arcSize=8;fillColor=#E8F5E9;strokeColor=#2E7D32;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="350" width="1140" height="570" as="geometry" />
+        </mxCell>
+        <mxCell id="g-human" value="Atención humana e historial" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingTop=12;spacingLeft=15;fontStyle=1;fontSize=17;strokeWidth=2;arcSize=8;fillColor=#FFEBEE;strokeColor=#C62828;fontColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="360" y="990" width="1080" height="450" as="geometry" />
+        </mxCell>
+        <mxCell id="g-notify" value="Notificaciones y archivos" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingTop=12;spacingLeft=15;fontStyle=1;fontSize=17;strokeWidth=2;arcSize=8;fillColor=#FFF8E1;strokeColor=#B28900;fontColor=#B28900;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="990" width="1140" height="450" as="geometry" />
+        </mxCell>
+        <mxCell id="a-client" value="Cliente" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="160" width="150" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="a-user" value="Usuario interno&lt;br&gt;(Empleado o administrador)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="35" y="1080" width="150" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="a-wa" value="WhatsApp Cloud API" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="2780" y="160" width="150" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="a-clock" value="Reloj del sistema" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="2790" y="1120" width="150" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-attend" value="Recibir y responder mensajes&lt;br&gt;&lt;b&gt;[RF-10]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="160" width="560" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-process" value="Procesar mensaje entrante&lt;br&gt;&lt;b&gt;[RF-10]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="720" y="400" width="360" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-open" value="Abrir o reutilizar&lt;br&gt;conversación&lt;br&gt;&lt;b&gt;[RF-10]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="420" y="540" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-history" value="Registrar cada mensaje&lt;br&gt;en el historial&lt;br&gt;&lt;b&gt;[RF-16]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="760" y="540" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-identify" value="Identificar cliente&lt;br&gt;por teléfono o DNI&lt;br&gt;&lt;b&gt;[RF-12]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="540" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-offer" value="Ofrecer registro y&lt;br&gt;contratación&lt;br&gt;&lt;b&gt;[RF-12]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="420" y="700" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-intent" value="Reconocer intención&lt;br&gt;mediante IA&lt;br&gt;&lt;b&gt;[RF-11]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="760" y="700" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-rephrase" value="Solicitar&lt;br&gt;reformulación&lt;br&gt;&lt;b&gt;[RF-11]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="700" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-auto-escalate" value="Derivar tras segundo&lt;br&gt;intento fallido&lt;br&gt;&lt;b&gt;[RF-11]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="760" y="820" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-account" value="Consultar estado&lt;br&gt;de cuenta&lt;br&gt;&lt;b&gt;[RF-13]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="1560" y="420" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-claim" value="Registrar reclamo o&lt;br&gt;soporte&lt;br&gt;&lt;b&gt;[RF-14]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="1920" y="420" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-ticket" value="Generar ticket&lt;br&gt;&lt;b&gt;[RF-14]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="2280" y="420" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-receipt" value="Recibir comprobante&lt;br&gt;imagen o PDF&lt;br&gt;&lt;b&gt;[RF-19]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="1560" y="620" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-format" value="Validar formato&lt;br&gt;imagen o PDF&lt;br&gt;&lt;b&gt;[RF-19]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="1920" y="620" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-store-file" value="Almacenar archivo&lt;br&gt;y referencia&lt;br&gt;&lt;b&gt;[RF-19]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="2280" y="620" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-confirm" value="Confirmar recepción&lt;br&gt;al cliente&lt;br&gt;&lt;b&gt;[RF-19]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="1920" y="800" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-take" value="Tomar control de la&lt;br&gt;conversación&lt;br&gt;&lt;b&gt;[RF-15]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#FFEBEE;strokeColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="430" y="1080" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-view-history" value="Consultar historial&lt;br&gt;de la conversación&lt;br&gt;&lt;b&gt;[RF-16]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#FFEBEE;strokeColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="800" y="1080" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-close-bot" value="Cerrar conversación&lt;br&gt;resuelta por el bot&lt;br&gt;&lt;b&gt;[RF-17]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#FFEBEE;strokeColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="430" y="1330" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-close-user" value="Cerrar atención&lt;br&gt;escalada&lt;br&gt;&lt;b&gt;[RF-17]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#FFEBEE;strokeColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="800" y="1330" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-due" value="Notificar próximo&lt;br&gt;vencimiento&lt;br&gt;&lt;b&gt;[RF-18]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#FFF8E1;strokeColor=#B28900;" vertex="1" parent="1">
+          <mxGeometry x="1560" y="1080" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-overdue" value="Notificar servicio&lt;br&gt;vencido&lt;br&gt;&lt;b&gt;[RF-18]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#FFF8E1;strokeColor=#B28900;" vertex="1" parent="1">
+          <mxGeometry x="1920" y="1080" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-send-wa" value="Enviar notificación&lt;br&gt;por WhatsApp&lt;br&gt;&lt;b&gt;[RF-18]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=2;fillColor=#FFF8E1;strokeColor=#B28900;" vertex="1" parent="1">
+          <mxGeometry x="2280" y="1080" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="as1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" parent="1" source="a-client" target="uc-attend">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="225" />
+              <mxPoint x="1160" y="225" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="as2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" parent="1" source="a-user" target="uc-take">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="1145" />
+              <mxPoint x="330" y="1145" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="as3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" parent="1" source="a-wa" target="uc-attend">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2740" y="225" />
+              <mxPoint x="1840" y="225" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="as4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" parent="1" source="a-wa" target="uc-send-wa">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2740" y="250" />
+              <mxPoint x="2690" y="250" />
+              <mxPoint x="2690" y="1125" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="as5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" parent="1" source="a-clock" target="uc-due">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2750" y="1185" />
+              <mxPoint x="2720" y="1185" />
+              <mxPoint x="2720" y="1530" />
+              <mxPoint x="1480" y="1530" />
+              <mxPoint x="1480" y="1125" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="as6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" parent="1" source="a-clock" target="uc-overdue">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2750" y="1205" />
+              <mxPoint x="2700" y="1205" />
+              <mxPoint x="2700" y="1510" />
+              <mxPoint x="2045" y="1510" />
+              <mxPoint x="2045" y="1170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i1" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-attend" target="uc-process">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1500" y="310" />
+              <mxPoint x="900" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i2" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-process" target="uc-open">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="900" y="515" />
+              <mxPoint x="545" y="515" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i3" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-process" target="uc-history">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="900" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i4" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-process" target="uc-identify">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="900" y="515" />
+              <mxPoint x="1225" y="515" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i5" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-process" target="uc-intent">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1060" y="500" />
+              <mxPoint x="1060" y="665" />
+              <mxPoint x="885" y="665" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i6" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-claim" target="uc-ticket">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i7" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-receipt" target="uc-format">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i8" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-receipt" target="uc-store-file">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1685" y="755" />
+              <mxPoint x="2405" y="755" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i9" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-receipt" target="uc-confirm">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1685" y="870" />
+              <mxPoint x="2045" y="870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i10" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-take" target="uc-view-history">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i11" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-due" target="uc-send-wa">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1685" y="1030" />
+              <mxPoint x="2405" y="1030" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i12" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-overdue" target="uc-send-wa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="«extend»&#10;[cliente no registrado]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-offer" target="uc-identify">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="545" y="660" />
+              <mxPoint x="1225" y="660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" value="«extend»&#10;[primer fallo]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-rephrase" target="uc-intent">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="«extend»&#10;[segundo fallo]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-auto-escalate" target="uc-intent">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="«extend»&#10;[intención: cuenta]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-account" target="uc-attend">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1685" y="315" />
+              <mxPoint x="1650" y="315" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" value="«extend»&#10;[intención: reclamo]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-claim" target="uc-attend">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2045" y="295" />
+              <mxPoint x="1760" y="295" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" value="«extend»&#10;[intención: pago]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-receipt" target="uc-attend">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1460" y="665" />
+              <mxPoint x="1460" y="300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" value="«extend»&#10;[consulta resuelta]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-close-bot" target="uc-attend">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="330" y="1375" />
+              <mxPoint x="330" y="300" />
+              <mxPoint x="1220" y="300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" value="«extend»&#10;[atención finalizada]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="uc-close-user" target="uc-take">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="925" y="1270" />
+              <mxPoint x="555" y="1270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

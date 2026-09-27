@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="Electron" agent="Codex" version="29.6.6">
+  <diagram id="seq-m2-account" name="Consulta de estado de cuenta por el bot">
+    <mxGraphModel dx="1870" dy="1720" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1870" pageHeight="1720" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Diagrama de secuencia — Módulo 2&lt;br&gt;Consulta de estado de cuenta por el bot&lt;br&gt;&lt;b&gt;RF-10 · RF-12 · RF-13 · RF-16&lt;/b&gt;" style="text;html=1;fontSize=20;fontStyle=1;align=center;fillColor=none;strokeColor=none;fontColor=#263238;" vertex="1" parent="1">
+          <mxGeometry x="120" y="15" width="1630" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p0" value="Cliente" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="15" y="110" width="190" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life0" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#9E9E9E;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="172" as="sourcePoint" />
+            <mxPoint x="110" y="1600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p1" value="WhatsApp Cloud API" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#2E7D32;strokeColor=#2E7D32;fontColor=#FFFFFF;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="285" y="110" width="190" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life1" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#9E9E9E;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="172" as="sourcePoint" />
+            <mxPoint x="380" y="1600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p2" value="BotController" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="555" y="110" width="190" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life2" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#9E9E9E;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="650" y="172" as="sourcePoint" />
+            <mxPoint x="650" y="1600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p3" value="Servicio&lt;br&gt;Conversaciones" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="825" y="110" width="190" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life3" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#9E9E9E;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="920" y="172" as="sourcePoint" />
+            <mxPoint x="920" y="1600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p4" value="Servicio&lt;br&gt;Clientes" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#B28900;strokeColor=#B28900;fontColor=#FFFFFF;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1095" y="110" width="190" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life4" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#9E9E9E;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1190" y="172" as="sourcePoint" />
+            <mxPoint x="1190" y="1600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p5" value="Servicio Cuenta&lt;br&gt;Corriente" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#6A1B9A;strokeColor=#6A1B9A;fontColor=#FFFFFF;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1365" y="110" width="190" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life5" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#9E9E9E;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1460" y="172" as="sourcePoint" />
+            <mxPoint x="1460" y="1600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p6" value="Base de Datos" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#37474F;strokeColor=#37474F;fontColor=#FFFFFF;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1635" y="110" width="190" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life6" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#9E9E9E;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1730" y="172" as="sourcePoint" />
+            <mxPoint x="1730" y="1600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="frame0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#607D8B;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="45" y="860" width="1680" height="500" as="geometry" />
+        </mxCell>
+        <mxCell id="frame0-label" value="opt" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="45" y="860" width="64" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="frame0-guard" value="[cliente identificado]" style="text;html=1;fontSize=11;fontStyle=2;fillColor=none;strokeColor=none;align=left;fontColor=#37474F;" vertex="1" parent="1">
+          <mxGeometry x="120" y="864" width="1590" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="m0" value="consulta estado de cuenta" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="240" as="sourcePoint" />
+            <mxPoint x="380" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1" value="webhook: mensaje" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="350" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" value="registrar y procesar mensaje [RF-10, RF-16]" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="650" y="460" as="sourcePoint" />
+            <mxPoint x="920" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" value="identificar por teléfono o DNI [RF-12]" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="920" y="570" as="sourcePoint" />
+            <mxPoint x="1190" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" value="buscar cliente y servicios" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1190" y="680" as="sourcePoint" />
+            <mxPoint x="1730" y="680" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" value="cliente identificado" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1730" y="790" as="sourcePoint" />
+            <mxPoint x="1190" y="790" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" value="consultarEstado(idCliente) [RF-13]" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="920" y="930" as="sourcePoint" />
+            <mxPoint x="1460" y="930" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" value="obtener cuotas y próximo vencimiento" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1460" y="1040" as="sourcePoint" />
+            <mxPoint x="1730" y="1040" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8" value="estado, deuda, fecha" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1730" y="1150" as="sourcePoint" />
+            <mxPoint x="1460" y="1150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m9" value="resumen de cuenta" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1460" y="1260" as="sourcePoint" />
+            <mxPoint x="920" y="1260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m10" value="guardar respuesta del bot [RF-16]" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="920" y="1380" as="sourcePoint" />
+            <mxPoint x="1730" y="1380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11" value="enviar estado de cuenta" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="920" y="1490" as="sourcePoint" />
+            <mxPoint x="380" y="1490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m12" value="al día/en mora, deuda y vencimiento" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="1600" as="sourcePoint" />
+            <mxPoint x="110" y="1600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="note" value="La respuesta muestra únicamente el estado, el monto adeudado y el próximo vencimiento del cliente identificado." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#FFF8E1;strokeColor=#B28900;fontSize=11;align=left;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="70" y="1620" width="1730" height="70" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

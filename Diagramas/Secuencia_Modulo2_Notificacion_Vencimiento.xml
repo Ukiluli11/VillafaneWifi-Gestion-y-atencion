@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="Electron" agent="Codex" version="29.6.6">
+  <diagram id="seq-m2-due" name="Notificación automática de vencimientos">
+    <mxGraphModel dx="1600" dy="1770" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1770" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Diagrama de secuencia — Módulo 2&lt;br&gt;Notificación automática de vencimientos&lt;br&gt;&lt;b&gt;RF-16 · RF-18&lt;/b&gt;" style="text;html=1;fontSize=20;fontStyle=1;align=center;fillColor=none;strokeColor=none;fontColor=#263238;" vertex="1" parent="1">
+          <mxGeometry x="120" y="15" width="1360" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p0" value="Scheduler" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="15" y="110" width="190" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life0" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#9E9E9E;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="172" as="sourcePoint" />
+            <mxPoint x="110" y="1650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p1" value="Servicio&lt;br&gt;Notificaciones" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#B28900;strokeColor=#B28900;fontColor=#FFFFFF;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="285" y="110" width="190" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life1" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#9E9E9E;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="172" as="sourcePoint" />
+            <mxPoint x="380" y="1650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p2" value="Base de Datos" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#37474F;strokeColor=#37474F;fontColor=#FFFFFF;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="555" y="110" width="190" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life2" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#9E9E9E;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="650" y="172" as="sourcePoint" />
+            <mxPoint x="650" y="1650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p3" value="Servicio&lt;br&gt;Conversaciones" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="825" y="110" width="190" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life3" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#9E9E9E;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="920" y="172" as="sourcePoint" />
+            <mxPoint x="920" y="1650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p4" value="WhatsApp Cloud API" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#2E7D32;strokeColor=#2E7D32;fontColor=#FFFFFF;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1095" y="110" width="190" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life4" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#9E9E9E;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1190" y="172" as="sourcePoint" />
+            <mxPoint x="1190" y="1650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p5" value="Cliente" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1365" y="110" width="190" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life5" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#9E9E9E;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1460" y="172" as="sourcePoint" />
+            <mxPoint x="1460" y="1650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="frame0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#607D8B;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="45" y="570" width="1460" height="880" as="geometry" />
+        </mxCell>
+        <mxCell id="frame0-label" value="loop" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="45" y="570" width="64" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="frame0-guard" value="[por cada servicio elegible]" style="text;html=1;fontSize=11;fontStyle=2;fillColor=none;strokeColor=none;align=left;fontColor=#37474F;" vertex="1" parent="1">
+          <mxGeometry x="120" y="574" width="1370" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="frame1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#607D8B;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="45" y="1450" width="1460" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="frame1-label" value="alt" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="45" y="1450" width="64" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="frame1-guard" value="[sin consentimiento / error de envío]" style="text;html=1;fontSize=11;fontStyle=2;fillColor=none;strokeColor=none;align=left;fontColor=#37474F;" vertex="1" parent="1">
+          <mxGeometry x="120" y="1454" width="1370" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="m0" value="ejecutar verificación diaria" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="250" as="sourcePoint" />
+            <mxPoint x="380" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1" value="buscar servicios próximos a vencer o vencidos" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="370" as="sourcePoint" />
+            <mxPoint x="650" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" value="clientes, fechas y estado" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="650" y="490" as="sourcePoint" />
+            <mxPoint x="380" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" value="verificar teléfono y consentimiento" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="650" as="sourcePoint" />
+            <mxPoint x="650" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" value="abrir/reutilizar conversación de notificación" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="770" as="sourcePoint" />
+            <mxPoint x="920" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" value="guardar mensaje saliente [RF-16]" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="920" y="890" as="sourcePoint" />
+            <mxPoint x="650" y="890" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" value="enviar plantilla de vencimiento [RF-18]" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="1010" as="sourcePoint" />
+            <mxPoint x="1190" y="1010" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" value="entregar notificación" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1190" y="1130" as="sourcePoint" />
+            <mxPoint x="1460" y="1130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8" value="estado de entrega" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1190" y="1250" as="sourcePoint" />
+            <mxPoint x="380" y="1250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m9" value="actualizar estado_envio" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="1370" as="sourcePoint" />
+            <mxPoint x="650" y="1370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m10" value="registrar omisión o fallo" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#37474F;fontSize=11;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;fontColor=#263238;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="1510" as="sourcePoint" />
+            <mxPoint x="650" y="1510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="note" value="Las comunicaciones iniciadas por la empresa usan una plantilla aprobada de WhatsApp." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#FFF8E1;strokeColor=#B28900;fontSize=11;align=left;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="70" y="1670" width="1460" height="70" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
