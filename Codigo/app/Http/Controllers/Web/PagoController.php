@@ -21,6 +21,6 @@ class PagoController extends Controller
             $datos['fecha'],
         );
 
-        return back()->with('exito', "Pago #{$pago->id_pago} registrado por ${$pago->monto_total}.");
+        return back()->with('exito', "Pago #{$pago->id_pago} registrado por \${$pago->monto_total}.");
     }
 }
