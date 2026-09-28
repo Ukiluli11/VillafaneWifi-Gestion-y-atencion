@@ -17,9 +17,16 @@ Siguiendo el estándar exacto aplicado en la **Fase 1 y Fase 2**:
 
 ---
 
-## 🟧 FASE 3 – Módulo 2: Bot de Atención WhatsApp con IA
-> **Fecha de Cierre Oficial:** Culmina en el **Avance 2 (18/09/2026)**.  
+## 🟧 FASE 3: Módulo 2 (Bot WhatsApp con IA) y Módulo 3 (Conciliación de Pagos y OCR)
+> **Período en Diagrama de Gantt:** 05/09/2026 al 02/10/2026 (Tareas 28 a 58).  
+> **Estructura de la Fase en el Gantt:**
+> * **Etapa 1 (Fase 3a - Módulo 2):** Culminó en el **Avance 2 (18/09/2026)** con demostración interactiva del bot de WhatsApp.
+> * **Etapa 2 (Fase 3b - Módulo 3):** Culmina en la **Entrega 2 con nota (02/10/2026)** con el circuito completo de pagos, OCR y conciliación.  
 > **Ubicación en Trello:** Lista *Hecho*.
+
+---
+
+### Sub-etapa 3A: Módulo 2 – Bot de Atención WhatsApp con IA (Avance 2)
 
 ### 14. [Fase 3 - Módulo 2] Revisión UML y Arquitectura del Bot
 **🎯 Objetivo:** Revisar las especificaciones y diagramas previos al código y planificar la integración con la Cloud API de WhatsApp.
@@ -63,9 +70,7 @@ Siguiendo el estándar exacto aplicado en la **Fase 1 y Fase 2**:
 
 ---
 
-## 🟥 FASE 3 – Módulo 3: Conciliación de Pagos y OCR
-> **Fecha de Cierre Oficial:** Culmina en la **Entrega 2 con nota (02/10/2026)**.  
-> **Ubicación en Trello:** Lista *Hecho*.
+### Sub-etapa 3B: Módulo 3 – Conciliación de Pagos y OCR (Entrega 2 con nota)
 
 ### 20. [Fase 3 - Módulo 3] Revisión UML y Diseño del Motor OCR
 **🎯 Objetivo:** Auditar los diagramas de clases y secuencias de pagos y definir la arquitectura de lectura inteligente de comprobantes.
