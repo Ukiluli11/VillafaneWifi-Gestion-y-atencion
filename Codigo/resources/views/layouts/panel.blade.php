@@ -26,7 +26,7 @@
                     <span>Resumen</span>
                 </a>
 
-                @if ($navegacionPermitida['clientes'] || $navegacionPermitida['servicios'])
+                @if ($navegacionPermitida['clientes'] || $navegacionPermitida['servicios'] || ($navegacionPermitida['comprobantes'] ?? false))
                     <span class="grupo-navegacion">Operaciones</span>
                 @endif
                 @if ($navegacionPermitida['clientes'])
@@ -52,6 +52,13 @@
                     <a class="enlace-navegacion {{ request()->routeIs('simulador-whatsapp.*') ? 'activo' : '' }}" href="{{ route('simulador-whatsapp.create') }}">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 12h5M8 16h3"/></svg>
                         <span>Simulador WhatsApp</span>
+                    </a>
+                @endif
+
+                @if ($navegacionPermitida['comprobantes'] ?? false)
+                    <a class="enlace-navegacion {{ request()->routeIs('comprobantes.*') ? 'activo' : '' }}" href="{{ route('comprobantes.index') }}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg>
+                        <span>Comprobantes</span>
                     </a>
                 @endif
 

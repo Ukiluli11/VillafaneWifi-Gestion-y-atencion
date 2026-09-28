@@ -6,6 +6,7 @@ use App\Enums\EstadoCuentaReceptora;
 use App\Enums\EstadoCuota;
 use App\Enums\EstadoServicio;
 use App\Enums\MedioPago;
+use App\Models\Cliente;
 use App\Models\CuentaReceptora;
 use App\Models\Cuota;
 use App\Models\Pago;
@@ -81,7 +82,7 @@ class ServicioFacturacion
     }
 
     /** @param list<int> $identificadoresCuota */
-    public function registrarPago(array $identificadoresCuota, CuentaReceptora $cuenta, MedioPago $medio, string $fecha): Pago
+    public function registrarPago(array $identificadoresCuota, CuentaReceptora $cuenta, MedioPago $medio, string $fecha, ?int $idComprobante = null): Pago
     {
         if ($identificadoresCuota === []) {
             throw ValidationException::withMessages(['cuotas' => 'Debe seleccionar al menos una cuota.']);
@@ -90,7 +91,7 @@ class ServicioFacturacion
             throw ValidationException::withMessages(['id_cuenta' => 'La cuenta receptora está inactiva.']);
         }
 
-        return DB::transaction(function () use ($identificadoresCuota, $cuenta, $medio, $fecha): Pago {
+        return DB::transaction(function () use ($identificadoresCuota, $cuenta, $medio, $fecha, $idComprobante): Pago {
             $cuotas = Cuota::query()
                 ->whereIn('id_cuota', array_unique($identificadoresCuota))
                 ->with('servicio')
@@ -112,6 +113,7 @@ class ServicioFacturacion
             );
             $pago = Pago::create([
                 'id_cuenta' => $cuenta->id_cuenta,
+                'id_comprobante' => $idComprobante,
                 'fecha' => $fecha,
                 'monto_total' => (string) $monto,
                 'medio_pago' => $medio,
@@ -124,7 +126,70 @@ class ServicioFacturacion
                 fn (Servicio $servicio) => $this->actualizarProximoVencimiento($servicio),
             );
 
-            return $pago->load(['cuenta', 'cuotas.servicio']);
+            return $pago->load(['cuenta', 'cuotas.servicio', 'comprobante']);
+        });
+    }
+
+    /**
+     * Imputa un monto a las cuotas impagas del cliente en orden cronológico (las más antiguas primero - RF-21).
+     */
+    public function imputarPagoACuotas(
+        Cliente $cliente,
+        CuentaReceptora $cuenta,
+        MedioPago $medio,
+        string $fecha,
+        string|float|BigDecimal $montoTotal,
+        ?int $idComprobante = null
+    ): Pago {
+        if ($cuenta->estado !== EstadoCuentaReceptora::Activa) {
+            throw ValidationException::withMessages(['id_cuenta' => 'La cuenta receptora está inactiva.']);
+        }
+
+        $montoDisponible = $montoTotal instanceof BigDecimal ? $montoTotal : BigDecimal::of((string) $montoTotal);
+        if ($montoDisponible->isLessThanOrEqualTo(0)) {
+            throw ValidationException::withMessages(['monto' => 'El monto debe ser mayor a cero.']);
+        }
+
+        return DB::transaction(function () use ($cliente, $cuenta, $medio, $fecha, $montoDisponible, $idComprobante): Pago {
+            // Buscamos todas las cuotas adeudadas ordenadas cronológicamente (RF-21)
+            $cuotasImpagas = Cuota::query()
+                ->whereHas('servicio', fn ($q) => $q->where('id_cliente', $cliente->id_cliente))
+                ->whereNull('id_pago')
+                ->whereIn('estado', [EstadoCuota::Pendiente->value, EstadoCuota::Vencida->value])
+                ->orderBy('fecha_vencimiento', 'asc')
+                ->orderBy('id_cuota', 'asc')
+                ->lockForUpdate()
+                ->get();
+
+            $pago = Pago::create([
+                'id_cuenta' => $cuenta->id_cuenta,
+                'id_comprobante' => $idComprobante,
+                'fecha' => $fecha,
+                'monto_total' => (string) $montoDisponible,
+                'medio_pago' => $medio,
+            ]);
+
+            $montoRestante = $montoDisponible;
+
+            foreach ($cuotasImpagas as $cuota) {
+                $montoCuota = BigDecimal::of($cuota->monto);
+                if ($montoRestante->isGreaterThanOrEqualTo($montoCuota)) {
+                    $cuota->update([
+                        'id_pago' => $pago->id_pago,
+                        'estado' => EstadoCuota::Pagada->value,
+                    ]);
+                    $montoRestante = $montoRestante->minus($montoCuota);
+                } else {
+                    break;
+                }
+            }
+
+            $servicios = Servicio::where('id_cliente', $cliente->id_cliente)->get();
+            foreach ($servicios as $servicio) {
+                $this->actualizarProximoVencimiento($servicio);
+            }
+
+            return $pago->load(['cuenta', 'cuotas.servicio', 'comprobante']);
         });
     }
 

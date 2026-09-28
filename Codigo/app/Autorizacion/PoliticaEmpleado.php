@@ -18,6 +18,7 @@ class PoliticaEmpleado implements PoliticaAcceso
             AccionSistema::ConsultarPagos, AccionSistema::GestionarPagos,
             AccionSistema::ConsultarConversaciones,
             AccionSistema::GestionarConversaciones,
+            AccionSistema::ConsultarComprobantes, AccionSistema::GestionarComprobantes,
         ],
         AreaEmpleado::Soporte->value => [
             AccionSistema::ConsultarClientes, AccionSistema::ConsultarServicios,
@@ -28,6 +29,7 @@ class PoliticaEmpleado implements PoliticaAcceso
             AccionSistema::ConsultarClientes, AccionSistema::ConsultarCuentas,
             AccionSistema::ConsultarPagos, AccionSistema::ConsultarConversaciones,
             AccionSistema::GestionarConversaciones,
+            AccionSistema::ConsultarPagos, AccionSistema::ConsultarComprobantes,
         ],
     ];
 

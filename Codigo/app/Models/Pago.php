@@ -41,4 +41,9 @@ class Pago extends Model
     {
         return $this->hasMany(Cuota::class, 'id_pago', 'id_pago');
     }
+
+    public function comprobante(): BelongsTo
+    {
+        return $this->belongsTo(Comprobante::class, 'id_comprobante', 'id_comprobante');
+    }
 }
