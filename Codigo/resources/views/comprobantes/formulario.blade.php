@@ -32,7 +32,7 @@
         <small style="color: #64748b;">Formatos aceptados: JPG, PNG o PDF. Máximo 10 MB. Se generará un hash SHA-256 para evitar duplicados.</small>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+    <div class="grilla-dos-campos separacion-superior">
         <div class="campo">
             <label for="monto">Monto pagado ($)</label>
             <input type="number" step="0.01" id="monto" name="monto" value="{{ old('monto') }}" placeholder="Ej: 15000.00">
@@ -52,7 +52,7 @@
         <small style="color: #64748b;">Opcional: Código de operación provisto por Mercado Pago o la entidad bancaria.</small>
     </div>
 
-    <div class="acciones-formulario" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+    <div class="acciones-formulario">
         <button class="boton" type="submit">Registrar Comprobante</button>
         <a class="boton secundario" href="{{ route('comprobantes.index') }}">Cancelar</a>
     </div>

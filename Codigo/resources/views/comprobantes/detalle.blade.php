@@ -13,10 +13,10 @@
     </div>
 </div>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem; align-items: start;">
+<div class="grilla-comprobante">
     
     <!-- Columna Izquierda: Datos del Comprobante y Archivo -->
-    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+    <div class="columna-comprobante">
         <section class="tarjeta">
             <h2>Datos del Comprobante</h2>
             <dl>
@@ -87,7 +87,7 @@
     </div>
 
     <!-- Columna Derecha: Cuotas Impagas y Formularios de Conciliación -->
-    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+    <div class="columna-comprobante">
         
         <!-- Listado de cuotas impagas del cliente (RF-21) -->
         <section class="tarjeta">
@@ -152,7 +152,7 @@
                         </select>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="grilla-dos-campos">
                         <div class="campo">
                             <label for="medio_pago">Medio de Pago *</label>
                             <select id="medio_pago" name="medio_pago" required>
