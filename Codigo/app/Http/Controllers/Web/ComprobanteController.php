@@ -92,7 +92,7 @@ class ComprobanteController extends Controller
 
     public function show(Comprobante $comprobante): View
     {
-        $comprobante->load(['cliente.servicios.plan', 'pago.cuenta', 'pago.cuotas']);
+        $comprobante->load(['cliente.servicios.plan', 'pago.cuenta', 'pago.cuotas', 'usuario']);
 
         // Cuotas impagas del cliente (pendientes y vencidas) para análisis en la conciliación
         $cuotasImpagas = Cuota::query()
@@ -123,7 +123,8 @@ class ComprobanteController extends Controller
             $cuenta,
             $medio,
             $request->validated('fecha'),
-            $request->validated('monto')
+            $request->validated('monto'),
+            $request->user()
         );
 
         return redirect()
@@ -133,7 +134,11 @@ class ComprobanteController extends Controller
 
     public function rechazar(RechazarComprobanteRequest $request, Comprobante $comprobante): RedirectResponse
     {
-        $this->servicioComprobantes->rechazarComprobante($comprobante, $request->validated('motivo_rechazo'));
+        $this->servicioComprobantes->rechazarComprobante(
+            $comprobante,
+            $request->validated('motivo_rechazo'),
+            $request->user()
+        );
 
         return redirect()
             ->route('comprobantes.show', $comprobante)

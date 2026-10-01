@@ -18,10 +18,10 @@ class Comprobante extends Model
     protected $primaryKey = 'id_comprobante';
 
     protected $fillable = [
-        'id_cliente', 'id_pago', 'id_conversacion', 'id_mensaje',
+        'id_cliente', 'id_pago', 'id_usuario', 'id_conversacion', 'id_mensaje',
         'fecha_recepcion', 'nombre_original', 'mime_type', 'tamanio_bytes',
         'hash_archivo', 'numero_operacion', 'monto_ocr', 'fecha_ocr',
-        'ruta_archivo', 'estado_validacion', 'motivo_rechazo', 'origen',
+        'ruta_archivo', 'estado_validacion', 'motivo_rechazo', 'fecha_hora_validacion', 'origen',
     ];
 
     protected $attributes = [
@@ -37,6 +37,7 @@ class Comprobante extends Model
             'monto_ocr' => 'decimal:2',
             'fecha_ocr' => 'date',
             'estado_validacion' => EstadoComprobante::class,
+            'fecha_hora_validacion' => 'datetime',
             'origen' => OrigenComprobante::class,
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
@@ -51,6 +52,11 @@ class Comprobante extends Model
     public function pago(): BelongsTo
     {
         return $this->belongsTo(Pago::class, 'id_pago', 'id_pago');
+    }
+
+    public function usuario(): BelongsTo
+    {
+        return $this->belongsTo(Usuario::class, 'id_usuario', 'id_usuario');
     }
 
     public function conversacion(): BelongsTo

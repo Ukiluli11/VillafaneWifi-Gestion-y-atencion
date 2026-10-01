@@ -9,6 +9,7 @@ use App\Models\Cliente;
 use App\Models\Comprobante;
 use App\Models\CuentaReceptora;
 use App\Models\Pago;
+use App\Models\Usuario;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -87,6 +88,7 @@ class ServicioComprobantes
         MedioPago $medio,
         ?string $fechaPago = null,
         ?string $montoAprobado = null,
+        ?Usuario $usuario = null,
     ): Pago {
         if (! $comprobante->estaPendiente()) {
             throw ValidationException::withMessages([
@@ -103,7 +105,7 @@ class ServicioComprobantes
 
         $fechaFinal = $fechaPago ?: ($comprobante->fecha_ocr?->toDateString() ?: CarbonImmutable::today()->toDateString());
 
-        return DB::transaction(function () use ($comprobante, $cuenta, $medio, $fechaFinal, $montoFinal): Pago {
+        return DB::transaction(function () use ($comprobante, $cuenta, $medio, $fechaFinal, $montoFinal, $usuario): Pago {
             // Imputa cronológicamente a las cuotas más antiguas del cliente (RF-21)
             $pago = $this->servicioFacturacion->imputarPagoACuotas(
                 $comprobante->cliente,
@@ -114,9 +116,11 @@ class ServicioComprobantes
                 $comprobante->id_comprobante
             );
 
-            // Actualiza el comprobante a Aprobado con el ID de pago vinculado
+            // Actualiza el comprobante a Aprobado con el ID de pago vinculado y datos de auditoría
             $comprobante->update([
                 'id_pago' => $pago->id_pago,
+                'id_usuario' => $usuario?->id_usuario,
+                'fecha_hora_validacion' => CarbonImmutable::now(),
                 'estado_validacion' => EstadoComprobante::Aprobado,
                 'motivo_rechazo' => null,
             ]);
@@ -129,9 +133,9 @@ class ServicioComprobantes
     }
 
     /**
-     * Rechaza un comprobante pendiente registrando el motivo de no validación (RF-22, RF-25).
+     * Rechaza un comprobante pendiente registrando el motivo de no validación y usuario auditor (RF-22, RF-25).
      */
-    public function rechazarComprobante(Comprobante $comprobante, string $motivo): Comprobante
+    public function rechazarComprobante(Comprobante $comprobante, string $motivo, ?Usuario $usuario = null): Comprobante
     {
         if (! $comprobante->estaPendiente()) {
             throw ValidationException::withMessages([
@@ -147,6 +151,8 @@ class ServicioComprobantes
         }
 
         $comprobante->update([
+            'id_usuario' => $usuario?->id_usuario,
+            'fecha_hora_validacion' => CarbonImmutable::now(),
             'estado_validacion' => EstadoComprobante::Rechazado,
             'motivo_rechazo' => $motivoLimpio,
         ]);

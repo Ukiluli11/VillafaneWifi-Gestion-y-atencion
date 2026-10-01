@@ -177,6 +177,8 @@ class ComprobantesTest extends TestCase
         $comprobante->refresh();
         $this->assertSame(EstadoComprobante::Aprobado, $comprobante->estado_validacion);
         $this->assertNotNull($comprobante->id_pago);
+        $this->assertSame($admin->id_usuario, $comprobante->id_usuario);
+        $this->assertNotNull($comprobante->fecha_hora_validacion);
 
         // Verificamos que se canceló la cuota MÁS ANTIGUA primero (RF-21)
         $cuotaAntigua->refresh();
@@ -213,6 +215,8 @@ class ComprobantesTest extends TestCase
         $comprobante->refresh();
         $this->assertSame(EstadoComprobante::Rechazado, $comprobante->estado_validacion);
         $this->assertSame('Comprobante ilegible, no coincide el titular de la transferencia.', $comprobante->motivo_rechazo);
+        $this->assertSame($admin->id_usuario, $comprobante->id_usuario);
+        $this->assertNotNull($comprobante->fecha_hora_validacion);
         $this->assertNull($comprobante->id_pago);
         $this->assertDatabaseCount('pago', 0);
     }

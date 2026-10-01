@@ -12,13 +12,17 @@ use Illuminate\Validation\ValidationException;
 
 class ServicioUsuarios
 {
+    public function __construct(
+        private readonly ServicioSeguridad $servicioSeguridad = new ServicioSeguridad()
+    ) {}
+
     /** @param array<string, mixed> $datos */
     public function crear(array $datos): Usuario
     {
         return DB::transaction(function () use ($datos): Usuario {
             $usuario = Usuario::create([
                 'nombre_usuario' => trim((string) $datos['nombre_usuario']),
-                'credencial' => Hash::make((string) $datos['contrasena']),
+                'credencial' => $this->servicioSeguridad->hashearPassword((string) $datos['contrasena']),
                 'estado' => EstadoUsuario::Activo,
             ]);
 

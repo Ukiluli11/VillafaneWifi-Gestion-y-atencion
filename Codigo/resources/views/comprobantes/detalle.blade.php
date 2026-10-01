@@ -70,6 +70,8 @@
                     <dd>{{ ucfirst(str_replace('_', ' ', $comprobante->pago?->medio_pago->value ?? '')) }}</dd>
                     <dt>Fecha efectiva</dt>
                     <dd>{{ $comprobante->pago?->fecha ? $comprobante->pago->fecha->format('d/m/Y') : '—' }}</dd>
+                    <dt>Validado por</dt>
+                    <dd><strong>{{ $comprobante->usuario?->nombre_usuario ?: 'Operador / Sistema' }}</strong> el {{ $comprobante->fecha_hora_validacion ? $comprobante->fecha_hora_validacion->format('d/m/Y H:i') : ($comprobante->updated_at ? $comprobante->updated_at->format('d/m/Y H:i') : '—') }}</dd>
                 </dl>
             </section>
         @endif
@@ -81,7 +83,9 @@
                 <blockquote style="margin: 0; padding: 0.75rem 1rem; background: #fff; border-radius: 6px; border-left: 3px solid #dc2626; font-style: italic;">
                     "{{ $comprobante->motivo_rechazo }}"
                 </blockquote>
-                <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">Se emitió la notificación correspondiente al cliente informando la no validación.</p>
+                <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">
+                    Rechazado por <strong>{{ $comprobante->usuario?->nombre_usuario ?: 'Operador' }}</strong> el {{ $comprobante->fecha_hora_validacion ? $comprobante->fecha_hora_validacion->format('d/m/Y H:i') : ($comprobante->updated_at ? $comprobante->updated_at->format('d/m/Y H:i') : '—') }}. Se emitió la notificación correspondiente al cliente informando la no validación.
+                </p>
             </section>
         @endif
     </div>
