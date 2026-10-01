@@ -92,9 +92,6 @@
         <!-- Listado de cuotas impagas del cliente (RF-21) -->
         <section class="tarjeta">
             <h2>Cuotas Pendientes de Cancelación</h2>
-            <p style="font-size: 0.9rem; color: #64748b;">
-                Las cuotas se cancelan en orden cronológico (más antiguas primero) según la regla de negocio del sistema (RF-21).
-            </p>
             <div class="tabla-contenedor" style="margin-top: 0.75rem;">
                 <table>
                     <thead>
