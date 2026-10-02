@@ -79,9 +79,7 @@ class ServicioComprobantes
         ]);
     }
 
-    /**
-     * Aprueba y concilia un comprobante pendiente, imputando el pago a las cuotas impagas (RF-21, RF-22, RF-25).
-     */
+   
     public function conciliarYAprobar(
         Comprobante $comprobante,
         CuentaReceptora $cuenta,
@@ -106,7 +104,7 @@ class ServicioComprobantes
         $fechaFinal = $fechaPago ?: ($comprobante->fecha_ocr?->toDateString() ?: CarbonImmutable::today()->toDateString());
 
         return DB::transaction(function () use ($comprobante, $cuenta, $medio, $fechaFinal, $montoFinal, $usuario): Pago {
-            // Imputa cronológicamente a las cuotas más antiguas del cliente (RF-21)
+            
             $pago = $this->servicioFacturacion->imputarPagoACuotas(
                 $comprobante->cliente,
                 $cuenta,
@@ -116,7 +114,7 @@ class ServicioComprobantes
                 $comprobante->id_comprobante
             );
 
-            // Actualiza el comprobante a Aprobado con el ID de pago vinculado y datos de auditoría
+            
             $comprobante->update([
                 'id_pago' => $pago->id_pago,
                 'id_usuario' => $usuario?->id_usuario,
@@ -125,16 +123,14 @@ class ServicioComprobantes
                 'motivo_rechazo' => null,
             ]);
 
-            // Notifica al cliente de la acreditación exitosa (RF-25)
+            
             $this->notificacionService->notificarPagoAprobado($comprobante->cliente, $pago, $comprobante);
 
             return $pago;
         });
     }
 
-    /**
-     * Rechaza un comprobante pendiente registrando el motivo de no validación y usuario auditor (RF-22, RF-25).
-     */
+   
     public function rechazarComprobante(Comprobante $comprobante, string $motivo, ?Usuario $usuario = null): Comprobante
     {
         if (! $comprobante->estaPendiente()) {
@@ -157,7 +153,7 @@ class ServicioComprobantes
             'motivo_rechazo' => $motivoLimpio,
         ]);
 
-        // Notifica el rechazo al cliente (RF-25)
+        
         $this->notificacionService->notificarPagoRechazado($comprobante->cliente, $comprobante, $motivoLimpio);
 
         return $comprobante;
