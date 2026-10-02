@@ -251,13 +251,13 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r3" value="1                              0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-client" target="c-service">
+        <mxCell id="r3" value="1                              N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-client" target="c-service">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r4" value="1                              0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-plan" target="c-service">
+        <mxCell id="r4" value="1                              N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-plan" target="c-service">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r5" value="1                              0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-service" target="c-installment">
+        <mxCell id="r5" value="1                              N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-service" target="c-installment">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="675" y="1160" />
@@ -265,10 +265,10 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r6" value="0..1                         0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-client" target="c-conversation">
+        <mxCell id="r6" value="1                              N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-client" target="c-conversation">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r7" value="0..1 atiende              0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-user" target="c-conversation">
+        <mxCell id="r7" value="1 atiende                   N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-user" target="c-conversation">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="255" y="105" />
@@ -276,10 +276,10 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r8" value="1                              1..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-conversation" target="c-message">
+        <mxCell id="r8" value="1                              N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-conversation" target="c-message">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r9" value="0..1 emite               0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-user" target="c-message">
+        <mxCell id="r9" value="1 emite                    N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-user" target="c-message">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="230" y="85" />
@@ -288,13 +288,13 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r10" value="1                              0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-message" target="c-receipt">
+        <mxCell id="r10" value="1                              1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-message" target="c-receipt">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r11" value="1                              0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-conversation" target="c-ticket">
+        <mxCell id="r11" value="1                              N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-conversation" target="c-ticket">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r12" value="1                              0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-service" target="c-ticket">
+        <mxCell id="r12" value="1                              N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-service" target="c-ticket">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="675" y="680" />
@@ -303,7 +303,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r13" value="0..1 asignado          0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-user" target="c-ticket">
+        <mxCell id="r13" value="1 asignado               N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-user" target="c-ticket">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="280" y="65" />
@@ -311,10 +311,10 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r14" value="1                              0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-ticket" target="c-note">
+        <mxCell id="r14" value="1                              N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-ticket" target="c-note">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r15" value="1 autor                    0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-user" target="c-note">
+        <mxCell id="r15" value="1 autor                    N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-user" target="c-note">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="305" y="125" />
@@ -323,13 +323,13 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r16" value="0..1                         0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-receipt" target="c-payment">
+        <mxCell id="r16" value="1                              1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-receipt" target="c-payment">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r17" value="1                              0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-account" target="c-payment">
+        <mxCell id="r17" value="1                              N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-account" target="c-payment">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r18" value="0..1                         1..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-payment" target="c-installment">
+        <mxCell id="r18" value="1                              N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=1.5;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c-payment" target="c-installment">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="2010" y="1700" />

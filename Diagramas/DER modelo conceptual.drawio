@@ -524,7 +524,7 @@
         <mxCell id="full-relation-cliente-conversacion" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="INICIA / ES INICIADA POR" vertex="1">
           <mxGeometry height="110" width="240" x="3425" y="595" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-81" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-cliente-conversacion" value="0..1">
+        <mxCell id="e-full-81" edge="1" parent="1" source="full-entity-cliente" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-relation-cliente-conversacion" value="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="e-full-82" edge="1" parent="1" source="full-relation-cliente-conversacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-conversacion" value="N">
@@ -556,7 +556,7 @@
         <mxCell id="full-relation-usuario-mensaje" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ENVÍA / ES ENVIADO POR" vertex="1">
           <mxGeometry height="110" width="240" x="5920" y="1445" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-87" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" target="full-relation-usuario-mensaje" value="0..1">
+        <mxCell id="e-full-87" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" target="full-relation-usuario-mensaje" value="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="e-full-88" edge="1" parent="1" source="full-relation-usuario-mensaje" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" target="full-entity-mensaje" value="N">
@@ -626,7 +626,7 @@
         <mxCell id="full-relation-usuario-conversacion" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" value="ATIENDE / ES ATENDIDA POR" vertex="1">
           <mxGeometry height="110" width="240" x="5090" y="610" as="geometry" />
         </mxCell>
-        <mxCell id="e-full-101" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.25;exitDx=0;exitDy=0;" target="full-relation-usuario-conversacion" value="0..1">
+        <mxCell id="e-full-101" edge="1" parent="1" source="full-entity-usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.25;exitDx=0;exitDy=0;" target="full-relation-usuario-conversacion" value="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="e-full-102" edge="1" parent="1" source="full-relation-usuario-conversacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="full-entity-conversacion" value="N">
@@ -823,7 +823,7 @@
         <mxCell id="overview-relation-ov-cliente-conversacion" value="INICIA / ES INICIADA POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="690" y="92" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-5" value="0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-cliente" target="overview-relation-ov-cliente-conversacion">
+        <mxCell id="e-overview-5" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-cliente" target="overview-relation-ov-cliente-conversacion">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="e-overview-6" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-cliente-conversacion" target="overview-entity-conversacion">
@@ -904,7 +904,7 @@
         <mxCell id="overview-relation-ov-usuario-mensaje" value="ENVÍA / ES ENVIADO POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="1280" y="250" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-23" value="0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-mensaje">
+        <mxCell id="e-overview-23" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-mensaje">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="e-overview-24" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-mensaje" target="overview-entity-mensaje">
@@ -913,7 +913,7 @@
         <mxCell id="overview-relation-ov-usuario-conversacion" value="ATIENDE / ES ATENDIDA POR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#d97706;strokeWidth=3;fontSize=12;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="1210" y="120" width="190" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="e-overview-25" value="0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-conversacion">
+        <mxCell id="e-overview-25" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-entity-usuario" target="overview-relation-ov-usuario-conversacion">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="e-overview-26" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startArrow=none;strokeColor=#475569;strokeWidth=2;fontSize=15;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="overview-relation-ov-usuario-conversacion" target="overview-entity-conversacion">
