@@ -23,14 +23,14 @@
                 <dt>Cliente titular</dt>
                 <dd>
                     <strong>{{ $comprobante->cliente->nombre_razon_social }}</strong><br>
-                    <small style="color: #64748b;">{{ $comprobante->cliente->tipo_documento->value }}: {{ $comprobante->cliente->numero_documento }}</small>
+                    <small class="texto-suave">{{ $comprobante->cliente->tipo_documento->value }}: {{ $comprobante->cliente->numero_documento }}</small>
                 </dd>
 
                 <dt>WhatsApp de contacto</dt>
                 <dd>{{ $comprobante->cliente->telefono_whatsapp ?: 'Sin teléfono registrado' }}</dd>
 
                 <dt>Monto detectado</dt>
-                <dd><strong style="font-size: 1.2rem; color: #0f172a;">${{ number_format((float) ($comprobante->monto_ocr ?: 0), 2, ',', '.') }}</strong></dd>
+                <dd><strong class="monto-comprobante" style="font-size: 1.2rem;">${{ number_format((float) ($comprobante->monto_ocr ?: 0), 2, ',', '.') }}</strong></dd>
 
                 <dt>Fecha detectada</dt>
                 <dd>{{ $comprobante->fecha_ocr ? $comprobante->fecha_ocr->format('d/m/Y') : 'Sin fecha detectada' }}</dd>
@@ -49,7 +49,7 @@
             </dl>
 
             @if ($comprobante->ruta_archivo)
-                <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                <div class="separador-comprobante" style="margin-top: 1.25rem; padding-top: 1rem;">
                     <a class="boton secundario" href="{{ asset('storage/' . $comprobante->ruta_archivo) }}" target="_blank" style="width: 100%; text-align: center;">
                         📄 Abrir archivo adjunto / imagen original ↗
                     </a>
@@ -58,8 +58,8 @@
         </section>
 
         @if ($comprobante->estaAprobado())
-            <section class="tarjeta" style="border-left: 4px solid #16a34a; background: #f0fdf4;">
-                <h2 style="color: #15803d;">Pago Acreditado Exitosamente</h2>
+            <section class="tarjeta comprobante-aprobado" style="border-left: 4px solid #16a34a;">
+                <h2 class="titulo-aprobado">Pago Acreditado Exitosamente</h2>
                 <p style="margin: 0.5rem 0;">Este comprobante fue conciliado y generó el <strong>Pago #{{ $comprobante->pago?->id_pago }}</strong>.</p>
                 <dl>
                     <dt>Monto total acreditado</dt>
@@ -77,13 +77,13 @@
         @endif
 
         @if ($comprobante->estaRechazado())
-            <section class="tarjeta" style="border-left: 4px solid #dc2626; background: #fef2f2;">
-                <h2 style="color: #b91c1c;">Comprobante Rechazado</h2>
-                <p style="margin: 0.5rem 0; color: #7f1d1d;"><strong>Motivo registrado:</strong></p>
-                <blockquote style="margin: 0; padding: 0.75rem 1rem; background: #fff; border-radius: 6px; border-left: 3px solid #dc2626; font-style: italic;">
+            <section class="tarjeta comprobante-rechazado" style="border-left: 4px solid #dc2626;">
+                <h2 class="titulo-rechazado">Comprobante Rechazado</h2>
+                <p class="titulo-rechazado" style="margin: 0.5rem 0;"><strong>Motivo registrado:</strong></p>
+                <blockquote class="motivo-comprobante" style="margin: 0; padding: 0.75rem 1rem; border-radius: 6px; border-left: 3px solid #dc2626; font-style: italic;">
                     "{{ $comprobante->motivo_rechazo }}"
                 </blockquote>
-                <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">
+                <p class="texto-suave" style="font-size: 0.85rem; margin-top: 0.5rem;">
                     Rechazado por <strong>{{ $comprobante->usuario?->nombre_usuario ?: 'Operador' }}</strong> el {{ $comprobante->fecha_hora_validacion ? $comprobante->fecha_hora_validacion->format('d/m/Y H:i') : ($comprobante->updated_at ? $comprobante->updated_at->format('d/m/Y H:i') : '—') }}. Se emitió la notificación correspondiente al cliente informando la no validación.
                 </p>
             </section>
@@ -120,7 +120,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" style="text-align: center; color: #16a34a; font-weight: 500;">
+                                <td colspan="4" class="titulo-aprobado" style="text-align: center; font-weight: 500;">
                                     El cliente no registra cuotas pendientes al día de hoy.
                                 </td>
                             </tr>
@@ -133,8 +133,8 @@
         @if ($comprobante->estaPendiente() && ($navegacionPermitida['gestionar_comprobantes'] ?? false))
             <!-- Formulario de Aprobación y Conciliación -->
             <section class="tarjeta" style="border-top: 3px solid #16a34a;">
-                <h2 style="color: #15803d;">Aprobar y Acreditar Pago</h2>
-                <p style="font-size: 0.9rem; color: #64748b;">
+                <h2 class="titulo-aprobado">Aprobar y Acreditar Pago</h2>
+                <p class="texto-suave" style="font-size: 0.9rem;">
                     Al confirmar, se registrará el pago oficial, se imputará a las cuotas impagas y se notificará al cliente.
                 </p>
 
@@ -184,8 +184,8 @@
 
             <!-- Formulario de Rechazo -->
             <section class="tarjeta" style="border-top: 3px solid #dc2626;">
-                <h2 style="color: #b91c1c;">Rechazar Comprobante</h2>
-                <p style="font-size: 0.9rem; color: #64748b;">
+                <h2 class="titulo-rechazado">Rechazar Comprobante</h2>
+                <p class="texto-suave" style="font-size: 0.9rem;">
                     Si el comprobante es ilegible, no coincide con la cuenta receptora o presenta anomalías, podés rechazarlo indicando el motivo.
                 </p>
 
@@ -195,7 +195,7 @@
                     <div class="campo">
                         <label for="motivo_rechazo">Motivo del Rechazo *</label>
                         <input type="text" id="motivo_rechazo" name="motivo_rechazo" value="{{ old('motivo_rechazo') }}" placeholder="Ej: Comprobante ilegible, no se aprecia fecha ni monto" required>
-                        <small style="color: #64748b;">Este texto será notificado al cliente para que pueda subsanar el envío.</small>
+                        <small class="texto-suave">Este texto será notificado al cliente para que pueda subsanar el envío.</small>
                     </div>
 
                     <button class="boton" type="submit" style="background: #dc2626; border-color: #dc2626; justify-content: center;">

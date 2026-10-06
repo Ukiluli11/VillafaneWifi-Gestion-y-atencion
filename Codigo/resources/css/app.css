@@ -254,3 +254,106 @@ textarea:focus { border-color: var(--verde-500); outline: 0; box-shadow: 0 0 0 4
     .mensaje-chat { width: 92%; }
     .mensaje-chat > div { flex-direction: column; gap: 2px; }
 }
+
+.alternar-barra, .alternar-tema { display: grid; width: 40px; height: 40px; min-height: 40px; flex: 0 0 40px; place-items: center; padding: 0; border-radius: 10px; cursor: pointer; }
+.alternar-barra { margin-left: auto; border: 1px solid rgba(255,255,255,.14); color: #d4e8df; background: rgba(255,255,255,.07); }
+.alternar-barra:hover { color: #fff; background: rgba(255,255,255,.15); }
+.alternar-barra svg, .alternar-tema svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.alternar-tema { margin-left: auto; border: 1px solid var(--borde); color: var(--texto); background: var(--blanco); }
+.alternar-tema:hover { color: var(--verde-700); background: var(--verde-50); }
+.alternar-tema .icono-sol { display: none; }
+.tema-oscuro .alternar-tema .icono-luna { display: none; }
+.tema-oscuro .alternar-tema .icono-sol { display: block; }
+.alternar-tema + .estado-sistema { margin-left: 0; }
+.acceso-tema { position: absolute; top: 20px; right: 20px; z-index: 2; margin: 0; }
+
+@media (min-width: 821px) {
+    .barra-lateral, .area-principal { transition: width .2s ease, margin-left .2s ease; }
+    .barra-reducida .barra-lateral { width: 76px; }
+    .barra-reducida .area-principal { margin-left: 76px; }
+    .barra-reducida .identidad { flex-direction: column; gap: 14px; padding: 18px 12px; }
+    .barra-reducida .marca-texto, .barra-reducida .grupo-navegacion, .barra-reducida .datos-usuario { display: none; }
+    .barra-reducida .alternar-barra { margin-left: 0; }
+    .barra-reducida .alternar-barra svg { transform: rotate(180deg); }
+    .barra-reducida .navegacion { gap: 8px; padding: 18px 12px; }
+    .barra-reducida .enlace-navegacion { justify-content: center; padding: 10px; }
+    .barra-reducida .enlace-navegacion span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .barra-reducida .enlace-navegacion svg { flex: 0 0 20px; }
+    .barra-reducida .usuario-lateral { flex-direction: column; margin: 10px; padding: 9px 5px; }
+}
+
+@media (max-width: 820px) {
+    .alternar-barra { display: none; }
+}
+
+.tema-oscuro {
+    color-scheme: dark;
+    color: #e5efeb;
+    background: #101c1a;
+    --texto: #e5efeb;
+    --texto-suave: #a4bab2;
+    --borde: #344942;
+    --fondo: #101c1a;
+    --blanco: #1c2b27;
+    --verde-950: #0b2420;
+    --verde-900: #10372e;
+    --verde-800: #195340;
+    --verde-700: #79d8a9;
+    --verde-600: #5bc996;
+    --verde-500: #79d8a9;
+    --verde-100: #244c3d;
+    --verde-50: #1a382d;
+    --peligro: #e78989;
+    --sombra: 0 12px 36px rgba(0,0,0,.17);
+}
+.tema-oscuro .barra-superior { border-bottom-color: var(--borde); background: rgba(28,43,39,.92); }
+.tema-oscuro .abrir-menu, .tema-oscuro .alternar-tema { border-color: var(--borde); color: var(--texto); background: #263b34; }
+.tema-oscuro .alternar-tema:hover { color: #a3eec4; background: #305140; }
+.tema-oscuro h1, .tema-oscuro h2, .tema-oscuro .metrica strong { color: #eef8f2; }
+.tema-oscuro .metrica small { color: var(--texto-suave); }
+.tema-oscuro .accion-rapida, .tema-oscuro .buscador, .tema-oscuro input, .tema-oscuro select, .tema-oscuro textarea { border-color: var(--borde); color: var(--texto); background: #22332d; }
+.tema-oscuro input::placeholder, .tema-oscuro textarea::placeholder { color: #98afa4; }
+.tema-oscuro .formulario label, .tema-oscuro .campo > label, .tema-oscuro dt { color: #bed3c8; }
+.tema-oscuro th { color: #b2c9bd; background: #253b32; }
+.tema-oscuro th, .tema-oscuro td { border-bottom-color: var(--borde); }
+.tema-oscuro tbody tr:hover { background: #263a32; }
+.tema-oscuro .boton.secundario { color: #d5f1e1; background: #294639; }
+.tema-oscuro .boton.secundario:hover { background: #365d49; }
+.tema-oscuro button:not(.alternar-barra):not(.alternar-tema):not(.abrir-menu):not(.cerrar-menu):not(.boton-salir), .tema-oscuro .boton:not(.secundario) { color: #0d3023; }
+.tema-oscuro .estado { color: #c0d4ca; background: #34463e; }
+.tema-oscuro .estado.activo, .tema-oscuro .estado.activa, .tema-oscuro .estado.pagada { color: #a8edc3; background: #214a34; }
+.tema-oscuro .estado.suspendido, .tema-oscuro .estado.pendiente { color: #f4d88a; background: #4c4024; }
+.tema-oscuro .estado.baja, .tema-oscuro .estado.inactivo, .tema-oscuro .estado.inactiva, .tema-oscuro .estado.vencida, .tema-oscuro .estado.escalada { color: #f3b7b7; background: #512f33; }
+.tema-oscuro .estado.en_atencion { color: #adddf0; background: #254656; }
+.tema-oscuro .estado.cerrada { color: #c0d4ca; background: #34463e; }
+.tema-oscuro .alerta.exito { border-color: #3b7154; color: #b8eccd; background: #204230; }
+.tema-oscuro .alerta.error { border-color: #855354; color: #f2c5c5; background: #482b2c; }
+.tema-oscuro .historial-chat { background: #15261f; }
+.tema-oscuro .mensaje-chat { background: #22372b; }
+.tema-oscuro .mensaje-chat.bot, .tema-oscuro .mensaje-chat.usuario_interno, .tema-oscuro .mensaje-chat.sistema { border-color: #3d7055; background: #244b36; }
+.tema-oscuro .pagina-acceso { background: radial-gradient(circle at 15% 20%, rgba(64,190,132,.12), transparent 30%), linear-gradient(145deg, #10241c, #101c1a); }
+.tema-oscuro .acceso-marca .marca-simbolo { color: #0d3023; }
+.tema-oscuro .panel-estado { background: linear-gradient(145deg, #174b40, #176b55); }
+
+.metrica-comprobante.pendiente .valor-comprobante { color: #b45309; }
+.metrica-comprobante.aprobado .valor-comprobante, .titulo-aprobado { color: #15803d; }
+.metrica-comprobante.rechazado .valor-comprobante, .titulo-rechazado { color: #b91c1c; }
+.monto-comprobante { color: #0f172a; }
+.origen-comprobante { color: #334155; background: #e2e8f0; }
+.separador-comprobante { border-top: 1px solid var(--borde); }
+.comprobante-aprobado { background: #f0fdf4; }
+.comprobante-rechazado { background: #fef2f2; }
+.motivo-comprobante { background: #fff; }
+
+.tema-oscuro .metrica-comprobante.pendiente .valor-comprobante { color: #f4c66e; }
+.tema-oscuro .metrica-comprobante.aprobado .valor-comprobante, .tema-oscuro .titulo-aprobado { color: #94e4b3; }
+.tema-oscuro .metrica-comprobante.rechazado .valor-comprobante, .tema-oscuro .titulo-rechazado { color: #f2a4a4; }
+.tema-oscuro .monto-comprobante { color: #e5efeb; }
+.tema-oscuro .origen-comprobante { color: #d8e9df; background: #34463e; }
+.tema-oscuro .comprobante-aprobado { background: #1d392b; }
+.tema-oscuro .comprobante-rechazado { background: #3d282b; }
+.tema-oscuro .motivo-comprobante { background: #2c2224; }
+
+@media (max-width: 640px) {
+    .filtros-estado { flex-wrap: wrap; }
+}

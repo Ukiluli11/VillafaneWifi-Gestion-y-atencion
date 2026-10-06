@@ -23,33 +23,33 @@
                 </option>
             @endforeach
         </select>
-        <small style="color: #64748b;">Seleccioná el cliente al que se le imputará el pago una vez conciliado.</small>
+        <small class="texto-suave">Seleccioná el cliente al que se le imputará el pago una vez conciliado.</small>
     </div>
 
     <div class="campo" style="margin-top: 1rem;">
         <label for="archivo">Archivo del Comprobante (Imagen o PDF) *</label>
         <input type="file" id="archivo" name="archivo" accept="image/jpeg,image/png,image/jpg,application/pdf" required>
-        <small style="color: #64748b;">Formatos aceptados: JPG, PNG o PDF. Máximo 10 MB. Se generará un hash SHA-256 para evitar duplicados.</small>
+        <small class="texto-suave">Formatos aceptados: JPG, PNG o PDF. Máximo 10 MB. Se generará un hash SHA-256 para evitar duplicados.</small>
     </div>
 
     <div class="grilla-dos-campos separacion-superior">
         <div class="campo">
             <label for="monto">Monto pagado ($)</label>
             <input type="number" step="0.01" id="monto" name="monto" value="{{ old('monto') }}" placeholder="Ej: 15000.00">
-            <small style="color: #64748b;">Opcional: Si se deja en blanco, el OCR intentará detectarlo.</small>
+            <small class="texto-suave">Opcional: Si se deja en blanco, el OCR intentará detectarlo.</small>
         </div>
 
         <div class="campo">
             <label for="fecha">Fecha del pago</label>
             <input type="date" id="fecha" name="fecha" value="{{ old('fecha', date('Y-m-d')) }}">
-            <small style="color: #64748b;">Fecha en que se realizó la transferencia.</small>
+            <small class="texto-suave">Fecha en que se realizó la transferencia.</small>
         </div>
     </div>
 
     <div class="campo" style="margin-top: 1rem;">
         <label for="numero_operacion">Número de Operación / Transferencia</label>
         <input type="text" id="numero_operacion" name="numero_operacion" value="{{ old('numero_operacion') }}" placeholder="Ej: 12345678901">
-        <small style="color: #64748b;">Opcional: Código de operación provisto por Mercado Pago o la entidad bancaria.</small>
+        <small class="texto-suave">Opcional: Código de operación provisto por Mercado Pago o la entidad bancaria.</small>
     </div>
 
     <div class="acciones-formulario">

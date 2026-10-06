@@ -13,20 +13,20 @@
 </div>
 
 <div class="cuadricula-metricas" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-    <div class="tarjeta" style="padding: 1.25rem; border-left: 4px solid #d97706;">
-        <span style="font-size: 0.85rem; color: #64748b; font-weight: 500;">Pendientes de Conciliación</span>
-        <div style="font-size: 1.8rem; font-weight: 700; color: #b45309; margin-top: 0.25rem;">{{ $totalPendientes }}</div>
-        <small style="color: #64748b;">Requieren revisión</small>
+    <div class="tarjeta metrica-comprobante pendiente" style="padding: 1.25rem; border-left: 4px solid #d97706;">
+        <span class="texto-suave" style="font-size: 0.85rem; font-weight: 500;">Pendientes de Conciliación</span>
+        <div class="valor-comprobante" style="font-size: 1.8rem; font-weight: 700; margin-top: 0.25rem;">{{ $totalPendientes }}</div>
+        <small class="texto-suave">Requieren revisión</small>
     </div>
-    <div class="tarjeta" style="padding: 1.25rem; border-left: 4px solid #16a34a;">
-        <span style="font-size: 0.85rem; color: #64748b; font-weight: 500;">Comprobantes Aprobados</span>
-        <div style="font-size: 1.8rem; font-weight: 700; color: #15803d; margin-top: 0.25rem;">{{ $totalAprobados }}</div>
-        <small style="color: #64748b;">Acreditados a cuentas</small>
+    <div class="tarjeta metrica-comprobante aprobado" style="padding: 1.25rem; border-left: 4px solid #16a34a;">
+        <span class="texto-suave" style="font-size: 0.85rem; font-weight: 500;">Comprobantes Aprobados</span>
+        <div class="valor-comprobante" style="font-size: 1.8rem; font-weight: 700; margin-top: 0.25rem;">{{ $totalAprobados }}</div>
+        <small class="texto-suave">Acreditados a cuentas</small>
     </div>
-    <div class="tarjeta" style="padding: 1.25rem; border-left: 4px solid #dc2626;">
-        <span style="font-size: 0.85rem; color: #64748b; font-weight: 500;">Comprobantes Rechazados</span>
-        <div style="font-size: 1.8rem; font-weight: 700; color: #b91c1c; margin-top: 0.25rem;">{{ $totalRechazados }}</div>
-        <small style="color: #64748b;">Con motivo notificado</small>
+    <div class="tarjeta metrica-comprobante rechazado" style="padding: 1.25rem; border-left: 4px solid #dc2626;">
+        <span class="texto-suave" style="font-size: 0.85rem; font-weight: 500;">Comprobantes Rechazados</span>
+        <div class="valor-comprobante" style="font-size: 1.8rem; font-weight: 700; margin-top: 0.25rem;">{{ $totalRechazados }}</div>
+        <small class="texto-suave">Con motivo notificado</small>
     </div>
 </div>
 
@@ -76,10 +76,10 @@
                     </td>
                     <td>
                         <strong>{{ $comprobante->cliente->nombre_razon_social }}</strong>
-                        <small style="display: block; color: #64748b;">{{ $comprobante->cliente->tipo_documento->value }} {{ $comprobante->cliente->numero_documento }}</small>
+                        <small class="texto-suave" style="display: block;">{{ $comprobante->cliente->tipo_documento->value }} {{ $comprobante->cliente->numero_documento }}</small>
                     </td>
                     <td>
-                        <strong style="color: #0f172a;">${{ number_format((float) ($comprobante->monto_ocr ?: 0), 2, ',', '.') }}</strong>
+                        <strong class="monto-comprobante">${{ number_format((float) ($comprobante->monto_ocr ?: 0), 2, ',', '.') }}</strong>
                     </td>
                     <td>
                         {{ $comprobante->fecha_ocr ? $comprobante->fecha_ocr->format('d/m/Y') : '—' }}
@@ -88,7 +88,7 @@
                         <code>{{ $comprobante->numero_operacion ?: 'Sin detectar' }}</code>
                     </td>
                     <td>
-                        <span style="font-size: 0.8rem; text-transform: uppercase; padding: 0.2rem 0.5rem; background: #e2e8f0; border-radius: 4px;">
+                        <span class="origen-comprobante" style="font-size: 0.8rem; text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 4px;">
                             {{ $comprobante->origen === \App\Enums\OrigenComprobante::Whatsapp ? 'WhatsApp' : 'Manual' }}
                         </span>
                     </td>
