@@ -131,7 +131,7 @@ class ServicioFacturacion
     }
 
     /**
-     * Imputa un monto a las cuotas impagas del cliente en orden cronológico (las más antiguas primero - RF-21).
+     * Imputa un monto a las cuotas impagas del cliente en orden cronológico (las más antiguas primero).
      */
     public function imputarPagoACuotas(
         Cliente $cliente,
@@ -151,7 +151,7 @@ class ServicioFacturacion
         }
 
         return DB::transaction(function () use ($cliente, $cuenta, $medio, $fecha, $montoDisponible, $idComprobante): Pago {
-            // Buscamos todas las cuotas adeudadas ordenadas cronológicamente (RF-21)
+            // Buscamos todas las cuotas adeudadas ordenadas cronológicamente
             $cuotasImpagas = Cuota::query()
                 ->whereHas('servicio', fn ($q) => $q->where('id_cliente', $cliente->id_cliente))
                 ->whereNull('id_pago')

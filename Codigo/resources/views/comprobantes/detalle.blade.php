@@ -93,7 +93,6 @@
     <!-- Columna Derecha: Cuotas Impagas y Formularios de Conciliación -->
     <div class="columna-comprobante">
         
-        <!-- Listado de cuotas impagas del cliente (RF-21) -->
         <section class="tarjeta">
             <h2>Cuotas Pendientes de Cancelación</h2>
             <div class="tabla-contenedor" style="margin-top: 0.75rem;">

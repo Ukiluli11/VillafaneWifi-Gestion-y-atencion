@@ -25,7 +25,7 @@ class ServicioComprobantes
     ) {}
 
     /**
-     * Registra un nuevo comprobante en el sistema, extrayendo datos con OCR y calculando el hash antifraude (RF-19, RF-20, RF-23).
+     * Registra un nuevo comprobante en el sistema, extrayendo datos con OCR y calculando el hash antifraude.
      */
     public function registrarComprobante(
         Cliente $cliente,
@@ -37,7 +37,7 @@ class ServicioComprobantes
     ): Comprobante {
         $esUploadedFile = $archivo instanceof UploadedFile;
 
-        // 1. Cálculo de Hash SHA-256 para verificación antifraude (RF-20)
+        // 1. Cálculo de Hash SHA-256 para verificación antifraude
         $hash = $esUploadedFile
             ? hash_file('sha256', $archivo->getRealPath())
             : hash('sha256', $archivo);
@@ -48,7 +48,7 @@ class ServicioComprobantes
             ]);
         }
 
-        // 2. Extracción por OCR si los datos no fueron provistos manualmente (RF-23)
+        // 2. Extracción por OCR si los datos no fueron provistos manualmente
         $rutaFisica = $esUploadedFile ? $archivo->getRealPath() : null;
         $datosOcr = $this->ocrService->procesarArchivo(
             $rutaFisica ?? '',

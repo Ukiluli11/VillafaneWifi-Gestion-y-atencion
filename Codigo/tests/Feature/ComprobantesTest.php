@@ -180,7 +180,7 @@ class ComprobantesTest extends TestCase
         $this->assertSame($admin->id_usuario, $comprobante->id_usuario);
         $this->assertNotNull($comprobante->fecha_hora_validacion);
 
-        // Verificamos que se canceló la cuota MÁS ANTIGUA primero (RF-21)
+        // Verificamos que se canceló la cuota MÁS ANTIGUA primero
         $cuotaAntigua->refresh();
         $cuotaReciente->refresh();
 
