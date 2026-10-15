@@ -7,8 +7,15 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use RuntimeException;
 
+/**
+ * Servicio WhatsAppService
+ * Integración con la API oficial de WhatsApp Cloud API (webhooks, recepción y envío de mensajes).
+ */
 class WhatsAppService
 {
+    /**
+     * Valida el token de verificación en la suscripción del webhook de WhatsApp.
+     */
     public function verificarSuscripcion(?string $modo, ?string $token, ?string $reto): ?string
     {
         $tokenEsperado = (string) config('services.whatsapp.verify_token');
@@ -20,6 +27,9 @@ class WhatsAppService
         return hash_equals($tokenEsperado, $token) ? $reto : null;
     }
 
+    /**
+     * Valida la firma HMAC SHA-256 recibida en la cabecera de la solicitud de Meta.
+     */
     public function validarFirma(string $contenido, ?string $firma): bool
     {
         $validar = filter_var(config('services.whatsapp.validar_firma', true), FILTER_VALIDATE_BOOL);
@@ -38,6 +48,8 @@ class WhatsAppService
     }
 
     /**
+     * Extrae y normaliza los mensajes entrantes contenidos en el payload del webhook.
+     *
      * @param  array<string, mixed>  $payload
      * @return list<array{id_externo: string, telefono: string, tipo: string, contenido: ?string, referencia_archivo: ?string, fecha_hora: CarbonImmutable}>
      */
@@ -153,6 +165,11 @@ class WhatsAppService
         return ['contenido' => $contenido, 'mime_type' => $mime, 'tamanio_bytes' => $tamanio];
     }
 
+    /**
+     * Envía un mensaje de texto plano al número de WhatsApp del cliente.
+     * Caso de Uso: Procesar mensaje entrante / Enviar respuesta (Módulo 2)
+     * Clase UML: WhatsAppService | Método UML: + enviarMensaje(numero, contenido) : String
+     */
     public function enviarMensaje(string $numero, string $contenido): string
     {
         if ($this->modoSimulacion()) {

@@ -13,6 +13,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * Modelo Conversacion
+ * Administra el ciclo de vida de la sesión de chat por WhatsApp (bot o atención humana).
+ */
 class Conversacion extends Model
 {
     /** @use HasFactory<ConversacionFactory> */
@@ -51,36 +55,59 @@ class Conversacion extends Model
         ];
     }
 
+    /**
+     * Cliente asociado a la conversación (si fue identificado).
+     */
     public function cliente(): BelongsTo
     {
         return $this->belongsTo(Cliente::class, 'id_cliente', 'id_cliente');
     }
 
+    /**
+     * Usuario/operador que atiende la conversación en modo humano.
+     */
     public function usuarioAtencion(): BelongsTo
     {
         return $this->belongsTo(Usuario::class, 'id_usuario_atencion', 'id_usuario');
     }
 
+    /**
+     * Mensajes enviados y recibidos durante la conversación.
+     */
     public function mensajes(): HasMany
     {
         return $this->hasMany(Mensaje::class, 'id_conversacion', 'id_conversacion');
     }
 
+    /**
+     * Tickets de soporte derivados de esta conversación.
+     */
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class, 'id_conversacion', 'id_conversacion');
     }
 
+    /**
+     * Comprobantes adjuntados en esta conversación.
+     */
     public function comprobantes(): HasMany
     {
         return $this->hasMany(Comprobante::class, 'id_conversacion', 'id_conversacion');
     }
 
+    /**
+     * Filtra las conversaciones que no se encuentran cerradas.
+     */
     public function scopeActivas(Builder $consulta): Builder
     {
         return $consulta->where('estado', '!=', EstadoConversacion::Cerrada->value);
     }
 
+    /**
+     * Caso de Uso: Abrir o reutilizar conversación (Módulo 2)
+     * Clase UML: Conversacion
+     * Método UML: + iniciar() : void
+     */
     public function iniciar(): void
     {
         $this->update([
@@ -91,6 +118,11 @@ class Conversacion extends Model
         ]);
     }
 
+    /**
+     * Caso de Uso: Cerrar conversación resuelta por el bot / Cerrar atención escalada (Módulo 2)
+     * Clase UML: Conversacion
+     * Método UML: + cerrar() : void
+     */
     public function cerrar(): void
     {
         $this->update([
@@ -100,6 +132,11 @@ class Conversacion extends Model
         ]);
     }
 
+    /**
+     * Caso de Uso: Derivar tras segundo fallo de IA / Escalar atención (Módulo 2)
+     * Clase UML: Conversacion
+     * Método UML: + escalar() : void
+     */
     public function escalar(): void
     {
         $this->update([
@@ -108,6 +145,11 @@ class Conversacion extends Model
         ]);
     }
 
+    /**
+     * Caso de Uso: Tomar control de conversación escalada (Módulo 2)
+     * Clase UML: Conversacion
+     * Método UML: + derivarAUsuario(usuario: Usuario) : void
+     */
     public function derivarAUsuario(Usuario $usuario): void
     {
         $this->update([
@@ -118,23 +160,44 @@ class Conversacion extends Model
         ]);
     }
 
+    /**
+     * Caso de Uso: Registrar mensaje en el historial (Módulo 2)
+     * Clase UML: Conversacion
+     * Método UML: + agregarMensaje(mensaje: Mensaje) : void
+     */
     public function agregarMensaje(Mensaje $mensaje): void
     {
         $this->mensajes()->save($mensaje);
     }
 
-    /** @return Collection<int, Mensaje> */
+    /**
+     * Caso de Uso: Consultar historial de conversación (Módulo 2)
+     * Clase UML: Conversacion
+     * Método UML: + obtenerHistorial() : List<Mensaje>
+     *
+     * @return Collection<int, Mensaje>
+     */
     public function obtenerHistorial(): Collection
     {
         return $this->mensajes()->orderBy('fecha_hora')->orderBy('id_mensaje')->get();
     }
 
+    /**
+     * Caso de Uso: Solicitar reformulación del mensaje (Módulo 2)
+     * Clase UML: Conversacion
+     * Método UML: + registrarIntentoFallido() : void
+     */
     public function registrarIntentoFallido(): void
     {
         $this->increment('intentos_interpretacion');
         $this->refresh();
     }
 
+    /**
+     * Caso de Uso: Reiniciar interpretación al cambiar de paso (Módulo 2)
+     * Clase UML: Conversacion
+     * Método UML: + reiniciarInterpretacion() : void
+     */
     public function reiniciarInterpretacion(): void
     {
         $this->update(['intentos_interpretacion' => 0]);

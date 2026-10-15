@@ -11,6 +11,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * Modelo Mensaje
+ * Representa cada mensaje individual (texto, imagen, documento) cursado en una conversación.
+ */
 class Mensaje extends Model
 {
     /** @use HasFactory<MensajeFactory> */
@@ -37,21 +41,35 @@ class Mensaje extends Model
         ];
     }
 
+    /**
+     * Conversación a la que pertenece el mensaje.
+     */
     public function conversacion(): BelongsTo
     {
         return $this->belongsTo(Conversacion::class, 'id_conversacion', 'id_conversacion');
     }
 
+    /**
+     * Operador humano que envió el mensaje (si fue manual).
+     */
     public function usuario(): BelongsTo
     {
         return $this->belongsTo(Usuario::class, 'id_usuario', 'id_usuario');
     }
 
+    /**
+     * Comprobante asociado al mensaje (si adjuntó un archivo de pago).
+     */
     public function comprobante(): HasOne
     {
         return $this->hasOne(Comprobante::class, 'id_mensaje', 'id_mensaje');
     }
 
+    /**
+     * Caso de Uso: Procesar mensaje entrante / Enviar respuesta WhatsApp (Módulo 2)
+     * Clase UML: Mensaje
+     * Método UML: + marcarEnviado(idExterno: String?) : void
+     */
     public function marcarEnviado(?string $idExterno = null): void
     {
         $this->update([
@@ -60,11 +78,21 @@ class Mensaje extends Model
         ]);
     }
 
+    /**
+     * Caso de Uso: Procesar mensaje entrante - Control de entrega (Módulo 2)
+     * Clase UML: Mensaje
+     * Método UML: + marcarFallido() : void
+     */
     public function marcarFallido(): void
     {
         $this->update(['estado_envio' => EstadoEnvioMensaje::Fallido]);
     }
 
+    /**
+     * Caso de Uso: Procesar mensaje entrante - Confirmación de lectura (Módulo 2)
+     * Clase UML: Mensaje
+     * Método UML: + marcarLeido() : void
+     */
     public function marcarLeido(): void
     {
         $this->update(['estado_envio' => EstadoEnvioMensaje::Leido]);

@@ -4,10 +4,16 @@ namespace App\Dominio;
 
 use Carbon\CarbonImmutable;
 
+/**
+ * Servicio OCRService
+ * Extrae texto y datos estructurados (operación, monto, fecha) de imágenes y PDFs de comprobantes.
+ */
 class OCRService
 {
     /**
-     * Procesa el contenido o ruta de un archivo para extraer datos clave del comprobante.
+     * Procesa el archivo del comprobante para extraer datos clave mediante OCR.
+     * Caso de Uso: Procesar comprobante mediante OCR (Módulo 3)
+     * Clase UML: OCRService | Método UML: + procesarArchivo(archivo) : array
      *
      * @return array{numero_operacion: ?string, monto: ?string, fecha: ?string}
      */
@@ -126,5 +132,27 @@ class OCRService
         preg_match_all('/[a-zA-Z0-9$#.,:\/ \-]{3,}/', $contenido, $matches);
 
         return implode(' ', $matches[0] ?? []);
+    }
+
+    /**
+     * Caso de Uso: Procesar comprobante mediante OCR (Módulo 3)
+     * Clase UML: OCRService
+     * Método UML: + calcularConfianza(datos: array) : double
+     * Calcula el nivel de confianza de la extracción en base a los campos recuperados.
+     */
+    public function calcularConfianza(array $datosExtraidos): float
+    {
+        $puntaje = 0.0;
+        if (!empty($datosExtraidos['numero_operacion'])) {
+            $puntaje += 0.40;
+        }
+        if (!empty($datosExtraidos['monto'])) {
+            $puntaje += 0.40;
+        }
+        if (!empty($datosExtraidos['fecha'])) {
+            $puntaje += 0.20;
+        }
+
+        return round($puntaje, 2);
     }
 }

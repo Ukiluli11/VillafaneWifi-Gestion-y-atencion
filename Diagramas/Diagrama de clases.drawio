@@ -101,7 +101,7 @@
         <mxCell id="c-conversation-sep" value="" style="line;strokeColor=#1565C0;fillColor=none;" vertex="1" parent="c-conversation">
           <mxGeometry x="0" y="304" width="380" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="c-conversation-m" value="+ iniciar() : void&lt;br&gt;+ cerrar() : void&lt;br&gt;+ derivarAUsuario(usuario: Usuario) : void&lt;br&gt;+ agregarMensaje(mensaje: Mensaje) : void&lt;br&gt;+ obtenerHistorial() : List&lt;Mensaje&gt;&lt;br&gt;+ registrarIntentoFallido() : void&lt;br&gt;+ reiniciarInterpretacion() : void" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-conversation">
+        <mxCell id="c-conversation-m" value="+ iniciar() : void&lt;br&gt;+ cerrar() : void&lt;br&gt;+ escalar() : void&lt;br&gt;+ derivarAUsuario(usuario: Usuario) : void&lt;br&gt;+ agregarMensaje(mensaje: Mensaje) : void&lt;br&gt;+ obtenerHistorial() : List&lt;Mensaje&gt;&lt;br&gt;+ registrarIntentoFallido() : void&lt;br&gt;+ reiniciarInterpretacion() : void" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-conversation">
           <mxGeometry x="0" y="312" width="380" height="154" as="geometry" />
         </mxCell>
         <mxCell id="c-message" value="Mensaje" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
@@ -213,7 +213,7 @@
           <mxGeometry x="0" y="73" width="660" height="125" as="geometry" />
         </mxCell>
         <mxCell id="c-ocr" value="OCRService" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#6A1B9A;strokeColor=#6A1B9A;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
-          <mxGeometry x="2260" y="850" width="620" height="215" as="geometry" />
+          <mxGeometry x="2260" y="850" width="620" height="235" as="geometry" />
         </mxCell>
         <mxCell id="c-ocr-a" value="(sin atributos propios)" style="text;strokeColor=none;fillColor=#F3E5F5;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-ocr">
           <mxGeometry x="0" y="30" width="620" height="52" as="geometry" />
@@ -221,8 +221,8 @@
         <mxCell id="c-ocr-sep" value="" style="line;strokeColor=#6A1B9A;fillColor=none;" vertex="1" parent="c-ocr">
           <mxGeometry x="0" y="82" width="620" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="c-ocr-m" value="+ extraerNumeroOperacion(imagen: String) : String&lt;br&gt;+ extraerMonto(imagen: String) : BigDecimal&lt;br&gt;+ extraerFecha(imagen: String) : Date&lt;br&gt;+ calcularConfianza() : double" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-ocr">
-          <mxGeometry x="0" y="90" width="620" height="95" as="geometry" />
+        <mxCell id="c-ocr-m" value="+ procesarArchivo(archivo: String) : array&lt;br&gt;+ extraerNumeroOperacion(imagen: String) : String&lt;br&gt;+ extraerMonto(imagen: String) : BigDecimal&lt;br&gt;+ extraerFecha(imagen: String) : Date&lt;br&gt;+ calcularConfianza() : double" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="c-ocr">
+          <mxGeometry x="0" y="90" width="620" height="115" as="geometry" />
         </mxCell>
         <mxCell id="c-notify" value="ServicioNotificacionesVencimiento" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#6A1B9A;strokeColor=#6A1B9A;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
           <mxGeometry x="3000" y="850" width="690" height="220" as="geometry" />

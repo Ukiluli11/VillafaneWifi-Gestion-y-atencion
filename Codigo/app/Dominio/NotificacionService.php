@@ -7,10 +7,16 @@ use App\Models\Comprobante;
 use App\Models\Pago;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Servicio NotificacionService
+ * Gestiona el envío de notificaciones automáticas de comprobantes (aprobados o rechazados).
+ */
 class NotificacionService
 {
     /**
      * Emite la notificación de comprobante aprobado y pago acreditado al cliente.
+     * Caso de Uso: Notificar acreditación de pago por WhatsApp (Módulo 3)
+     * Clase UML: NotificacionService | Método UML: + notificarPagoAprobado(...) : void
      */
     public function notificarPagoAprobado(Cliente $cliente, Pago $pago, ?Comprobante $comprobante = null): array
     {
@@ -39,6 +45,8 @@ class NotificacionService
 
     /**
      * Emite la notificación de comprobante rechazado al cliente con el motivo correspondiente.
+     * Caso de Uso: Notificar rechazo con motivo por WhatsApp (Módulo 3)
+     * Clase UML: NotificacionService | Método UML: + notificarPagoRechazado(...) : void
      */
     public function notificarPagoRechazado(Cliente $cliente, Comprobante $comprobante, string $motivo): array
     {

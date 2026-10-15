@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * Modelo Servicio
+ * Representa la conexión física de internet instalada en el domicilio de un cliente.
+ */
 class Servicio extends Model
 {
     /** @use HasFactory<ServicioFactory> */
@@ -37,31 +41,53 @@ class Servicio extends Model
         ];
     }
 
+    /**
+     * Cliente titular de la conexión.
+     */
     public function cliente(): BelongsTo
     {
         return $this->belongsTo(Cliente::class, 'id_cliente', 'id_cliente');
     }
 
+    /**
+     * Plan de velocidad asignado a este servicio.
+     */
     public function plan(): BelongsTo
     {
         return $this->belongsTo(Plan::class, 'id_plan', 'id_plan');
     }
 
+    /**
+     * Cuotas mensuales facturadas por este servicio.
+     */
     public function cuotas(): HasMany
     {
         return $this->hasMany(Cuota::class, 'id_servicio', 'id_servicio');
     }
 
+    /**
+     * Tickets técnicos o reclamos asociados a este servicio.
+     */
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class, 'id_servicio', 'id_servicio');
     }
 
+    /**
+     * Caso de Uso: Suspender servicio por falta de pago (Módulo 1)
+     * Clase UML: Servicio
+     * Método UML: + suspender() : void
+     */
     public function suspender(): void
     {
         $this->update(['estado' => EstadoServicio::Suspendido]);
     }
 
+    /**
+     * Caso de Uso: Reactivar servicio tras acreditación (Módulo 1)
+     * Clase UML: Servicio
+     * Método UML: + reactivar() : void
+     */
     public function reactivar(): void
     {
         $this->update(['estado' => EstadoServicio::Activo]);

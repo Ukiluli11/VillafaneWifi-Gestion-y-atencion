@@ -33,87 +33,87 @@
         </mxCell>
 
 
-        <mxCell id="cu_atender_conv" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Atender conversación&#10;por WhatsApp [RF-10]" vertex="1">
+        <mxCell id="cu_atender_conv" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Atender conversación&#10;por WhatsApp" vertex="1">
           <mxGeometry height="65" width="220" x="260" y="105" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_procesar_msg" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Procesar mensaje&#10;entrante [RF-10]" vertex="1">
+        <mxCell id="cu_procesar_msg" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Procesar mensaje&#10;entrante" vertex="1">
           <mxGeometry height="65" width="200" x="570" y="105" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_gestionar_sesion" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Abrir o reutilizar&#10;conversación [RF-10]" vertex="1">
+        <mxCell id="cu_gestionar_sesion" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Abrir o reutilizar&#10;conversación" vertex="1">
           <mxGeometry height="65" width="200" x="870" y="105" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_historial" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Registrar mensaje&#10;en el historial [RF-16]" vertex="1">
+        <mxCell id="cu_historial" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Registrar mensaje&#10;en el historial" vertex="1">
           <mxGeometry height="65" width="200" x="870" y="240" as="geometry" />
         </mxCell>
 
 
-        <mxCell id="cu_identificar" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#d5e8d4;strokeColor=#82b366;" value="Identificar cliente por&#10;teléfono o DNI [RF-12]" vertex="1">
+        <mxCell id="cu_identificar" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#d5e8d4;strokeColor=#82b366;" value="Identificar cliente por&#10;teléfono o DNI" vertex="1">
           <mxGeometry height="65" width="210" x="565" y="380" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_ofrecer_alta" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#d5e8d4;strokeColor=#82b366;" value="Ofrecer registro y&#10;contratación [RF-12]" vertex="1">
+        <mxCell id="cu_ofrecer_alta" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#d5e8d4;strokeColor=#82b366;" value="Ofrecer registro y&#10;contratación" vertex="1">
           <mxGeometry height="65" width="200" x="260" y="380" as="geometry" />
         </mxCell>
 
 
-        <mxCell id="cu_reconocer_ia" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Reconocer intención&#10;mediante IA [RF-11]" vertex="1">
+        <mxCell id="cu_reconocer_ia" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Reconocer intención&#10;mediante IA" vertex="1">
           <mxGeometry height="65" width="210" x="565" y="700" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_reformular" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Solicitar reformulación&#10;del mensaje [RF-11]" vertex="1">
+        <mxCell id="cu_reformular" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Solicitar reformulación&#10;del mensaje" vertex="1">
           <mxGeometry height="65" width="200" x="260" y="640" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_derivar_fallo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Derivar tras segundo&#10;fallo de IA [RF-11]" vertex="1">
+        <mxCell id="cu_derivar_fallo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Derivar tras segundo&#10;fallo de IA" vertex="1">
           <mxGeometry height="65" width="200" x="260" y="770" as="geometry" />
         </mxCell>
 
 
-        <mxCell id="cu_consultar_cuenta" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Consultar estado de&#10;cuenta corriente [RF-13]" vertex="1">
+        <mxCell id="cu_consultar_cuenta" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Consultar estado de&#10;cuenta corriente" vertex="1">
           <mxGeometry height="65" width="220" x="1220" y="200" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_registrar_reclamo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Registrar reclamo o&#10;soporte técnico [RF-14]" vertex="1">
+        <mxCell id="cu_registrar_reclamo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Registrar reclamo o&#10;soporte técnico" vertex="1">
           <mxGeometry height="65" width="220" x="1220" y="440" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_generar_ticket" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Generar ticket en el&#10;sistema [RF-14]" vertex="1">
+        <mxCell id="cu_generar_ticket" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Generar ticket en el&#10;sistema" vertex="1">
           <mxGeometry height="65" width="200" x="1560" y="440" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_recibir_comprobante" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Recibir comprobante&#10;(imagen o PDF) [RF-19]" vertex="1">
+        <mxCell id="cu_recibir_comprobante" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Recibir comprobante&#10;(imagen o PDF)" vertex="1">
           <mxGeometry height="65" width="220" x="1220" y="740" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_resguardar_archivo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Validar y resguardar&#10;archivo de pago [RF-19]" vertex="1">
+        <mxCell id="cu_resguardar_archivo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Validar y resguardar&#10;archivo de pago" vertex="1">
           <mxGeometry height="65" width="200" x="1560" y="670" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_confirmar_recepcion" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Confirmar recepción del&#10;comprobante [RF-19]" vertex="1">
+        <mxCell id="cu_confirmar_recepcion" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Confirmar recepción del&#10;comprobante" vertex="1">
           <mxGeometry height="65" width="200" x="1560" y="810" as="geometry" />
         </mxCell>
 
 
-        <mxCell id="cu_escalar_humano" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Tomar control de&#10;conversación escalada [RF-15]" vertex="1">
+        <mxCell id="cu_escalar_humano" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Tomar control de&#10;conversación escalada" vertex="1">
           <mxGeometry height="65" width="220" x="560" y="1080" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_consultar_hist_humano" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Consultar historial&#10;de conversación [RF-16]" vertex="1">
+        <mxCell id="cu_consultar_hist_humano" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Consultar historial&#10;de conversación" vertex="1">
           <mxGeometry height="65" width="200" x="870" y="1080" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_cerrar_bot" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Cerrar conversación&#10;resuelta por el bot [RF-17]" vertex="1">
+        <mxCell id="cu_cerrar_bot" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Cerrar conversación&#10;resuelta por el bot" vertex="1">
           <mxGeometry height="65" width="200" x="260" y="980" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_cerrar_humano" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Cerrar atención&#10;escalada [RF-17]" vertex="1">
+        <mxCell id="cu_cerrar_humano" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Cerrar atención&#10;escalada" vertex="1">
           <mxGeometry height="65" width="200" x="260" y="1170" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_notificar_vencimientos" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Notificar vencimientos&#10;por WhatsApp [RF-18]" vertex="1">
+        <mxCell id="cu_notificar_vencimientos" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Notificar vencimientos&#10;por WhatsApp" vertex="1">
           <mxGeometry height="65" width="220" x="1400" y="1105" as="geometry" />
         </mxCell>
 

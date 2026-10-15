@@ -10,6 +10,10 @@ use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Throwable;
 
+/**
+ * Servicio ServicioNotificacionesVencimiento
+ * Proceso batch/scheduler para enviar avisos preventivos de vencimiento de cuotas por WhatsApp.
+ */
 class ServicioNotificacionesVencimiento
 {
     public function __construct(
@@ -17,7 +21,13 @@ class ServicioNotificacionesVencimiento
         private readonly ServicioConversaciones $servicioConversaciones,
     ) {}
 
-    /** @return array{enviadas: int, omitidas: int, fallidas: int} */
+    /**
+     * Procesa y envía recordatorios de vencimiento a clientes con cuotas próximas a vencer o vencidas.
+     * Caso de Uso: Notificar vencimientos por WhatsApp (Módulo 2)
+     * Clase UML: ServicioNotificacionesVencimiento | Método UML: + enviar() : array
+     *
+     * @return array{enviadas: int, omitidas: int, fallidas: int}
+     */
     public function enviar(): array
     {
         $hoy = CarbonImmutable::today();

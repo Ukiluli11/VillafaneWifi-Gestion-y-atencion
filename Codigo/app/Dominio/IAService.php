@@ -10,9 +10,17 @@ use JsonException;
 use RuntimeException;
 use Throwable;
 
+/**
+ * Servicio IAService
+ * Clasifica la intención del mensaje del cliente mediante IA (OpenAI) con respaldo local por reglas.
+ */
 class IAService
 {
     /**
+     * Interpreta la intención del cliente a partir de un mensaje de texto.
+     * Caso de Uso: Reconocer intención mediante IA (Módulo 2)
+     * Clase UML: IAService | Método UML: + interpretarIntencion(texto, contexto) : array
+     *
      * @return array{intencion: IntencionConversacion, confianza: float}
      */
     public function interpretarIntencion(string $texto, string $contextoConversacion = ''): array
