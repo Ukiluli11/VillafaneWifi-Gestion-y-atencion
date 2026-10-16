@@ -9,6 +9,12 @@ use App\Models\Conversacion;
 use App\Models\Mensaje;
 use Carbon\CarbonImmutable;
 
+/**
+ * ServicioAtencionWhatsapp: Orquesta el bot conversacional inteligente para atencion al cliente.
+ * Corresponde a los casos de uso: 'Atender conversacion por WhatsApp', 'Reconocer intencion mediante IA',
+ * 'Consultar estado de cuenta corriente', 'Registrar reclamo tecnico' y 'Derivar tras segundo fallo de IA'.
+ * Conecta con IAService, ServicioCuentaCorriente, ServicioTickets y ServicioRecepcionComprobantes.
+ */
 class ServicioAtencionWhatsapp
 {
     public function __construct(

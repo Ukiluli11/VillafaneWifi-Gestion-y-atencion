@@ -9,6 +9,11 @@ use App\Models\Conversacion;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * ServicioTickets: Genera tickets de reclamo tecnico originados desde la atencion automatica de WhatsApp.
+ * Corresponde a los casos de uso: 'Registrar reclamo o soporte tecnico' y 'Generar ticket en el sistema'.
+ * Conecta con el modelo Ticket y el servicio activo del cliente.
+ */
 class ServicioTickets
 {
     public function crearDesdeConversacion(
