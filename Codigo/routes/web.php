@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\AutenticacionController;
 use App\Http\Controllers\Web\ClienteController;
+use App\Http\Controllers\Web\ComprobanteController;
 use App\Http\Controllers\Web\CuentaCorrienteController;
 use App\Http\Controllers\Web\CuentaReceptoraController;
 use App\Http\Controllers\Web\CuotaController;
@@ -56,6 +57,18 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/clientes/{cliente}/cuenta', [CuentaCorrienteController::class, 'show'])->middleware('accion:consultar_cuentas')->name('cuentas.show');
     Route::post('/cuotas/generar', [CuotaController::class, 'store'])->middleware('accion:gestionar_cuentas')->name('cuotas.store');
     Route::post('/pagos', [PagoController::class, 'store'])->middleware('accion:gestionar_pagos')->name('pagos.store');
+
+    // Módulo 3: Comprobantes y Conciliación
+    Route::middleware('accion:consultar_comprobantes')->group(function (): void {
+        Route::get('/comprobantes', [ComprobanteController::class, 'index'])->name('comprobantes.index');
+        Route::get('/comprobantes/{comprobante}', [ComprobanteController::class, 'show'])->name('comprobantes.show');
+    });
+    Route::middleware('accion:gestionar_comprobantes')->group(function (): void {
+        Route::get('/comprobantes-nuevo', [ComprobanteController::class, 'create'])->name('comprobantes.create');
+        Route::post('/comprobantes', [ComprobanteController::class, 'store'])->name('comprobantes.store');
+        Route::post('/comprobantes/{comprobante}/aprobar', [ComprobanteController::class, 'aprobar'])->name('comprobantes.aprobar');
+        Route::post('/comprobantes/{comprobante}/rechazar', [ComprobanteController::class, 'rechazar'])->name('comprobantes.rechazar');
+    });
 
     Route::get('/cuentas-receptoras', [CuentaReceptoraController::class, 'index'])->middleware('accion:consultar_cuentas')->name('cuentas-receptoras.index');
     Route::post('/cuentas-receptoras', [CuentaReceptoraController::class, 'store'])->middleware('accion:gestionar_cuentas')->name('cuentas-receptoras.store');

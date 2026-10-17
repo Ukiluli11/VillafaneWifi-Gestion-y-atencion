@@ -33,5 +33,6 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call(DatosDemostracionSeeder::class);
+        $this->call(ComprobantesDemostracionSeeder::class);
     }
 }
