@@ -7,7 +7,7 @@
         <mxCell id="1" parent="0" />
 
 
-        <mxCell id="sys_box" parent="1" style="text;html=1;strokeColor=#333;fillColor=#fafafa;align=center;verticalAlign=top;whiteSpace=wrap;overflow=hidden;fontStyle=1;fontSize=13;" value="Sistema de Gestión Villafañe Wifi — Módulo 2: Atención y Asistencia por WhatsApp" vertex="1">
+        <mxCell id="sys_box" parent="1" style="text;html=1;strokeColor=#1565C0;fillColor=#E3F2FD;align=center;verticalAlign=top;whiteSpace=wrap;overflow=hidden;fontStyle=1;fontSize=14;fontColor=#1565C0;rounded=1;arcSize=6;strokeWidth=2;spacingTop=14;" value="Sistema de Gestión Villafañe Wifi — Módulo 2: Atención y Asistencia por WhatsApp" vertex="1">
           <mxGeometry height="1420" width="1860" x="180" y="35" as="geometry" />
         </mxCell>
 
