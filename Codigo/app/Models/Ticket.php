@@ -65,7 +65,7 @@ class Ticket extends Model
     }
 
     /**
-     * Caso de Uso: Asignar ticket a técnico (Módulo 2)
+     * Caso de Uso: Asignar ticket a técnico (Módulo 4)
      * Clase UML: Ticket | Método UML: + asignar(usuario: Usuario) : void
      */
     public function asignar(Usuario $usuario): void
@@ -78,7 +78,16 @@ class Ticket extends Model
     }
 
     /**
-     * Caso de Uso: Resolver ticket de reclamo (Módulo 2)
+     * Caso de Uso: Poner ticket en proceso (Módulo 4)
+     * Clase UML: Ticket | Método UML: + ponerEnProceso() : void
+     */
+    public function ponerEnProceso(): void
+    {
+        $this->update(['estado' => EstadoTicket::EnProceso]);
+    }
+
+    /**
+     * Caso de Uso: Resolver ticket de soporte (Módulo 4)
      * Clase UML: Ticket | Método UML: + resolver() : void
      */
     public function resolver(): void
@@ -87,7 +96,7 @@ class Ticket extends Model
     }
 
     /**
-     * Caso de Uso: Cerrar ticket de soporte (Módulo 2)
+     * Caso de Uso: Cerrar ticket de soporte (Módulo 4)
      * Clase UML: Ticket | Método UML: + cerrar() : void
      */
     public function cerrar(): void
@@ -96,7 +105,7 @@ class Ticket extends Model
     }
 
     /**
-     * Caso de Uso: Reabrir ticket de soporte (Módulo 2)
+     * Caso de Uso: Reabrir ticket de soporte (Módulo 4)
      * Clase UML: Ticket | Método UML: + reabrir() : void
      */
     public function reabrir(): void
@@ -113,7 +122,7 @@ class Ticket extends Model
     }
 
     /**
-     * Caso de Uso: Agregar nota interna a ticket (Módulo 2)
+     * Caso de Uso: Agregar nota interna a ticket (Módulo 4)
      * Clase UML: Ticket
      * Método UML: + agregarNota(contenido: String, usuario: Usuario) : NotaInterna
      * Registra una nota interna asociada al ticket para seguimiento del equipo.
@@ -125,5 +134,44 @@ class Ticket extends Model
             'contenido'  => $contenido,
             'fecha_hora' => now(),
         ]);
+    }
+
+    /**
+     * Scope para filtrar y listar tickets con criterios múltiples (RF-28).
+     */
+    public function scopeFiltrar($query, array $filtros)
+    {
+        return $query
+            ->when(!empty($filtros['estado']), function ($q) use ($filtros) {
+                $q->where('estado', $filtros['estado']);
+            })
+            ->when(!empty($filtros['id_usuario_asignado']), function ($q) use ($filtros) {
+                if ($filtros['id_usuario_asignado'] === 'sin_asignar') {
+                    $q->whereNull('id_usuario_asignado');
+                } else {
+                    $q->where('id_usuario_asignado', $filtros['id_usuario_asignado']);
+                }
+            })
+            ->when(!empty($filtros['tipo']), function ($q) use ($filtros) {
+                $q->where('tipo', $filtros['tipo']);
+            })
+            ->when(!empty($filtros['busqueda']), function ($q) use ($filtros) {
+                $busqueda = '%' . trim($filtros['busqueda']) . '%';
+                $q->where(function ($sub) use ($busqueda, $filtros) {
+                    $sub->where('descripcion', 'like', $busqueda)
+                        ->orWhere('id_ticket', trim($filtros['busqueda']))
+                        ->orWhereHas('servicio.cliente', function ($qc) use ($busqueda) {
+                            $qc->where('nombre_razon_social', 'like', $busqueda)
+                                ->orWhere('numero_documento', 'like', $busqueda)
+                                ->orWhere('telefono_whatsapp', 'like', $busqueda);
+                        });
+                });
+            })
+            ->when(!empty($filtros['fecha_desde']), function ($q) use ($filtros) {
+                $q->whereDate('fecha_creacion', '>=', $filtros['fecha_desde']);
+            })
+            ->when(!empty($filtros['fecha_hasta']), function ($q) use ($filtros) {
+                $q->whereDate('fecha_creacion', '<=', $filtros['fecha_hasta']);
+            });
     }
 }

@@ -5,6 +5,7 @@ namespace App\Dominio;
 use App\Models\Cliente;
 use App\Models\Comprobante;
 use App\Models\Pago;
+use App\Models\Ticket;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -63,6 +64,47 @@ class NotificacionService
             'telefono' => $telefono,
             'id_comprobante' => $comprobante->id_comprobante,
             'motivo' => $motivo,
+            'mensaje' => $mensaje,
+        ]);
+
+        return [
+            'destinatario' => $telefono,
+            'mensaje' => $mensaje,
+            'estado' => 'enviado',
+        ];
+    }
+
+    /**
+     * Emite la notificación de novedad o resolución de ticket al cliente por WhatsApp.
+     * Caso de Uso: Notificar novedad por WhatsApp (Módulo 4)
+     * Clase UML: NotificacionService | Método UML: + notificarNovedad(ticket: Ticket, detalle: String) : void
+     */
+    public function notificarNovedad(Ticket $ticket, string $detalle = ''): array
+    {
+        $cliente = $ticket->servicio->cliente;
+        $telefono = $cliente->telefono_whatsapp ?? 'Sin teléfono';
+        $estadoLabel = match ($ticket->estado->value) {
+            'resuelto' => 'ha sido resuelto',
+            'en_proceso' => 'está siendo atendido por un técnico',
+            'cerrado' => 'ha sido cerrado satisfactoriamente',
+            'reabierto' => 'ha sido reabierto para revisión técnica',
+            default => 'ha sido actualizado',
+        };
+
+        $mensaje = sprintf(
+            "Hola %s. Te informamos que tu ticket #%d sobre \"%s\" %s.%s Gracias por comunicarte con Villafañe Wifi.",
+            $cliente->nombre_razon_social,
+            $ticket->id_ticket,
+            $ticket->descripcion,
+            $estadoLabel,
+            $detalle ? " Detalle: {$detalle}." : ''
+        );
+
+        Log::info('[NotificacionService] Novedad de ticket notificada al cliente', [
+            'id_ticket' => $ticket->id_ticket,
+            'id_cliente' => $cliente->id_cliente,
+            'telefono' => $telefono,
+            'estado' => $ticket->estado->value,
             'mensaje' => $mensaje,
         ]);
 

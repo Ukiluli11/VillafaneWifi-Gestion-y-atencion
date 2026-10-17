@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('ticket', function (Blueprint $table) {
             $table->increments('id_ticket');
-            $table->unsignedInteger('id_conversacion');
+            $table->unsignedInteger('id_conversacion')->nullable();
             $table->unsignedInteger('id_servicio');
             $table->unsignedInteger('id_usuario_asignado')->nullable();
             $table->dateTime('fecha_creacion');

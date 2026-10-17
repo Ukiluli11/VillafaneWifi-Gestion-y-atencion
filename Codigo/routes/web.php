@@ -12,6 +12,7 @@ use App\Http\Controllers\Web\PagoController;
 use App\Http\Controllers\Web\PlanController;
 use App\Http\Controllers\Web\ServicioController;
 use App\Http\Controllers\Web\SimuladorWhatsappController;
+use App\Http\Controllers\Web\TicketController;
 use App\Http\Controllers\Web\UsuarioController;
 use App\Http\Controllers\Webhooks\WebhookWhatsappController;
 use Illuminate\Support\Facades\Route;
@@ -90,6 +91,20 @@ Route::middleware('auth')->group(function (): void {
         Route::post('/conversaciones/{conversacion}/tomar', [ConversacionController::class, 'tomar'])->name('conversaciones.tomar');
         Route::post('/conversaciones/{conversacion}/responder', [ConversacionController::class, 'responder'])->name('conversaciones.responder');
         Route::post('/conversaciones/{conversacion}/cerrar', [ConversacionController::class, 'cerrar'])->name('conversaciones.cerrar');
+    });
+
+    // Módulo 4: Soporte Técnico y Gestión de Tickets
+    Route::middleware('accion:consultar_tickets')->group(function (): void {
+        Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
+        Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
+    });
+    Route::middleware('accion:gestionar_tickets')->group(function (): void {
+        Route::get('/tickets-nuevo', [TicketController::class, 'create'])->name('tickets.create');
+        Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
+        Route::post('/tickets/{ticket}/asignar', [TicketController::class, 'asignar'])->name('tickets.asignar');
+        Route::post('/tickets/{ticket}/estado', [TicketController::class, 'cambiarEstado'])->name('tickets.estado');
+        Route::post('/tickets/{ticket}/reabrir', [TicketController::class, 'reabrir'])->name('tickets.reabrir');
+        Route::post('/tickets/{ticket}/notas', [TicketController::class, 'agregarNota'])->name('tickets.notas.store');
     });
 
     Route::get('/usuarios', [UsuarioController::class, 'index'])->middleware('accion:gestionar_usuarios')->name('usuarios.index');
