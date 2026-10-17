@@ -40,7 +40,7 @@ class ServicioCuentaCorriente
     {
         return Cuota::query()
             ->whereHas('servicio', fn ($consulta) => $consulta->whereBelongsTo($cliente))
-            ->with(['servicio.plan', 'pago.cuenta'])
+            ->with(['servicio.plan', 'pago.cuenta', 'pago.comprobante'])
             ->orderByDesc('periodo')
             ->orderBy('id_servicio')
             ->get();
