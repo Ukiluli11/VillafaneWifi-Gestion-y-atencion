@@ -34,5 +34,5 @@ Los diagramas utilizan el formato estándar editable de diagrams.net (.drawio) y
 - Las relaciones `include` señalan tareas obligatorias y las relaciones `extend` representan variantes condicionadas por la intención o el resultado del procesamiento.
 - Los diagramas de secuencia utilizan marcos `alt`, `opt` y `loop` para mostrar decisiones, pasos opcionales y procesamiento repetido.
 - RF-19 termina con el resguardo del comprobante. La extracción OCR, la detección de duplicados y la conciliación pertenecen a RF-20 y posteriores.
-- Los PNG fueron revisados después de la exportación. Se ajustaron posiciones, recorridos, nombres largos y marcos para evitar elementos superpuestos y conservar la lectura de las flechas.
+- Los archivos fuente `.drawio` usan una sola lámina por diagrama, rutas ortogonales y separaciones uniformes. Los PNG se regeneran desde estos fuentes y se revisan visualmente antes de publicar los cambios.
 

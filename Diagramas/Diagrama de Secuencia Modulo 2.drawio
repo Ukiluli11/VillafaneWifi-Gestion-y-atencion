@@ -79,7 +79,7 @@
           <mxGeometry relative="1" as="geometry"><mxPoint x="95" y="180" as="sourcePoint" /><mxPoint x="330" y="180" as="targetPoint" /></mxGeometry>
         </mxCell>
 
-        <mxCell id="m_2" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="POST /webhook/whatsapp {entry: [{changes: [messages: [...]]}]}">
+        <mxCell id="m_2" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="POST /webhooks/whatsapp {entry: [{changes: [messages: [...]]}]}">
           <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="225" as="sourcePoint" /><mxPoint x="575" y="225" as="targetPoint" /></mxGeometry>
         </mxCell>
 
@@ -143,7 +143,7 @@
           <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="780" as="sourcePoint" /><mxPoint x="1310" y="780" as="targetPoint" /></mxGeometry>
         </mxCell>
 
-        <mxCell id="m_14" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#6A1B9A;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: {intencion: &apos;consulta_deuda&apos; | &apos;reclamo&apos; | &apos;envio_pago&apos; | &apos;desconocida&apos;, confianza: 0.94}">
+        <mxCell id="m_14" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#6A1B9A;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: {intencion: &apos;consulta_cuenta&apos; | &apos;reclamo_soporte&apos; | &apos;envio_comprobante&apos; | &apos;desconocida&apos;, confianza: 0.94}">
           <mxGeometry relative="1" as="geometry"><mxPoint x="1310" y="825" as="sourcePoint" /><mxPoint x="820" y="825" as="targetPoint" /></mxGeometry>
         </mxCell>
 
@@ -156,7 +156,7 @@
         </mxCell>
 
         <!-- CASO 1: CONSULTA DE ESTADO DE CUENTA (RF-13) -->
-        <mxCell id="cond_cuenta" parent="1" style="text;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=none;align=left;fontColor=#2E7D32;" value="[CASO 1: intencion == &apos;consulta_deuda&apos; — RF-13]" vertex="1">
+        <mxCell id="cond_cuenta" parent="1" style="text;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=none;align=left;fontColor=#2E7D32;" value="[CASO 1: intencion == &apos;consulta_cuenta&apos; — RF-13]" vertex="1">
           <mxGeometry height="20" width="500" x="90" y="870" as="geometry" />
         </mxCell>
 
@@ -208,7 +208,7 @@
         </mxCell>
 
         <!-- CASO 3: ENVÍO Y RESGUARDO DE COMPROBANTE DE PAGO (RF-19) -->
-        <mxCell id="cond_pago" parent="1" style="text;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=none;align=left;fontColor=#E65100;" value="[CASO 3: intencion == &apos;envio_pago&apos; — Cliente envía imagen o PDF de comprobante — RF-19]" vertex="1">
+        <mxCell id="cond_pago" parent="1" style="text;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=none;align=left;fontColor=#E65100;" value="[CASO 3: intencion == &apos;envio_comprobante&apos; — Cliente envía imagen o PDF de comprobante — RF-19]" vertex="1">
           <mxGeometry height="20" width="600" x="90" y="1335" as="geometry" />
         </mxCell>
 
@@ -216,7 +216,7 @@
           <mxGeometry relative="1" as="geometry"><mxPoint x="95" y="1385" as="sourcePoint" /><mxPoint x="330" y="1385" as="targetPoint" /></mxGeometry>
         </mxCell>
 
-        <mxCell id="m_p2" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="POST /webhook/whatsapp {messages: [{type: &apos;image&apos;, id: &apos;media_123&apos;}]}">
+        <mxCell id="m_p2" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="POST /webhooks/whatsapp {messages: [{type: &apos;image&apos;, id: &apos;media_123&apos;}]}">
           <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="1425" as="sourcePoint" /><mxPoint x="575" y="1425" as="targetPoint" /></mxGeometry>
         </mxCell>
 
@@ -250,11 +250,11 @@
           <mxGeometry height="20" width="550" x="90" y="1695" as="geometry" />
         </mxCell>
 
-        <mxCell id="m_cb1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#455A64;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="finalizarSesionBot(): UPDATE conversacion SET estado=&apos;resuelta&apos;, fecha_cierre=NOW() WHERE id=:id">
+        <mxCell id="m_cb1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#455A64;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="finalizarSesionBot(): UPDATE conversacion SET estado=&apos;cerrada&apos;, fecha_hora_cierre=NOW() WHERE id=:id">
           <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1745" as="sourcePoint" /><mxPoint x="1555" y="1745" as="targetPoint" /></mxGeometry>
         </mxCell>
 
-        <mxCell id="m_cb2" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: conversacion marcada como resuelta">
+        <mxCell id="m_cb2" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: conversacion marcada como cerrada">
           <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="1785" as="sourcePoint" /><mxPoint x="820" y="1785" as="targetPoint" /></mxGeometry>
         </mxCell>
 
@@ -317,7 +317,7 @@
           <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2280" as="sourcePoint" /><mxPoint x="1800" y="2280" as="targetPoint" /></mxGeometry>
         </mxCell>
 
-        <mxCell id="m_e4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="tomarControlConversacion(idConv): POST /web/conversaciones/{id}/tomar [RF-15]">
+        <mxCell id="m_e4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="tomarControlConversacion(idConv): POST /conversaciones/{id}/tomar [RF-15]">
           <mxGeometry relative="1" as="geometry"><mxPoint x="1800" y="2330" as="sourcePoint" /><mxPoint x="575" y="2330" as="targetPoint" /></mxGeometry>
         </mxCell>
 
@@ -325,7 +325,7 @@
           <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="2375" as="sourcePoint" /><mxPoint x="1555" y="2375" as="targetPoint" /></mxGeometry>
         </mxCell>
 
-        <mxCell id="m_e6" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="responderDesdePanel(idConv, texto): POST /web/conversaciones/{id}/mensajes">
+        <mxCell id="m_e6" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="responderDesdePanel(idConv, texto): POST /conversaciones/{id}/responder">
           <mxGeometry relative="1" as="geometry"><mxPoint x="1800" y="2425" as="sourcePoint" /><mxPoint x="575" y="2425" as="targetPoint" /></mxGeometry>
         </mxCell>
 
@@ -337,7 +337,7 @@
           <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="2510" as="sourcePoint" /><mxPoint x="95" y="2510" as="targetPoint" /></mxGeometry>
         </mxCell>
 
-        <mxCell id="m_e9" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="cerrarAtencionEscalada(idConv): POST /web/conversaciones/{id}/cerrar [RF-17]">
+        <mxCell id="m_e9" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="cerrarAtencionEscalada(idConv): POST /conversaciones/{id}/cerrar [RF-17]">
           <mxGeometry relative="1" as="geometry"><mxPoint x="1800" y="2555" as="sourcePoint" /><mxPoint x="575" y="2555" as="targetPoint" /></mxGeometry>
         </mxCell>
 
@@ -350,7 +350,7 @@
           <mxGeometry height="26" width="1860" x="40" y="2650" as="geometry" />
         </mxCell>
 
-        <mxCell id="m_v1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="cron: notificar-vencimientos diario (php artisan app:notificar-vencimientos) [RF-18]">
+        <mxCell id="m_v1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="cron: notificar-vencimientos diario (php artisan whatsapp:notificar-vencimientos) [RF-18]">
           <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="2700" as="sourcePoint" /><mxPoint x="820" y="2700" as="targetPoint" /></mxGeometry>
         </mxCell>
 

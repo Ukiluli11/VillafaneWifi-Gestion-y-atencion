@@ -33,7 +33,7 @@ Al sincronizar y revisar los artefactos desarrollados previamente para el Módul
 ### B. En el Diagrama de Casos de Uso General
 * **Casos de uso huérfanos / desconectados**: Varios casos de uso de los Módulos 1, 2, 4 y 6 se encontraban dibujados en el lienzo pero sin asociaciones a sus actores correspondientes ni relaciones de inclusión/extensión, quedando sin trazabilidad formal.
 * **Inversión semántica de relaciones UML**: La relación entre el caso de uso base *Generar reportes* y su extensión *Exportar reportes a PDF/Excel* se encontraba con la flecha invertida (la flecha de un `«extend»` debe apuntar siempre desde el caso de uso que agrega comportamiento opcional hacia el caso de uso base).
-* **Mezcla de alcances (Módulo 3 en la rama del Módulo 2)**: Existían artefactos y relaciones tentativas pertenecientes al Módulo 3 (Conciliación de pagos y OCR) que no correspondían al alcance de la rama `Modulo2Actualizacion`, violando la regla de separación de ramas y desarrollo modular.
+* **Convivencia de alcances en los diagramas generales**: El diagrama general incluye funciones de otros módulos, entre ellas OCR y conciliación. Se conservan porque describen el sistema completo, pero quedan delimitadas explícitamente respecto del alcance RF-10 a RF-19 del Módulo 2.
 
 ### C. En los Diagramas Específicos del Módulo 2
 * **Fragmentación excesiva y falta de estándar unificado**: El trabajo inicial del compañero presentaba 6 diagramas de secuencia individuales y un caso de uso específico en archivos XML/PNG separados, con dimensiones, paletas de colores y estilos tipográficos heterogéneos que rompían el estándar de lámina única consolidada presente en los Módulos 1 y 6.
@@ -76,8 +76,8 @@ Para subsanar las desviaciones detectadas y establecer una base sólida antes de
      - Derivación a operador humano (`«extend»`).
      - Registro de reclamo técnico y generación de ticket (`«include»`).
      - Notificación automática de vencimientos (`Reloj del Sistema / Cron`).
-4. **Purga y Blindaje contra el Módulo 3**:
-   * Se suprimieron todas las conexiones y casos de uso tentativos del Módulo 3 (`ei14`, `ea14`, `ea15`, `ea16`) presentes en esta rama, garantizando aislamiento estricto y trazabilidad limpia para la evaluación del Módulo 2.
+4. **Delimitación respecto del Módulo 3**:
+   * El diagrama general conserva los casos de uso del sistema completo. El caso de uso específico del Módulo 2 termina al recibir y resguardar el comprobante; OCR, validación y conciliación continúan identificados como responsabilidades del Módulo 3.
 
 ---
 
@@ -110,8 +110,8 @@ Para cumplir con la directiva metodológica del proyecto (mantener idéntico for
   - `alt`: Para bifurcar los flujos según el *intent* detectado por la IA:
     - Rama 1: Consulta de estado de cuenta y deuda (RF-13).
     - Rama 2: Registro de reclamo técnico y ticket (RF-14).
-    - Rama 3: Recepción y resguardo de comprobante de pago (RF-15).
-    - Rama 4: Escalado a operador humano y atención en vivo (RF-16 y RF-17).
+    - Rama 3: Recepción y resguardo de comprobante de pago (RF-19).
+    - Rama 4: Escalado a operador humano, historial y cierre (RF-15, RF-16 y RF-17).
     - Rama 5: Tarea programada (Cron) para notificación de vencimientos (RF-18).
 
 ---
@@ -125,11 +125,11 @@ Para cumplir con la directiva metodológica del proyecto (mantener idéntico for
 | **RF-12** | Identificación del cliente por teléfono o DNI | Clase `ServicioIdentificacion` asociada a `Cliente` | `CU-M2-02: Identificar cliente` (`«include»`) | Búsqueda por número en `Cliente::where('telefono')` |
 | **RF-13** | Consulta de estado de cuenta y deuda vía bot | Navegabilidad `Cliente -> Servicio -> Cuota` | `CU-M2-04: Consultar estado de cuenta` | Rama `alt [intención = consulta_saldo]` con lectura en DB |
 | **RF-14** | Registro de reclamo y ticket de soporte técnico | Clase `Ticket` asociada a `Conversacion` y `Servicio` | `CU-M2-05: Registrar reclamo y generar ticket` | Rama `alt [intención = reclamo_tecnico]`, creación en tabla `ticket` |
-| **RF-15** | Recepción y resguardo de comprobante de pago | Clase `ComprobantePago` asociada a `Conversacion` | `CU-M2-06: Recibir y archivar comprobante` | Rama `alt [intención = envio_comprobante]`, almacenamiento de archivo |
-| **RF-16** | Derivación / escalado a operador humano | Atributos `estado = 'derivada'`, `idOperador` | `CU-M2-07: Derivar a operador humano` (`«extend»`) | Actualización de estado y aviso en cola del panel web |
-| **RF-17** | Gestión de chat y respuesta desde panel web | Métodos en `PanelAtencionController` | `CU-M2-08: Gestionar chat desde panel` | Interacción Empleado -> Panel -> Servicio -> WhatsApp API |
-| **RF-18** | Envío automático de avisos de vencimiento masivos | `NotificacionService` hereda de `ServicioExterno` | `CU-M2-09: Enviar recordatorio masivo` | Disparador `Reloj / Cron` -> consulta cuotas por vencer -> envío de plantilla |
-| **RF-19** | Cierre y tipificación final de la conversación | Métodos `cerrar()` y `tipificar()` en `Conversacion` | `CU-M2-10: Finalizar y tipificar conversación` | Cierre por bot o por operador, marcando `fechaFin` |
+| **RF-15** | Escalado y toma de control por un usuario interno | Atributos de asignación y modo humano en `Conversacion` | `CU-M2-07: Derivar a operador humano` | Segundo fallo o solicitud explícita, cola del panel y toma exclusiva |
+| **RF-16** | Registro y consulta del historial completo | Clases `Conversacion` y `Mensaje` | Todos los casos que intercambian mensajes | Persistencia de mensajes entrantes, salientes, internos y notificaciones |
+| **RF-17** | Cierre de la conversación | Método `Conversacion::cerrar()` y panel de atención | `CU-M2-08: Gestionar y cerrar conversación` | Cierre por el usuario responsable con fecha de finalización |
+| **RF-18** | Envío automático de avisos de vencimiento | `ServicioNotificacionesVencimiento` y tarea programada | `CU-M2-09: Enviar recordatorio` | Scheduler -> consulta cuotas -> plantilla de WhatsApp con idempotencia |
+| **RF-19** | Recepción y resguardo de comprobante | `Comprobante` asociado a cliente, conversación y mensaje | `CU-M2-06: Recibir y archivar comprobante` | Descarga de imagen o PDF, validación de formato y almacenamiento privado |
 
 ---
 
@@ -138,7 +138,11 @@ Para cumplir con la directiva metodológica del proyecto (mantener idéntico for
 Gracias al saneamiento ejecutado:
 1. **Se eliminaron todos los vicios y contradicciones de diseño** (desaparición de FKs relacionales en el modelo conceptual de clases y corrección de flechas de casos de uso).
 2. **Se unificó el criterio estético y metodológico del proyecto**, presentando el Módulo 2 con el mismo rigor y formato que los Módulos 1 y 6.
-3. **Se aisló completamente la rama `Modulo2Actualizacion`**, garantizando que el alcance permanezca enfocado al 100% en las conversaciones y atención al cliente.
+3. **Se delimitó el alcance de `Modulo2Actualizacion`** en RF-10 a RF-19, manteniendo en los diagramas generales la visión integral necesaria para la futura integración con el Módulo 3.
 
 **Dictamen Técnico:**  
 El sistema cuenta con una base de diseño formal, consistente y validada. **Se otorga el visto bueno para dar inicio a la implementación del código fuente en Laravel**, comenzando por las migraciones de base de datos de las tablas `conversacion`, `mensaje`, `ticket`, `comprobante` y `nota_interna`.
+
+## 8. Actualización posterior a la implementación
+
+El código del Módulo 2 implementa actualmente los RF-10 a RF-19. La recepción de comprobantes comparte con el Módulo 3 una migración base compatible y agrega el contexto de WhatsApp mediante una migración separada. El servicio de recepción del Módulo 2 finaliza con el archivo resguardado y el estado pendiente; OCR, conciliación y aprobación continúan perteneciendo al Módulo 3.

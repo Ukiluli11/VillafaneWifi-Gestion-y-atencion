@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\AutenticacionController;
 use App\Http\Controllers\Web\ClienteController;
+use App\Http\Controllers\Web\ConversacionController;
 use App\Http\Controllers\Web\CuentaCorrienteController;
 use App\Http\Controllers\Web\CuentaReceptoraController;
 use App\Http\Controllers\Web\CuotaController;
@@ -9,8 +10,13 @@ use App\Http\Controllers\Web\InicioController;
 use App\Http\Controllers\Web\PagoController;
 use App\Http\Controllers\Web\PlanController;
 use App\Http\Controllers\Web\ServicioController;
+use App\Http\Controllers\Web\SimuladorWhatsappController;
 use App\Http\Controllers\Web\UsuarioController;
+use App\Http\Controllers\Webhooks\WebhookWhatsappController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/webhooks/whatsapp', [WebhookWhatsappController::class, 'verificar'])->name('whatsapp.verificar');
+Route::post('/webhooks/whatsapp', [WebhookWhatsappController::class, 'recibir'])->name('whatsapp.recibir');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/iniciar-sesion', [AutenticacionController::class, 'create'])->name('sesion.crear');
@@ -60,6 +66,18 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/cuentas-receptoras', [CuentaReceptoraController::class, 'index'])->middleware('accion:consultar_cuentas')->name('cuentas-receptoras.index');
     Route::post('/cuentas-receptoras', [CuentaReceptoraController::class, 'store'])->middleware('accion:gestionar_cuentas')->name('cuentas-receptoras.store');
     Route::put('/cuentas-receptoras/{cuentaReceptora}', [CuentaReceptoraController::class, 'update'])->middleware('accion:gestionar_cuentas')->name('cuentas-receptoras.update');
+
+    Route::middleware('accion:consultar_conversaciones')->group(function (): void {
+        Route::get('/conversaciones', [ConversacionController::class, 'index'])->name('conversaciones.index');
+        Route::get('/conversaciones/{conversacion}', [ConversacionController::class, 'show'])->name('conversaciones.show');
+    });
+    Route::middleware('accion:gestionar_conversaciones')->group(function (): void {
+        Route::get('/simulador-whatsapp', [SimuladorWhatsappController::class, 'create'])->name('simulador-whatsapp.create');
+        Route::post('/simulador-whatsapp', [SimuladorWhatsappController::class, 'store'])->name('simulador-whatsapp.store');
+        Route::post('/conversaciones/{conversacion}/tomar', [ConversacionController::class, 'tomar'])->name('conversaciones.tomar');
+        Route::post('/conversaciones/{conversacion}/responder', [ConversacionController::class, 'responder'])->name('conversaciones.responder');
+        Route::post('/conversaciones/{conversacion}/cerrar', [ConversacionController::class, 'cerrar'])->name('conversaciones.cerrar');
+    });
 
     Route::get('/usuarios', [UsuarioController::class, 'index'])->middleware('accion:gestionar_usuarios')->name('usuarios.index');
     Route::post('/usuarios', [UsuarioController::class, 'store'])->middleware('accion:gestionar_usuarios')->name('usuarios.store');

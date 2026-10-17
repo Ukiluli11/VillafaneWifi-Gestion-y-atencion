@@ -308,7 +308,7 @@
         <mxCell id="ei10" value="«extend»&#10;[solicitud exportación]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-export" target="uc-reports">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ee1" value="«extend»&#10;[primer intento fallido]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-rephrase" target="uc-intent">
+        <mxCell id="ee1" value="«extend» [1.er fallo]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-rephrase" target="uc-intent">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ee2" value="«extend»&#10;[solicitud o segundo fallo]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-escalate" target="uc-attend">
@@ -321,7 +321,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- Conexiones para casos de uso del Módulo 1 -->
+
         <mxCell id="ei11" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-manage-client" target="uc-register-client">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -340,8 +340,8 @@
           </mxGeometry>
         </mxCell>
 
-        <!-- Conexión para cierre en Módulo 2 -->
-        <mxCell id="ee5" value="«extend»&#10;[atención finalizada]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-close" target="uc-attend">
+
+        <mxCell id="ee5" value="«extend» [atención finalizada]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-close" target="uc-attend">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1220" y="740" />
@@ -350,13 +350,13 @@
           </mxGeometry>
         </mxCell>
 
-        
-        
-        
-        
-        
 
-        <!-- Conexiones para tickets (Módulo 4) -->
+
+
+
+
+
+
         <mxCell id="ei15" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-manage-ticket" target="uc-resolve-ticket">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -370,7 +370,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- Conexiones para usuarios, login y reportes (Módulo 5 y 6) -->
+
         <mxCell id="ea17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" parent="1" source="a-employee" target="uc-login">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">

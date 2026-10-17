@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias(['accion' => VerificarAccion::class]);
+        $middleware->preventRequestForgery(except: ['webhooks/whatsapp']);
 
         $middleware->redirectGuestsTo(fn (): string => route('sesion.crear'));
     })
