@@ -65,7 +65,7 @@ class Ticket extends Model
     }
 
     /**
-     * Caso de Uso: Asignar ticket a técnico (Módulo 4)
+     * Caso de Uso: Asignar ticket a técnico
      * Clase UML: Ticket | Método UML: + asignar(usuario: Usuario) : void
      */
     public function asignar(Usuario $usuario): void
@@ -78,7 +78,7 @@ class Ticket extends Model
     }
 
     /**
-     * Caso de Uso: Poner ticket en proceso (Módulo 4)
+     * Caso de Uso: Poner ticket en proceso
      * Clase UML: Ticket | Método UML: + ponerEnProceso() : void
      */
     public function ponerEnProceso(): void
@@ -87,7 +87,7 @@ class Ticket extends Model
     }
 
     /**
-     * Caso de Uso: Resolver ticket de soporte (Módulo 4)
+     * Caso de Uso: Resolver ticket de soporte
      * Clase UML: Ticket | Método UML: + resolver() : void
      */
     public function resolver(): void
@@ -96,7 +96,7 @@ class Ticket extends Model
     }
 
     /**
-     * Caso de Uso: Cerrar ticket de soporte (Módulo 4)
+     * Caso de Uso: Cerrar ticket de soporte
      * Clase UML: Ticket | Método UML: + cerrar() : void
      */
     public function cerrar(): void
@@ -105,7 +105,7 @@ class Ticket extends Model
     }
 
     /**
-     * Caso de Uso: Reabrir ticket de soporte (Módulo 4)
+     * Caso de Uso: Reabrir ticket de soporte
      * Clase UML: Ticket | Método UML: + reabrir() : void
      */
     public function reabrir(): void
@@ -122,7 +122,7 @@ class Ticket extends Model
     }
 
     /**
-     * Caso de Uso: Agregar nota interna a ticket (Módulo 4)
+     * Caso de Uso: Agregar nota interna a ticket
      * Clase UML: Ticket
      * Método UML: + agregarNota(contenido: String, usuario: Usuario) : NotaInterna
      * Registra una nota interna asociada al ticket para seguimiento del equipo.

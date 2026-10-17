@@ -16,7 +16,7 @@ class NotificacionService
 {
     /**
      * Emite la notificación de comprobante aprobado y pago acreditado al cliente.
-     * Caso de Uso: Notificar acreditación de pago por WhatsApp (Módulo 3)
+     * Caso de Uso: Notificar acreditación de pago por WhatsApp
      * Clase UML: NotificacionService | Método UML: + notificarPagoAprobado(...) : void
      */
     public function notificarPagoAprobado(Cliente $cliente, Pago $pago, ?Comprobante $comprobante = null): array
@@ -46,7 +46,7 @@ class NotificacionService
 
     /**
      * Emite la notificación de comprobante rechazado al cliente con el motivo correspondiente.
-     * Caso de Uso: Notificar rechazo con motivo por WhatsApp (Módulo 3)
+     * Caso de Uso: Notificar rechazo con motivo por WhatsApp
      * Clase UML: NotificacionService | Método UML: + notificarPagoRechazado(...) : void
      */
     public function notificarPagoRechazado(Cliente $cliente, Comprobante $comprobante, string $motivo): array
@@ -76,7 +76,7 @@ class NotificacionService
 
     /**
      * Emite la notificación de novedad o resolución de ticket al cliente por WhatsApp.
-     * Caso de Uso: Notificar novedad por WhatsApp (Módulo 4)
+     * Caso de Uso: Notificar novedad por WhatsApp
      * Clase UML: NotificacionService | Método UML: + notificarNovedad(ticket: Ticket, detalle: String) : void
      */
     public function notificarNovedad(Ticket $ticket, string $detalle = ''): array

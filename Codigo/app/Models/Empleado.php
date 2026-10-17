@@ -43,7 +43,7 @@ class Empleado extends Model
     }
 
     /**
-     * Caso de Uso: Consultar tickets asignados al empleado (Módulo 2)
+     * Caso de Uso: Consultar tickets asignados al empleado
      * Clase UML: Empleado
      * Método UML: + consultarTicketsAsignados() : List<Ticket>
      * Retorna los tickets asignados al usuario vinculado a este empleado.
@@ -54,7 +54,7 @@ class Empleado extends Model
     }
 
     /**
-     * Caso de Uso: Tomar control de conversación escalada (Módulo 2)
+     * Caso de Uso: Tomar control de conversación escalada
      * Clase UML: Empleado
      * Método UML: + atenderConversacion(c: Conversacion) : void
      * Servicio coordinador: ServicioAtencionHumana::tomar()

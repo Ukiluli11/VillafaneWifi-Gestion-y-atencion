@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\DB;
 /**
  * ServicioTickets: Coordina la generación, asignación, ciclo de vida y notas de tickets de soporte técnico.
  * Casos de Uso: Registrar reclamo técnico, Generar ticket de soporte, Asignar ticket a técnico,
- * Gestionar estado de ticket, Reabrir ticket, Agregar nota interna (Módulo 4).
+ * Gestionar estado de ticket, Reabrir ticket y Agregar nota interna.
  */
 class ServicioTickets
 {
     /**
-     * Caso de Uso: Registrar reclamo técnico / Generar ticket de soporte (desde WhatsApp)
+     * Caso de Uso: Registrar reclamo técnico
      */
     public function crearDesdeConversacion(
         Conversacion $conversacion,
@@ -48,7 +48,7 @@ class ServicioTickets
     }
 
     /**
-     * Caso de Uso: Generar ticket de soporte (manualmente desde panel web) (RF-27)
+     * Caso de Uso: Generar ticket de soporte
      */
     public function crearManual(array $datos, Usuario $creador): Ticket
     {
@@ -73,7 +73,7 @@ class ServicioTickets
     }
 
     /**
-     * Caso de Uso: Asignar ticket a técnico (RF-29)
+     * Caso de Uso: Asignar ticket a técnico
      */
     public function asignarTicket(Ticket $ticket, Usuario $tecnico): void
     {
@@ -84,7 +84,7 @@ class ServicioTickets
     }
 
     /**
-     * Caso de Uso: Gestionar estado de ticket - Resolver / Cerrar / En proceso (RF-30)
+     * Caso de Uso: Gestionar estado de ticket
      */
     public function cambiarEstado(Ticket $ticket, EstadoTicket $nuevoEstado, ?Usuario $operador = null, ?string $observacion = null): void
     {
@@ -105,7 +105,7 @@ class ServicioTickets
     }
 
     /**
-     * Caso de Uso: Reabrir ticket de soporte (RF-31)
+     * Caso de Uso: Reabrir ticket
      */
     public function reabrirTicket(Ticket $ticket, Usuario $operador, ?string $motivo = null): void
     {
@@ -120,7 +120,7 @@ class ServicioTickets
     }
 
     /**
-     * Caso de Uso: Agregar nota interna (RF-32)
+     * Caso de Uso: Agregar nota interna
      */
     public function agregarNotaInterna(Ticket $ticket, Usuario $autor, string $contenido): NotaInterna
     {

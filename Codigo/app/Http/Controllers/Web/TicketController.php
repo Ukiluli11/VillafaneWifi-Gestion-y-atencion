@@ -17,9 +17,11 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * TicketController: Controlador de soporte técnico y gestión de tickets (Módulo 4).
- * Responsable de la bandeja web, filtros, generación manual, asignación a técnicos,
- * transiciones de estado, notas internas y trazabilidad con WhatsApp.
+ * TicketController: Controlador web para la gestión de tickets y soporte técnico.
+ * Corresponde a los casos de uso: 'Filtrar y listar tickets', 'Generar ticket de soporte',
+ * 'Asignar ticket a técnico', 'Gestionar estado de ticket', 'Reabrir ticket', 'Agregar nota interna',
+ * 'Visualizar conversación de chat asociada' y 'Notificar novedad por WhatsApp'.
+ * Conecta con el modelo Ticket, ServicioTickets y NotificacionService.
  */
 class TicketController extends Controller
 {
@@ -29,7 +31,7 @@ class TicketController extends Controller
     ) {}
 
     /**
-     * Bandeja principal de tickets con filtrado avanzado (RF-28).
+     * Bandeja principal de tickets con filtrado avanzado multicriterio.
      */
     public function index(Request $request): View
     {
@@ -76,7 +78,7 @@ class TicketController extends Controller
     }
 
     /**
-     * Pantalla para registrar un ticket de soporte de manera manual (RF-27).
+     * Presenta el formulario para registrar un ticket de soporte de manera manual.
      */
     public function create(Request $request): View
     {
@@ -100,7 +102,7 @@ class TicketController extends Controller
     }
 
     /**
-     * Guarda el ticket manual en la base de datos (RF-27).
+     * Persiste el ticket manual en la base de datos con asignación opcional y nota inicial.
      */
     public function store(CrearTicketRequest $request): RedirectResponse
     {
@@ -111,7 +113,7 @@ class TicketController extends Controller
     }
 
     /**
-     * Detalle completo del ticket: datos, estado, notas internas y chat asociado (RF-28, RF-32, RF-33).
+     * Muestra datos del servicio, estado, línea de tiempo, notas y chat de WhatsApp vinculado.
      */
     public function show(Ticket $ticket): View
     {
@@ -131,7 +133,7 @@ class TicketController extends Controller
     }
 
     /**
-     * Asignar ticket a un técnico responsable (RF-29).
+     * Asigna formalmente el responsable técnico e inicia el seguimiento del ticket.
      */
     public function asignar(Request $request, Ticket $ticket): RedirectResponse
     {
@@ -150,7 +152,7 @@ class TicketController extends Controller
     }
 
     /**
-     * Gestión de transiciones de estado: en proceso, resuelto, cerrado (RF-30).
+     * Controla las transiciones de ciclo de vida del ticket con notificación opcional por WhatsApp.
      */
     public function cambiarEstado(Request $request, Ticket $ticket): RedirectResponse
     {
@@ -168,7 +170,7 @@ class TicketController extends Controller
         $observacion = $request->input('observacion');
         $this->servicioTickets->cambiarEstado($ticket, $nuevoEstado, $request->user(), $observacion);
 
-        // Notificación opcional al cliente por WhatsApp (RF-33)
+        // Notificación opcional al cliente por WhatsApp
         if ($request->boolean('notificar_whatsapp')) {
             $this->notificacionService->notificarNovedad($ticket, $observacion ?? '');
         }
@@ -178,7 +180,7 @@ class TicketController extends Controller
     }
 
     /**
-     * Mecanismo formal de reapertura de ticket ante reclamo persistente (RF-31).
+     * Mecanismo formal de reapertura de incidentes no solucionados.
      */
     public function reabrir(Request $request, Ticket $ticket): RedirectResponse
     {
@@ -196,7 +198,7 @@ class TicketController extends Controller
     }
 
     /**
-     * Agregar nota técnica o comentario interno a la bitácora del ticket (RF-32).
+     * Asienta anotaciones técnicas o comentarios internos en la bitácora del ticket.
      */
     public function agregarNota(AgregarNotaInternaRequest $request, Ticket $ticket): RedirectResponse
     {
