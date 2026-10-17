@@ -305,7 +305,7 @@
         <mxCell id="ei9" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-manage-client" target="uc-search-client">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ei10" value="«extend»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-reports" target="uc-export">
+        <mxCell id="ei10" value="«extend»&#10;[solicitud exportación]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-export" target="uc-reports">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ee1" value="«extend»&#10;[primer intento fallido]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-rephrase" target="uc-intent">
@@ -320,6 +320,98 @@
         <mxCell id="ee4" value="«extend»&#10;[reclamo]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-claim" target="uc-attend">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+
+        <!-- Conexiones para casos de uso del Módulo 1 -->
+        <mxCell id="ei11" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-manage-client" target="uc-register-client">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ei12" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-manage-client" target="uc-edit-client">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ei13" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-manage-client" target="uc-manage-service">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" parent="1" source="a-employee" target="uc-manage-client">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="280" y="1035" />
+              <mxPoint x="1160" y="1035" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Conexión para cierre en Módulo 2 -->
+        <mxCell id="ee5" value="«extend»&#10;[atención finalizada]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-close" target="uc-attend">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1220" y="740" />
+              <mxPoint x="545" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        
+        
+        
+        
+        
+
+        <!-- Conexiones para tickets (Módulo 4) -->
+        <mxCell id="ei15" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-manage-ticket" target="uc-resolve-ticket">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ee6" value="«extend»&#10;[problema persiste]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-reopen-ticket" target="uc-manage-ticket">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ei16" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-manage-ticket" target="uc-note-ticket">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ei17" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;" edge="1" parent="1" source="uc-manage-ticket" target="uc-ticket-notify">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Conexiones para usuarios, login y reportes (Módulo 5 y 6) -->
+        <mxCell id="ea17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" parent="1" source="a-employee" target="uc-login">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240" y="970" />
+              <mxPoint x="2260" y="970" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" parent="1" source="a-admin" target="uc-login">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="1410" />
+              <mxPoint x="2260" y="1410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" parent="1" source="a-admin-report" target="uc-dashboard">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="3110" y="1360" />
+              <mxPoint x="2260" y="1360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" parent="1" source="a-admin-report" target="uc-alerts">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="3110" y="1340" />
+              <mxPoint x="2710" y="1340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" parent="1" source="a-employee" target="uc-alerts">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="950" />
+              <mxPoint x="2710" y="950" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
       </root>
     </mxGraphModel>
   </diagram>
