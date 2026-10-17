@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Throwable;
 
+/**
+ * ServicioRecepcionComprobantes: Recibe comprobantes adjuntos (JPG, PNG, PDF) enviados por WhatsApp.
+ * Corresponde a los casos de uso: 'Enviar comprobante de pago', 'Recibir comprobante (imagen o PDF)'
+ * y 'Verificar duplicidad'. Conecta con WhatsAppService, Comprobante y OCRService.
+ */
 class ServicioRecepcionComprobantes
 {
     private const FORMATOS = [

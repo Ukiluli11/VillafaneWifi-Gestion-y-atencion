@@ -14,6 +14,11 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
+/**
+ * WebhookWhatsappController: Endpoint receptor de eventos y mensajes entrantes de Meta WhatsApp Cloud API.
+ * Corresponde a los casos de uso: 'Atender conversacion por WhatsApp' y 'Procesar mensaje entrante' (Modulo 2).
+ * Conecta con WhatsAppService (verificarSuscripcion, validarFirma, extraerMensajes), ServicioIdentificacion y ServicioAtencionWhatsapp.
+ */
 class WebhookWhatsappController extends Controller
 {
     public function __construct(
@@ -23,6 +28,9 @@ class WebhookWhatsappController extends Controller
         private readonly ServicioAtencionWhatsapp $servicioAtencionWhatsapp,
     ) {}
 
+    /**
+     * Responde al desafio GET del webhook de Meta para verificar la suscripcion de la URL de recepcion.
+     */
     public function verificar(Request $request): Response
     {
         $reto = $this->whatsAppService->verificarSuscripcion(
@@ -36,6 +44,9 @@ class WebhookWhatsappController extends Controller
         return response($reto, 200)->header('Content-Type', 'text/plain');
     }
 
+    /**
+     * Procesa los eventos POST entrantes de WhatsApp: valida la firma SHA-256 y despacha al bot o historial.
+     */
     public function recibir(Request $request): JsonResponse
     {
         if (! $this->whatsAppService->validarFirma(

@@ -18,12 +18,21 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * ComprobanteController: Controlador web para la bandeja de conciliacion y dictamen de comprobantes.
+ * Corresponde a los casos de uso: 'Visualizar bandeja de conciliacion', 'Validar comprobante de pago',
+ * 'Aprobar comprobante' y 'Rechazar comprobante' (Modulo 3).
+ * Conecta con Comprobante (metodos aprobar(), rechazar(), esDuplicado()), Pago (imputar()) y ServicioComprobantes.
+ */
 class ComprobanteController extends Controller
 {
     public function __construct(
         private readonly ServicioComprobantes $servicioComprobantes
     ) {}
 
+    /**
+     * Muestra la bandeja de comprobantes con filtros por estado y buscador.
+     */
     public function index(Request $request): View
     {
         $estadoFiltro = $request->query('estado');
@@ -63,6 +72,9 @@ class ComprobanteController extends Controller
         ));
     }
 
+    /**
+     * Muestra el formulario para recepcion manual de comprobantes de pago.
+     */
     public function create(): View
     {
         $clientes = Cliente::query()
@@ -73,6 +85,9 @@ class ComprobanteController extends Controller
         return view('comprobantes.formulario', compact('clientes'));
     }
 
+    /**
+     * Registra un comprobante subido manualmente calculando su hash y ejecutando el OCR.
+     */
     public function store(SubirComprobanteRequest $request): RedirectResponse
     {
         $cliente = Cliente::findOrFail($request->validated('id_cliente'));
@@ -90,6 +105,9 @@ class ComprobanteController extends Controller
             ->with('exito', 'Comprobante recibido y registrado para conciliación.');
     }
 
+    /**
+     * Muestra el detalle del comprobante para auditoria humana, exhibiendo cuotas impagas y datos OCR.
+     */
     public function show(Comprobante $comprobante): View
     {
         $comprobante->load(['cliente.servicios.plan', 'pago.cuenta', 'pago.cuotas', 'usuario']);
@@ -113,6 +131,9 @@ class ComprobanteController extends Controller
         return view('comprobantes.detalle', compact('comprobante', 'cuotasImpagas', 'cuentasReceptoras', 'mediosPago'));
     }
 
+    /**
+     * Dictamina la aprobacion del comprobante, genera el registro de Pago e imputa las cuotas adeudadas.
+     */
     public function aprobar(AprobarComprobanteRequest $request, Comprobante $comprobante): RedirectResponse
     {
         $cuenta = CuentaReceptora::findOrFail($request->validated('id_cuenta'));
@@ -132,6 +153,9 @@ class ComprobanteController extends Controller
             ->with('exito', "¡Comprobante aprobado! Se registró el Pago #{$pago->id_pago} por \${$pago->monto_total} y se imputaron las cuotas.");
     }
 
+    /**
+     * Dictamina el rechazo del comprobante registrando el motivo justificado y notificando al cliente.
+     */
     public function rechazar(RechazarComprobanteRequest $request, Comprobante $comprobante): RedirectResponse
     {
         $this->servicioComprobantes->rechazarComprobante(

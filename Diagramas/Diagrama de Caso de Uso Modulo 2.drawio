@@ -12,117 +12,112 @@
         </mxCell>
 
 
-        <mxCell id="act_cliente" parent="1" style="shape=umlActor;whiteSpace=wrap;html=1;verticalLabelPosition=bottom;verticalAlign=top;fontSize=12;fontStyle=1;fillColor=#f5f5f5;strokeColor=#333;" value="Cliente" vertex="1">
+        <mxCell id="act_cliente" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeWidth=1.5;fillColor=#ECEFF1;strokeColor=#455A64;fontColor=#263238;fontStyle=1;fontSize=12;" value="Cliente" vertex="1">
           <mxGeometry height="75" width="55" x="50" y="110" as="geometry" />
         </mxCell>
 
-        <mxCell id="act_empleado" parent="1" style="shape=umlActor;whiteSpace=wrap;html=1;verticalLabelPosition=bottom;verticalAlign=top;fontSize=12;fontStyle=1;fillColor=#f5f5f5;strokeColor=#333;" value="Empleado" vertex="1">
+        <mxCell id="act_empleado" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeWidth=1.5;fillColor=#ECEFF1;strokeColor=#455A64;fontColor=#263238;fontStyle=1;fontSize=12;" value="Empleado" vertex="1">
           <mxGeometry height="75" width="55" x="50" y="1030" as="geometry" />
         </mxCell>
 
-        <mxCell id="act_admin" parent="1" style="shape=umlActor;whiteSpace=wrap;html=1;verticalLabelPosition=bottom;verticalAlign=top;fontSize=12;fontStyle=1;fillColor=#f5f5f5;strokeColor=#333;" value="Dueño /&#10;Administrador" vertex="1">
+        <mxCell id="act_admin" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeWidth=1.5;fillColor=#ECEFF1;strokeColor=#455A64;fontColor=#263238;fontStyle=1;fontSize=12;" value="Dueño / Administrador" vertex="1">
           <mxGeometry height="75" width="55" x="50" y="1190" as="geometry" />
         </mxCell>
 
-        <mxCell id="act_wa" parent="1" style="shape=umlActor;whiteSpace=wrap;html=1;verticalLabelPosition=bottom;verticalAlign=top;fontSize=12;fontStyle=1;fillColor=#f5f5f5;strokeColor=#333;" value="WhatsApp Cloud API&#10;(Sistema Externo)" vertex="1">
+        <mxCell id="act_wa" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeWidth=1.5;fillColor=#E8F5E9;strokeColor=#2E7D32;fontColor=#1B5E20;fontStyle=1;fontSize=12;" value="«external»&#10;Bot de WhatsApp&#10;(Meta API)" vertex="1">
           <mxGeometry height="75" width="55" x="2120" y="110" as="geometry" />
         </mxCell>
 
-        <mxCell id="act_reloj" parent="1" style="shape=umlActor;whiteSpace=wrap;html=1;verticalLabelPosition=bottom;verticalAlign=top;fontSize=12;fontStyle=1;fillColor=#f5f5f5;strokeColor=#333;" value="Reloj del Sistema&#10;(Cron / Scheduler)" vertex="1">
-          <mxGeometry height="75" width="55" x="2120" y="1100" as="geometry" />
-        </mxCell>
-
-
-        <mxCell id="cu_atender_conv" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Atender conversación&#10;por WhatsApp" vertex="1">
+        <mxCell id="cu_atender_conv" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Atender conversación&#10;por WhatsApp" vertex="1">
           <mxGeometry height="65" width="220" x="260" y="105" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_procesar_msg" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Procesar mensaje&#10;entrante" vertex="1">
+        <mxCell id="cu_procesar_msg" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Procesar mensaje&#10;entrante" vertex="1">
           <mxGeometry height="65" width="200" x="570" y="105" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_gestionar_sesion" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Abrir o reutilizar&#10;conversación" vertex="1">
+        <mxCell id="cu_gestionar_sesion" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Abrir o reutilizar&#10;conversación" vertex="1">
           <mxGeometry height="65" width="200" x="870" y="105" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_historial" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Registrar mensaje&#10;en el historial" vertex="1">
+        <mxCell id="cu_historial" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Registrar mensaje&#10;en el historial" vertex="1">
           <mxGeometry height="65" width="200" x="870" y="240" as="geometry" />
         </mxCell>
 
 
-        <mxCell id="cu_identificar" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#d5e8d4;strokeColor=#82b366;" value="Identificar cliente por&#10;teléfono o DNI" vertex="1">
+        <mxCell id="cu_identificar" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Identificar cliente por&#10;teléfono o DNI" vertex="1">
           <mxGeometry height="65" width="210" x="565" y="380" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_ofrecer_alta" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#d5e8d4;strokeColor=#82b366;" value="Ofrecer registro y&#10;contratación" vertex="1">
+        <mxCell id="cu_ofrecer_alta" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Ofrecer registro y&#10;contratación" vertex="1">
           <mxGeometry height="65" width="200" x="260" y="380" as="geometry" />
         </mxCell>
 
 
-        <mxCell id="cu_reconocer_ia" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Reconocer intención&#10;mediante IA" vertex="1">
+        <mxCell id="cu_reconocer_ia" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Reconocer intención&#10;mediante IA" vertex="1">
           <mxGeometry height="65" width="210" x="565" y="700" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_reformular" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Solicitar reformulación&#10;del mensaje" vertex="1">
+        <mxCell id="cu_reformular" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Solicitar reformulación&#10;del mensaje" vertex="1">
           <mxGeometry height="65" width="200" x="260" y="640" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_derivar_fallo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Derivar tras segundo&#10;fallo de IA" vertex="1">
+        <mxCell id="cu_derivar_fallo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Derivar tras segundo&#10;fallo de IA" vertex="1">
           <mxGeometry height="65" width="200" x="260" y="770" as="geometry" />
         </mxCell>
 
 
-        <mxCell id="cu_consultar_cuenta" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Consultar estado de&#10;cuenta corriente" vertex="1">
+        <mxCell id="cu_consultar_cuenta" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Consultar estado de&#10;cuenta corriente" vertex="1">
           <mxGeometry height="65" width="220" x="1220" y="200" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_registrar_reclamo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Registrar reclamo o&#10;soporte técnico" vertex="1">
+        <mxCell id="cu_registrar_reclamo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Registrar reclamo o&#10;soporte técnico" vertex="1">
           <mxGeometry height="65" width="220" x="1220" y="440" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_generar_ticket" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Generar ticket en el&#10;sistema" vertex="1">
+        <mxCell id="cu_generar_ticket" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Generar ticket en el&#10;sistema" vertex="1">
           <mxGeometry height="65" width="200" x="1560" y="440" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_recibir_comprobante" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Recibir comprobante&#10;(imagen o PDF)" vertex="1">
+        <mxCell id="cu_recibir_comprobante" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Recibir comprobante&#10;(imagen o PDF)" vertex="1">
           <mxGeometry height="65" width="220" x="1220" y="740" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_resguardar_archivo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Validar y resguardar&#10;archivo de pago" vertex="1">
+        <mxCell id="cu_resguardar_archivo" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Validar y resguardar&#10;archivo de pago" vertex="1">
           <mxGeometry height="65" width="200" x="1560" y="670" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_confirmar_recepcion" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#fff2cc;strokeColor=#d6b656;" value="Confirmar recepción del&#10;comprobante" vertex="1">
+        <mxCell id="cu_confirmar_recepcion" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Confirmar recepción del&#10;comprobante" vertex="1">
           <mxGeometry height="65" width="200" x="1560" y="810" as="geometry" />
         </mxCell>
 
 
-        <mxCell id="cu_escalar_humano" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Tomar control de&#10;conversación escalada" vertex="1">
+        <mxCell id="cu_escalar_humano" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Tomar control de&#10;conversación escalada" vertex="1">
           <mxGeometry height="65" width="220" x="560" y="1080" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_consultar_hist_humano" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Consultar historial&#10;de conversación" vertex="1">
+        <mxCell id="cu_consultar_hist_humano" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Consultar historial&#10;de conversación" vertex="1">
           <mxGeometry height="65" width="200" x="870" y="1080" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_cerrar_bot" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Cerrar conversación&#10;resuelta por el bot" vertex="1">
+        <mxCell id="cu_cerrar_bot" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Cerrar conversación&#10;resuelta por el bot" vertex="1">
           <mxGeometry height="65" width="200" x="260" y="980" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_cerrar_humano" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Cerrar atención&#10;escalada" vertex="1">
+        <mxCell id="cu_cerrar_humano" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Cerrar atención&#10;escalada" vertex="1">
           <mxGeometry height="65" width="200" x="260" y="1170" as="geometry" />
         </mxCell>
 
-        <mxCell id="cu_notificar_vencimientos" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;" value="Notificar vencimientos&#10;por WhatsApp" vertex="1">
+        <mxCell id="cu_notificar_vencimientos" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#263238;" value="Notificar vencimientos&#10;por WhatsApp" vertex="1">
           <mxGeometry height="65" width="220" x="1400" y="1105" as="geometry" />
         </mxCell>
 
 
-        <mxCell id="edge_act_cliente" edge="1" parent="1" source="act_cliente" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_atender_conv" value="">
+        <mxCell id="edge_act_cliente" edge="1" parent="1" source="act_cliente" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" target="cu_atender_conv" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <mxCell id="edge_act_wa" edge="1" parent="1" source="act_wa" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_atender_conv" value="">
+        <mxCell id="edge_act_wa" edge="1" parent="1" source="act_wa" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" target="cu_atender_conv" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="2000" y="80" />
@@ -131,19 +126,15 @@
           </mxGeometry>
         </mxCell>
 
-        <mxCell id="edge_act_emp_escalar" edge="1" parent="1" source="act_empleado" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_escalar_humano" value="">
+        <mxCell id="edge_act_emp_escalar" edge="1" parent="1" source="act_empleado" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" target="cu_escalar_humano" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <mxCell id="edge_act_adm_escalar" edge="1" parent="1" source="act_admin" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_escalar_humano" value="">
+        <mxCell id="edge_act_adm_escalar" edge="1" parent="1" source="act_admin" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" target="cu_escalar_humano" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <mxCell id="edge_act_reloj" edge="1" parent="1" source="act_reloj" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_notificar_vencimientos" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <mxCell id="edge_wa_notif" edge="1" parent="1" source="act_wa" style="endArrow=none;html=1;strokeColor=#444;strokeWidth=1.5;" target="cu_notificar_vencimientos" value="">
+        <mxCell id="edge_wa_notif" edge="1" parent="1" source="act_wa" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" target="cu_notificar_vencimientos" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="2150" y="600" />
@@ -154,15 +145,15 @@
         </mxCell>
 
 
-        <mxCell id="inc_atender_procesar" edge="1" parent="1" source="cu_atender_conv" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_procesar_msg" value="«include»">
+        <mxCell id="inc_atender_procesar" edge="1" parent="1" source="cu_atender_conv" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_procesar_msg" value="«include»">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <mxCell id="inc_procesar_sesion" edge="1" parent="1" source="cu_procesar_msg" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_gestionar_sesion" value="«include»">
+        <mxCell id="inc_procesar_sesion" edge="1" parent="1" source="cu_procesar_msg" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_gestionar_sesion" value="«include»">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <mxCell id="inc_procesar_historial" edge="1" parent="1" source="cu_procesar_msg" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_historial" value="«include»">
+        <mxCell id="inc_procesar_historial" edge="1" parent="1" source="cu_procesar_msg" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_historial" value="«include»">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="670" y="272" />
@@ -170,11 +161,11 @@
           </mxGeometry>
         </mxCell>
 
-        <mxCell id="inc_procesar_identificar" edge="1" parent="1" source="cu_procesar_msg" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_identificar" value="«include»">
+        <mxCell id="inc_procesar_identificar" edge="1" parent="1" source="cu_procesar_msg" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_identificar" value="«include»">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <mxCell id="inc_procesar_ia" edge="1" parent="1" source="cu_procesar_msg" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_reconocer_ia" value="«include»">
+        <mxCell id="inc_procesar_ia" edge="1" parent="1" source="cu_procesar_msg" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_reconocer_ia" value="«include»">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="790" y="200" />
@@ -184,11 +175,11 @@
           </mxGeometry>
         </mxCell>
 
-        <mxCell id="inc_reclamo_ticket" edge="1" parent="1" source="cu_registrar_reclamo" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_generar_ticket" value="«include»">
+        <mxCell id="inc_reclamo_ticket" edge="1" parent="1" source="cu_registrar_reclamo" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_generar_ticket" value="«include»">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <mxCell id="inc_comp_resguardo" edge="1" parent="1" source="cu_recibir_comprobante" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_resguardar_archivo" value="«include»">
+        <mxCell id="inc_comp_resguardo" edge="1" parent="1" source="cu_recibir_comprobante" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_resguardar_archivo" value="«include»">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1480" y="702" />
@@ -196,7 +187,7 @@
           </mxGeometry>
         </mxCell>
 
-        <mxCell id="inc_comp_confirma" edge="1" parent="1" source="cu_recibir_comprobante" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_confirmar_recepcion" value="«include»">
+        <mxCell id="inc_comp_confirma" edge="1" parent="1" source="cu_recibir_comprobante" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_confirmar_recepcion" value="«include»">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1480" y="842" />
@@ -204,11 +195,11 @@
           </mxGeometry>
         </mxCell>
 
-        <mxCell id="inc_escalar_hist" edge="1" parent="1" source="cu_escalar_humano" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_consultar_hist_humano" value="«include»">
+        <mxCell id="inc_escalar_hist" edge="1" parent="1" source="cu_escalar_humano" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_consultar_hist_humano" value="«include»">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <mxCell id="inc_escalar_msg" edge="1" parent="1" source="cu_escalar_humano" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#336699;fontColor=#336699;" target="cu_historial" value="«include»">
+        <mxCell id="inc_escalar_msg" edge="1" parent="1" source="cu_escalar_humano" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_historial" value="«include»">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="830" y="1050" />
@@ -219,11 +210,11 @@
         </mxCell>
 
 
-        <mxCell id="ext_ofrecer_alta" edge="1" parent="1" source="cu_ofrecer_alta" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="cu_identificar" value="«extend» [sin registro]">
+        <mxCell id="ext_ofrecer_alta" edge="1" parent="1" source="cu_ofrecer_alta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_identificar" value="«extend» [sin registro]">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <mxCell id="ext_reformular" edge="1" parent="1" source="cu_reformular" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="cu_reconocer_ia" value="«extend» [1.er fallo]">
+        <mxCell id="ext_reformular" edge="1" parent="1" source="cu_reformular" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_reconocer_ia" value="«extend» [1.er fallo]">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="490" y="672" />
@@ -232,7 +223,7 @@
           </mxGeometry>
         </mxCell>
 
-        <mxCell id="ext_derivar_fallo" edge="1" parent="1" source="cu_derivar_fallo" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="cu_reconocer_ia" value="«extend» [2.º fallo]">
+        <mxCell id="ext_derivar_fallo" edge="1" parent="1" source="cu_derivar_fallo" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_reconocer_ia" value="«extend» [2.º fallo]">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="490" y="802" />
@@ -241,7 +232,7 @@
           </mxGeometry>
         </mxCell>
 
-        <mxCell id="ext_cuenta" edge="1" parent="1" source="cu_consultar_cuenta" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="cu_atender_conv" value="«extend» [consulta]">
+        <mxCell id="ext_cuenta" edge="1" parent="1" source="cu_consultar_cuenta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_atender_conv" value="«extend» [consulta]">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1150" y="232" />
@@ -251,7 +242,7 @@
           <mxPoint as="offset" x="-40" y="-32" /></mxGeometry>
         </mxCell>
 
-        <mxCell id="ext_reclamo" edge="1" parent="1" source="cu_registrar_reclamo" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="cu_atender_conv" value="«extend» [reclamo]">
+        <mxCell id="ext_reclamo" edge="1" parent="1" source="cu_registrar_reclamo" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_atender_conv" value="«extend» [reclamo]">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1170" y="472" />
@@ -261,7 +252,7 @@
           <mxPoint as="offset" x="0" y="0" /></mxGeometry>
         </mxCell>
 
-        <mxCell id="ext_comprobante" edge="1" parent="1" source="cu_recibir_comprobante" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="cu_atender_conv" value="«extend» [comprobante]">
+        <mxCell id="ext_comprobante" edge="1" parent="1" source="cu_recibir_comprobante" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_atender_conv" value="«extend» [comprobante]">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1190" y="772" />
@@ -271,7 +262,7 @@
           <mxPoint as="offset" x="35" y="30" /></mxGeometry>
         </mxCell>
 
-        <mxCell id="ext_cerrar_bot" edge="1" parent="1" source="cu_cerrar_bot" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="cu_atender_conv" value="«extend» [resuelto]">
+        <mxCell id="ext_cerrar_bot" edge="1" parent="1" source="cu_cerrar_bot" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_atender_conv" value="«extend» [resuelto]">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="220" y="1012" />
@@ -280,7 +271,7 @@
           </mxGeometry>
         </mxCell>
 
-        <mxCell id="ext_cerrar_humano" edge="1" parent="1" source="cu_cerrar_humano" style="dashed=1;endArrow=open;startArrow=none;html=1;fontSize=10;fontStyle=2;startFill=0;endFill=0;strokeColor=#996633;fontColor=#996633;" target="cu_escalar_humano" value="«extend» [finalizada]">
+        <mxCell id="ext_cerrar_humano" edge="1" parent="1" source="cu_cerrar_humano" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="cu_escalar_humano" value="«extend» [finalizada]">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="490" y="1202" />
@@ -289,7 +280,7 @@
           </mxGeometry>
         </mxCell>
 
-      </root>
+      <mxCell id="edge_admin_notif" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" parent="1" source="act_admin" target="cu_notificar_vencimientos"><mxGeometry relative="1" as="geometry" /></mxCell></root>
     </mxGraphModel>
   </diagram>
 </mxfile>

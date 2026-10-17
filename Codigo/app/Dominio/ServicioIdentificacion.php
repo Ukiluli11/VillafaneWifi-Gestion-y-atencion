@@ -5,6 +5,11 @@ namespace App\Dominio;
 use App\Models\Cliente;
 use App\Models\Conversacion;
 
+/**
+ * ServicioIdentificacion: Identifica abonados a partir del numero de WhatsApp o DNI recibido en el chat.
+ * Corresponde al caso de uso: 'Identificar cliente por telefono o DNI'.
+ * Vincula la conversacion activa con el modelo Cliente correspondiente.
+ */
 class ServicioIdentificacion
 {
     public function identificarCliente(

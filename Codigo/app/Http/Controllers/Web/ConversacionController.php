@@ -13,8 +13,17 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Throwable;
 
+/**
+ * ConversacionController: Controlador web para la gestion de conversaciones y atencion escalada.
+ * Corresponde a los casos de uso: 'Tomar control de conversacion escalada', 'Consultar historial de conversacion',
+ * y 'Cerrar atencion escalada' (Modulo 2).
+ * Conecta con Conversacion (metodos derivarAUsuario(), cerrar()), Empleado (atenderConversacion()) y ServicioAtencionHumana.
+ */
 class ConversacionController extends Controller
 {
+    /**
+     * Lista las conversaciones activas, escaladas y cerradas con soporte de filtrado.
+     */
     public function index(Request $request): View
     {
         $estado = $request->string('estado')->toString();
@@ -57,6 +66,9 @@ class ConversacionController extends Controller
         ]);
     }
 
+    /**
+     * Muestra la bandeja y el historial completo de mensajes intercambiados en la conversacion.
+     */
     public function show(Conversacion $conversacion): View
     {
         $conversacion->load([
@@ -70,6 +82,9 @@ class ConversacionController extends Controller
         return view('conversaciones.detalle', ['conversacion' => $conversacion]);
     }
 
+    /**
+     * Toma el control de una conversacion escalada para atencion humana directa por el empleado.
+     */
     public function tomar(
         Request $request,
         Conversacion $conversacion,
@@ -88,6 +103,9 @@ class ConversacionController extends Controller
         return back()->with('exito', 'Tomaste la conversación y se envió tu presentación al cliente.');
     }
 
+    /**
+     * Despacha un mensaje de respuesta escrito por el operador humano hacia el WhatsApp del cliente.
+     */
     public function responder(
         ResponderConversacionRequest $request,
         Conversacion $conversacion,
@@ -106,6 +124,9 @@ class ConversacionController extends Controller
         return back()->with('exito', 'Mensaje enviado y guardado en el historial.');
     }
 
+    /**
+     * Finaliza la atencion escalada y cierra la conversacion en el sistema.
+     */
     public function cerrar(
         Request $request,
         Conversacion $conversacion,

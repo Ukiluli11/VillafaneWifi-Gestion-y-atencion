@@ -12,13 +12,25 @@ use App\Models\Servicio;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
+/**
+ * ServicioController: Controlador web para la administracion de conexiones tecnicas de internet.
+ * Corresponde a los casos de uso: 'Asignar plan al servicio', 'Registrar datos de conexion (IP, MAC)'
+ * y 'Dar de baja cliente o servicio' / 'Suspender servicio' / 'Reactivar servicio' (Modulo 1).
+ * Conecta con Servicio (metodos suspender(), reactivar()) y ServicioContrataciones.
+ */
 class ServicioController extends Controller
 {
+    /**
+     * Lista los servicios de instalacion activos e historicos con su cliente y plan.
+     */
     public function index(): View
     {
         return view('servicios.index', ['servicios' => Servicio::with(['cliente', 'plan'])->orderByDesc('id_servicio')->paginate(20)]);
     }
 
+    /**
+     * Muestra el formulario para asociar un nuevo servicio a un cliente y plan.
+     */
     public function create(): View
     {
         return view('servicios.formulario', [
@@ -27,6 +39,9 @@ class ServicioController extends Controller
         ]);
     }
 
+    /**
+     * Registra una nueva instalacion de internet asignando parametros de red y plan.
+     */
     public function store(GuardarServicioRequest $request, ServicioContrataciones $dominio): RedirectResponse
     {
         $datos = $request->validated();
@@ -36,6 +51,9 @@ class ServicioController extends Controller
         return redirect()->route('servicios.index')->with('exito', "Servicio #{$servicio->id_servicio} registrado.");
     }
 
+    /**
+     * Muestra el formulario para modificar datos tecnicos o domicilio de instalacion.
+     */
     public function edit(Servicio $servicio): View
     {
         return view('servicios.formulario', [
@@ -45,6 +63,9 @@ class ServicioController extends Controller
         ]);
     }
 
+    /**
+     * Actualiza la configuracion tecnica del servicio (IP, MAC, domicilio).
+     */
     public function update(ActualizarServicioRequest $request, Servicio $servicio, ServicioContrataciones $dominio): RedirectResponse
     {
         $dominio->actualizar($servicio, $request->validated());
@@ -52,6 +73,9 @@ class ServicioController extends Controller
         return redirect()->route('servicios.index')->with('exito', 'Servicio actualizado correctamente.');
     }
 
+    /**
+     * Interrumpe temporalmente la prestacion tecnica del servicio.
+     */
     public function suspender(Servicio $servicio, ServicioContrataciones $dominio): RedirectResponse
     {
         $dominio->suspender($servicio);
@@ -59,6 +83,9 @@ class ServicioController extends Controller
         return back()->with('exito', 'Servicio suspendido.');
     }
 
+    /**
+     * Restablece la conectividad del servicio tras la regularizacion de deuda o mantenimiento.
+     */
     public function reactivar(Servicio $servicio, ServicioContrataciones $dominio): RedirectResponse
     {
         $dominio->reactivar($servicio);
@@ -66,6 +93,9 @@ class ServicioController extends Controller
         return back()->with('exito', 'Servicio reactivado.');
     }
 
+    /**
+     * Da de baja definitiva el servicio de internet.
+     */
     public function destroy(Servicio $servicio): RedirectResponse
     {
         $servicio->update(['estado' => 'baja']);

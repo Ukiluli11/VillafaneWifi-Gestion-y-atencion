@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
+/**
+ * ServicioAtencionHumana: Gestiona el traspaso y atencion de conversaciones por parte de operadores humanos.
+ * Corresponde a los casos de uso: 'Tomar control de conversacion escalada' y 'Cerrar atencion escalada'.
+ * Conecta con los metodos Empleado::atenderConversacion() y Conversacion::derivarAUsuario() y cerrar().
+ */
 class ServicioAtencionHumana
 {
     public function __construct(
