@@ -30,7 +30,7 @@ class ServicioNotificacionesVencimiento
      */
     public function enviar(): array
     {
-        $hoy = CarbonImmutable::today();
+        $hoy = CarbonImmutable::today('America/Argentina/Buenos_Aires');
         $limite = $hoy->addDays(3);
         $resultado = ['enviadas' => 0, 'omitidas' => 0, 'fallidas' => 0];
 
@@ -48,11 +48,11 @@ class ServicioNotificacionesVencimiento
             ->orderBy('id_cuota')
             ->chunkById(100, function ($cuotas) use ($hoy, &$resultado): void {
                 foreach ($cuotas as $cuota) {
-                    $estadoAviso = $cuota->fecha_vencimiento->lessThan($hoy) ? 'vencida' : 'proxima';
+                    $estadoAviso = $cuota->fecha_vencimiento->toDateString() < $hoy->toDateString() ? 'vencida' : 'proxima';
                     $clave = "vencimiento:{$estadoAviso}:{$cuota->id_cuota}";
                     $cliente = $cuota->servicio->cliente;
                     $conversacion = $this->servicioConversaciones->obtenerOCrearConversacion($cliente->telefono_whatsapp);
-                    $contenido = $this->contenido($cuota, $estadoAviso);
+                    $contenido = $this->contenido($cuota, $estadoAviso, $cliente->nombre_razon_social);
                     $mensaje = $this->servicioConversaciones->reservarNotificacion($conversacion, $clave, $contenido);
 
                     if ($mensaje === null) {
@@ -61,7 +61,7 @@ class ServicioNotificacionesVencimiento
                         continue;
                     }
 
-                    if ($this->enviarMensaje($mensaje, $cliente->telefono_whatsapp, $cliente->nombre_razon_social, $cuota)) {
+                    if ($this->enviarMensaje($mensaje, $cliente->telefono_whatsapp, $cliente->nombre_razon_social, $cuota, $estadoAviso)) {
                         $resultado['enviadas']++;
                     } else {
                         $resultado['fallidas']++;
@@ -72,12 +72,14 @@ class ServicioNotificacionesVencimiento
         return $resultado;
     }
 
-    private function enviarMensaje(Mensaje $mensaje, string $telefono, string $cliente, Cuota $cuota): bool
+    private function enviarMensaje(Mensaje $mensaje, string $telefono, string $cliente, Cuota $cuota, string $estadoAviso): bool
     {
         try {
             $idExterno = $this->whatsAppService->enviarPlantilla(
                 $telefono,
-                (string) config('services.whatsapp.plantilla_vencimiento'),
+                (string) config($estadoAviso === 'vencida'
+                    ? 'services.whatsapp.plantilla_vencida'
+                    : 'services.whatsapp.plantilla_vencimiento'),
                 (string) config('services.whatsapp.idioma_plantilla', 'es_AR'),
                 [
                     $cliente,
@@ -96,13 +98,13 @@ class ServicioNotificacionesVencimiento
         }
     }
 
-    private function contenido(Cuota $cuota, string $estadoAviso): string
+    private function contenido(Cuota $cuota, string $estadoAviso, string $cliente): string
     {
         $fecha = $cuota->fecha_vencimiento->format('d/m/Y');
         $monto = number_format((float) $cuota->monto, 2, ',', '.');
 
         return $estadoAviso === 'vencida'
-            ? "Recordatorio: la cuota #{$cuota->id_cuota} venció el {$fecha}. Importe pendiente: \${$monto}."
-            : "Recordatorio: la cuota #{$cuota->id_cuota} vence el {$fecha}. Importe: \${$monto}.";
+            ? sprintf('Villafañe Wifi (demostración): Hola %s, la cuota de prueba venció el %s y su importe simulado pendiente es $%s. No realices pagos; este aviso forma parte de una prueba.', $cliente, $fecha, $monto)
+            : sprintf('Villafañe Wifi (demostración): Hola %s, te recordamos que la cuota de prueba vence el %s y su importe simulado es $%s. No realices pagos; este aviso forma parte de una prueba.', $cliente, $fecha, $monto);
     }
 }

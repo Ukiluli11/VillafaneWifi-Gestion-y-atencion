@@ -10,4 +10,5 @@ Artisan::command('inspire', function () {
 
 Schedule::command('whatsapp:notificar-vencimientos')
     ->dailyAt('09:00')
+    ->timezone('America/Argentina/Buenos_Aires')
     ->withoutOverlapping();

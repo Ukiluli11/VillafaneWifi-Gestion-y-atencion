@@ -21,10 +21,13 @@ return [
         'phone_number_id' => env('WHATSAPP_PHONE_NUMBER_ID'),
         'modo_simulacion' => env('WHATSAPP_MODO_SIMULACION', false),
         'graph_api_version' => env('WHATSAPP_GRAPH_API_VERSION', 'v25.0'),
+        'ca_bundle' => env('WHATSAPP_CA_BUNDLE'),
+        'destinatarios_permitidos' => env('WHATSAPP_DESTINATARIOS_PERMITIDOS'),
         'validar_firma' => env('WHATSAPP_VALIDAR_FIRMA', true),
         'media_disk' => env('WHATSAPP_MEDIA_DISK', 'local'),
         'media_max_kb' => (int) env('WHATSAPP_MEDIA_MAX_KB', 10240),
         'plantilla_vencimiento' => env('WHATSAPP_TEMPLATE_VENCIMIENTO', 'recordatorio_vencimiento'),
+        'plantilla_vencida' => env('WHATSAPP_TEMPLATE_VENCIDA', 'recordatorio_cuota_vencida'),
         'idioma_plantilla' => env('WHATSAPP_TEMPLATE_LANGUAGE', 'es_AR'),
     ],
 

@@ -3,6 +3,8 @@
 namespace App\Dominio;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use RuntimeException;
@@ -140,7 +142,7 @@ class WhatsAppService
             throw new RuntimeException('No se pudo resolver la referencia del archivo de WhatsApp.');
         }
 
-        $metadatos = Http::withToken($token)
+        $metadatos = $this->solicitudMeta($token)
             ->acceptJson()
             ->connectTimeout(5)
             ->timeout(15)
@@ -154,7 +156,7 @@ class WhatsAppService
             throw new RuntimeException('El archivo supera el tamaño máximo permitido o no está disponible.');
         }
 
-        $archivo = Http::withToken($token)->connectTimeout(5)->timeout(30)->get($url);
+        $archivo = $this->solicitudMeta($token)->connectTimeout(5)->timeout(30)->get($url);
         $archivo->throw();
         $contenido = $archivo->body();
         $tamanio = strlen($contenido);
@@ -184,21 +186,15 @@ class WhatsAppService
             throw new RuntimeException('La integración de WhatsApp Cloud API no está configurada.');
         }
 
-        $respuesta = Http::withToken($token)
-            ->acceptJson()
-            ->asJson()
-            ->connectTimeout(5)
-            ->timeout(15)
-            ->post("https://graph.facebook.com/{$version}/{$idTelefono}/messages", [
-                'messaging_product' => 'whatsapp',
-                'recipient_type' => 'individual',
-                'to' => preg_replace('/\D+/', '', $numero) ?? $numero,
-                'type' => 'text',
-                'text' => [
-                    'preview_url' => false,
-                    'body' => $contenido,
-                ],
-            ]);
+        $respuesta = $this->publicarMensaje($token, $version, $idTelefono, $numero, [
+            'messaging_product' => 'whatsapp',
+            'recipient_type' => 'individual',
+            'type' => 'text',
+            'text' => [
+                'preview_url' => false,
+                'body' => $contenido,
+            ],
+        ]);
 
         $respuesta->throw();
         $idMensaje = data_get($respuesta->json(), 'messages.0.id');
@@ -225,28 +221,22 @@ class WhatsAppService
             throw new RuntimeException('La plantilla de WhatsApp no está configurada.');
         }
 
-        $respuesta = Http::withToken($token)
-            ->acceptJson()
-            ->asJson()
-            ->connectTimeout(5)
-            ->timeout(15)
-            ->post("https://graph.facebook.com/{$version}/{$idTelefono}/messages", [
-                'messaging_product' => 'whatsapp',
-                'recipient_type' => 'individual',
-                'to' => preg_replace('/\D+/', '', $numero) ?? $numero,
-                'type' => 'template',
-                'template' => [
-                    'name' => $nombre,
-                    'language' => ['code' => $idioma],
-                    'components' => [[
-                        'type' => 'body',
-                        'parameters' => array_map(
-                            fn (string $valor): array => ['type' => 'text', 'text' => $valor],
-                            $parametros,
-                        ),
-                    ]],
-                ],
-            ]);
+        $respuesta = $this->publicarMensaje($token, $version, $idTelefono, $numero, [
+            'messaging_product' => 'whatsapp',
+            'recipient_type' => 'individual',
+            'type' => 'template',
+            'template' => [
+                'name' => $nombre,
+                'language' => ['code' => $idioma],
+                'components' => [[
+                    'type' => 'body',
+                    'parameters' => array_map(
+                        fn (string $valor): array => ['type' => 'text', 'text' => $valor],
+                        $parametros,
+                    ),
+                ]],
+            ],
+        ]);
 
         $respuesta->throw();
         $idMensaje = data_get($respuesta->json(), 'messages.0.id');
@@ -255,6 +245,58 @@ class WhatsAppService
         }
 
         return $idMensaje;
+    }
+
+    /** @param array<string, mixed> $payload */
+    private function publicarMensaje(string $token, string $version, string $idTelefono, string $numero, array $payload): Response
+    {
+        $destino = preg_replace('/\D+/', '', $numero) ?? $numero;
+        $permitidos = array_filter(array_map('trim', explode(',', (string) config('services.whatsapp.destinatarios_permitidos'))));
+        if ($permitidos !== [] && ! in_array($this->normalizarDestinoArgentino($destino), array_map($this->normalizarDestinoArgentino(...), $permitidos), true)) {
+            throw new RuntimeException('El destinatario no está autorizado para los envíos de prueba de WhatsApp.');
+        }
+
+        $url = "https://graph.facebook.com/{$version}/{$idTelefono}/messages";
+        $enviar = function (string $telefono) use ($token, $url, $payload): Response {
+            return $this->solicitudMeta($token)
+                ->acceptJson()
+                ->asJson()
+                ->connectTimeout(5)
+                ->timeout(15)
+                ->post($url, array_merge($payload, ['to' => $telefono]));
+        };
+
+        $respuesta = $enviar($destino);
+
+        // Meta puede devolver el remitente argentino con 549 aunque el número de prueba esté autorizado con 54.
+        if ($respuesta->status() === 400 && (int) $respuesta->json('error.code') === 131030 && str_starts_with($destino, '549')) {
+            return $enviar('54'.substr($destino, 3));
+        }
+
+        return $respuesta;
+    }
+
+    private function normalizarDestinoArgentino(string $numero): string
+    {
+        $digitos = preg_replace('/\D+/', '', $numero) ?? '';
+
+        return str_starts_with($digitos, '549') ? '54'.substr($digitos, 3) : $digitos;
+    }
+
+    private function solicitudMeta(string $token): PendingRequest
+    {
+        $solicitud = Http::withToken($token);
+        $certificados = trim((string) config('services.whatsapp.ca_bundle'));
+
+        if ($certificados !== '') {
+            if (! is_file($certificados)) {
+                throw new RuntimeException('El archivo de certificados de WhatsApp no está disponible.');
+            }
+
+            $solicitud->withOptions(['verify' => $certificados]);
+        }
+
+        return $solicitud;
     }
 
     /** @param array<string, mixed> $mensaje */

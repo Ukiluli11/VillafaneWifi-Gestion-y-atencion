@@ -57,6 +57,10 @@
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4zM8 9h8M8 12h5"/></svg>
                         <span>Conversaciones</span>
                     </a>
+                    <a class="enlace-navegacion {{ request()->routeIs('tickets.*') ? 'activo' : '' }}" href="{{ route('tickets.index') }}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v5a3 3 0 0 0 0 6v5H4v-5a3 3 0 0 0 0-6zM12 4v16"/></svg>
+                        <span>Tickets</span>
+                    </a>
                 @endif
 
                 @if ($navegacionPermitida['simulador_whatsapp'])

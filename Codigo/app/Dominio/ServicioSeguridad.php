@@ -19,9 +19,6 @@ class ServicioSeguridad
         return Hash::check($passwordPlano, $passwordHash);
     }
 
-    /**
-     * Determina si el hash almacenado requiere re-hasheo según la configuración vigente del sistema.
-     */
     public function necesitaRehasheo(string $passwordHash): bool
     {
         return Hash::needsRehash($passwordHash);

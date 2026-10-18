@@ -78,7 +78,7 @@
             <article class="tarjeta">
                 <h2>Tickets asociados</h2>
                 @foreach ($conversacion->tickets as $ticket)
-                    <p><strong>#{{ $ticket->id_ticket }}</strong> · {{ $ticket->estado->value }}<br><small class="texto-suave">{{ $ticket->descripcion }}</small></p>
+                    <p><a href="{{ route('tickets.show', $ticket) }}"><strong>Ticket #{{ $ticket->id_ticket }}</strong></a> · {{ $ticket->estado->value }}<br><small class="texto-suave">{{ $ticket->descripcion }}</small></p>
                 @endforeach
             </article>
         @endif

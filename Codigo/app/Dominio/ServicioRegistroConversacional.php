@@ -235,7 +235,7 @@ class ServicioRegistroConversacional
         }
 
         $detalle = $planes->map(fn (Plan $plan): string => sprintf(
-            '#%d %s (%s Mbps) $%s',
+            '#%d %s (%s) $%s',
             $plan->id_plan,
             $plan->nombre,
             $plan->velocidad,
