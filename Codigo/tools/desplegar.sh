@@ -57,8 +57,7 @@ $valid = app()->environment("production")
     && config("session.secure") === true
     && config("database.default") === "mariadb"
     && (string) config("database.connections.mariadb.host") === "127.0.0.1"
-    && config("services.whatsapp.validar_firma") === true
-    && (string) config("services.whatsapp.destinatarios_permitidos") !== "";
+    && config("services.whatsapp.validar_firma") === true;
 foreach (["verify_token", "access_token", "app_secret", "phone_number_id"] as $key) {
     $valid = $valid && (string) config("services.whatsapp.".$key) !== "";
 }

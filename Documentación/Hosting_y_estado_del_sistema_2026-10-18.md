@@ -51,7 +51,7 @@ Cualquier persona puede abrir el formulario de acceso, pero debe autenticarse pa
 
 Un administrador total puede modificar los datos de demostración. Conviene que cada integrante use su propia cuenta para identificar sus intervenciones.
 
-El panel se puede probar desde otro dispositivo. Las pruebas de WhatsApp siguen limitadas a la configuración de prueba de Meta y a la lista de destinatarios permitidos: compartir el enlace del panel no habilita automáticamente nuevos teléfonos.
+El panel se puede probar desde otro dispositivo con credenciales. Desde el 19/10, cualquier teléfono puede escribir al número propio terminado en 1032 e interactuar con el bot; ya no hace falta incorporarlo como destinatario de prueba de Meta. Si no se reconoce al cliente, el bot solicita su DNI u ofrece registrarse.
 
 ## 5. Qué está funcional
 
@@ -77,9 +77,11 @@ https://vps-6524456-x.dattaweb.com/webhooks/whatsapp
 
 Se verificó la URL en Meta y el usuario confirmó que el menú respondió correctamente después del cambio. Ya no dependemos del túnel temporal de Cloudflare ni de mantener encendida la PC local.
 
-El programador del servidor está activo y el aviso habitual está configurado para las **09:00 de Argentina**. Detuvimos el programador local para evitar dos instancias enviando recordatorios. No conviene volver a activarlo contra otra copia de los mismos datos durante estas pruebas.
+**Decisión posterior del 19/10:** se deshabilitó y detuvo el temporizador `villafane-scheduler.timer` para limitar los recordatorios con plantilla a pruebas puntuales autorizadas. El código conserva el horario de las **09:00 de Argentina**, pero actualmente no se ejecuta automáticamente en el servidor. Las respuestas a mensajes entrantes y los respaldos diarios siguen activos. El programador local también quedó detenido; no conviene volver a activarlo contra otra copia de los mismos datos durante estas pruebas.
 
-El hosting no publica automáticamente la aplicación de Meta ni convierte el número de prueba en un canal para clientes reales. Seguimos usando el entorno controlado de demostración.
+El hosting no publica automáticamente la aplicación de Meta ni convierte el número de prueba en un canal para clientes reales.
+
+**Migración del 19/10 al número propio:** después de que el usuario eliminara la cuenta de WhatsApp Business dedicada a las pruebas, Meta verificó y registró su línea terminada en 1032. El servidor se configuró con el nuevo identificador de teléfono `1372527232611726`, y se vació la lista de destinatarios para permitir respuestas a quienes escriban a ese número. Los recordatorios automáticos permanecen desactivados y no se agregó un método de pago. Se confirmó la recepción por webhook y se resolvieron los permisos del usuario del sistema tanto sobre el número como sobre la cuenta de mensajes vinculada. El usuario confirmó respuestas correctas y probó varios mensajes desde otro teléfono. Los recordatorios anteriores se probaron con el número de prueba de Meta; su habilitación con el número propio queda para más adelante.
 
 ## 7. Protección y respaldos
 
@@ -104,13 +106,19 @@ Podemos automatizar el despliegue desde Git más adelante. Los cambios de estruc
 
 ## 9. Qué falta
 
-### Para cerrar las comprobaciones pendientes del módulo 2
+### Actualización del módulo 2 — 19/10/2026
 
-1. Observar un recordatorio enviado por ejecución automática. El programador ya funciona, pero aún no verificamos un envío real disparado a las 09:00. Podemos preparar una prueba para unos minutos después si queremos comprobarlo sin esperar al día siguiente.
-2. Probar el aviso de una cuota vencida con datos ficticios y el teléfono autorizado.
-3. Guardar en Git y compartir los cambios locales relacionados con los avisos y el despliegue; el trabajo de hosting no realizó un commit ni un push.
+Las dos comprobaciones manuales pendientes se completaron juntas: a las **01:32 de Argentina**, el temporizador habitual del servidor ejecutó una tarea temporal de Laravel y envió un único aviso de cuota vencida. El resultado fue **1 enviada, 0 omitidas y 0 fallidas**. Meta informó entrega y el usuario confirmó la recepción en WhatsApp.
 
-La cuota #24 ya tiene registrado su aviso previo al vencimiento. Repetir el mismo aviso debe omitirse para evitar duplicados; hay que preparar los datos correspondientes antes de las próximas pruebas.
+Para la prueba autorizada se cambió temporalmente el vencimiento de la cuota ficticia #24 al 18/10. Al terminar se restauraron su vencimiento original **19/10/2026** y su estado **pendiente**. No se registró ningún pago. El aviso aclara que es una demostración y que no se debe pagar.
+
+Se retiró la tarea temporal y se comprobó que el código de programación recuperó su contenido original. En ese momento quedó únicamente el recordatorio habitual de las **09:00 de Argentina**. Se comprobó el envío automático mediante la prueba de la 01:32; una ejecución exactamente a las 09:00 no fue observada. Posteriormente se desactivó el temporizador por decisión del usuario para limitar los avisos a pruebas puntuales, como se detalla en la sección 6.
+
+La cuota #24 tiene registrados tanto el aviso previo al vencimiento como el aviso de vencida. Repetir esos avisos para esa cuota debe omitirse para evitar duplicados; no debe esperarse otro mensaje de ella solo por llegar las 09:00.
+
+La revisión automatizada final del 19/10 pasó con **13 pruebas y 43 aserciones** del módulo 2, usando SQLite en memoria y servicios externos simulados.
+
+**Módulo 2 cerrado para la demostración el 19/10, por decisión del usuario**, con el bot funcionando en el número propio. Los recordatorios automáticos quedan desactivados; su incorporación al canal propio, junto con la revisión de plantillas y facturación aplicable, se retomará más adelante. Las funciones pendientes de otros módulos se detallan debajo. Los cambios de este documento deben guardarse en Git; esta actualización no realiza commit ni push.
 
 ### Pendientes del sistema completo
 
