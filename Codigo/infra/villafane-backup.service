@@ -1,0 +1,10 @@
+[Unit]
+Description=Respaldo privado de Villafane Wifi
+After=mariadb.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash /srv/villafane-wifi/current/tools/respaldar.sh
+UMask=0077
+PrivateTmp=true
+TimeoutStartSec=600

@@ -28,13 +28,13 @@ class ServicioNotificacionesVencimiento
      *
      * @return array{enviadas: int, omitidas: int, fallidas: int}
      */
-    public function enviar(): array
+    public function enviar(?int $idCuota = null): array
     {
         $hoy = CarbonImmutable::today('America/Argentina/Buenos_Aires');
         $limite = $hoy->addDays(3);
         $resultado = ['enviadas' => 0, 'omitidas' => 0, 'fallidas' => 0];
 
-        Cuota::query()
+        $consulta = Cuota::query()
             ->with(['servicio.cliente'])
             ->whereNull('id_pago')
             ->whereIn('estado', [EstadoCuota::Pendiente->value, EstadoCuota::Vencida->value])
@@ -44,13 +44,24 @@ class ServicioNotificacionesVencimiento
                     ->whereHas('cliente', fn (Builder $cliente) => $cliente
                         ->whereNotNull('telefono_whatsapp')
                         ->where('telefono_whatsapp', '!=', ''));
-            })
-            ->orderBy('id_cuota')
+            });
+
+        if ($idCuota !== null) {
+            $consulta->whereKey($idCuota);
+        }
+
+        $consulta->orderBy('id_cuota')
             ->chunkById(100, function ($cuotas) use ($hoy, &$resultado): void {
                 foreach ($cuotas as $cuota) {
                     $estadoAviso = $cuota->fecha_vencimiento->toDateString() < $hoy->toDateString() ? 'vencida' : 'proxima';
                     $clave = "vencimiento:{$estadoAviso}:{$cuota->id_cuota}";
                     $cliente = $cuota->servicio->cliente;
+                    if (! $this->whatsAppService->destinatarioPermitido($cliente->telefono_whatsapp)) {
+                        $resultado['omitidas']++;
+
+                        continue;
+                    }
+
                     $conversacion = $this->servicioConversaciones->obtenerOCrearConversacion($cliente->telefono_whatsapp);
                     $contenido = $this->contenido($cuota, $estadoAviso, $cliente->nombre_razon_social);
                     $mensaje = $this->servicioConversaciones->reservarNotificacion($conversacion, $clave, $contenido);

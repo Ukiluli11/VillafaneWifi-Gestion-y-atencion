@@ -234,6 +234,41 @@ class Modulo2WhatsappTest extends TestCase
         $this->assertDatabaseCount('mensaje', 1);
     }
 
+    public function test_comando_envia_solo_la_cuota_elegida_y_omite_destinatarios_no_autorizados(): void
+    {
+        config([
+            'services.whatsapp.modo_simulacion' => false,
+            'services.whatsapp.access_token' => 'token-de-prueba',
+            'services.whatsapp.phone_number_id' => 'telefono-de-prueba',
+            'services.whatsapp.destinatarios_permitidos' => '543704000000',
+        ]);
+        Http::fake(['*' => Http::response(['messages' => [['id' => 'wamid.cuota-seleccionada']]])]);
+
+        $fechaVencimiento = CarbonImmutable::today('America/Argentina/Buenos_Aires')->addDay()->toDateString();
+        $clientePermitido = Cliente::factory()->create(['telefono_whatsapp' => '5493704000000']);
+        $clienteNoPermitido = Cliente::factory()->create(['telefono_whatsapp' => '5493704000001']);
+        $servicioPermitido = Servicio::factory()->create(['id_cliente' => $clientePermitido->id_cliente]);
+        $servicioNoPermitido = Servicio::factory()->create(['id_cliente' => $clienteNoPermitido->id_cliente]);
+        $cuotaSeleccionada = Cuota::factory()->create([
+            'id_servicio' => $servicioPermitido->id_servicio,
+            'fecha_vencimiento' => $fechaVencimiento,
+        ]);
+        $cuotaNoPermitida = Cuota::factory()->create([
+            'id_servicio' => $servicioNoPermitido->id_servicio,
+            'fecha_vencimiento' => $fechaVencimiento,
+        ]);
+
+        $this->artisan('whatsapp:notificar-vencimientos', ['--id-cuota' => $cuotaSeleccionada->id_cuota])
+            ->assertExitCode(0);
+        Http::assertSentCount(1);
+        $this->assertDatabaseHas('mensaje', ['clave_idempotencia' => 'vencimiento:proxima:'.$cuotaSeleccionada->id_cuota]);
+        $this->assertDatabaseMissing('mensaje', ['clave_idempotencia' => 'vencimiento:proxima:'.$cuotaNoPermitida->id_cuota]);
+
+        $this->artisan('whatsapp:notificar-vencimientos')->assertExitCode(0);
+        Http::assertSentCount(1);
+        $this->assertDatabaseCount('mensaje', 1);
+    }
+
     public function test_cuota_vencida_usa_la_plantilla_y_el_texto_de_demostracion_correctos(): void
     {
         config([

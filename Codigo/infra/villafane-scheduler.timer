@@ -1,0 +1,11 @@
+[Unit]
+Description=Ejecutar el programador de Villafane Wifi cada minuto
+
+[Timer]
+OnCalendar=*-*-* *:*:00
+AccuracySec=1s
+Persistent=false
+Unit=villafane-scheduler.service
+
+[Install]
+WantedBy=timers.target

@@ -251,8 +251,7 @@ class WhatsAppService
     private function publicarMensaje(string $token, string $version, string $idTelefono, string $numero, array $payload): Response
     {
         $destino = preg_replace('/\D+/', '', $numero) ?? $numero;
-        $permitidos = array_filter(array_map('trim', explode(',', (string) config('services.whatsapp.destinatarios_permitidos'))));
-        if ($permitidos !== [] && ! in_array($this->normalizarDestinoArgentino($destino), array_map($this->normalizarDestinoArgentino(...), $permitidos), true)) {
+        if (! $this->destinatarioPermitido($destino)) {
             throw new RuntimeException('El destinatario no está autorizado para los envíos de prueba de WhatsApp.');
         }
 
@@ -274,6 +273,21 @@ class WhatsAppService
         }
 
         return $respuesta;
+    }
+
+    public function destinatarioPermitido(string $numero): bool
+    {
+        if ($this->modoSimulacion()) {
+            return true;
+        }
+
+        $permitidos = array_filter(array_map('trim', explode(',', (string) config('services.whatsapp.destinatarios_permitidos'))));
+
+        return $permitidos === [] || in_array(
+            $this->normalizarDestinoArgentino($numero),
+            array_map($this->normalizarDestinoArgentino(...), $permitidos),
+            true,
+        );
     }
 
     private function normalizarDestinoArgentino(string $numero): string

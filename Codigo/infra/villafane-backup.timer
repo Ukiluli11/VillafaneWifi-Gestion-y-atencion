@@ -1,0 +1,10 @@
+[Unit]
+Description=Respaldar Villafane Wifi diariamente
+
+[Timer]
+OnCalendar=*-*-* 06:00:00 UTC
+Persistent=true
+Unit=villafane-backup.service
+
+[Install]
+WantedBy=timers.target
