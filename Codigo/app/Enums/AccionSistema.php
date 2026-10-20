@@ -18,5 +18,7 @@ enum AccionSistema: string
     case GestionarConversaciones = 'gestionar_conversaciones';
     case ConsultarComprobantes = 'consultar_comprobantes';
     case GestionarComprobantes = 'gestionar_comprobantes';
+    case ConsultarTickets = 'consultar_tickets';
+    case GestionarTickets = 'gestionar_tickets';
     case GestionarUsuarios = 'gestionar_usuarios';
 }

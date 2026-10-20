@@ -2,158 +2,245 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Dominio\NotificacionService;
+use App\Dominio\ServicioTickets;
 use App\Enums\EstadoTicket;
 use App\Enums\EstadoUsuario;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AgregarNotaInternaRequest;
+use App\Http\Requests\CrearTicketRequest;
+use App\Models\Cliente;
+use App\Models\Servicio;
 use App\Models\Ticket;
 use App\Models\Usuario;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
+/**
+ * TicketController: Controlador web para la gestión de tickets y soporte técnico.
+ * Corresponde a los casos de uso: 'Filtrar y listar tickets', 'Generar ticket de soporte',
+ * 'Asignar ticket a técnico', 'Gestionar estado de ticket', 'Reabrir ticket', 'Agregar nota interna',
+ * 'Visualizar conversación de chat asociada' y 'Notificar novedad por WhatsApp'.
+ * Conecta con el modelo Ticket, ServicioTickets y NotificacionService.
+ */
 class TicketController extends Controller
 {
+    public function __construct(
+        private readonly ServicioTickets $servicioTickets,
+        private readonly NotificacionService $notificacionService,
+    ) {}
+
+    /**
+     * Bandeja principal de tickets con filtrado avanzado multicriterio.
+     */
     public function index(Request $request): View
     {
-        $estado = $request->string('estado')->toString();
-        $busqueda = trim($request->string('buscar')->toString());
-        $mios = $request->boolean('mios');
-        $consulta = Ticket::query()->with(['servicio.cliente', 'usuarioAsignado']);
+        $filtros = [
+            'estado' => $request->query('estado'),
+            'id_usuario_asignado' => $request->query('id_usuario_asignado'),
+            'tipo' => $request->query('tipo'),
+            'busqueda' => $request->query('busqueda', $request->query('buscar')),
+            'fecha_desde' => $request->query('fecha_desde'),
+            'fecha_hasta' => $request->query('fecha_hasta'),
+        ];
 
-        if (EstadoTicket::tryFrom($estado) !== null) {
-            $consulta->where('estado', $estado);
-        }
-        if ($mios) {
-            $consulta->where('id_usuario_asignado', $request->user()->id_usuario);
-        }
-        if ($busqueda !== '') {
-            $consulta->where(function ($filtro) use ($busqueda): void {
-                if (ctype_digit($busqueda)) {
-                    $filtro->where('id_ticket', (int) $busqueda);
-                }
-                $filtro->orWhereHas('servicio.cliente', fn ($cliente) => $cliente
-                    ->where('nombre_razon_social', 'like', "%{$busqueda}%"));
-            });
+        if ($request->boolean('mios')) {
+            $filtros['id_usuario_asignado'] = $request->user()->id_usuario;
         }
 
-        return view('tickets.index', [
-            'tickets' => $consulta->orderByDesc('id_ticket')->paginate(20)->withQueryString(),
-            'estados' => EstadoTicket::cases(),
-            'estadoSeleccionado' => $estado,
-            'busqueda' => $busqueda,
-            'mios' => $mios,
-        ]);
-    }
+        $tickets = Ticket::with(['servicio.cliente', 'servicio.plan', 'usuarioAsignado'])
+            ->filtrar($filtros)
+            ->orderByRaw("
+                CASE estado
+                    WHEN 'pendiente' THEN 1
+                    WHEN 'reabierto' THEN 2
+                    WHEN 'en_proceso' THEN 3
+                    WHEN 'asignado' THEN 4
+                    WHEN 'resuelto' THEN 5
+                    WHEN 'cerrado' THEN 6
+                    ELSE 7
+                END
+            ")
+            ->orderByDesc('id_ticket')
+            ->paginate(15)
+            ->withQueryString();
 
-    public function show(Ticket $ticket): View
-    {
-        $ticket->load([
-            'conversacion',
-            'servicio.cliente',
-            'servicio.plan',
-            'usuarioAsignado',
-            'notas' => fn ($consulta) => $consulta->with('usuario')->orderBy('fecha_hora')->orderBy('id_nota'),
-        ]);
+        $estadisticas = [
+            'total' => Ticket::count(),
+            'pendientes' => Ticket::where('estado', EstadoTicket::Pendiente)->count(),
+            'en_proceso' => Ticket::whereIn('estado', [EstadoTicket::Asignado, EstadoTicket::EnProceso])->count(),
+            'reabiertos' => Ticket::where('estado', EstadoTicket::Reabierto)->count(),
+            'resueltos' => Ticket::where('estado', EstadoTicket::Resuelto)->count(),
+            'cerrados' => Ticket::where('estado', EstadoTicket::Cerrado)->count(),
+        ];
 
-        $responsables = Usuario::query()
-            ->where('estado', EstadoUsuario::Activo->value)
-            ->where(function ($consulta): void {
-                $consulta->whereHas('administrador')
-                    ->orWhereHas('empleado', fn ($empleado) => $empleado->where('area', 'soporte'));
-            })
+        $tecnicos = Usuario::where('estado', EstadoUsuario::Activo->value)
+            ->where(fn ($q) => $q->whereHas('administrador')->orWhereHas('empleado', fn ($e) => $e->where('area', 'soporte')))
             ->orderBy('nombre_usuario')
             ->get();
 
-        $usuario = auth()->user();
-        $esAdministrador = $usuario->administrador()->exists();
-
-        return view('tickets.detalle', [
-            'ticket' => $ticket,
-            'responsables' => $responsables,
-            'puedeGestionar' => $this->puedeGestionar($ticket, $usuario),
-            'esAdministrador' => $esAdministrador,
-            'puedeAsignar' => $esAdministrador || ($usuario->empleado()->where('area', 'soporte')->exists()
-                && in_array($ticket->id_usuario_asignado, [null, $usuario->id_usuario], true)),
-        ]);
+        return view('tickets.index', compact('tickets', 'filtros', 'estadisticas', 'tecnicos'));
     }
 
+    /**
+     * Presenta el formulario para registrar un ticket de soporte de manera manual.
+     */
+    public function create(Request $request): View
+    {
+        $idServicioSeleccionado = $request->query('id_servicio');
+        $idClienteSeleccionado = $request->query('id_cliente');
+
+        $clientes = Cliente::with(['servicios' => function ($q) {
+            $q->where('estado', '!=', 'baja');
+        }])
+            ->whereHas('servicios', function ($q) {
+                $q->where('estado', '!=', 'baja');
+            })
+            ->orderBy('nombre_razon_social')
+            ->get();
+
+        $tecnicos = Usuario::where('estado', EstadoUsuario::Activo->value)
+            ->where(fn ($q) => $q->whereHas('administrador')->orWhereHas('empleado', fn ($e) => $e->where('area', 'soporte')))
+            ->orderBy('nombre_usuario')
+            ->get();
+
+        return view('tickets.formulario', compact('clientes', 'tecnicos', 'idServicioSeleccionado', 'idClienteSeleccionado'));
+    }
+
+    /**
+     * Persiste el ticket manual en la base de datos con asignación opcional y nota inicial.
+     */
+    public function store(CrearTicketRequest $request): RedirectResponse
+    {
+        $ticket = $this->servicioTickets->crearManual($request->validated(), $request->user());
+
+        return redirect()->route('tickets.show', $ticket)
+            ->with('exito', "Ticket #{$ticket->id_ticket} registrado correctamente.");
+    }
+
+    /**
+     * Muestra datos del servicio, estado, línea de tiempo, notas y chat de WhatsApp vinculado.
+     */
+    public function show(Ticket $ticket): View
+    {
+        $ticket->load([
+            'servicio.cliente',
+            'servicio.plan',
+            'usuarioAsignado',
+            'conversacion.mensajes.usuario',
+            'notas.usuario',
+        ]);
+
+        $tecnicos = Usuario::where('estado', EstadoUsuario::Activo->value)
+            ->where(fn ($q) => $q->whereHas('administrador')->orWhereHas('empleado', fn ($e) => $e->where('area', 'soporte')))
+            ->orderBy('nombre_usuario')
+            ->get();
+
+        $esAdministrador = auth()->user()->administrador()->exists();
+        $puedeGestionar = $esAdministrador || $ticket->id_usuario_asignado === auth()->id();
+        $puedeAsignar = ! in_array($ticket->estado, [EstadoTicket::Resuelto, EstadoTicket::Cerrado], true)
+            && ($esAdministrador || (auth()->user()->empleado()->where('area', 'soporte')->exists()
+                && in_array($ticket->id_usuario_asignado, [null, auth()->id()], true)));
+        if (! $esAdministrador) {
+            $tecnicos = $tecnicos->where('id_usuario', auth()->id());
+        }
+
+        return view('tickets.detalle', compact('ticket', 'tecnicos', 'puedeGestionar', 'puedeAsignar'));
+    }
+
+    /**
+     * Asigna formalmente el responsable técnico e inicia el seguimiento del ticket.
+     */
     public function asignar(Request $request, Ticket $ticket): RedirectResponse
     {
-        $datos = $request->validate(['id_usuario' => ['required', 'integer', 'exists:usuario,id_usuario']]);
-        $responsable = Usuario::query()
-            ->whereKey($datos['id_usuario'])
-            ->where('estado', EstadoUsuario::Activo->value)
-            ->where(function ($consulta): void {
-                $consulta->whereHas('administrador')
-                    ->orWhereHas('empleado', fn ($empleado) => $empleado->where('area', 'soporte'));
-            })
-            ->first();
+        $campo = $request->has('id_usuario_asignado') ? 'id_usuario_asignado' : 'id_usuario';
+        $request->validate([
+            $campo => ['required', 'integer', 'exists:usuario,id_usuario'],
+        ], [
+            'id_usuario_asignado.required' => 'Debe seleccionar un técnico.',
+            'id_usuario_asignado.exists' => 'El técnico seleccionado no existe.',
+        ]);
 
-        $esAdministrador = $request->user()->administrador()->exists();
-        if ($responsable === null || (! $esAdministrador && (
-            $responsable->id_usuario !== $request->user()->id_usuario
-            || ! in_array($ticket->id_usuario_asignado, [null, $request->user()->id_usuario], true)
-        ))) {
-            throw ValidationException::withMessages(['id_usuario' => 'Elegí un responsable de soporte habilitado.']);
-        }
-        if (in_array($ticket->estado, [EstadoTicket::Resuelto, EstadoTicket::Cerrado], true)) {
-            throw ValidationException::withMessages(['ticket' => 'Reabrí el ticket antes de asignarlo.']);
-        }
+        $tecnico = Usuario::findOrFail($request->input($campo));
+        $this->servicioTickets->asignarTicket($ticket, $tecnico, $request->user(), $campo);
 
-        $ticket->asignar($responsable);
-
-        return back()->with('exito', 'Ticket asignado a '.$responsable->nombre_usuario.'.');
+        return redirect()->route('tickets.show', $ticket)
+            ->with('exito', "Ticket asignado exitosamente al técnico {$tecnico->nombre_usuario}.");
     }
 
-    public function agregarNota(Request $request, Ticket $ticket): RedirectResponse
+    /**
+     * Controla las transiciones de ciclo de vida del ticket con notificación opcional por WhatsApp.
+     */
+    public function cambiarEstado(Request $request, Ticket $ticket): RedirectResponse
     {
-        abort_unless($this->puedeGestionar($ticket, $request->user()), 403);
-        $datos = $request->validate(['contenido' => ['required', 'string', 'min:3', 'max:5000']]);
-        $ticket->agregarNota(trim($datos['contenido']), $request->user());
+        $request->validate([
+            'estado' => ['required', 'string'],
+            'observacion' => ['nullable', 'string', 'max:2000'],
+            'notificar_whatsapp' => ['nullable', 'boolean'],
+        ]);
 
-        return back()->with('exito', 'Nota interna guardada.');
+        $nuevoEstado = EstadoTicket::tryFrom($request->input('estado'));
+        if (! $nuevoEstado) {
+            return back()->withErrors(['estado' => 'El estado especificado no es válido.']);
+        }
+
+        $observacion = $request->input('observacion');
+        $this->servicioTickets->cambiarEstado($ticket, $nuevoEstado, $request->user(), $observacion);
+
+        // Notificación opcional al cliente por WhatsApp
+        if ($request->boolean('notificar_whatsapp')) {
+            $aviso = $this->notificacionService->notificarNovedad($ticket->fresh());
+        }
+
+        return redirect()->route('tickets.show', $ticket)
+            ->with('exito', "Estado del ticket actualizado a: {$nuevoEstado->value}.".(isset($aviso) ? ' '.$aviso['detalle'] : ''));
     }
 
     public function resolver(Request $request, Ticket $ticket): RedirectResponse
     {
-        abort_unless($this->puedeGestionar($ticket, $request->user()), 403);
-        if (! in_array($ticket->estado, [EstadoTicket::Asignado, EstadoTicket::EnProceso, EstadoTicket::Reabierto], true)) {
-            throw ValidationException::withMessages(['ticket' => 'Asigná o reabrí el ticket antes de resolverlo.']);
-        }
+        $request->merge(['estado' => EstadoTicket::Resuelto->value]);
 
-        $ticket->resolver();
-
-        return back()->with('exito', 'Ticket marcado como resuelto.');
+        return $this->cambiarEstado($request, $ticket);
     }
 
     public function cerrar(Request $request, Ticket $ticket): RedirectResponse
     {
-        abort_unless($this->puedeGestionar($ticket, $request->user()), 403);
-        if ($ticket->estado !== EstadoTicket::Resuelto) {
-            throw ValidationException::withMessages(['ticket' => 'El ticket debe estar resuelto antes de cerrarlo.']);
-        }
+        $request->merge(['estado' => EstadoTicket::Cerrado->value]);
 
-        $ticket->cerrar();
-
-        return back()->with('exito', 'Ticket cerrado.');
+        return $this->cambiarEstado($request, $ticket);
     }
 
+    /**
+     * Mecanismo formal de reapertura de incidentes no solucionados.
+     */
     public function reabrir(Request $request, Ticket $ticket): RedirectResponse
     {
-        abort_unless($this->puedeGestionar($ticket, $request->user()), 403);
-        if (! in_array($ticket->estado, [EstadoTicket::Resuelto, EstadoTicket::Cerrado], true)) {
-            throw ValidationException::withMessages(['ticket' => 'Solo se puede reabrir un ticket resuelto o cerrado.']);
-        }
+        $request->validate([
+            'motivo' => ['nullable', 'string', 'min:5', 'max:2000'],
+        ], [
+            'motivo.required' => 'Debe ingresar el motivo de reapertura del ticket.',
+            'motivo.min' => 'El motivo debe tener al menos 5 caracteres.',
+        ]);
 
-        $ticket->reabrir();
+        $this->servicioTickets->reabrirTicket($ticket, $request->user(), $request->input('motivo'));
 
-        return back()->with('exito', 'Ticket reabierto.');
+        return redirect()->route('tickets.show', $ticket)
+            ->with('exito', 'Ticket reabierto con éxito.');
     }
 
-    private function puedeGestionar(Ticket $ticket, Usuario $usuario): bool
+    /**
+     * Asienta anotaciones técnicas o comentarios internos en la bitácora del ticket.
+     */
+    public function agregarNota(AgregarNotaInternaRequest $request, Ticket $ticket): RedirectResponse
     {
-        return $usuario->administrador()->exists()
-            || $ticket->id_usuario_asignado === $usuario->id_usuario;
+        $this->servicioTickets->agregarNotaInterna(
+            $ticket,
+            $request->user(),
+            $request->validated()['contenido']
+        );
+
+        return redirect()->route('tickets.show', $ticket)
+            ->with('exito', 'Nota interna agregada correctamente.');
     }
 }

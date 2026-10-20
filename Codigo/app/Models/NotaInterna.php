@@ -54,7 +54,7 @@ class NotaInterna extends Model
     }
 
     /**
-     * Caso de Uso: Registrar nota interna en ticket (Módulo 2)
+     * Caso de Uso: Registrar nota interna en ticket / Agregar nota interna
      * Clase UML: NotaInterna
      * Método UML: + registrar() : void
      *

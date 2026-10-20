@@ -87,8 +87,6 @@ Route::middleware('auth')->group(function (): void {
     Route::middleware('accion:consultar_conversaciones')->group(function (): void {
         Route::get('/conversaciones', [ConversacionController::class, 'index'])->name('conversaciones.index');
         Route::get('/conversaciones/{conversacion}', [ConversacionController::class, 'show'])->name('conversaciones.show');
-        Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
-        Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
     });
     Route::middleware('accion:gestionar_conversaciones')->group(function (): void {
         Route::get('/simulador-whatsapp', [SimuladorWhatsappController::class, 'create'])->name('simulador-whatsapp.create');
@@ -96,11 +94,22 @@ Route::middleware('auth')->group(function (): void {
         Route::post('/conversaciones/{conversacion}/tomar', [ConversacionController::class, 'tomar'])->name('conversaciones.tomar');
         Route::post('/conversaciones/{conversacion}/responder', [ConversacionController::class, 'responder'])->name('conversaciones.responder');
         Route::post('/conversaciones/{conversacion}/cerrar', [ConversacionController::class, 'cerrar'])->name('conversaciones.cerrar');
+    });
+
+    // Módulo 4: Soporte Técnico y Gestión de Tickets
+    Route::middleware('accion:consultar_tickets')->group(function (): void {
+        Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
+        Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
+    });
+    Route::middleware('accion:gestionar_tickets')->group(function (): void {
+        Route::get('/tickets-nuevo', [TicketController::class, 'create'])->name('tickets.create');
+        Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
         Route::post('/tickets/{ticket}/asignar', [TicketController::class, 'asignar'])->name('tickets.asignar');
-        Route::post('/tickets/{ticket}/notas', [TicketController::class, 'agregarNota'])->name('tickets.notas.store');
+        Route::post('/tickets/{ticket}/estado', [TicketController::class, 'cambiarEstado'])->name('tickets.estado');
         Route::post('/tickets/{ticket}/resolver', [TicketController::class, 'resolver'])->name('tickets.resolver');
         Route::post('/tickets/{ticket}/cerrar', [TicketController::class, 'cerrar'])->name('tickets.cerrar');
         Route::post('/tickets/{ticket}/reabrir', [TicketController::class, 'reabrir'])->name('tickets.reabrir');
+        Route::post('/tickets/{ticket}/notas', [TicketController::class, 'agregarNota'])->name('tickets.notas.store');
     });
 
     Route::get('/usuarios', [UsuarioController::class, 'index'])->middleware('accion:gestionar_usuarios')->name('usuarios.index');

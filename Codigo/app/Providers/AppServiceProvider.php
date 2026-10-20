@@ -46,6 +46,8 @@ class AppServiceProvider extends ServiceProvider
                 'simulador_whatsapp' => $puede(AccionSistema::GestionarConversaciones) && config('services.whatsapp.modo_simulacion'),
                 'comprobantes' => $puede(AccionSistema::ConsultarComprobantes),
                 'gestionar_comprobantes' => $puede(AccionSistema::GestionarComprobantes),
+                'tickets' => $puede(AccionSistema::ConsultarTickets),
+                'gestionar_tickets' => $puede(AccionSistema::GestionarTickets),
                 'usuarios' => $puede(AccionSistema::GestionarUsuarios),
             ]);
         });

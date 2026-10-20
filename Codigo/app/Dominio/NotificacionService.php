@@ -9,6 +9,7 @@ use App\Models\Cliente;
 use App\Models\Comprobante;
 use App\Models\Mensaje;
 use App\Models\Pago;
+use App\Models\Ticket;
 use Illuminate\Support\Facades\Cache;
 use Throwable;
 
@@ -18,6 +19,17 @@ class NotificacionService
         private readonly WhatsAppService $whatsapp,
         private readonly ServicioConversaciones $conversaciones,
     ) {}
+
+    public function notificarNovedad(Ticket $ticket, string $detalle = ''): array
+    {
+        $ticket->refresh();
+        $cliente = $ticket->servicio->cliente;
+        $contenido = sprintf('Villafañe Wifi (demostración académica). Hola %s, el ticket #%d se actualizó a: %s. Podés escribirnos para consultar su seguimiento.',
+            $cliente->nombre_razon_social, $ticket->id_ticket, str_replace('_', ' ', $ticket->estado->value));
+
+        return $this->enviar($cliente, 'ticket:estado:'.$ticket->id_ticket.':'.$ticket->estado->value.':'.$ticket->notas()->max('id_nota'),
+            $contenido, '', [], 'tickets');
+    }
 
     public function notificarPagoAprobado(Cliente $cliente, Pago $pago, ?Comprobante $comprobante = null): array
     {
@@ -40,20 +52,20 @@ class NotificacionService
     }
 
     /** @param list<string> $parametros */
-    private function enviar(Cliente $cliente, string $clave, string $contenido, string $plantilla, array $parametros): array
+    private function enviar(Cliente $cliente, string $clave, string $contenido, string $plantilla, array $parametros, string $modulo = 'comprobantes'): array
     {
         try {
-            return $this->procesarEnvio($cliente, $clave, $contenido, $plantilla, $parametros);
+            return $this->procesarEnvio($cliente, $clave, $contenido, $plantilla, $parametros, $modulo);
         } catch (Throwable) {
             return ['estado' => 'fallido', 'detalle' => 'El resultado quedó guardado; no se pudo procesar el aviso. Podés reintentarlo.'];
         }
     }
 
     /** @param list<string> $parametros */
-    private function procesarEnvio(Cliente $cliente, string $clave, string $contenido, string $plantilla, array $parametros): array
+    private function procesarEnvio(Cliente $cliente, string $clave, string $contenido, string $plantilla, array $parametros, string $modulo): array
     {
-        $resultado = ['estado' => 'pendiente', 'detalle' => 'El aviso no se envió: las notificaciones de comprobantes están desactivadas.'];
-        if (! config('services.comprobantes.notificar_resultado', false)) {
+        $resultado = ['estado' => 'pendiente', 'detalle' => 'El aviso no se envió: las notificaciones de '.$modulo.' están desactivadas.'];
+        if (! config('services.'.$modulo.'.notificar_resultado', false)) {
             return $resultado;
         }
         $telefono = preg_replace('/\D/', '', $cliente->telefono_whatsapp ?? '');
@@ -74,7 +86,7 @@ class NotificacionService
             return ['estado' => 'pendiente', 'detalle' => 'Aviso pendiente: no hay un mensaje previo del cliente en este teléfono.'];
         }
         $fueraDeVentana = $ultimoEntrante->fecha_hora->lte(now()->subHours(24));
-        if ($fueraDeVentana && (! config('services.comprobantes.plantillas_fuera_ventana', false) || blank($plantilla))) {
+        if ($fueraDeVentana && (! config('services.'.$modulo.'.plantillas_fuera_ventana', false) || blank($plantilla))) {
             return ['estado' => 'pendiente', 'detalle' => 'Aviso pendiente: el cliente debe volver a escribir o se deben habilitar las plantillas de resultado aprobadas por Meta.'];
         }
         $lock = Cache::lock('notificacion:'.$clave, 90);
@@ -99,11 +111,11 @@ class NotificacionService
             } catch (LimiteConsumoWhatsappException $error) {
                 $mensaje->marcarFallido();
 
-                return ['estado' => 'bloqueado', 'detalle' => $error->getMessage().' La decisión del comprobante permanece guardada.'];
+                return ['estado' => 'bloqueado', 'detalle' => $error->getMessage().' La decisión permanece guardada.'];
             } catch (Throwable) {
                 $mensaje->marcarFallido();
 
-                return ['estado' => 'fallido', 'detalle' => 'El pago conserva su resultado, pero no se pudo enviar el aviso. Podés reintentarlo desde el detalle.'];
+                return ['estado' => 'fallido', 'detalle' => 'La actualización quedó guardada, pero no se pudo enviar el aviso.'];
             }
         } catch (Throwable) {
             return ['estado' => 'fallido', 'detalle' => 'El resultado quedó guardado; no se pudo registrar el aviso. Podés reintentarlo.'];

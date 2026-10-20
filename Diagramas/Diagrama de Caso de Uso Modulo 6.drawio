@@ -5,7 +5,7 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="2" parent="1" style="text;html=1;strokeColor=#7B1FA2;fillColor=#F3E5F5;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontStyle=1;fontSize=13;fontColor=#7B1FA2;rounded=1;arcSize=10;" value="Sistema de Gestión Villafañe Wifi — Módulo 6: Usuarios y Accesos" vertex="1">
+        <mxCell id="2" parent="1" style="text;html=1;strokeColor=#7B1FA2;fillColor=#F3E5F5;align=center;verticalAlign=top;whiteSpace=wrap;overflow=hidden;fontStyle=1;fontSize=14;fontColor=#7B1FA2;rounded=1;arcSize=6;strokeWidth=2;spacingTop=14;" value="Sistema de Gestión Villafañe Wifi — Módulo 6: Usuarios y Accesos" vertex="1">
           <mxGeometry height="850" width="1200" x="195" y="35" as="geometry" />
         </mxCell>
         <mxCell id="3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontColor=#263238;" value="Autenticar usuario" vertex="1">

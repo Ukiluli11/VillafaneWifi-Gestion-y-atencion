@@ -37,7 +37,7 @@
                     <span>Resumen</span>
                 </a>
 
-                @if ($navegacionPermitida['clientes'] || $navegacionPermitida['servicios'] || ($navegacionPermitida['comprobantes'] ?? false))
+                @if ($navegacionPermitida['clientes'] || $navegacionPermitida['servicios'] || ($navegacionPermitida['comprobantes'] ?? false) || ($navegacionPermitida['tickets'] ?? false))
                     <span class="grupo-navegacion">Operaciones</span>
                 @endif
                 @if ($navegacionPermitida['clientes'])
@@ -57,10 +57,6 @@
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4zM8 9h8M8 12h5"/></svg>
                         <span>Conversaciones</span>
                     </a>
-                    <a class="enlace-navegacion {{ request()->routeIs('tickets.*') ? 'activo' : '' }}" href="{{ route('tickets.index') }}">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v5a3 3 0 0 0 0 6v5H4v-5a3 3 0 0 0 0-6zM12 4v16"/></svg>
-                        <span>Tickets</span>
-                    </a>
                 @endif
 
                 @if ($navegacionPermitida['simulador_whatsapp'])
@@ -74,6 +70,13 @@
                     <a class="enlace-navegacion {{ request()->routeIs('comprobantes.*') ? 'activo' : '' }}" href="{{ route('comprobantes.index') }}">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg>
                         <span>Comprobantes</span>
+                    </a>
+                @endif
+
+                @if ($navegacionPermitida['tickets'] ?? false)
+                    <a class="enlace-navegacion {{ request()->routeIs('tickets.*') ? 'activo' : '' }}" href="{{ route('tickets.index') }}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                        <span>Tickets de Soporte</span>
                     </a>
                 @endif
 

@@ -46,6 +46,10 @@ return [
         'plantilla_rechazado' => env('WHATSAPP_TEMPLATE_PAGO_RECHAZADO', 'demo_pago_rechazado_v1'),
     ],
 
+    'tickets' => [
+        'notificar_resultado' => env('TICKETS_NOTIFICAR_RESULTADO', false),
+    ],
+
     'transferencias' => [
         'habilitadas' => env('TRANSFERENCIAS_HABILITADAS', false),
         'id_cuenta' => (int) env('TRANSFERENCIAS_ID_CUENTA', 0),

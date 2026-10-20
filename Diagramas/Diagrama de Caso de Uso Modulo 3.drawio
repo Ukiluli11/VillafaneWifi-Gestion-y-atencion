@@ -7,7 +7,7 @@
         <mxCell id="1" parent="0" />
         
         
-        <mxCell id="2" parent="1" style="text;html=1;strokeColor=#2E7D32;fillColor=#E8F5E9;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontStyle=1;fontSize=13;fontColor=#2E7D32;rounded=1;arcSize=10;" value="Sistema de Gestión Villafañe Wifi — Módulo 3: Gestión de Pagos y Comprobantes" vertex="1">
+        <mxCell id="2" parent="1" style="text;html=1;strokeColor=#2E7D32;fillColor=#E8F5E9;align=center;verticalAlign=top;whiteSpace=wrap;overflow=hidden;fontStyle=1;fontSize=14;fontColor=#2E7D32;rounded=1;arcSize=6;strokeWidth=2;spacingTop=14;" value="Sistema de Gestión Villafañe Wifi — Módulo 3: Gestión de Pagos y Comprobantes" vertex="1">
           <mxGeometry height="1250" width="2040" x="190" y="35" as="geometry" />
         </mxCell>
 

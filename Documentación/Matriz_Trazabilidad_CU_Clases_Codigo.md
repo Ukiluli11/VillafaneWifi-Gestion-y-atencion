@@ -72,7 +72,26 @@
 
 ---
 
-## 4. Módulo 6 — Usuarios, Roles y Seguridad de Acceso
+## 4. Módulo 4 — Soporte Técnico y Gestión de Tickets
+
+| Caso de Uso (Diagrama CU) | Actor | Clase UML | Método UML | Archivo PHP | Función en Código | Descripción breve |
+|---|---|---|---|---|---|---|
+| **Registrar reclamo técnico** | Cliente / Bot de WhatsApp / Empleado | `ServicioTickets`<br>`Ticket` | `+ crearDesdeConversacion(...)`<br>`+ resolver() : void` | `app/Dominio/ServicioTickets.php`<br>`app/Models/Ticket.php` | `ServicioTickets::crearDesdeConversacion()` | Registra la manifestación de una falla técnica del cliente en el sistema. |
+| **Generar ticket de soporte** | Bot de WhatsApp / Empleado | `Ticket`<br>`ServicioTickets` | `Ticket::create(...)`<br>`+ crearManual(datos, creador) : Ticket` | `app/Models/Ticket.php`<br>`app/Dominio/ServicioTickets.php`<br>`app/Http/Controllers/Web/TicketController.php` | `Ticket::create()`<br>`ServicioTickets::crearManual()`<br>`TicketController::store()` | Instancia el ticket técnico con estado inicial pendiente/asignado asociado al servicio. |
+| **Filtrar y listar tickets** | Empleado / Administrador | `Ticket` | `Scope / Query` | `app/Http/Controllers/Web/TicketController.php`<br>`app/Models/Ticket.php` | `TicketController::index()`<br>`Ticket::scopeFiltrar()` | Permite buscar y filtrar tickets por estado, prioridad, técnico y fecha. |
+| **Consultar tickets asignados** | Empleado | `Empleado` | `+ consultarTicketsAsignados() : List<Ticket>` | `app/Models/Empleado.php` | `Empleado::consultarTicketsAsignados()` | Devuelve los incidentes asignados al operador o técnico en turno. |
+| **Asignar ticket a técnico** | Empleado / Administrador | `Ticket`<br>`ServicioTickets` | `+ asignar(usuario: Usuario) : void`<br>`+ asignarTicket(ticket, tec) : void` | `app/Models/Ticket.php`<br>`app/Dominio/ServicioTickets.php`<br>`app/Http/Controllers/Web/TicketController.php` | `Ticket::asignar()`<br>`ServicioTickets::asignarTicket()`<br>`TicketController::asignar()` | Asigna formalmente el responsable técnico y cambia el estado a Asignado/En Proceso. |
+| **Gestionar estado de ticket** | Empleado / Administrador | `Ticket`<br>`ServicioTickets` | `+ ponerEnProceso() : void`<br>`+ resolver() : void`<br>`+ cerrar() : void` | `app/Models/Ticket.php`<br>`app/Dominio/ServicioTickets.php`<br>`app/Http/Controllers/Web/TicketController.php` | `Ticket::ponerEnProceso()`<br>`ServicioTickets::cambiarEstado()`<br>`TicketController::cambiarEstado()` | Controla la transición de estados del incidente durante su ciclo de vida. |
+| **Resolver ticket** | Empleado / Administrador | `Ticket` | `+ resolver() : void` | `app/Models/Ticket.php`<br>`app/Dominio/ServicioTickets.php` | `Ticket::resolver()`<br>`TicketController::cambiarEstado()` | Marca el incidente como solucionado registrando la fecha/hora de resolución. |
+| **Cerrar ticket** | Empleado / Administrador | `Ticket` | `+ cerrar() : void` | `app/Models/Ticket.php`<br>`app/Dominio/ServicioTickets.php` | `Ticket::cerrar()`<br>`TicketController::cambiarEstado()` | Cierre formal y definitivo del ticket una vez verificado el servicio. |
+| **Reabrir ticket** | Empleado / Administrador | `Ticket`<br>`ServicioTickets` | `+ reabrir() : void`<br>`+ reabrirTicket(ticket, u, motivo) : void` | `app/Models/Ticket.php`<br>`app/Dominio/ServicioTickets.php`<br>`app/Http/Controllers/Web/TicketController.php` | `Ticket::reabrir()`<br>`ServicioTickets::reabrirTicket()`<br>`TicketController::reabrir()` | Reabre un ticket ante persistencia de falla o disconformidad del cliente. |
+| **Agregar nota interna** | Empleado / Administrador | `Ticket`<br>`NotaInterna` | `+ agregarNota(txt, u) : NotaInterna`<br>`+ registrar() : void` | `app/Models/Ticket.php`<br>`app/Models/NotaInterna.php`<br>`app/Http/Controllers/Web/TicketController.php` | `Ticket::agregarNota()`<br>`NotaInterna::registrar()`<br>`TicketController::agregarNota()` | Asienta comentarios técnicos o bitácora de seguimiento no visibles al cliente. |
+| **Visualizar conversación de chat asociada** | Empleado / Administrador | `Conversacion`<br>`Ticket` | `+ obtenerHistorial() : List<Mensaje>` | `app/Models/Ticket.php`<br>`app/Models/Conversacion.php`<br>`app/Http/Controllers/Web/TicketController.php` | `Conversacion::obtenerHistorial()`<br>`TicketController::show()` | Permite al técnico ver el chat completo de WhatsApp donde se originó la falla. |
+| **Notificar novedad por WhatsApp** | Bot de WhatsApp / Sistema | `NotificacionService` | `+ notificarNovedad(ticket: Ticket, detalle: String) : void` | `app/Dominio/NotificacionService.php`<br>`app/Http/Controllers/Web/TicketController.php` | `NotificacionService::notificarNovedad()` | Despacha un mensaje automático por WhatsApp al cliente informando la solución o cambio de estado. |
+
+---
+
+## 5. Módulo 6 — Usuarios, Roles y Seguridad de Acceso
 
 | Caso de Uso (Diagrama CU) | Actor | Clase UML | Método UML | Archivo PHP | Función en Código | Descripción breve |
 |---|---|---|---|---|---|---|
