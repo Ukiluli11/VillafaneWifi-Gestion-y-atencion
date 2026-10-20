@@ -34,9 +34,9 @@ class DatosDemostracionSeeder extends Seeder
     private function crearPlanes(): array
     {
         $datos = [
-            'hogar' => ['nombre' => 'Hogar 20', 'velocidad' => '20 Mbps', 'precio_vigente' => '18000.00'],
-            'plus' => ['nombre' => 'Hogar Plus 50', 'velocidad' => '50 Mbps', 'precio_vigente' => '26000.00'],
-            'comercio' => ['nombre' => 'Comercio 100', 'velocidad' => '100 Mbps', 'precio_vigente' => '42000.00'],
+            'hogar' => ['nombre' => 'Hogar 20', 'velocidad' => '20 Mbps', 'precio_vigente' => '100.00'],
+            'plus' => ['nombre' => 'Hogar Plus 50', 'velocidad' => '50 Mbps', 'precio_vigente' => '150.00'],
+            'comercio' => ['nombre' => 'Comercio 100', 'velocidad' => '100 Mbps', 'precio_vigente' => '200.00'],
         ];
 
         return collect($datos)->mapWithKeys(function (array $plan, string $clave): array {

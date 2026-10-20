@@ -22,7 +22,8 @@ class AprobarComprobanteRequest extends FormRequest
             'id_cuenta' => ['required', 'integer', 'exists:cuenta_receptora,id_cuenta'],
             'medio_pago' => ['required', new Enum(MedioPago::class)],
             'monto' => ['nullable', 'numeric', 'min:0.01'],
-            'fecha' => ['nullable', 'date'],
+            'fecha' => ['nullable', 'date_format:Y-m-d', 'before_or_equal:today'],
+            'numero_operacion' => ['nullable', 'string', 'max:50'],
         ];
     }
 

@@ -5,7 +5,7 @@
     <div>
         <p class="sobrelinea">Recepción de Pagos</p>
         <h1>Cargar Comprobante Manual</h1>
-        <p>Adjuntá el comprobante de transferencia o Mercado Pago. El sistema calculará el hash antifraude y extraerá los datos.</p>
+        <p>Adjuntá el comprobante de transferencia o Mercado Pago. La lectura automática requiere configuración; siempre podés completar los datos revisando el original.</p>
     </div>
     <a class="boton secundario" href="{{ route('comprobantes.index') }}">← Volver a la bandeja</a>
 </div>
@@ -41,7 +41,7 @@
 
         <div class="campo">
             <label for="fecha">Fecha del pago</label>
-            <input type="date" id="fecha" name="fecha" value="{{ old('fecha', date('Y-m-d')) }}">
+            <input type="date" id="fecha" name="fecha" value="{{ old('fecha') }}">
             <small class="texto-suave">Fecha en que se realizó la transferencia.</small>
         </div>
     </div>

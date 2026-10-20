@@ -29,6 +29,33 @@ return [
         'plantilla_vencimiento' => env('WHATSAPP_TEMPLATE_VENCIMIENTO', 'recordatorio_vencimiento'),
         'plantilla_vencida' => env('WHATSAPP_TEMPLATE_VENCIDA', 'recordatorio_cuota_vencida'),
         'idioma_plantilla' => env('WHATSAPP_TEMPLATE_LANGUAGE', 'es_AR'),
+        'recordatorios_habilitados' => env('WHATSAPP_RECORDATORIOS_HABILITADOS', false),
+        'recordatorios_destinatarios' => env('WHATSAPP_RECORDATORIOS_DESTINATARIOS', ''),
+        'control_consumo_habilitado' => env('WHATSAPP_CONTROL_CONSUMO_HABILITADO', true),
+        'limite_servicios_mes' => (int) env('WHATSAPP_LIMITE_SERVICIOS_MES', 900),
+        'plantillas_reales_habilitadas' => env('WHATSAPP_PLANTILLAS_REALES_HABILITADAS', false),
+        'plantillas_destinatarios' => env('WHATSAPP_PLANTILLAS_DESTINATARIOS', ''),
+        'limite_plantillas_mes' => (int) env('WHATSAPP_LIMITE_PLANTILLAS_MES', 4),
+        'limite_plantillas_dia' => (int) env('WHATSAPP_LIMITE_PLANTILLAS_DIA', 2),
+    ],
+
+    'comprobantes' => [
+        'notificar_resultado' => env('COMPROBANTES_NOTIFICAR_RESULTADO', false),
+        'plantillas_fuera_ventana' => env('COMPROBANTES_PLANTILLAS_FUERA_VENTANA', false),
+        'plantilla_aprobado' => env('WHATSAPP_TEMPLATE_PAGO_APROBADO', 'demo_pago_aprobado_v1'),
+        'plantilla_rechazado' => env('WHATSAPP_TEMPLATE_PAGO_RECHAZADO', 'demo_pago_rechazado_v1'),
+    ],
+
+    'transferencias' => [
+        'habilitadas' => env('TRANSFERENCIAS_HABILITADAS', false),
+        'id_cuenta' => (int) env('TRANSFERENCIAS_ID_CUENTA', 0),
+    ],
+
+    'ocr' => [
+        'habilitado' => env('OCR_HABILITADO', false),
+        'tesseract_bin' => env('TESSERACT_BIN', 'tesseract'),
+        'pdftoppm_bin' => env('PDFTOPPM_BIN', 'pdftoppm'),
+        'timeout' => (int) env('OCR_TIMEOUT', 25),
     ],
 
     'openai' => [

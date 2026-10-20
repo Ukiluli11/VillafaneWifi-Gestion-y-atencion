@@ -18,6 +18,13 @@
     </div>
 </div>
 
+@if ($instruccionesTransferencia)
+    <section class="tarjeta">
+        <h2>Cuenta de la empresa para transferencias</h2>
+        <p style="white-space: pre-line;">{{ $instruccionesTransferencia }}</p>
+    </section>
+@endif
+
 <section class="metricas">
     <article class="metrica">
         <div class="metrica-cabecera"><span>Total pendiente</span><span class="metrica-icono">$</span></div>

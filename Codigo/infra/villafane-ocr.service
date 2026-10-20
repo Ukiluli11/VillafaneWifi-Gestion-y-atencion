@@ -1,0 +1,23 @@
+[Unit]
+Description=Lectura de comprobantes de Villafane Wifi
+After=network-online.target mariadb.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/srv/villafane-wifi/current
+ExecStart=/usr/bin/php artisan queue:work database --queue=ocr --sleep=3 --tries=1 --timeout=60 --max-time=3600
+Restart=always
+RestartSec=5
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+Environment=OMP_THREAD_LIMIT=1
+MemoryMax=512M
+CPUQuota=75%
+
+[Install]
+WantedBy=multi-user.target

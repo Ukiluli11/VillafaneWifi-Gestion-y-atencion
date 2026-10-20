@@ -87,9 +87,7 @@ class ServicioFacturacion
         if ($identificadoresCuota === []) {
             throw ValidationException::withMessages(['cuotas' => 'Debe seleccionar al menos una cuota.']);
         }
-        if ($cuenta->estado !== EstadoCuentaReceptora::Activa) {
-            throw ValidationException::withMessages(['id_cuenta' => 'La cuenta receptora está inactiva.']);
-        }
+        $this->validarCuentaReceptora($cuenta);
 
         return DB::transaction(function () use ($identificadoresCuota, $cuenta, $medio, $fecha, $idComprobante): Pago {
             $cuotas = Cuota::query()
@@ -141,9 +139,7 @@ class ServicioFacturacion
         string|float|BigDecimal $montoTotal,
         ?int $idComprobante = null
     ): Pago {
-        if ($cuenta->estado !== EstadoCuentaReceptora::Activa) {
-            throw ValidationException::withMessages(['id_cuenta' => 'La cuenta receptora está inactiva.']);
-        }
+        $this->validarCuentaReceptora($cuenta);
 
         $montoDisponible = $montoTotal instanceof BigDecimal ? $montoTotal : BigDecimal::of((string) $montoTotal);
         if ($montoDisponible->isLessThanOrEqualTo(0)) {
@@ -161,6 +157,24 @@ class ServicioFacturacion
                 ->lockForUpdate()
                 ->get();
 
+            $montoRestante = $montoDisponible;
+            $cuotasACancelar = [];
+
+            foreach ($cuotasImpagas as $cuota) {
+                $montoCuota = BigDecimal::of($cuota->monto);
+                if ($montoRestante->isGreaterThanOrEqualTo($montoCuota)) {
+                    $cuotasACancelar[] = $cuota->id_cuota;
+                    $montoRestante = $montoRestante->minus($montoCuota);
+                } else {
+                    break;
+                }
+            }
+
+            if ($cuotasACancelar === [] || ! $montoRestante->isZero()) {
+                throw ValidationException::withMessages([
+                    'monto' => 'El importe debe cancelar exactamente una o más cuotas completas, comenzando por las más antiguas. Por ahora no se admiten pagos parciales ni saldos a favor.',
+                ]);
+            }
             $pago = Pago::create([
                 'id_cuenta' => $cuenta->id_cuenta,
                 'id_comprobante' => $idComprobante,
@@ -168,21 +182,10 @@ class ServicioFacturacion
                 'monto_total' => (string) $montoDisponible,
                 'medio_pago' => $medio,
             ]);
-
-            $montoRestante = $montoDisponible;
-
-            foreach ($cuotasImpagas as $cuota) {
-                $montoCuota = BigDecimal::of($cuota->monto);
-                if ($montoRestante->isGreaterThanOrEqualTo($montoCuota)) {
-                    $cuota->update([
-                        'id_pago' => $pago->id_pago,
-                        'estado' => EstadoCuota::Pagada->value,
-                    ]);
-                    $montoRestante = $montoRestante->minus($montoCuota);
-                } else {
-                    break;
-                }
-            }
+            Cuota::whereIn('id_cuota', $cuotasACancelar)->update([
+                'id_pago' => $pago->id_pago,
+                'estado' => EstadoCuota::Pagada->value,
+            ]);
 
             $servicios = Servicio::where('id_cliente', $cliente->id_cliente)->get();
             foreach ($servicios as $servicio) {
@@ -200,6 +203,16 @@ class ServicioFacturacion
             ->whereNull('id_pago')
             ->whereDate('fecha_vencimiento', '<', CarbonImmutable::today())
             ->update(['estado' => EstadoCuota::Vencida->value]);
+    }
+
+    private function validarCuentaReceptora(CuentaReceptora $cuenta): void
+    {
+        if ($cuenta->estado !== EstadoCuentaReceptora::Activa) {
+            throw ValidationException::withMessages(['id_cuenta' => 'La cuenta receptora está inactiva.']);
+        }
+        if (config('services.transferencias.habilitadas') && $cuenta->id_cuenta !== (int) config('services.transferencias.id_cuenta')) {
+            throw ValidationException::withMessages(['id_cuenta' => 'Debe utilizar la cuenta de Mercado Pago configurada para la empresa.']);
+        }
     }
 
     private function actualizarProximoVencimiento(Servicio $servicio): void

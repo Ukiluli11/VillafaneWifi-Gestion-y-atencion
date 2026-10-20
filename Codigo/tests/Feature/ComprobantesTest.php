@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Dominio\OCRService;
-use App\Dominio\ServicioFacturacion;
 use App\Dominio\ServicioUsuarios;
 use App\Enums\EstadoComprobante;
 use App\Enums\EstadoCuota;
@@ -14,7 +13,6 @@ use App\Models\CuentaReceptora;
 use App\Models\Cuota;
 use App\Models\Plan;
 use App\Models\Servicio;
-use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -47,7 +45,7 @@ class ComprobantesTest extends TestCase
 
     public function test_subir_comprobante_calcula_hash_sha256_y_queda_en_estado_pendiente(): void
     {
-        Storage::fake('public');
+        Storage::fake('local');
         $admin = $this->crearAdministrador();
         $cliente = Cliente::factory()->create();
 
@@ -69,12 +67,12 @@ class ComprobantesTest extends TestCase
         $this->assertSame('15000.00', (string) $comprobante->monto_ocr);
         $this->assertNotEmpty($comprobante->hash_archivo);
         $this->assertNotNull($comprobante->ruta_archivo);
-        Storage::disk('public')->assertExists($comprobante->ruta_archivo);
+        Storage::disk('local')->assertExists($comprobante->ruta_archivo);
     }
 
     public function test_antifraude_rechaza_comprobante_duplicado_por_hash_identico(): void
     {
-        Storage::fake('public');
+        Storage::fake('local');
         $admin = $this->crearAdministrador();
         $cliente = Cliente::factory()->create();
 
@@ -110,10 +108,10 @@ class ComprobantesTest extends TestCase
         $ocr = app(OCRService::class);
 
         $textoSimulado = "Comprobante de Transferencia Mercado Pago\n"
-            . "Operación #9876543210\n"
-            . "Monto: $ 18.500,00\n"
-            . "Fecha: 25/09/2026\n"
-            . "Destinatario: Villafañe Wifi";
+            ."Operación #9876543210\n"
+            ."Monto: $ 18.500,00\n"
+            ."Fecha: 25/09/2026\n"
+            .'Destinatario: Villafañe Wifi';
 
         $datos = $ocr->procesarArchivo('', $textoSimulado);
 

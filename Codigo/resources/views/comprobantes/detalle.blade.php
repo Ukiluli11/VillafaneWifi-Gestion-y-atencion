@@ -30,7 +30,7 @@
                 <dd>{{ $comprobante->cliente->telefono_whatsapp ?: 'Sin teléfono registrado' }}</dd>
 
                 <dt>Monto detectado</dt>
-                <dd><strong class="monto-comprobante" style="font-size: 1.2rem;">${{ number_format((float) ($comprobante->monto_ocr ?: 0), 2, ',', '.') }}</strong></dd>
+                <dd><strong class="monto-comprobante" style="font-size: 1.2rem;">{{ $comprobante->monto_ocr === null ? 'Sin monto detectado' : '$'.number_format((float) $comprobante->monto_ocr, 2, ',', '.') }}</strong></dd>
 
                 <dt>Fecha detectada</dt>
                 <dd>{{ $comprobante->fecha_ocr ? $comprobante->fecha_ocr->format('d/m/Y') : 'Sin fecha detectada' }}</dd>
@@ -50,12 +50,59 @@
 
             @if ($comprobante->ruta_archivo)
                 <div class="separador-comprobante" style="margin-top: 1.25rem; padding-top: 1rem;">
-                    <a class="boton secundario" href="{{ asset('storage/' . $comprobante->ruta_archivo) }}" target="_blank" style="width: 100%; text-align: center;">
+                    <a class="boton secundario" href="{{ route('comprobantes.archivo', $comprobante) }}" style="width: 100%; text-align: center;">
                         📄 Abrir archivo adjunto / imagen original ↗
                     </a>
                 </div>
             @endif
         </section>
+
+        <section class="tarjeta">
+            <h2>Lectura automática</h2>
+            <p>{{ match ($comprobante->estado_ocr) {
+                'desactivado' => 'La lectura automática no estaba habilitada al recibir este archivo. Completá los datos revisando el original.',
+                'en_cola' => 'El archivo está esperando su lectura automática. Actualizá la página para consultar el resultado.',
+                'procesando' => 'Se está leyendo el archivo.',
+                'procesado' => 'Lectura terminada. Compará siempre los datos con el original antes de aprobar.',
+                'fallido' => $comprobante->error_ocr ?: 'No se pudo leer el archivo. Podés completarlo manualmente.',
+                default => 'Este comprobante todavía no tiene una lectura automática registrada.',
+            } }}</p>
+            <p class="texto-suave">En PDF se lee solamente la primera página. El archivo original completo se conserva para revisión.</p>
+            @if ($comprobante->completitud_ocr !== null)
+                <p>Campos recuperados: {{ (int) round((float) $comprobante->completitud_ocr * 100) }}%. Este indicador no confirma que la transferencia sea válida.</p>
+            @endif
+            @if ($comprobante->estaPendiente() && ($navegacionPermitida['gestionar_comprobantes'] ?? false) && ! in_array($comprobante->estado_ocr, ['en_cola', 'procesando'], true))
+                <form method="POST" action="{{ route('comprobantes.ocr', $comprobante) }}">
+                    @csrf
+                    <button class="boton secundario" type="submit">Solicitar lectura automática</button>
+                </form>
+            @endif
+        </section>
+
+        @if (! $comprobante->estaPendiente())
+            <section class="tarjeta">
+                <h2>Aviso al cliente</h2>
+                @if ($avisoResultado)
+                    <p>Estado del aviso: <strong>{{ ucfirst($avisoResultado->estado_envio->value) }}</strong>.</p>
+                    @if ($navegacionPermitida['consultar_conversaciones'] ?? false)
+                        <a href="{{ route('conversaciones.show', $avisoResultado->id_conversacion) }}">Ver aviso en la conversación</a>
+                    @endif
+                @else
+                    <p>No hay un envío registrado para esta decisión.</p>
+                @endif
+                    <p>{{ ! config('services.comprobantes.notificar_resultado')
+                        ? 'Los avisos de comprobantes están desactivados. La decisión queda guardada aunque el aviso no se envíe.'
+                        : (config('services.comprobantes.plantillas_fuera_ventana')
+                            ? 'Dentro de las 24 horas se responde por texto. Fuera de esa ventana se utiliza la plantilla de resultado configurada; su envío puede generar un cargo de Meta.'
+                            : 'Solo se envían respuestas dentro de las 24 horas desde el último mensaje del cliente. Fuera de esa ventana el aviso queda pendiente.') }}</p>
+                @if ($navegacionPermitida['gestionar_comprobantes'] ?? false)
+                    <form method="POST" action="{{ route('comprobantes.notificar', $comprobante) }}">
+                        @csrf
+                        <button class="boton secundario" type="submit">Consultar o reintentar aviso</button>
+                    </form>
+                @endif
+            </section>
+        @endif
 
         @if ($comprobante->estaAprobado())
             <section class="tarjeta comprobante-aprobado" style="border-left: 4px solid #16a34a;">
@@ -84,7 +131,7 @@
                     "{{ $comprobante->motivo_rechazo }}"
                 </blockquote>
                 <p class="texto-suave" style="font-size: 0.85rem; margin-top: 0.5rem;">
-                    Rechazado por <strong>{{ $comprobante->usuario?->nombre_usuario ?: 'Operador' }}</strong> el {{ $comprobante->fecha_hora_validacion ? $comprobante->fecha_hora_validacion->format('d/m/Y H:i') : ($comprobante->updated_at ? $comprobante->updated_at->format('d/m/Y H:i') : '—') }}. Se emitió la notificación correspondiente al cliente informando la no validación.
+                    Rechazado por <strong>{{ $comprobante->usuario?->nombre_usuario ?: 'Operador' }}</strong> el {{ $comprobante->fecha_hora_validacion ? $comprobante->fecha_hora_validacion->format('d/m/Y H:i') : ($comprobante->updated_at ? $comprobante->updated_at->format('d/m/Y H:i') : '—') }}. El envío del aviso se consulta por separado.
                 </p>
             </section>
         @endif
@@ -134,11 +181,16 @@
             <section class="tarjeta" style="border-top: 3px solid #16a34a;">
                 <h2 class="titulo-aprobado">Aprobar y Acreditar Pago</h2>
                 <p class="texto-suave" style="font-size: 0.9rem;">
-                    Al confirmar, se registrará el pago oficial, se imputará a las cuotas impagas y se notificará al cliente.
+                    Al confirmar, se registrará el pago y se cancelarán cuotas completas, comenzando por las más antiguas. No se admiten pagos parciales ni saldos a favor. Verificá el ingreso en la cuenta receptora antes de aprobar; el OCR no comprueba movimientos bancarios.
                 </p>
 
                 <form method="POST" action="{{ route('comprobantes.aprobar', $comprobante) }}" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
                     @csrf
+
+                    <div class="campo">
+                        <label for="numero_operacion">Número de operación *</label>
+                        <input id="numero_operacion" name="numero_operacion" maxlength="50" value="{{ old('numero_operacion', $comprobante->numero_operacion) }}" required>
+                    </div>
 
                     <div class="campo">
                         <label for="id_cuenta">Cuenta Receptora de Cobranza *</label>
@@ -172,7 +224,7 @@
 
                     <div class="campo">
                         <label for="fecha">Fecha de Acreditación *</label>
-                        <input type="date" id="fecha" name="fecha" value="{{ old('fecha', $comprobante->fecha_ocr ? $comprobante->fecha_ocr->toDateString() : date('Y-m-d')) }}" required>
+                        <input type="date" id="fecha" name="fecha" value="{{ old('fecha', $comprobante->fecha_ocr?->toDateString()) }}" required>
                     </div>
 
                     <button class="boton" type="submit" style="background: #16a34a; border-color: #16a34a; justify-content: center;">
@@ -194,7 +246,7 @@
                     <div class="campo">
                         <label for="motivo_rechazo">Motivo del Rechazo *</label>
                         <input type="text" id="motivo_rechazo" name="motivo_rechazo" value="{{ old('motivo_rechazo') }}" placeholder="Ej: Comprobante ilegible, no se aprecia fecha ni monto" required>
-                        <small class="texto-suave">Este texto será notificado al cliente para que pueda subsanar el envío.</small>
+                        <small class="texto-suave">Se guarda el motivo y se intenta avisar según la configuración de WhatsApp. Podés consultar el resultado del envío después del rechazo.</small>
                     </div>
 
                     <button class="boton" type="submit" style="background: #dc2626; border-color: #dc2626; justify-content: center;">

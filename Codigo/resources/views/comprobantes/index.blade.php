@@ -26,7 +26,7 @@
     <div class="tarjeta metrica-comprobante rechazado" style="padding: 1.25rem; border-left: 4px solid #dc2626;">
         <span class="texto-suave" style="font-size: 0.85rem; font-weight: 500;">Comprobantes Rechazados</span>
         <div class="valor-comprobante" style="font-size: 1.8rem; font-weight: 700; margin-top: 0.25rem;">{{ $totalRechazados }}</div>
-        <small class="texto-suave">Con motivo notificado</small>
+        <small class="texto-suave">Con motivo registrado</small>
     </div>
 </div>
 

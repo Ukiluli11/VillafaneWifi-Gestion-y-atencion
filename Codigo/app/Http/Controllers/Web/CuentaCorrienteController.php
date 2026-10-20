@@ -22,7 +22,10 @@ class CuentaCorrienteController extends Controller
             'cliente' => $cliente,
             'cuotas' => $cuentaCorriente->cuotasDelCliente($cliente),
             'resumen' => $cuentaCorriente->resumir($cliente),
-            'cuentasReceptoras' => CuentaReceptora::where('estado', 'activa')->orderBy('nombre')->get(),
+            'instruccionesTransferencia' => $cuentaCorriente->instruccionesTransferencia($cliente),
+            'cuentasReceptoras' => CuentaReceptora::where('estado', 'activa')
+                ->when(config('services.transferencias.habilitadas'), fn ($q) => $q->whereKey(config('services.transferencias.id_cuenta')))
+                ->orderBy('nombre')->get(),
         ]);
     }
 }

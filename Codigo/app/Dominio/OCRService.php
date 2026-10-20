@@ -2,157 +2,180 @@
 
 namespace App\Dominio;
 
-use Carbon\CarbonImmutable;
+use App\Jobs\ProcesarOcrComprobante;
+use App\Models\Comprobante;
+use Illuminate\Support\Facades\Process;
+use Illuminate\Support\Str;
+use RuntimeException;
+use Throwable;
 
-/**
- * Servicio OCRService
- * Extrae texto y datos estructurados (operación, monto, fecha) de imágenes y PDFs de comprobantes.
- */
 class OCRService
 {
-    /**
-     * Procesa el archivo del comprobante para extraer datos clave mediante OCR.
-     * Caso de Uso: Procesar comprobante mediante OCR (Módulo 3)
-     * Clase UML: OCRService | Método UML: + procesarArchivo(archivo) : array
-     *
-     * @return array{numero_operacion: ?string, monto: ?string, fecha: ?string}
-     */
+    public function estaConfigurado(): bool
+    {
+        return (bool) config('services.ocr.habilitado') && filled(config('services.ocr.tesseract_bin'));
+    }
+
+    public function encolarLectura(Comprobante $comprobante): void
+    {
+        try {
+            ProcesarOcrComprobante::dispatch($comprobante->id_comprobante)->onConnection('database')->afterCommit();
+        } catch (Throwable) {
+            $comprobante->update(['estado_ocr' => 'fallido', 'error_ocr' => 'El archivo fue guardado, pero no se pudo programar su lectura. Podés reintentar.']);
+        }
+    }
+
+    /** @return array{numero_operacion: ?string, monto: ?string, fecha: ?string} */
     public function procesarArchivo(string $rutaOContenido, ?string $textoDirecto = null): array
     {
-        $texto = $textoDirecto;
-
-        if ($texto === null && file_exists($rutaOContenido)) {
-            // Intenta leer texto plano o metadatos del archivo
-            $rawContent = @file_get_contents($rutaOContenido);
-            if ($rawContent !== false) {
-                $texto = $this->extraerCadenasImprimibles($rawContent);
-            }
-        } elseif ($texto === null) {
-            $texto = $this->extraerCadenasImprimibles($rutaOContenido);
+        if ($textoDirecto === null) {
+            $textoDirecto = $this->leerConTesseract($rutaOContenido);
         }
 
         return [
-            'numero_operacion' => $this->extraerNumeroOperacion($texto),
-            'monto' => $this->extraerMonto($texto),
-            'fecha' => $this->extraerFecha($texto),
+            'numero_operacion' => $this->extraerNumeroOperacion($textoDirecto),
+            'monto' => $this->extraerMonto($textoDirecto),
+            'fecha' => $this->extraerFecha($textoDirecto),
         ];
     }
 
-    /**
-     * Extrae el número de comprobante u operación (ej. Mercado Pago, transferencias).
-     */
+    private function leerConTesseract(string $ruta): string
+    {
+        if (! $this->estaConfigurado() || ! is_file($ruta)) {
+            throw new RuntimeException('El OCR local no está habilitado o el archivo no está disponible.');
+        }
+        $tamanio = filesize($ruta);
+        if ($tamanio === false || $tamanio === 0 || $tamanio > 10 * 1024 * 1024) {
+            throw new RuntimeException('El archivo está vacío o supera los 10 MB.');
+        }
+        $mime = (new \finfo(FILEINFO_MIME_TYPE))->file($ruta);
+        if (! in_array($mime, ['image/jpeg', 'image/png', 'application/pdf'], true)) {
+            throw new RuntimeException('El formato no es compatible con la lectura automática.');
+        }
+        $directorio = null;
+        $imagen = $ruta;
+        try {
+            if ($mime === 'application/pdf') {
+                $directorio = storage_path('app/private/ocr-temporales/'.Str::uuid());
+                if (! mkdir($directorio, 0700, true) && ! is_dir($directorio)) {
+                    throw new RuntimeException('No se pudo preparar la lectura del PDF.');
+                }
+                $conversion = Process::timeout(15)->env(['OMP_THREAD_LIMIT' => '1'])->run([
+                    (string) config('services.ocr.pdftoppm_bin', 'pdftoppm'),
+                    '-f', '1', '-l', '1', '-singlefile', '-scale-to', '2000', '-png',
+                    $ruta, $directorio.'/pagina',
+                ]);
+                $imagen = $directorio.'/pagina.png';
+                if (! $conversion->successful() || ! is_file($imagen)) {
+                    throw new RuntimeException('No se pudo leer la primera página del PDF.');
+                }
+            }
+            $dimensiones = @getimagesize($imagen);
+            if ($dimensiones === false || $dimensiones[0] * $dimensiones[1] > 16000000) {
+                throw new RuntimeException('La imagen es inválida o supera las dimensiones admitidas.');
+            }
+            $resultado = Process::timeout(min(30, max(1, (int) config('services.ocr.timeout', 25))))
+                ->env(['OMP_THREAD_LIMIT' => '1'])->run([
+                    (string) config('services.ocr.tesseract_bin', 'tesseract'), $imagen, 'stdout',
+                    '-l', 'spa+eng', '--oem', '1', '--psm', '6',
+                ]);
+            if (! $resultado->successful() || trim($resultado->output()) === '') {
+                throw new RuntimeException('No se detectó texto legible. Revisá el original o completá los datos manualmente.');
+            }
+
+            return $resultado->output();
+        } finally {
+            if ($directorio !== null) {
+                if (is_file($directorio.'/pagina.png')) {
+                    unlink($directorio.'/pagina.png');
+                }
+                if (is_dir($directorio)) {
+                    rmdir($directorio);
+                }
+            }
+        }
+    }
+
     public function extraerNumeroOperacion(?string $texto): ?string
     {
-        if (empty($texto)) {
-            return null;
+        if (preg_match('/(?:operaci[oó]n|transacci[oó]n|transferencia|comprobante|\bop)\s*(?:n[uú]mero|nro\.?|n[°ºo.]|#|:)?\s*([0-9]{6,30})\b/iu', $texto ?? '', $coincidencias)) {
+            return $coincidencias[1];
         }
 
-        // Patrones habituales de Mercado Pago y transferencias bancarias:
-        // "Operación #12345678901", "Op: 12345678", "Transferencia N° 123456789", "N°: 12345678"
-        $patrones = [
-            '/(?:operaci[oó]n|op|transf(?:erencia)?|comprobante|c[oó]d(?:igo)?)\s*(?:n[°o#:\s]*)?([0-9]{6,16})/i',
-            '/#\s*([0-9]{8,16})/',
-            '/\b([0-9]{8,14})\b/',
-        ];
-
-        foreach ($patrones as $patron) {
-            if (preg_match($patron, $texto, $coincidencias)) {
-                return trim($coincidencias[1]);
+        $lineas = preg_split('/\R/u', $texto ?? '') ?: [];
+        foreach ($lineas as $indice => $linea) {
+            if (preg_match('/^\s*Estado\b/iu', $linea)
+                || ! preg_match('/\b(?:Coelsa\s*ID|(?:ID|c[oó]digo|n[uú]mero|nro\.?)\s*(?:de\s+(?:la\s+)?)?(?:operaci[oó]n|transacci[oó]n|transferencia)|operaci[oó]n)\b/iu', $linea, $etiqueta, PREG_OFFSET_CAPTURE)) {
+                continue;
+            }
+            $resto = substr($linea, $etiqueta[0][1] + strlen($etiqueta[0][0]));
+            $candidatas = array_merge([$resto], array_slice($lineas, $indice + 1, 3));
+            foreach ($candidatas as $candidata) {
+                if (preg_match('/\b(?:Estado|CUIT|CUIL|DNI|CBU|CVU|Destinatario|Moneda|Monto)\b/iu', $candidata)) {
+                    break;
+                }
+                preg_match_all('/\b[A-Z0-9][A-Z0-9-]{5,49}\b/u', mb_strtoupper($candidata), $tokens);
+                foreach ($tokens[0] as $token) {
+                    if (preg_match('/\d/', $token) && strlen($token) <= 50) {
+                        return $token;
+                    }
+                }
             }
         }
 
         return null;
     }
 
-    /**
-     * Extrae el importe pagado detectado en el comprobante.
-     */
     public function extraerMonto(?string $texto): ?string
     {
-        if (empty($texto)) {
+        if (! preg_match('/(?:\b(?:total|monto|importe|pagado)(?:\s+(?:enviado|transferido|total))?\s*:?\s*(?:ARS\s*)?\$?\s*|(?:ARS\s*)?\$\s*)(\d[\d.,]*)(?!\d)/iu', $texto ?? '', $coincidencias)) {
+            return null;
+        }
+        $valor = rtrim($coincidencias[1], '.,');
+        if (str_contains($valor, ',') && str_contains($valor, '.')) {
+            $decimal = strrpos($valor, ',') > strrpos($valor, '.') ? ',' : '.';
+            $valor = str_replace($decimal === ',' ? '.' : ',', '', $valor);
+            $valor = str_replace(',', '.', $valor);
+        } elseif (str_contains($valor, ',') || str_contains($valor, '.')) {
+            $separador = str_contains($valor, ',') ? ',' : '.';
+            $partes = explode($separador, $valor);
+            if (count($partes) === 2 && strlen($partes[1]) <= 2) {
+                $valor = str_replace(',', '.', $valor);
+            } elseif (preg_match('/^\d{1,3}(?:[.,]\d{3})+$/', $valor)) {
+                $valor = str_replace([',', '.'], '', $valor);
+            } else {
+                return null;
+            }
+        }
+        if (! preg_match('/^\d{1,8}(?:\.\d{1,2})?$/', $valor) || (float) $valor <= 0) {
             return null;
         }
 
-        // Ejemplos: "$ 15.000,00", "$15000", "Total: 15.000", "Monto: $ 8.500,50"
-        $patrones = [
-            '/(?:total|monto|importe|pagado)?\s*\$\s*([0-9]{1,3}(?:\.[0-9]{3})+(?:,[0-9]{2})?)/i',
-            '/\$\s*([0-9]+(?:,[0-9]{2})?)/i',
-            '/(?:total|monto|importe)\s*:?\s*([0-9]+(?:\.[0-9]{2})?)/i',
-        ];
-
-        foreach ($patrones as $patron) {
-            if (preg_match($patron, $texto, $coincidencias)) {
-                $valor = trim($coincidencias[1]);
-                // Normaliza formato argentino 15.000,00 a decimal estándar 15000.00
-                $valor = str_replace('.', '', $valor);
-                $valor = str_replace(',', '.', $valor);
-
-                return number_format((float) $valor, 2, '.', '');
-            }
-        }
-
-        return null;
+        return number_format((float) $valor, 2, '.', '');
     }
 
-    /**
-     * Extrae la fecha de pago del comprobante.
-     */
     public function extraerFecha(?string $texto): ?string
     {
-        if (empty($texto)) {
+        if (preg_match('/\b(\d{4})[-\/](\d{2})[-\/](\d{2})\b/', $texto ?? '', $partes)) {
+            [$anio, $mes, $dia] = [(int) $partes[1], (int) $partes[2], (int) $partes[3]];
+        } elseif (preg_match('/\b(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})\b/', $texto ?? '', $partes)) {
+            [$anio, $mes, $dia] = [(int) $partes[3], (int) $partes[2], (int) $partes[1]];
+        } elseif (preg_match('/\b(\d{1,2})\s+(?:de\s+)?(ene(?:ro)?|feb(?:rero)?|mar(?:zo)?|abr(?:il)?|may(?:o)?|jun(?:io)?|jul(?:io)?|ago(?:sto)?|sep(?:t(?:iembre)?)?|set(?:iembre)?|oct(?:ubre)?|nov(?:iembre)?|dic(?:iembre)?)\.?\s+(?:de\s+)?(\d{4})\b/iu', $texto ?? '', $partes)) {
+            $meses = ['ene' => 1, 'feb' => 2, 'mar' => 3, 'abr' => 4, 'may' => 5, 'jun' => 6,
+                'jul' => 7, 'ago' => 8, 'sep' => 9, 'set' => 9, 'oct' => 10, 'nov' => 11, 'dic' => 12];
+            [$anio, $mes, $dia] = [(int) $partes[3], $meses[mb_substr(mb_strtolower($partes[2]), 0, 3)], (int) $partes[1]];
+        } else {
             return null;
         }
 
-        // Formatos DD/MM/AAAA o AAAA-MM-DD
-        if (preg_match('/(\b\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4}\b)/', $texto, $coincidencias)) {
-            $dia = str_pad($coincidencias[1], 2, '0', STR_PAD_LEFT);
-            $mes = str_pad($coincidencias[2], 2, '0', STR_PAD_LEFT);
-            $anio = $coincidencias[3];
-
-            try {
-                return CarbonImmutable::createFromFormat('Y-m-d', "{$anio}-{$mes}-{$dia}")->toDateString();
-            } catch (\Throwable) {
-                // Siguiente intento
-            }
-        }
-
-        if (preg_match('/(\b\d{4})[\/\-](\d{2})[\/\-](\d{2}\b)/', $texto, $coincidencias)) {
-            return "{$coincidencias[1]}-{$coincidencias[2]}-{$coincidencias[3]}";
-        }
-
-        return null;
+        return checkdate($mes, $dia, $anio) ? sprintf('%04d-%02d-%02d', $anio, $mes, $dia) : null;
     }
 
-    /**
-     * Filtra caracteres imprimibles para extraer texto bruto desde archivos binarios.
-     */
-    private function extraerCadenasImprimibles(string $contenido): string
-    {
-        // Extrae secuencias legibles ASCII/UTF-8
-        preg_match_all('/[a-zA-Z0-9$#.,:\/ \-]{3,}/', $contenido, $matches);
-
-        return implode(' ', $matches[0] ?? []);
-    }
-
-    /**
-     * Caso de Uso: Procesar comprobante mediante OCR (Módulo 3)
-     * Clase UML: OCRService
-     * Método UML: + calcularConfianza(datos: array) : double
-     * Calcula el nivel de confianza de la extracción en base a los campos recuperados.
-     */
+    /** La presencia de campos mide completitud, no certeza de una transferencia. */
     public function calcularConfianza(array $datosExtraidos): float
     {
-        $puntaje = 0.0;
-        if (!empty($datosExtraidos['numero_operacion'])) {
-            $puntaje += 0.40;
-        }
-        if (!empty($datosExtraidos['monto'])) {
-            $puntaje += 0.40;
-        }
-        if (!empty($datosExtraidos['fecha'])) {
-            $puntaje += 0.20;
-        }
-
-        return round($puntaje, 2);
+        return round((filled($datosExtraidos['numero_operacion'] ?? null) ? 0.4 : 0)
+            + (filled($datosExtraidos['monto'] ?? null) ? 0.4 : 0)
+            + (filled($datosExtraidos['fecha'] ?? null) ? 0.2 : 0), 2);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Dominio\ServicioAtencionHumana;
+use App\Dominio\ServicioConsumoWhatsapp;
 use App\Enums\EstadoConversacion;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResponderConversacionRequest;
@@ -24,7 +25,7 @@ class ConversacionController extends Controller
     /**
      * Lista las conversaciones activas, escaladas y cerradas con soporte de filtrado.
      */
-    public function index(Request $request): View
+    public function index(Request $request, ServicioConsumoWhatsapp $consumo): View
     {
         $estado = $request->string('estado')->toString();
         $busqueda = trim($request->string('buscar')->toString());
@@ -63,6 +64,7 @@ class ConversacionController extends Controller
             'estadoSeleccionado' => $estado,
             'busqueda' => $busqueda,
             'estados' => EstadoConversacion::cases(),
+            'consumoWhatsapp' => $consumo->resumir(),
         ]);
     }
 

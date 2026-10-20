@@ -72,6 +72,7 @@ echo parse_url((string) config("app.url"), PHP_URL_HOST);
 
 bash "$release/tools/respaldar.sh"
 runuser -u www-data -- php artisan migrate --force --no-interaction
+runuser -u www-data -- php artisan comprobantes:privatizar --no-interaction
 php artisan storage:link --no-interaction
 runuser -u www-data -- php artisan optimize --no-interaction
 
@@ -79,6 +80,9 @@ anterior=$(readlink "$base/current" || true)
 ln -s "$release" "$base/.siguiente-$version"
 mv -Tf "$base/.siguiente-$version" "$base/current"
 systemctl reload "$servicio_php"
+if systemctl is-active --quiet villafane-ocr.service; then
+    systemctl restart villafane-ocr.service
+fi
 
 if ! estado=$(curl --fail --silent --show-error --max-time 20 --retry 2 \
     --resolve "$dominio:443:127.0.0.1" --output /dev/null --write-out '%{http_code}' \

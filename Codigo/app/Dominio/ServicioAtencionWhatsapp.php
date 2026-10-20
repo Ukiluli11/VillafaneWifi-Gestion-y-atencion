@@ -2,12 +2,17 @@
 
 namespace App\Dominio;
 
+use App\Enums\EstadoConversacion;
 use App\Enums\IntencionConversacion;
 use App\Enums\ModoAtencion;
+use App\Enums\TipoEmisorMensaje;
+use App\Enums\TipoMensaje;
 use App\Models\Cliente;
 use App\Models\Conversacion;
 use App\Models\Mensaje;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 /**
  * ServicioAtencionWhatsapp: Orquesta el bot conversacional inteligente para atencion al cliente.
@@ -30,9 +35,17 @@ class ServicioAtencionWhatsapp
         Mensaje $mensaje,
         ?Cliente $cliente,
     ): ?string {
+        $comando = $mensaje->tipo === TipoMensaje::Texto
+            ? trim(preg_replace('/[^a-z0-9]+/', ' ', Str::lower(Str::ascii((string) $mensaje->contenido))))
+            : '';
+
         if ($conversacion->modo_atencion === ModoAtencion::Humano) {
-            return null;
+            if ($comando !== 'menu' || ! $this->retomarBotEnEspera($conversacion)) {
+                return null;
+            }
         }
+
+        $this->reiniciarIntentosTrasInactividad($conversacion, $mensaje);
 
         $respuestaRegistro = $this->servicioRegistro->procesar($conversacion, $mensaje, $cliente);
         if ($respuestaRegistro !== null) {
@@ -49,6 +62,29 @@ class ServicioAtencionWhatsapp
             ]);
         }
 
+        if (in_array($comando, ['pagar', 'como pagar', 'datos de pago', 'alias', 'mercado pago'], true)) {
+            $conversacion->update(['paso_actual' => null, 'intencion_actual' => null, 'intentos_interpretacion' => 0]);
+
+            return $this->servicioCuentaCorriente->instruccionesTransferencia($cliente)
+                ?? 'Los datos de la cuenta receptora no están disponibles. Escribí MENU para consultar tu cuenta o hablar con un operador antes de transferir.';
+        }
+
+        if (in_array($comando, ['menu', 'hola', 'buenas', 'buen dia', 'buenos dias', 'buenas tardes', 'buenas noches'], true)) {
+            $conversacion->update([
+                'paso_actual' => null,
+                'intencion_actual' => null,
+                'intentos_interpretacion' => 0,
+            ]);
+
+            return $this->mensajeBienvenida($cliente);
+        }
+
+        if (in_array($comando, ['gracias', 'muchas gracias', 'ok gracias', 'dale gracias'], true)) {
+            $conversacion->reiniciarInterpretacion();
+
+            return '¡De nada! Cuando necesites otra consulta, escribí MENU para ver las opciones.';
+        }
+
         $respuestaComprobante = $this->servicioComprobantes->procesar($conversacion, $mensaje, $cliente);
         if ($respuestaComprobante !== null) {
             return $respuestaComprobante;
@@ -57,12 +93,6 @@ class ServicioAtencionWhatsapp
         if (in_array($conversacion->paso_actual, ['esperando_identificacion', 'identificacion_confirmada'], true)) {
             $conversacion->update(['paso_actual' => null]);
             $conversacion->reiniciarInterpretacion();
-
-            return $this->mensajeBienvenida($cliente);
-        }
-
-        if (mb_strtolower(trim((string) $mensaje->contenido)) === 'menu') {
-            $conversacion->update(['paso_actual' => null]);
 
             return $this->mensajeBienvenida($cliente);
         }
@@ -99,6 +129,44 @@ class ServicioAtencionWhatsapp
             IntencionConversacion::EnvioComprobante => 'Entendí que querés enviar un comprobante. Podés adjuntar una imagen o un archivo PDF.',
             default => $this->mensajeBienvenida($cliente),
         };
+    }
+
+    private function retomarBotEnEspera(Conversacion $conversacion): bool
+    {
+        return DB::transaction(function () use ($conversacion): bool {
+            $actual = Conversacion::query()->lockForUpdate()->findOrFail($conversacion->id_conversacion);
+            if ($actual->estado !== EstadoConversacion::Escalada || $actual->id_usuario_atencion !== null) {
+                return false;
+            }
+
+            $actual->update([
+                'estado' => EstadoConversacion::Abierta,
+                'modo_atencion' => ModoAtencion::Bot,
+                'paso_actual' => null,
+                'intencion_actual' => null,
+                'intentos_interpretacion' => 0,
+            ]);
+            $conversacion->refresh();
+
+            return true;
+        });
+    }
+
+    private function reiniciarIntentosTrasInactividad(Conversacion $conversacion, Mensaje $mensaje): void
+    {
+        if ($conversacion->intentos_interpretacion === 0) {
+            return;
+        }
+
+        $anterior = $conversacion->mensajes()
+            ->where('tipo_emisor', TipoEmisorMensaje::Cliente->value)
+            ->where('id_mensaje', '<', $mensaje->id_mensaje)
+            ->latest('id_mensaje')
+            ->first();
+
+        if ($anterior !== null && $anterior->fecha_hora->lte($mensaje->fecha_hora->copy()->subMinutes(30))) {
+            $conversacion->reiniciarInterpretacion();
+        }
     }
 
     private function registrarReclamo(Conversacion $conversacion, Cliente $cliente, string $descripcion): string
@@ -147,7 +215,7 @@ class ServicioAtencionWhatsapp
         if ($conversacion->intentos_interpretacion >= 2) {
             $conversacion->escalar();
 
-            return 'No pude interpretar tu consulta después de dos intentos. Te transferimos con un operador.';
+            return 'No pude interpretar tu consulta después de dos intentos. Te transferimos con un operador. Si preferís volver al bot mientras esperás, escribí MENU.';
         }
 
         $conversacion->update(['paso_actual' => 'esperando_reformulacion']);
@@ -183,6 +251,11 @@ class ServicioAtencionWhatsapp
 
     private function mensajeBienvenida(Cliente $cliente): string
     {
-        return "¡Hola {$cliente->nombre_razon_social}! Elegí una opción: 1. Consultar cuenta · 2. Registrar reclamo · 3. Enviar comprobante · 4. Hablar con un operador.";
+        $respuesta = "¡Hola {$cliente->nombre_razon_social}! Elegí una opción: 1. Consultar cuenta · 2. Registrar reclamo · 3. Enviar comprobante · 4. Hablar con un operador.";
+        if ($this->servicioCuentaCorriente->instruccionesTransferencia($cliente) !== null) {
+            $respuesta .= ' Para ver la cuenta de la empresa y las instrucciones de transferencia, escribí PAGAR.';
+        }
+
+        return $respuesta;
     }
 }

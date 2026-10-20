@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Dominio\NotificacionService;
+use App\Dominio\OCRService;
 use App\Dominio\ServicioComprobantes;
 use App\Enums\EstadoComprobante;
 use App\Enums\EstadoCuota;
@@ -14,9 +16,12 @@ use App\Models\Cliente;
 use App\Models\Comprobante;
 use App\Models\CuentaReceptora;
 use App\Models\Cuota;
+use App\Models\Mensaje;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * ComprobanteController: Controlador web para la bandeja de conciliacion y dictamen de comprobantes.
@@ -85,6 +90,50 @@ class ComprobanteController extends Controller
         return view('comprobantes.formulario', compact('clientes'));
     }
 
+    public function archivo(Comprobante $comprobante): StreamedResponse
+    {
+        $ruta = $comprobante->ruta_archivo;
+        abort_unless(is_string($ruta) && str_starts_with($ruta, 'comprobantes/') && ! str_contains($ruta, '..'), 404);
+        $disco = Storage::disk('local');
+        abort_unless($disco->exists($ruta), 404, 'El archivo no está disponible en el almacenamiento privado.');
+
+        return $disco->download($ruta, basename($ruta), [
+            'Cache-Control' => 'private, no-store',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
+    }
+
+    public function reprocesarOcr(Comprobante $comprobante, OCRService $ocr): RedirectResponse
+    {
+        abort_unless($comprobante->estaPendiente(), 409);
+        if (! $ocr->estaConfigurado()) {
+            return back()->withErrors(['comprobante' => 'La lectura automática todavía no está configurada. Podés revisar y completar los datos manualmente.']);
+        }
+        $reclamado = Comprobante::whereKey($comprobante->id_comprobante)
+            ->where('estado_validacion', EstadoComprobante::Pendiente->value)
+            ->whereNotIn('estado_ocr', ['en_cola', 'procesando'])
+            ->update(['estado_ocr' => 'en_cola', 'error_ocr' => null]);
+        if (! $reclamado) {
+            return back()->withErrors(['comprobante' => 'La lectura ya está en curso o el comprobante ya fue evaluado.']);
+        }
+        $ocr->encolarLectura($comprobante);
+        if ($comprobante->fresh()->estado_ocr === 'fallido') {
+            return back()->withErrors(['comprobante' => 'El archivo está guardado, pero no se pudo programar la lectura. Intentá nuevamente.']);
+        }
+
+        return back()->with('exito', 'La lectura del comprobante quedó en cola.');
+    }
+
+    public function notificar(Comprobante $comprobante, NotificacionService $notificaciones): RedirectResponse
+    {
+        abort_if($comprobante->estaPendiente(), 409);
+        $resultado = $comprobante->estaAprobado()
+            ? $notificaciones->notificarPagoAprobado($comprobante->cliente, $comprobante->pago, $comprobante)
+            : $notificaciones->notificarPagoRechazado($comprobante->cliente, $comprobante, $comprobante->motivo_rechazo);
+
+        return back()->with('exito', $resultado['detalle']);
+    }
+
     /**
      * Registra un comprobante subido manualmente calculando su hash y ejecutando el OCR.
      */
@@ -123,12 +172,16 @@ class ComprobanteController extends Controller
 
         $cuentasReceptoras = CuentaReceptora::query()
             ->where('estado', 'activa')
+            ->when(config('services.transferencias.habilitadas'), fn ($q) => $q->whereKey(config('services.transferencias.id_cuenta')))
             ->orderBy('nombre')
             ->get();
 
         $mediosPago = MedioPago::cases();
+        $tipoAviso = $comprobante->estaAprobado() ? 'aprobado' : 'rechazado';
+        $avisoResultado = $comprobante->estaPendiente() ? null : Mensaje::query()
+            ->where('clave_idempotencia', "comprobante:{$tipoAviso}:{$comprobante->id_comprobante}")->first();
 
-        return view('comprobantes.detalle', compact('comprobante', 'cuotasImpagas', 'cuentasReceptoras', 'mediosPago'));
+        return view('comprobantes.detalle', compact('comprobante', 'cuotasImpagas', 'cuentasReceptoras', 'mediosPago', 'avisoResultado'));
     }
 
     /**
@@ -145,7 +198,8 @@ class ComprobanteController extends Controller
             $medio,
             $request->validated('fecha'),
             $request->validated('monto'),
-            $request->user()
+            $request->user(),
+            $request->validated('numero_operacion'),
         );
 
         return redirect()
@@ -166,6 +220,6 @@ class ComprobanteController extends Controller
 
         return redirect()
             ->route('comprobantes.show', $comprobante)
-            ->with('exito', 'Comprobante rechazado. Se registró el motivo y se generó la notificación.');
+            ->with('exito', 'Comprobante rechazado. Se registró el motivo; el envío del aviso se consulta por separado.');
     }
 }

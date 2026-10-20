@@ -41,7 +41,7 @@ Ubuntu es una distribución de Linux. Elegimos esta versión LTS por su estabili
 | Automatización | Temporizadores de systemd ejecutan el programador de Laravel y los respaldos |
 | Archivos | Almacenamiento persistente dentro del VPS; los comprobantes se conservan entre despliegues |
 
-Las integraciones de IA son externas y opcionales. El servidor no ejecuta un modelo de IA propio. El OCR real de imágenes es un pendiente del módulo de comprobantes.
+Las integraciones de IA son externas y opcionales. El servidor no ejecuta un modelo de IA propio. Desde el 20/10, el OCR de comprobantes usa Tesseract 5.3.4 instalado en el VPS, con español e inglés. Los PDF se convierten con Poppler y se lee su primera página. Esta lectura no requiere Google Cloud, claves externas ni cobros por imagen; consume recursos del hosting contratado.
 
 ## 4. Cómo acceder y probar
 
@@ -123,12 +123,95 @@ La revisión automatizada final del 19/10 pasó con **13 pruebas y 43 aserciones
 ### Pendientes del sistema completo
 
 - **Módulo 1:** automatización de la generación mensual de cuotas.
-- **Módulo 3:** completar comprobantes y conciliación, especialmente OCR real de imágenes y los flujos pendientes.
+- **Módulo 3:** circuito de demostración verificado con recepción, OCR, aprobación, rechazo, duplicados, avisos por WhatsApp y aprobación manual tras una lectura fallida. Los bloqueos de importes parciales/sobrantes y operaciones repetidas se verificaron con pruebas automatizadas. Se mantienen las limitaciones documentadas: cuotas completas, revisión humana, lectura de la primera página del PDF y avisos dentro de las 24 horas.
 - **Módulo 4:** completar funciones previstas de soporte, como creación manual de tickets y asignación automática por disponibilidad.
 - **Módulo 5:** reportes y exportaciones PDF/Excel; hoy hay un resumen básico.
 - **Módulo 6:** completar edición de usuarios y cambio de contraseña desde la interfaz.
 
 Antes de incorporar clientes reales también harán falta pruebas de carga, restauración de respaldos, revisión de permisos y configuración definitiva de los servicios externos.
+
+### Actualización del módulo 3 — 20/10/2026
+
+Se publicó la versión `20261020T044008Z-46879`, con almacenamiento privado de comprobantes y descarga autenticada. Se trasladaron los archivos históricos públicos verificando su hash y se bloqueó su antigua ruta pública en Nginx. El registro de pagos exige cancelar cuotas completas en orden de antigüedad: por decisión del usuario, todavía no se admiten pagos parciales ni saldos a favor. También se incorporaron controles de operaciones duplicadas y bloqueo transaccional al aprobar o rechazar.
+
+El servicio `villafane-ocr.service` procesa una tarea por vez, con un límite de memoria de 512 MB, CPU de 75% y tiempos máximos por archivo. No depende del temporizador de recordatorios. Una falla de lectura conserva el original y permite la revisión manual. El OCR propone datos; no valida que el dinero haya ingresado a una cuenta bancaria.
+
+La suite local inicial pasó con **62 pruebas y 263 aserciones**. En el VPS se extrajeron correctamente operación, monto y fecha de un PDF ficticio y su imagen. La prueba de cola creó el comprobante **#11**, quedó con OCR procesado, validación pendiente y sin pago asociado; no se enviaron mensajes. El servicio de OCR está activo y habilitado al iniciar el servidor.
+
+Luego se publicó la corrección del bot `20261020T045924Z-48351`: los saludos y agradecimientos no acumulan errores, los intentos fallidos se reinician tras 30 minutos de inactividad y MENU permite retomar una derivación si todavía no fue tomada por un operador. La suite completa pasó con **68 pruebas y 293 aserciones**.
+
+Pruebas integrales confirmadas por el usuario y verificadas en el servidor:
+
+- El comprobante **#12**, enviado como imagen por WhatsApp, recuperó operación **8765432109**, importe **$18.000** y fecha **20/10/2026**. Su aprobación generó un único **pago ficticio #7** y canceló la **cuota #25**, período noviembre y vencimiento **02/11/2026**, del servicio de demostración #8.
+- Reenviar el mismo archivo identificó el comprobante #12 y no creó otro registro ni pago.
+- El comprobante **#13**, recibido como PDF con operación **7654321098**, fue leído y rechazado con motivo registrado; no generó pagos.
+- Se habilitó `COMPROBANTES_NOTIFICAR_RESULTADO=true` en el host. Se enviaron los avisos de aprobación y rechazo de estas pruebas y el usuario confirmó ambos en WhatsApp. Los mensajes aclaran que se trata de una demostración y que no se debe pagar. Solo se envían dentro de las 24 horas desde el último mensaje del cliente; fuera de esa ventana queda pendiente el aviso y no se envían plantillas.
+- La revisión automatizada más reciente de M3 pasó con **20 pruebas y 111 aserciones**: incluye importes parciales/sobrantes, operación repetida con otro archivo y lectura fallida sin inventar datos, conservando el original y permitiendo conciliación manual.
+
+- La última prueba integral utilizó el comprobante **#14**, una imagen sin datos legibles. El OCR falló, conservó el original y dejó monto y fecha sin detectar. El usuario completó la operación **6543210987**, el importe **$18.000** y la fecha **20/10/2026** desde el panel. La aprobación generó un único **pago ficticio #8**, canceló la **cuota #26** de diciembre, con vencimiento **02/12/2026**, y envió el aviso automáticamente. El usuario mostró su recepción y el servidor registró el aviso como leído. Los valores manuales de monto y fecha quedaron en el pago; los campos detectados por OCR permanecieron vacíos para conservar esa distinción.
+
+Con esta última comprobación se completaron las pruebas principales previstas para M3 en la demostración. Todas las cuotas, comprobantes y pagos de estas comprobaciones son ficticios. Los recordatorios automáticos continúan desactivados. Esta actualización no realiza commit ni push.
+
+### Ampliación de la demostración: transferencias reales de $5 y plantillas — 20/10/2026
+
+Por pedido del usuario, se publicó `20261020T054429Z-50280`. Se agregó un plan exclusivo **#4** de $5, el servicio de prueba **#10** para el cliente que venía probando y la cuota **#27**, con vencimiento **23/10/2026**. Se registró la cuenta receptora **#3**, de Mercado Pago, con el alias y titular aportados por el usuario. Los servicios y cuotas anteriores mantienen sus importes. Al preparar esta actualización, la cuota de $5 continúa pendiente y no tiene ningún pago registrado.
+
+El comando **PAGAR** y la cuenta corriente muestran las instrucciones solo al cliente con una cuota pendiente de $5 del plan configurado. Se aclara que se transfiere dinero real, se debe comprobar el titular y enviar el comprobante, y la aprobación depende de verificar el ingreso manualmente en Mercado Pago. No se incorporó acceso a la API de movimientos ni acreditación automática. Esta modalidad no requiere credenciales de Mercado Pago; recibir por alias no equivale a una integración API de Checkout.
+
+La suite completa pasó con **73 pruebas y 324 aserciones**. Se probaron la disponibilidad de instrucciones para el cliente habilitado, su ausencia para otros clientes o cuotas ya pagadas, la lista separada de destinatarios de recordatorios y el envío de plantillas fuera de ventana sin duplicar avisos. El OCR con un comprobante descargado de Mercado Pago sigue pendiente: se utilizará el de la primera transferencia real, ocultando datos sensibles para compartirlo en esta conversación.
+
+Se presentaron en Meta cuatro plantillas `UTILITY`, idioma `es_AR`: `demo_cuota_proxima_v1`, `demo_cuota_vencida_v1`, `demo_pago_aprobado_v1` y `demo_pago_rechazado_v1`. La consulta posterior confirmó las cuatro **PENDING**. El código permite enviar el resultado fuera de las 24 horas si se habilita expresamente y se configura la plantilla; dentro de la ventana conserva el texto libre. **El envío fuera de ventana permanece desactivado** hasta resolver aprobación y configuración de facturación de Meta con el usuario.
+
+Los recordatorios tienen ahora una habilitación explícita y una lista propia de destinatarios. La lista vacía bloquea los recordatorios reales y no restringe las respuestas del bot a mensajes entrantes. Se configuró únicamente el teléfono del usuario para las futuras pruebas; tanto la habilitación de recordatorios como el temporizador permanecen desactivados hasta tener las plantillas y la facturación listas. Queda pendiente observar una ejecución programada en el número propio.
+
+### Cuenta de la empresa para todos los clientes — 20/10/2026
+
+El usuario aclaró que su Mercado Pago debe representar a la cuenta de la empresa para **todos los clientes**, y pidió usar precios bajos en los planes de megas existentes. Esta configuración reemplaza la limitación anterior a un cliente y plan de $5. Se publicó `20261020T055843Z-51090`.
+
+- **Hogar 20, 20 Mbps: $5**; **Hogar Plus 50, 50 Mbps: $10**; **Comercio 100, 100 Mbps: $15**. Los tres permanecen activos. Se actualizaron también 20 cuotas pendientes de esos planes para poder probar transferencias pequeñas y respetar la cancelación de cuotas completas. Los pagos históricos y sus importes se conservaron.
+- La cuenta receptora #3 ahora tiene como nombre de titular **Serrano Ulises Ivan**, alias **uliserrano.mp**, y es la única cuenta activa. Las dos cuentas ficticias anteriores quedaron inactivas para impedir seleccionarlas al acreditar nuevos pagos; siguen disponibles como referencias del historial.
+- El plan separado #4 quedó inactivo y su servicio #10 se dio de baja. La cuota pendiente #27 de $5 se trasladó al servicio Hogar 20 #8 del mismo cliente, sin duplicarla. Se conservó su vencimiento del 23/10 para la prueba que ya estaba preparada.
+- El comando **PAGAR** y la cuenta corriente muestran el mismo destino a cualquier cliente identificado. El importe indicado corresponde a su cuota pendiente más antigua. Si no tiene cuotas pendientes se muestran los datos de la empresa aclarando que no necesita transferir. Se quitó la condición de pertenecer a un plan especial o adeudar exactamente $5.
+- El panel ofrece la cuenta de la empresa para acreditar, y el servicio de facturación bloquea registrar pagos en otra cuenta cuando está habilitado este destino único. La cuenta receptora se configura con `TRANSFERENCIAS_HABILITADAS=true` y `TRANSFERENCIAS_ID_CUENTA=3`; se retiraron las variables de la configuración limitada anterior.
+- **74 pruebas y 337 aserciones** pasaron. Incluyen clientes con distintos planes, un cliente sin deuda, cuenta receptora inactiva y rechazo de otra cuenta aunque esté activa, tanto en la aprobación del comprobante como en el registro manual de pago.
+
+Las transferencias son dinero real recibido en Mercado Pago. El sistema continúa requiriendo verificación manual del ingreso por el personal de cobranza antes de aprobar; no consulta movimientos ni acredita automáticamente. Los avisos por plantilla y los recordatorios siguen con el estado pendiente de configuración ya indicado. No se realizó commit ni push.
+
+### Ajuste de importes y texto de PAGAR — 20/10/2026
+
+Por pedido posterior del usuario, los precios bajos se reemplazaron por **$100 para Hogar 20 Mbps, $150 para Hogar Plus 50 Mbps y $200 para Comercio 100 Mbps**. Se actualizaron las 21 cuotas pendientes de esos planes y el catálogo inicial del repositorio; la cuota #27 ahora es de **$100**. Los pagos ya registrados conservaron sus importes históricos.
+
+Se publicó `20261020T061235Z-51991`. El mensaje de PAGAR ahora comienza con «Transferencia a la cuenta de la empresa (Pruebas académicas).» y termina indicando que el personal verificará el ingreso en Mercado Pago y aprobará manualmente. A pedido del usuario, se retiró del texto la aclaración técnica sobre la consulta de movimientos. Esto solo modifica la redacción: las transferencias continúan siendo reales y la verificación sigue siendo manual. El alias común sigue siendo `uliserrano.mp`, titular Serrano Ulises Ivan.
+
+Se verificaron **74 pruebas y 337 aserciones**, respaldo previo y publicación correcta en el host. No se realizó commit ni push.
+
+### Lectura de comprobante ARQ/DolarApp — 20/10/2026
+
+La primera prueba con un comprobante de ARQ creó el registro #15 y conservó la imagen, pero no extrajo los campos: el formato usa un ID de Coelsa alfanumérico, la etiqueta «Monto enviado» y un mes escrito en letras. Se amplió la extracción para admitir esos formatos sin tomar CUIT o CBU/CVU como identificador de operación. Se agregó una prueba con texto sintético sin datos personales; las **24 pruebas de M3 y 136 aserciones** pasaron.
+
+Se publicó `20261020T061846Z-52708` y se reprocesó el mismo registro #15 mediante la cola. Ahora se recuperaron importe **$100**, fecha **20/10/2026** e ID alfanumérico. El comprobante conserva validación **pendiente**, sin pago asociado. La captura original muestra una transacción **PENDIENTE**: el administrador debe comprobar el ingreso en Mercado Pago antes de aprobar. Tesseract confundió algunos caracteres del ID; ese campo debe cotejarse con el original, preferentemente con el PDF descargado de ARQ. Recuperar los tres campos no implica que sus caracteres sean exactos ni que el dinero se haya acreditado.
+
+**Resultado posterior confirmado:** el usuario informó que los **$100 ingresaron en su Mercado Pago** y aprobó el comprobante desde el panel. Se verificó en el servidor que el comprobante #15 quedó aprobado, generó un único **pago #9 por $100** a la cuenta `uliserrano.mp` y canceló la **cuota #27** del servicio #8. El aviso automático quedó registrado como **leído**, y el usuario mostró su recepción en WhatsApp. Quedó completado el recorrido con transferencia real desde ARQ, recepción del comprobante, extracción asistida, comprobación manual del ingreso, aprobación, cancelación de cuota y aviso. Esta prueba no incorpora consulta automática de movimientos de Mercado Pago ni elimina la necesidad de revisar los caracteres del identificador extraído por OCR.
+
+### Preparación de la habilitación de recordatorios y plantillas — 20/10/2026
+
+El usuario pidió retomar las pruebas pendientes de M2. La consulta de Meta confirmó que las cuatro plantillas propias siguen en estado **PENDING**, categoría `UTILITY`, idioma `es_AR`; solo la plantilla de ejemplo `hello_world` está aprobada. No se enviaron mensajes de prueba con plantillas pendientes.
+
+Se habilitó y activó `villafane-scheduler.timer` para ejecutar el programador cada minuto, también al iniciar el VPS. Laravel mantiene el recordatorio diario a las **09:00 de Argentina**. Esto reemplaza el estado anterior del temporizador deshabilitado. **Los envíos de recordatorios siguen bloqueados** por `WHATSAPP_RECORDATORIOS_HABILITADOS=false`, y `COMPROBANTES_PLANTILLAS_FUERA_VENTANA=false` conserva pendientes los avisos fuera de ventana. La lista exclusiva de destinatarios de recordatorios contiene únicamente el teléfono del usuario.
+
+Se intentó consultar si había financiamiento asociado a la cuenta, pero Meta rechazó la consulta con el permiso disponible (código 10: requiere que el negocio sea proveedor de soluciones de WhatsApp). Eso no confirma ni descarta un método de pago. Se pidió al usuario revisar el apartado de facturación desde la interfaz de Meta. Quedan pendientes aprobación de las plantillas, verificación de facturación, habilitación de los envíos y prueba de entrega programada en el número propio. No se alteraron fechas del historial ni se simuló que hubiera transcurrido la ventana de 24 horas.
+
+### Control de consumo para la demostración — 20/10/2026
+
+El usuario priorizó conservar los requisitos funcionales con el mínimo uso real cobrable. Se publicó `20261020T064614Z-54156` con una tabla persistente de consumo por número emisor y mes UTC, reserva transaccional previa a cada envío y límites en el servicio común de WhatsApp, de modo que se aplican al bot, operadores y notificaciones.
+
+- **Respuestas normales: máximo 900 intentos por mes.** El límite deja margen respecto del cupo de 1.000 mensajes de servicio que Meta informa para el número. El historial real previo del mes se incluye conservadoramente; los identificadores de simulación se excluyen. En la comprobación del despliegue, el contador local mostró **84 / 900**.
+- **Plantillas reales de prueba: máximo 4 intentos por mes y 2 por día UTC**, una vez habilitadas. Se admiten únicamente las cuatro plantillas configuradas y el teléfono de prueba del usuario. La lista de plantillas es independiente de la lista de destinatarios de respuestas normales, que sigue abierta a clientes entrantes.
+- **Actualmente continúan bloqueadas las plantillas reales**, los recordatorios y los avisos fuera de ventana. La consulta final confirmó que las cuatro plantillas propias siguen `PENDING`. El programador está activo, pero no habilita envíos por sí solo. Falta aprobar las plantillas y revisar la facturación antes de efectuar las pruebas reales limitadas.
+- El contador se muestra en **Conversaciones**. Es un control local de intentos, no una factura de Meta ni una medición del uso en otras aplicaciones. Las reservas se conservan también ante errores o tiempos de espera de red, para evitar reintentar sin presupuesto cuando Meta pudo haber recibido la solicitud. Las pruebas en modo simulación no contactan a Meta ni consumen los cupos.
+- Si se alcanza un límite, se bloquea el envío antes de realizar la solicitud HTTP. El pago y la decisión del comprobante conservan su resultado, y el aviso fallido puede revisarse por separado. No se promete gasto cero para los envíos reales con plantillas; la tarifa efectiva se confirma en Meta.
+
+Pasaron **84 pruebas y 376 aserciones**, incluidas pruebas de topes diario/mensual, cambio de mes, historial previo, simulación, fallo de red, destinatarios y plantillas ajenos a la demo, vista del contador y aprobación de pago con aviso bloqueado. En el host se verificaron migración, bloqueo sin envío, servicio OCR, programador y salud HTTP 200. No se enviaron mensajes reales para comprobar estos límites y no se realizó commit ni push.
 
 ## 10. Comprobaciones realizadas al publicar
 

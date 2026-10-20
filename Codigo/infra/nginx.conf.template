@@ -24,6 +24,7 @@ server {
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location = /robots.txt { access_log off; log_not_found off; }
+    location ^~ /storage/comprobantes/ { return 404; }
     error_page 404 /index.php;
 
     location ~ ^/index\.php(/|$) {

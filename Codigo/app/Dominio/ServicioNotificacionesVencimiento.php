@@ -34,6 +34,10 @@ class ServicioNotificacionesVencimiento
         $limite = $hoy->addDays(3);
         $resultado = ['enviadas' => 0, 'omitidas' => 0, 'fallidas' => 0];
 
+        if (! config('services.whatsapp.recordatorios_habilitados', false)) {
+            return $resultado;
+        }
+
         $consulta = Cuota::query()
             ->with(['servicio.cliente'])
             ->whereNull('id_pago')
@@ -56,7 +60,7 @@ class ServicioNotificacionesVencimiento
                     $estadoAviso = $cuota->fecha_vencimiento->toDateString() < $hoy->toDateString() ? 'vencida' : 'proxima';
                     $clave = "vencimiento:{$estadoAviso}:{$cuota->id_cuota}";
                     $cliente = $cuota->servicio->cliente;
-                    if (! $this->whatsAppService->destinatarioPermitido($cliente->telefono_whatsapp)) {
+                    if (! $this->destinatarioDeRecordatorios($cliente->telefono_whatsapp)) {
                         $resultado['omitidas']++;
 
                         continue;
@@ -81,6 +85,24 @@ class ServicioNotificacionesVencimiento
             }, 'id_cuota');
 
         return $resultado;
+    }
+
+    private function destinatarioDeRecordatorios(string $telefono): bool
+    {
+        if (! $this->whatsAppService->destinatarioPermitido($telefono)) {
+            return false;
+        }
+        if (config('services.whatsapp.modo_simulacion')) {
+            return true;
+        }
+        $normalizar = static function (string $numero): string {
+            $numero = preg_replace('/\D/', '', $numero) ?? '';
+
+            return str_starts_with($numero, '549') ? '54'.substr($numero, 3) : $numero;
+        };
+        $permitidos = array_filter(array_map('trim', explode(',', (string) config('services.whatsapp.recordatorios_destinatarios'))));
+
+        return in_array($normalizar($telefono), array_map($normalizar, $permitidos), true);
     }
 
     private function enviarMensaje(Mensaje $mensaje, string $telefono, string $cliente, Cuota $cuota, string $estadoAviso): bool
@@ -115,7 +137,7 @@ class ServicioNotificacionesVencimiento
         $monto = number_format((float) $cuota->monto, 2, ',', '.');
 
         return $estadoAviso === 'vencida'
-            ? sprintf('Villafañe Wifi (demostración): Hola %s, la cuota de prueba venció el %s y su importe simulado pendiente es $%s. No realices pagos; este aviso forma parte de una prueba.', $cliente, $fecha, $monto)
-            : sprintf('Villafañe Wifi (demostración): Hola %s, te recordamos que la cuota de prueba vence el %s y su importe simulado es $%s. No realices pagos; este aviso forma parte de una prueba.', $cliente, $fecha, $monto);
+            ? sprintf('Villafañe Wifi (demostración académica). Hola %s, tu cuota con vencimiento %s por $%s figura pendiente. Si ya enviaste un comprobante, aguardá su revisión antes de volver a pagar.', $cliente, $fecha, $monto)
+            : sprintf('Villafañe Wifi (demostración académica). Hola %s, te recordamos que tu cuota vence el %s por $%s. Consultá el detalle en el sistema antes de realizar cualquier pago.', $cliente, $fecha, $monto);
     }
 }

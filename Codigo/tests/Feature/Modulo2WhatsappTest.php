@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Dominio\ServicioAtencionHumana;
 use App\Dominio\ServicioAtencionWhatsapp;
 use App\Dominio\ServicioConversaciones;
+use App\Dominio\ServicioCuentaCorriente;
 use App\Dominio\ServicioIdentificacion;
 use App\Dominio\ServicioNotificacionesVencimiento;
 use App\Dominio\ServicioUsuarios;
@@ -16,8 +17,10 @@ use App\Enums\TipoEmisorMensaje;
 use App\Enums\TipoMensaje;
 use App\Models\Cliente;
 use App\Models\Conversacion;
+use App\Models\CuentaReceptora;
 use App\Models\Cuota;
 use App\Models\Mensaje;
+use App\Models\Plan;
 use App\Models\Servicio;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
@@ -35,6 +38,10 @@ class Modulo2WhatsappTest extends TestCase
         config([
             'services.whatsapp.modo_simulacion' => true,
             'services.whatsapp.validar_firma' => false,
+            'services.whatsapp.control_consumo_habilitado' => false,
+            'services.whatsapp.recordatorios_habilitados' => true,
+            'services.whatsapp.recordatorios_destinatarios' => '543704061032,543704000000',
+            'services.transferencias.habilitadas' => false,
             'services.openai.api_key' => null,
             'services.openai.model' => null,
         ]);
@@ -173,6 +180,174 @@ class Modulo2WhatsappTest extends TestCase
         $this->assertSame($cliente->id_cliente, $conversacion->fresh()->id_cliente);
     }
 
+    public function test_pagar_muestra_la_misma_cuenta_a_clientes_de_distintos_planes_y_sin_deuda(): void
+    {
+        $cliente = Cliente::factory()->create();
+        $plan = Plan::factory()->create(['precio_vigente' => '100.00']);
+        $servicio = Servicio::factory()->create(['id_cliente' => $cliente->id_cliente, 'id_plan' => $plan->id_plan]);
+        $cuota = Cuota::factory()->create(['id_servicio' => $servicio->id_servicio, 'monto' => '100.00', 'id_pago' => null]);
+        $cuenta = CuentaReceptora::factory()->create(['nombre' => 'Titular de prueba', 'tipo' => 'mercado_pago', 'identificador' => 'alias.ficticio', 'estado' => 'activa']);
+        config(['services.transferencias.habilitadas' => true, 'services.transferencias.id_cuenta' => $cuenta->id_cuenta]);
+        $conversacion = Conversacion::factory()->create(['id_cliente' => $cliente->id_cliente]);
+        $mensaje = Mensaje::factory()->create(['id_conversacion' => $conversacion->id_conversacion, 'contenido' => 'PAGAR']);
+
+        $respuesta = app(ServicioAtencionWhatsapp::class)->procesarMensaje($conversacion, $mensaje, $cliente);
+
+        $this->assertStringContainsString('Pruebas académicas', $respuesta);
+        $this->assertStringContainsString('$100,00', $respuesta);
+        $this->assertStringContainsString('alias.ficticio', $respuesta);
+        $this->assertStringContainsString('manualmente', $respuesta);
+        $otro = Cliente::factory()->create();
+        $otroPlan = Plan::factory()->create(['precio_vigente' => '200.00']);
+        $otroServicio = Servicio::factory()->create(['id_cliente' => $otro->id_cliente, 'id_plan' => $otroPlan->id_plan]);
+        Cuota::factory()->create(['id_servicio' => $otroServicio->id_servicio, 'monto' => '200.00', 'id_pago' => null]);
+        $otrasInstrucciones = app(ServicioCuentaCorriente::class)->instruccionesTransferencia($otro);
+        $this->assertStringContainsString('alias.ficticio', $otrasInstrucciones);
+        $this->assertStringContainsString('$200,00', $otrasInstrucciones);
+        $cuota->update(['estado' => 'pagada']);
+        $sinDeuda = app(ServicioCuentaCorriente::class)->instruccionesTransferencia($cliente);
+        $this->assertStringContainsString('alias.ficticio', $sinDeuda);
+        $this->assertStringContainsString('No es necesario realizar una transferencia', $sinDeuda);
+        $cuenta->update(['estado' => 'inactiva']);
+        $this->assertNull(app(ServicioCuentaCorriente::class)->instruccionesTransferencia($otro));
+    }
+
+    public function test_saludos_agradecimientos_y_menu_no_acumulan_fallos(): void
+    {
+        $cliente = Cliente::factory()->create();
+        $conversacion = Conversacion::factory()->create(['id_cliente' => $cliente->id_cliente]);
+
+        foreach (['gracias', '¡Hola!', 'MENÚ', 'Muchas gracias.'] as $contenido) {
+            $mensaje = Mensaje::factory()->create([
+                'id_conversacion' => $conversacion->id_conversacion,
+                'contenido' => $contenido,
+            ]);
+            $respuesta = app(ServicioAtencionWhatsapp::class)->procesarMensaje($conversacion->fresh(), $mensaje, $cliente);
+
+            $this->assertNotNull($respuesta);
+            $this->assertSame(0, $conversacion->fresh()->intentos_interpretacion);
+            $this->assertSame(ModoAtencion::Bot, $conversacion->fresh()->modo_atencion);
+        }
+    }
+
+    public function test_menu_cancela_la_espera_de_comprobante_y_permite_elegir_otra_opcion(): void
+    {
+        $cliente = Cliente::factory()->create();
+        $conversacion = Conversacion::factory()->create([
+            'id_cliente' => $cliente->id_cliente,
+            'paso_actual' => 'esperando_comprobante',
+            'intentos_interpretacion' => 1,
+        ]);
+        $mensaje = Mensaje::factory()->create([
+            'id_conversacion' => $conversacion->id_conversacion,
+            'contenido' => 'Menú!',
+        ]);
+
+        $respuesta = app(ServicioAtencionWhatsapp::class)->procesarMensaje($conversacion, $mensaje, $cliente);
+
+        $this->assertStringContainsString('2. Registrar reclamo', $respuesta);
+        $this->assertStringContainsString('3. Enviar comprobante', $respuesta);
+        $this->assertNull($conversacion->fresh()->paso_actual);
+        $this->assertSame(0, $conversacion->fresh()->intentos_interpretacion);
+
+        $mensaje = Mensaje::factory()->create([
+            'id_conversacion' => $conversacion->id_conversacion,
+            'contenido' => '3',
+        ]);
+        $respuesta = app(ServicioAtencionWhatsapp::class)->procesarMensaje($conversacion->fresh(), $mensaje, $cliente);
+        $this->assertStringContainsString('adjuntar', $respuesta);
+        $this->assertSame('esperando_comprobante', $conversacion->fresh()->paso_actual);
+    }
+
+    public function test_menu_retoma_el_bot_si_la_derivacion_aun_no_tiene_operador(): void
+    {
+        $cliente = Cliente::factory()->create();
+        $conversacion = Conversacion::factory()->create([
+            'id_cliente' => $cliente->id_cliente,
+            'estado' => EstadoConversacion::Escalada,
+            'modo_atencion' => ModoAtencion::Humano,
+            'intentos_interpretacion' => 2,
+            'paso_actual' => 'esperando_reformulacion',
+        ]);
+        $mensaje = Mensaje::factory()->create([
+            'id_conversacion' => $conversacion->id_conversacion,
+            'contenido' => 'MENU',
+        ]);
+
+        $respuesta = app(ServicioAtencionWhatsapp::class)->procesarMensaje($conversacion, $mensaje, $cliente);
+
+        $this->assertStringContainsString('Elegí una opción', $respuesta);
+        $this->assertSame(EstadoConversacion::Abierta, $conversacion->fresh()->estado);
+        $this->assertSame(ModoAtencion::Bot, $conversacion->fresh()->modo_atencion);
+        $this->assertSame(0, $conversacion->fresh()->intentos_interpretacion);
+    }
+
+    public function test_menu_no_interrumpe_a_un_operador_que_tomo_la_conversacion(): void
+    {
+        $cliente = Cliente::factory()->create();
+        $conversacion = Conversacion::factory()->create([
+            'id_cliente' => $cliente->id_cliente,
+            'estado' => EstadoConversacion::Escalada,
+            'modo_atencion' => ModoAtencion::Humano,
+        ]);
+        $copiaAnterior = $conversacion->fresh();
+        $operador = app(ServicioUsuarios::class)->crear([
+            'nombre_usuario' => 'operador-menu',
+            'contrasena' => 'clave-segura',
+            'tipo' => 'empleado',
+            'area' => 'soporte',
+        ]);
+        $conversacion->derivarAUsuario($operador);
+        $mensaje = Mensaje::factory()->create([
+            'id_conversacion' => $conversacion->id_conversacion,
+            'contenido' => 'MENU',
+        ]);
+
+        $this->assertNull(app(ServicioAtencionWhatsapp::class)->procesarMensaje($copiaAnterior, $mensaje, $cliente));
+        $this->assertSame(EstadoConversacion::EnAtencion, $conversacion->fresh()->estado);
+        $this->assertSame($operador->id_usuario, $conversacion->fresh()->id_usuario_atencion);
+    }
+
+    public function test_un_fallo_del_dia_anterior_no_provoca_una_derivacion_inmediata(): void
+    {
+        $cliente = Cliente::factory()->create();
+        $conversacion = Conversacion::factory()->create([
+            'id_cliente' => $cliente->id_cliente,
+            'intentos_interpretacion' => 1,
+            'paso_actual' => 'esperando_reformulacion',
+        ]);
+        Mensaje::factory()->create([
+            'id_conversacion' => $conversacion->id_conversacion,
+            'fecha_hora' => now()->subDay(),
+            'contenido' => 'mensaje incomprensible',
+        ]);
+        $mensaje = Mensaje::factory()->create([
+            'id_conversacion' => $conversacion->id_conversacion,
+            'contenido' => 'otra cosa extraña',
+        ]);
+
+        $respuesta = app(ServicioAtencionWhatsapp::class)->procesarMensaje($conversacion, $mensaje, $cliente);
+
+        $this->assertStringContainsString('otras palabras', $respuesta);
+        $this->assertSame(1, $conversacion->fresh()->intentos_interpretacion);
+        $this->assertSame(ModoAtencion::Bot, $conversacion->fresh()->modo_atencion);
+    }
+
+    public function test_un_saludo_con_una_consulta_sigue_procesando_la_consulta(): void
+    {
+        $cliente = Cliente::factory()->create();
+        $conversacion = Conversacion::factory()->create(['id_cliente' => $cliente->id_cliente]);
+        $mensaje = Mensaje::factory()->create([
+            'id_conversacion' => $conversacion->id_conversacion,
+            'contenido' => 'Hola, quiero enviar un comprobante',
+        ]);
+
+        $respuesta = app(ServicioAtencionWhatsapp::class)->procesarMensaje($conversacion, $mensaje, $cliente);
+
+        $this->assertStringContainsString('adjuntar', $respuesta);
+        $this->assertSame('esperando_comprobante', $conversacion->fresh()->paso_actual);
+    }
+
     public function test_estado_de_entrega_no_retrocede(): void
     {
         $conversacion = Conversacion::factory()->create();
@@ -301,9 +476,26 @@ class Modulo2WhatsappTest extends TestCase
             && $solicitud['template']['components'][0]['parameters'][2]['text'] === '$18.000,00');
         $this->assertDatabaseHas('mensaje', [
             'id_mensaje_externo' => 'wamid.vencida',
-            'contenido' => sprintf('Villafañe Wifi (demostración): Hola Cliente de prueba, la cuota de prueba venció el %s y su importe simulado pendiente es $18.000,00. No realices pagos; este aviso forma parte de una prueba.', $fechaVencimiento->format('d/m/Y')),
+            'contenido' => sprintf('Villafañe Wifi (demostración académica). Hola Cliente de prueba, tu cuota con vencimiento %s por $18.000,00 figura pendiente. Si ya enviaste un comprobante, aguardá su revisión antes de volver a pagar.', $fechaVencimiento->format('d/m/Y')),
         ]);
         $this->assertSame('vencimiento:vencida:'.$cuota->id_cuota, Mensaje::query()->sole()->clave_idempotencia);
+    }
+
+    public function test_recordatorios_desactivados_o_sin_lista_no_envian_a_clientes_de_la_demo_abierta(): void
+    {
+        config(['services.whatsapp.modo_simulacion' => false, 'services.whatsapp.recordatorios_destinatarios' => '',
+            'services.whatsapp.destinatarios_permitidos' => '']);
+        Http::preventStrayRequests();
+        $cliente = Cliente::factory()->create(['telefono_whatsapp' => '5493704000000']);
+        $servicio = Servicio::factory()->create(['id_cliente' => $cliente->id_cliente]);
+        Cuota::factory()->create(['id_servicio' => $servicio->id_servicio, 'fecha_vencimiento' => today()->toDateString()]);
+
+        $this->assertSame(['enviadas' => 0, 'omitidas' => 1, 'fallidas' => 0], app(ServicioNotificacionesVencimiento::class)->enviar());
+        config(['services.whatsapp.recordatorios_habilitados' => false]);
+        $this->assertSame(['enviadas' => 0, 'omitidas' => 0, 'fallidas' => 0], app(ServicioNotificacionesVencimiento::class)->enviar());
+
+        Http::assertNothingSent();
+        $this->assertDatabaseCount('mensaje', 0);
     }
 
     public function test_recibe_comprobante_simulado_y_cierra_la_conversacion(): void

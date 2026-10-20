@@ -26,7 +26,8 @@ class Comprobante extends Model
         'id_cliente', 'id_pago', 'id_usuario', 'id_conversacion', 'id_mensaje',
         'fecha_recepcion', 'nombre_original', 'mime_type', 'tamanio_bytes',
         'hash_archivo', 'numero_operacion', 'monto_ocr', 'fecha_ocr',
-        'ruta_archivo', 'estado_validacion', 'motivo_rechazo', 'fecha_hora_validacion', 'origen',
+        'ruta_archivo', 'disco_archivo', 'estado_ocr', 'error_ocr', 'completitud_ocr',
+        'estado_validacion', 'motivo_rechazo', 'fecha_hora_validacion', 'origen',
     ];
 
     protected $attributes = [
@@ -40,6 +41,7 @@ class Comprobante extends Model
             'fecha_recepcion' => 'datetime',
             'tamanio_bytes' => 'integer',
             'monto_ocr' => 'decimal:2',
+            'completitud_ocr' => 'decimal:2',
             'fecha_ocr' => 'date',
             'estado_validacion' => EstadoComprobante::class,
             'fecha_hora_validacion' => 'datetime',
@@ -146,8 +148,8 @@ class Comprobante extends Model
     public function aprobar(Usuario $usuario): void
     {
         $this->update([
-            'estado_validacion'     => EstadoComprobante::Aprobado,
-            'id_usuario'            => $usuario->id_usuario,
+            'estado_validacion' => EstadoComprobante::Aprobado,
+            'id_usuario' => $usuario->id_usuario,
             'fecha_hora_validacion' => Carbon::now(),
         ]);
     }
@@ -161,9 +163,9 @@ class Comprobante extends Model
     public function rechazar(Usuario $usuario, string $motivo): void
     {
         $this->update([
-            'estado_validacion'     => EstadoComprobante::Rechazado,
-            'motivo_rechazo'        => $motivo,
-            'id_usuario'            => $usuario->id_usuario,
+            'estado_validacion' => EstadoComprobante::Rechazado,
+            'motivo_rechazo' => $motivo,
+            'id_usuario' => $usuario->id_usuario,
             'fecha_hora_validacion' => Carbon::now(),
         ]);
     }

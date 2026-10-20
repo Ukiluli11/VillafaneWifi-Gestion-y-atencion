@@ -69,12 +69,15 @@ Route::middleware('auth')->group(function (): void {
     Route::middleware('accion:consultar_comprobantes')->group(function (): void {
         Route::get('/comprobantes', [ComprobanteController::class, 'index'])->name('comprobantes.index');
         Route::get('/comprobantes/{comprobante}', [ComprobanteController::class, 'show'])->name('comprobantes.show');
+        Route::get('/comprobantes/{comprobante}/archivo', [ComprobanteController::class, 'archivo'])->name('comprobantes.archivo');
     });
     Route::middleware('accion:gestionar_comprobantes')->group(function (): void {
         Route::get('/comprobantes-nuevo', [ComprobanteController::class, 'create'])->name('comprobantes.create');
         Route::post('/comprobantes', [ComprobanteController::class, 'store'])->name('comprobantes.store');
         Route::post('/comprobantes/{comprobante}/aprobar', [ComprobanteController::class, 'aprobar'])->name('comprobantes.aprobar');
         Route::post('/comprobantes/{comprobante}/rechazar', [ComprobanteController::class, 'rechazar'])->name('comprobantes.rechazar');
+        Route::post('/comprobantes/{comprobante}/ocr', [ComprobanteController::class, 'reprocesarOcr'])->name('comprobantes.ocr');
+        Route::post('/comprobantes/{comprobante}/notificar', [ComprobanteController::class, 'notificar'])->name('comprobantes.notificar');
     });
 
     Route::get('/cuentas-receptoras', [CuentaReceptoraController::class, 'index'])->middleware('accion:consultar_cuentas')->name('cuentas-receptoras.index');

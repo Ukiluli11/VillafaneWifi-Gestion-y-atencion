@@ -70,6 +70,9 @@
                 <h2>Comprobantes recibidos</h2>
                 @foreach ($conversacion->comprobantes as $comprobante)
                     <p><strong>#{{ $comprobante->id_comprobante }}</strong> · {{ $comprobante->estado_validacion->value }}<br><small class="texto-suave">{{ $comprobante->nombre_original ?? $comprobante->mime_type }} · {{ number_format($comprobante->tamanio_bytes / 1024, 1, ',', '.') }} KB</small></p>
+                    @if ($navegacionPermitida['consultar_comprobantes'] ?? false)
+                        <a href="{{ route('comprobantes.show', $comprobante) }}">Revisar comprobante</a>
+                    @endif
                 @endforeach
             </article>
         @endif

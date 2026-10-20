@@ -67,7 +67,7 @@ class ServicioRecepcionComprobantes
                 return "El archivo coincide con el comprobante #{$duplicado->id_comprobante}, que ya está registrado.";
             }
 
-            $disco = (string) config('services.whatsapp.media_disk', 'local');
+            $disco = 'local';
             $ruta = sprintf('comprobantes/%d/%s.%s', $cliente->id_cliente, Str::uuid(), $extension);
             if (! Storage::disk($disco)->put($ruta, $archivo['contenido'])) {
                 throw new \RuntimeException('No se pudo guardar el archivo del comprobante.');
@@ -85,6 +85,8 @@ class ServicioRecepcionComprobantes
                         'tamanio_bytes' => $archivo['tamanio_bytes'],
                         'hash_archivo' => $hash,
                         'ruta_archivo' => $ruta,
+                        'disco_archivo' => 'local',
+                        'estado_ocr' => app(OCRService::class)->estaConfigurado() ? 'en_cola' : 'desactivado',
                         'estado_validacion' => EstadoComprobante::Pendiente,
                         'origen' => OrigenComprobante::Whatsapp,
                     ]);
@@ -97,6 +99,10 @@ class ServicioRecepcionComprobantes
             } catch (Throwable $error) {
                 Storage::disk($disco)->delete($ruta);
                 throw $error;
+            }
+
+            if ($comprobante->estado_ocr === 'en_cola') {
+                app(OCRService::class)->encolarLectura($comprobante);
             }
 
             return "Recibimos y resguardamos tu comprobante #{$comprobante->id_comprobante}. Quedará disponible para su posterior validación.";

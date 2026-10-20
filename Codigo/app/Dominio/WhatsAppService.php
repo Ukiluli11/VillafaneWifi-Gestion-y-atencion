@@ -255,6 +255,10 @@ class WhatsAppService
             throw new RuntimeException('El destinatario no está autorizado para los envíos de prueba de WhatsApp.');
         }
 
+        app(ServicioConsumoWhatsapp::class)->reservar(
+            ($payload['type'] ?? null) === 'template', $destino, data_get($payload, 'template.name'),
+        );
+
         $url = "https://graph.facebook.com/{$version}/{$idTelefono}/messages";
         $enviar = function (string $telefono) use ($token, $url, $payload): Response {
             return $this->solicitudMeta($token)

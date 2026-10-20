@@ -2,74 +2,113 @@
 
 namespace App\Dominio;
 
+use App\Enums\EstadoEnvioMensaje;
+use App\Enums\TipoEmisorMensaje;
+use App\Exceptions\LimiteConsumoWhatsappException;
 use App\Models\Cliente;
 use App\Models\Comprobante;
+use App\Models\Mensaje;
 use App\Models\Pago;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
+use Throwable;
 
-/**
- * Servicio NotificacionService
- * Gestiona el envío de notificaciones automáticas de comprobantes (aprobados o rechazados).
- */
 class NotificacionService
 {
-    /**
-     * Emite la notificación de comprobante aprobado y pago acreditado al cliente.
-     * Caso de Uso: Notificar acreditación de pago por WhatsApp (Módulo 3)
-     * Clase UML: NotificacionService | Método UML: + notificarPagoAprobado(...) : void
-     */
+    public function __construct(
+        private readonly WhatsAppService $whatsapp,
+        private readonly ServicioConversaciones $conversaciones,
+    ) {}
+
     public function notificarPagoAprobado(Cliente $cliente, Pago $pago, ?Comprobante $comprobante = null): array
     {
-        $telefono = $cliente->telefono_whatsapp ?? 'Sin teléfono';
-        $mensaje = sprintf(
-            "¡Hola %s! Tu pago de $%s ha sido acreditado exitosamente con fecha %s. Tus cuotas han sido actualizadas. Gracias por confiar en Villafañe Wifi.",
-            $cliente->nombre_razon_social,
-            number_format((float) $pago->monto_total, 2, ',', '.'),
-            $pago->fecha->format('d/m/Y')
-        );
+        $contenido = sprintf('Villafañe Wifi (demostración académica). Hola %s, registramos tu pago de $%s del %s y actualizamos las cuotas correspondientes. No es necesario volver a pagar esas cuotas.',
+            $cliente->nombre_razon_social, number_format((float) $pago->monto_total, 2, ',', '.'), $pago->fecha->format('d/m/Y'));
 
-        Log::info('[NotificacionService] Pago aprobado notificado al cliente', [
-            'id_cliente' => $cliente->id_cliente,
-            'telefono' => $telefono,
-            'id_pago' => $pago->id_pago,
-            'id_comprobante' => $comprobante?->id_comprobante,
-            'mensaje' => $mensaje,
-        ]);
-
-        return [
-            'destinatario' => $telefono,
-            'mensaje' => $mensaje,
-            'estado' => 'enviado',
-        ];
+        return $this->enviar($cliente, 'comprobante:aprobado:'.($comprobante?->id_comprobante ?? 'pago-'.$pago->id_pago), $contenido,
+            (string) config('services.comprobantes.plantilla_aprobado'),
+            [$cliente->nombre_razon_social, '$'.number_format((float) $pago->monto_total, 2, ',', '.'), $pago->fecha->format('d/m/Y')]);
     }
 
-    /**
-     * Emite la notificación de comprobante rechazado al cliente con el motivo correspondiente.
-     * Caso de Uso: Notificar rechazo con motivo por WhatsApp (Módulo 3)
-     * Clase UML: NotificacionService | Método UML: + notificarPagoRechazado(...) : void
-     */
     public function notificarPagoRechazado(Cliente $cliente, Comprobante $comprobante, string $motivo): array
     {
-        $telefono = $cliente->telefono_whatsapp ?? 'Sin teléfono';
-        $mensaje = sprintf(
-            "Hola %s. Te informamos que el comprobante enviado (Op: %s) no pudo ser validado. Motivo: %s. Por favor, comunícate con nosotros o reenvía un comprobante legible.",
-            $cliente->nombre_razon_social,
-            $comprobante->numero_operacion ?? 'S/N',
-            $motivo
-        );
+        $contenido = sprintf('Villafañe Wifi (demostración académica). Hola %s, el comprobante #%d fue rechazado. Motivo: %s. Podés escribirnos para revisar el caso o enviar un comprobante corregido.',
+            $cliente->nombre_razon_social, $comprobante->id_comprobante, $motivo);
 
-        Log::warning('[NotificacionService] Pago rechazado notificado al cliente', [
-            'id_cliente' => $cliente->id_cliente,
-            'telefono' => $telefono,
-            'id_comprobante' => $comprobante->id_comprobante,
-            'motivo' => $motivo,
-            'mensaje' => $mensaje,
-        ]);
+        return $this->enviar($cliente, 'comprobante:rechazado:'.$comprobante->id_comprobante, $contenido,
+            (string) config('services.comprobantes.plantilla_rechazado'),
+            [$cliente->nombre_razon_social, (string) $comprobante->id_comprobante, $motivo]);
+    }
 
-        return [
-            'destinatario' => $telefono,
-            'mensaje' => $mensaje,
-            'estado' => 'enviado',
-        ];
+    /** @param list<string> $parametros */
+    private function enviar(Cliente $cliente, string $clave, string $contenido, string $plantilla, array $parametros): array
+    {
+        try {
+            return $this->procesarEnvio($cliente, $clave, $contenido, $plantilla, $parametros);
+        } catch (Throwable) {
+            return ['estado' => 'fallido', 'detalle' => 'El resultado quedó guardado; no se pudo procesar el aviso. Podés reintentarlo.'];
+        }
+    }
+
+    /** @param list<string> $parametros */
+    private function procesarEnvio(Cliente $cliente, string $clave, string $contenido, string $plantilla, array $parametros): array
+    {
+        $resultado = ['estado' => 'pendiente', 'detalle' => 'El aviso no se envió: las notificaciones de comprobantes están desactivadas.'];
+        if (! config('services.comprobantes.notificar_resultado', false)) {
+            return $resultado;
+        }
+        $telefono = preg_replace('/\D/', '', $cliente->telefono_whatsapp ?? '');
+        if (blank($telefono)) {
+            return ['estado' => 'pendiente', 'detalle' => 'El cliente no tiene un teléfono registrado.'];
+        }
+        $telefonos = [$telefono];
+        if (str_starts_with($telefono, '549')) {
+            $telefonos[] = '54'.substr($telefono, 3);
+        } elseif (str_starts_with($telefono, '54')) {
+            $telefonos[] = '549'.substr($telefono, 2);
+        }
+        $ultimoEntrante = Mensaje::query()->where('tipo_emisor', TipoEmisorMensaje::Cliente->value)
+            ->whereHas('conversacion', fn ($q) => $q->where('id_cliente', $cliente->id_cliente)->whereIn('numero_whatsapp', $telefonos))
+            ->where('fecha_hora', '<=', now())
+            ->latest('fecha_hora')->first();
+        if ($ultimoEntrante === null) {
+            return ['estado' => 'pendiente', 'detalle' => 'Aviso pendiente: no hay un mensaje previo del cliente en este teléfono.'];
+        }
+        $fueraDeVentana = $ultimoEntrante->fecha_hora->lte(now()->subHours(24));
+        if ($fueraDeVentana && (! config('services.comprobantes.plantillas_fuera_ventana', false) || blank($plantilla))) {
+            return ['estado' => 'pendiente', 'detalle' => 'Aviso pendiente: el cliente debe volver a escribir o se deben habilitar las plantillas de resultado aprobadas por Meta.'];
+        }
+        $lock = Cache::lock('notificacion:'.$clave, 90);
+        if (! $lock->get()) {
+            return ['estado' => 'pendiente', 'detalle' => 'El aviso ya está siendo procesado.'];
+        }
+        try {
+            $mensaje = $this->conversaciones->reservarNotificacion($ultimoEntrante->conversacion, $clave, $contenido);
+            if ($mensaje === null) {
+                $estado = Mensaje::where('clave_idempotencia', $clave)->value('estado_envio');
+
+                return ['estado' => $estado instanceof EstadoEnvioMensaje ? $estado->value : (string) $estado,
+                    'detalle' => 'El aviso ya está registrado. Revisá su estado en el historial de la conversación.'];
+            }
+            try {
+                $idExterno = $fueraDeVentana
+                    ? $this->whatsapp->enviarPlantilla($telefono, $plantilla, (string) config('services.whatsapp.idioma_plantilla', 'es_AR'), $parametros)
+                    : $this->whatsapp->enviarMensaje($telefono, $contenido);
+                $mensaje->marcarEnviado($idExterno);
+
+                return ['estado' => 'enviado', 'detalle' => 'Meta aceptó el aviso. Su entrega se puede consultar en la conversación.'];
+            } catch (LimiteConsumoWhatsappException $error) {
+                $mensaje->marcarFallido();
+
+                return ['estado' => 'bloqueado', 'detalle' => $error->getMessage().' La decisión del comprobante permanece guardada.'];
+            } catch (Throwable) {
+                $mensaje->marcarFallido();
+
+                return ['estado' => 'fallido', 'detalle' => 'El pago conserva su resultado, pero no se pudo enviar el aviso. Podés reintentarlo desde el detalle.'];
+            }
+        } catch (Throwable) {
+            return ['estado' => 'fallido', 'detalle' => 'El resultado quedó guardado; no se pudo registrar el aviso. Podés reintentarlo.'];
+        } finally {
+            $lock->release();
+        }
     }
 }
