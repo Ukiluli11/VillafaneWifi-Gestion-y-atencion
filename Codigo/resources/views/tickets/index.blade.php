@@ -1,9 +1,10 @@
 @extends('layouts.panel')
 @section('titulo', 'Bandeja de Tickets de Soporte')
 @section('contenido')
+<section class="pagina-tickets">
 <div class="encabezado">
     <div>
-        <p class="sobrelinea">Módulo de Soporte Técnico y Reclamos</p>
+        <p class="sobrelinea">Soporte Técnico y Reclamos</p>
         <h1>Bandeja de Tickets</h1>
         <p>Gestioná, derivá y resolvé los incidentes y solicitudes de servicio reportados por clientes o generados internamente.</p>
     </div>
@@ -43,7 +44,7 @@
 
 {{-- Filtros y buscador --}}
 <div class="tarjeta" style="padding: 1rem; margin-bottom: 1.5rem;">
-    <form method="GET" action="{{ route('tickets.index') }}" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)) auto; gap: 0.75rem; align-items: end;">
+    <form method="GET" action="{{ route('tickets.index') }}" class="filtros-tickets">
         <div>
             <label for="filtro-busqueda" style="font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 0.25rem;">Buscar</label>
             <input type="search" id="filtro-busqueda" name="busqueda" value="{{ $filtros['busqueda'] ?? '' }}" placeholder="N° ticket, cliente, DNI..." aria-label="Buscar tickets">
@@ -84,6 +85,14 @@
             </select>
         </div>
 
+        <div>
+            <label for="fecha-desde">Desde</label>
+            <input id="fecha-desde" name="fecha_desde" type="date" value="{{ $filtros['fecha_desde'] ?? '' }}">
+        </div>
+        <div>
+            <label for="fecha-hasta">Hasta</label>
+            <input id="fecha-hasta" name="fecha_hasta" type="date" value="{{ $filtros['fecha_hasta'] ?? '' }}">
+        </div>
         <div style="display: flex; gap: 0.5rem;">
             <button type="submit" class="boton" style="padding: 0.55rem 1rem;">Filtrar</button>
             <a href="{{ route('tickets.index') }}" class="boton secundario" style="padding: 0.55rem 0.8rem;" title="Limpiar filtros">✕</a>
@@ -127,7 +136,7 @@
                     </td>
                     <td>
                         <strong>{{ $ticket->servicio?->cliente?->nombre_razon_social ?? 'Cliente no disponible' }}</strong>
-                        <small style="display: block; color: var(--color-texto-suave, #64748b);">
+                        <small style="display: block; color: var(--texto-suave);">
                             Plan: {{ $ticket->servicio?->plan?->nombre ?? 'N/A' }} | IP: {{ $ticket->servicio?->ipv4 ?? 'S/D' }}
                         </small>
                     </td>
@@ -151,7 +160,7 @@
                     </td>
                     <td>
                         <span>{{ $ticket->fecha_creacion?->format('d/m/Y') }}</span>
-                        <small style="display: block; color: var(--color-texto-suave, #64748b);">
+                        <small style="display: block; color: var(--texto-suave);">
                             {{ $ticket->fecha_creacion?->format('H:i') }} hs
                         </small>
                     </td>
@@ -174,4 +183,5 @@
 </div>
 
 {{ $tickets->links() }}
+</section>
 @endsection

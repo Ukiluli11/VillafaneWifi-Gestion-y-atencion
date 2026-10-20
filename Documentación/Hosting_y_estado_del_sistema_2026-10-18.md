@@ -222,3 +222,21 @@ Pasaron **84 pruebas y 376 aserciones**, incluidas pruebas de topes diario/mensu
 - Base trasladada con 10 clientes, 7 servicios, 10 conversaciones, 2 tickets y 24 cuotas al momento de la migración.
 - Nginx, PHP-FPM, MariaDB, renovación del certificado y temporizadores configurados para iniciar automáticamente.
 - Antes del despliegue, la suite automatizada había pasado con **43 pruebas y 167 aserciones**. Eso no reemplaza las comprobaciones manuales que siguen pendientes.
+
+## Integración de M2, M3 y M4 y revisión visual — 20/10/2026
+
+Se publicó la rama `Integracion-m2-m3-m4`, con los ajustes de la revisión, en la versión **`20261020T074959Z-56728`**. La integración incorpora las pantallas y funciones de tickets del módulo 4, conserva el circuito de WhatsApp y pagos, y resuelve los cruces de rutas, permisos y notas internas.
+
+- Se agregó una migración que permite tickets manuales sin conversación, sin recrear la tabla ni modificar los registros existentes. Se comprobó su ejecución en MariaDB del host.
+- Se revisaron en navegador las pantallas de resumen, clientes, servicios, planes, cobranza, conversaciones, comprobantes, listado y detalle de tickets, y formulario de ticket manual. Se comprobaron modo claro, modo oscuro y la adaptación de tickets y su formulario a una pantalla de 390 píxeles. El filtro de estado de tickets también se verificó en el servidor.
+- Se corrigieron contraste de textos y botones, distribución de filtros y encabezados, controles de estado que aparecían antes de asignar un ticket y ajuste de formularios móviles. Se incorporaron los filtros de fecha visibles y su validación. Los importes no leídos por OCR ahora se muestran como «Sin detectar» en la bandeja; el mensaje de cuenta sin cuotas pendientes ya no queda dentro de una tabla desplazable.
+- **Verificación automatizada: 98 pruebas aprobadas, 451 aserciones**, formato PHP correcto y compilación de recursos correcta. Incluye pruebas de permisos, ciclo de vida de tickets, fechas, carga manual y avisos limitados por ventana y consumo. La revisión visual del host fue de consulta: no se aprobaron pagos ni se modificaron tickets para probar pantallas.
+- Se compararon las cantidades de registros antes y después: **12 clientes, 10 servicios, 3 tickets, 1 nota interna, 13 comprobantes, 7 pagos, 27 cuotas y 199 mensajes**. Se conservó el Pago #9 de $100 en la cuenta receptora #3. No se ejecutaron seeders de demostración en el host.
+- Se confirmó salud HTTP **200**, acceso no autenticado a tickets y archivos privados con redirección al ingreso (**302**), y bloqueo de la ruta pública de comprobantes (**404**). PHP-FPM, OCR y programador permanecen activos; la última ejecución del programador informa resultado correcto.
+- El respaldo privado final es **`/var/backups/villafane-wifi/respaldo-20261020T075001Z.tar.gz`**; se comprobó que contiene el respaldo de base de datos y archivos. Se generaron respaldos antes de cada publicación.
+
+**Configuración conservada:** control de consumo activo, respuestas con límite 900/mes, plantillas con límites 4/mes y 2/día. Los recordatorios reales y las plantillas cobrables siguen desactivados. El usuario ya agregó el método de pago en Meta; el último estado conocido de las cuatro plantillas es «En revisión». Faltan las pruebas reales de recordatorios y avisos fuera de las 24 horas.
+
+Los avisos de novedades de tickets se integraron al envío real y al historial, con deduplicación y control de ventana y consumo; no incluyen notas técnicas internas. **Quedan desactivados por defecto** mediante `TICKETS_NOTIFICAR_RESULTADO=false`. Si se habilitan, solo pueden enviar dentro de las 24 horas desde el mensaje del cliente: no se configuró una plantilla fuera de ventana para tickets. La gestión de tickets no depende de esos avisos. No se enviaron mensajes reales ni se generaron cobros durante esta revisión.
+
+Los ajustes posteriores a la integración quedaron como cambios locales pendientes de commit y push. La publicación del host fue manual; publicar una rama en GitHub no despliega automáticamente.

@@ -104,11 +104,26 @@ class TicketsTest extends TestCase
         $respuesta->assertSee('Pendientes');
     }
 
+    public function test_filtros_de_fecha_funcionan_separados_y_rechazan_rangos_invalidos(): void
+    {
+        $admin = $this->crearAdministrador();
+        $anterior = Ticket::factory()->create(['fecha_creacion' => '2026-10-01 10:00:00']);
+        $reciente = Ticket::factory()->create(['fecha_creacion' => '2026-10-20 10:00:00']);
+        $this->actingAs($admin)->get(route('tickets.index', ['fecha_hasta' => '2026-10-10']))
+            ->assertOk()->assertSee($anterior->descripcion)->assertDontSee($reciente->descripcion);
+        $this->get(route('tickets.index', ['fecha_desde' => '2026-10-10']))
+            ->assertOk()->assertSee($reciente->descripcion)->assertDontSee($anterior->descripcion);
+        $this->get(route('tickets.index', ['fecha_desde' => '2026-10-20', 'fecha_hasta' => '2026-10-01']))
+            ->assertSessionHasErrors('fecha_hasta');
+    }
+
     public function test_generar_ticket_manual_desde_panel(): void
     {
         $admin = $this->crearAdministrador();
         $tecnico = $this->crearTecnicoSoporte();
         [$cliente, $servicio] = $this->crearEntornoServicio();
+
+        $this->actingAs($admin)->get(route('tickets.create'))->assertOk()->assertSee('Descripción del Problema');
 
         $datos = [
             'id_servicio' => $servicio->id_servicio,

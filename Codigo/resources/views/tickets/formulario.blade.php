@@ -1,11 +1,12 @@
 @extends('layouts.panel')
 @section('titulo', 'Registrar Ticket de Soporte')
 @section('contenido')
+<section class="pagina-tickets">
 <div class="encabezado">
     <div>
         <p class="sobrelinea">Soporte Técnico y Reclamos</p>
         <h1>Registrar Nuevo Ticket</h1>
-        <p>Generá manualmente una solicitud de servicio o reporte técnico para un cliente (RF-27).</p>
+        <p>Generá manualmente una solicitud de servicio o reporte técnico para un cliente.</p>
     </div>
     <a class="boton secundario" href="{{ route('tickets.index') }}">← Volver a la bandeja</a>
 </div>
@@ -73,4 +74,5 @@
         <a class="boton secundario" href="{{ route('tickets.index') }}">Cancelar</a>
     </div>
 </form>
+</section>
 @endsection

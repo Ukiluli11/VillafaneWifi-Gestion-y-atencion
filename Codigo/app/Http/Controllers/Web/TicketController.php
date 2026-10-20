@@ -36,6 +36,15 @@ class TicketController extends Controller
      */
     public function index(Request $request): View
     {
+        $request->validate([
+            'estado' => ['nullable', 'string', 'in:pendiente,asignado,en_proceso,resuelto,cerrado,reabierto'],
+            'busqueda' => ['nullable', 'string', 'max:200'],
+            'buscar' => ['nullable', 'string', 'max:200'],
+            'tipo' => ['nullable', 'string', 'in:tecnico,administrativo,instalacion,reclamo'],
+            'id_usuario_asignado' => ['nullable', 'regex:/^(sin_asignar|[0-9]+)$/'],
+            'fecha_desde' => ['nullable', 'date_format:Y-m-d'],
+            'fecha_hasta' => ['nullable', 'date_format:Y-m-d', ...($request->filled('fecha_desde') ? ['after_or_equal:fecha_desde'] : [])],
+        ]);
         $filtros = [
             'estado' => $request->query('estado'),
             'id_usuario_asignado' => $request->query('id_usuario_asignado'),
@@ -104,6 +113,10 @@ class TicketController extends Controller
             ->where(fn ($q) => $q->whereHas('administrador')->orWhereHas('empleado', fn ($e) => $e->where('area', 'soporte')))
             ->orderBy('nombre_usuario')
             ->get();
+
+        if (! $request->user()->administrador()->exists()) {
+            $tecnicos = $tecnicos->where('id_usuario', $request->user()->id_usuario);
+        }
 
         return view('tickets.formulario', compact('clientes', 'tecnicos', 'idServicioSeleccionado', 'idClienteSeleccionado'));
     }

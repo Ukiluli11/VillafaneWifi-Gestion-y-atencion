@@ -22,6 +22,18 @@
 }
 
 * { box-sizing: border-box; }
+.pagina-tickets { min-width: 0; }
+.pagina-tickets div, .pagina-tickets form { min-width: 0; }
+.pagina-tickets select, .pagina-tickets input { max-width: 100%; min-width: 0; }
+.pagina-tickets code, .pagina-tickets .tarjeta { overflow-wrap: anywhere; }
+.filtros-tickets { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); gap: .75rem; align-items: end; }
+.filtros-tickets label { display: block; margin-bottom: .35rem; font-size: .8rem; font-weight: 600; }
+.filtros-tickets input, .filtros-tickets select { width: 100%; }
+.pagina-tickets #modal-resolver form > div:last-child, .pagina-tickets #modal-reabrir form > div:last-child { flex-wrap: wrap; }
+.pagina-tickets #modal-resolver .boton, .pagina-tickets #modal-reabrir .boton { white-space: nowrap; }
+@media (max-width: 600px) {
+    .pagina-tickets .grilla-dos-campos { grid-template-columns: 1fr !important; }
+}
 html { min-height: 100%; }
 body { min-height: 100vh; margin: 0; background: var(--fondo); }
 button, input, select { font: inherit; }
@@ -319,7 +331,7 @@ textarea:focus { border-color: var(--verde-500); outline: 0; box-shadow: 0 0 0 4
 .tema-oscuro tbody tr:hover { background: #263a32; }
 .tema-oscuro .boton.secundario { color: #d5f1e1; background: #294639; }
 .tema-oscuro .boton.secundario:hover { background: #365d49; }
-.tema-oscuro button:not(.alternar-barra):not(.alternar-tema):not(.abrir-menu):not(.cerrar-menu):not(.boton-salir), .tema-oscuro .boton:not(.secundario) { color: #0d3023; }
+.tema-oscuro button:not(.alternar-barra):not(.alternar-tema):not(.abrir-menu):not(.cerrar-menu):not(.boton-salir):not(.secundario), .tema-oscuro .boton:not(.secundario) { color: #0d3023; }
 .tema-oscuro .estado { color: #c0d4ca; background: #34463e; }
 .tema-oscuro .estado.activo, .tema-oscuro .estado.activa, .tema-oscuro .estado.pagada { color: #a8edc3; background: #214a34; }
 .tema-oscuro .estado.suspendido, .tema-oscuro .estado.pendiente { color: #f4d88a; background: #4c4024; }

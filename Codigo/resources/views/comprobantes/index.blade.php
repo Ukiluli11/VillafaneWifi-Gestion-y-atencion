@@ -79,7 +79,7 @@
                         <small class="texto-suave" style="display: block;">{{ $comprobante->cliente->tipo_documento->value }} {{ $comprobante->cliente->numero_documento }}</small>
                     </td>
                     <td>
-                        <strong class="monto-comprobante">${{ number_format((float) ($comprobante->monto_ocr ?: 0), 2, ',', '.') }}</strong>
+                        <strong class="monto-comprobante">{{ $comprobante->monto_ocr === null ? 'Sin detectar' : '$'.number_format((float) $comprobante->monto_ocr, 2, ',', '.') }}</strong>
                     </td>
                     <td>
                         {{ $comprobante->fecha_ocr ? $comprobante->fecha_ocr->format('d/m/Y') : '—' }}

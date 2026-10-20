@@ -142,6 +142,9 @@
         
         <section class="tarjeta">
             <h2>Cuotas Pendientes de Cancelación</h2>
+            @if ($cuotasImpagas->isEmpty())
+                <p class="titulo-aprobado">El cliente no registra cuotas pendientes al día de hoy.</p>
+            @else
             <div class="tabla-contenedor" style="margin-top: 0.75rem;">
                 <table>
                     <thead>
@@ -153,7 +156,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($cuotasImpagas as $cuota)
+                        @foreach ($cuotasImpagas as $cuota)
                             <tr>
                                 <td><strong>{{ $cuota->periodo }}</strong></td>
                                 <td>{{ $cuota->fecha_vencimiento->format('d/m/Y') }}</td>
@@ -164,16 +167,11 @@
                                     </span>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="titulo-aprobado" style="text-align: center; font-weight: 500;">
-                                    El cliente no registra cuotas pendientes al día de hoy.
-                                </td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
+            @endif
         </section>
 
         @if ($comprobante->estaPendiente() && ($navegacionPermitida['gestionar_comprobantes'] ?? false))

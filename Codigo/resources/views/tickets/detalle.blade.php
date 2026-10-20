@@ -1,9 +1,10 @@
 @extends('layouts.panel')
 @section('titulo', 'Ticket #' . $ticket->id_ticket . ' - ' . ucfirst(str_replace('_', ' ', $ticket->estado->value)))
 @section('contenido')
+<section class="pagina-tickets">
 <div class="encabezado">
     <div>
-        <p class="sobrelinea">Gestión de Soporte Técnico (Módulo 4)</p>
+        <p class="sobrelinea">Gestión de Soporte Técnico</p>
         <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
             <h1 style="margin: 0;">Ticket #{{ $ticket->id_ticket }}</h1>
             @php
@@ -25,7 +26,7 @@
                 Tipo: {{ $ticket->tipo }}
             </span>
         </div>
-        <p style="margin-top: 0.5rem; color: var(--color-texto-suave, #64748b);">
+        <p style="margin-top: 0.5rem; color: var(--texto-suave);">
             Creado el {{ $ticket->fecha_creacion?->format('d/m/Y H:i') }} hs
             @if ($ticket->fecha_asignacion)
                 · Asignado: {{ $ticket->fecha_asignacion->format('d/m/Y H:i') }} hs
@@ -39,7 +40,7 @@
 </div>
 
 {{-- Disposición en dos columnas: Izquierda (Detalles y Chat) / Derecha (Acciones y Notas) --}}
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 1.5rem; margin-top: 1rem;">
 
     {{-- Columna Izquierda: Información técnica del incidente y cliente --}}
     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
@@ -105,12 +106,12 @@
             @endif
         </div>
 
-        {{-- Tarjeta de Conversación de WhatsApp Asociada (RF-33) --}}
+        {{-- Tarjeta de Conversación de WhatsApp Asociada --}}
         <div class="tarjeta" style="padding: 1.25rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
                 <h3 style="margin: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
                     <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2;" aria-hidden="true"><path d="M4 5h16v11H8l-4 4zM8 9h8M8 12h5"/></svg>
-                    Historial de WhatsApp Vinculado (RF-33)
+                    Historial de WhatsApp Vinculado
                 </h3>
                 @if ($ticket->conversacion)
                     <a class="enlace-tabla" href="{{ route('conversaciones.show', $ticket->conversacion) }}" target="_blank">Ver conversación completa ↗</a>
@@ -161,12 +162,12 @@
                     Control y Acciones del Ticket
                 </h3>
 
-                {{-- Asignación a técnico (RF-29) --}}
+                {{-- Asignación a técnico --}}
                 @if ($puedeAsignar)
-                <form method="POST" action="{{ route('tickets.asignar', $ticket) }}" style="margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-borde, #e2e8f0);">
+                <form method="POST" action="{{ route('tickets.asignar', $ticket) }}" style="margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--borde);">
                     @csrf
                     <label for="id_usuario_asignado" style="font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 0.4rem;">
-                        Técnico Asignado (RF-29)
+                        Técnico Asignado
                     </label>
                     <div style="display: flex; gap: 0.5rem;">
                         <select id="id_usuario_asignado" name="id_usuario_asignado" required style="flex: 1;">
@@ -184,25 +185,25 @@
                 </form>
                 @endif
 
-                {{-- Botones de Transición de Estados (RF-30) --}}
+                {{-- Botones de Transición de Estados --}}
                 @if ($puedeGestionar)
                 <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                    <span style="font-size: 0.85rem; font-weight: 600;">Transición de Estado (RF-30):</span>
+                    <span style="font-size: 0.85rem; font-weight: 600;">Transición de Estado:</span>
 
                     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                        @if ($ticket->estado->value !== 'en_proceso' && $ticket->estado->value !== 'resuelto' && $ticket->estado->value !== 'cerrado')
+                        @if (in_array($ticket->estado->value, ['asignado', 'reabierto']))
                             <form method="POST" action="{{ route('tickets.estado', $ticket) }}" style="display: inline;">
                                 @csrf
                                 <input type="hidden" name="estado" value="en_proceso">
-                                <button type="submit" class="boton" style="background: #8b5cf6; border-color: #8b5cf6;">
+                                <button type="submit" class="boton">
                                     ⚙ Iniciar Atención (En Proceso)
                                 </button>
                             </form>
                         @endif
 
-                        @if ($ticket->estado->value !== 'resuelto' && $ticket->estado->value !== 'cerrado')
+                        @if (in_array($ticket->estado->value, ['asignado', 'en_proceso', 'reabierto']))
                             {{-- Formulario para Resolver Ticket con notificación opcional --}}
-                            <button type="button" class="boton" style="background: #10b981; border-color: #10b981;" onclick="document.getElementById('modal-resolver').style.display='block'">
+                            <button type="button" class="boton" onclick="document.getElementById('modal-resolver').style.display='block'">
                                 ✓ Marcar Resuelto
                             </button>
                         @endif
@@ -218,17 +219,20 @@
                         @endif
 
                         @if (in_array($ticket->estado->value, ['resuelto', 'cerrado']))
-                            {{-- Botón de Reapertura (RF-31) --}}
-                            <button type="button" class="boton" style="background: #ef4444; border-color: #ef4444;" onclick="document.getElementById('modal-reabrir').style.display='block'">
-                                ↺ Reabrir Ticket (RF-31)
+                            {{-- Botón de Reapertura --}}
+                            <button type="button" class="boton peligro" style="border-color: var(--peligro);" onclick="document.getElementById('modal-reabrir').style.display='block'">
+                                ↺ Reabrir Ticket
                             </button>
                         @endif
                     </div>
+                    @if ($ticket->estado->value === 'pendiente')
+                        <p class="texto-suave">Asigná un responsable para iniciar la atención del ticket.</p>
+                    @endif
                 </div>
 
                 {{-- Modal desplegable para Resolver con detalle --}}
                 <div id="modal-resolver" style="display: none; margin-top: 1rem; padding: 1rem; background: rgba(16, 185, 129, 0.08); border: 1px solid #10b981; border-radius: 6px;">
-                    <h4 style="margin: 0 0 0.5rem 0; color: #065f46;">Confirmar Solución del Incidente</h4>
+                    <h4 style="margin: 0 0 0.5rem 0; color: var(--verde-700);">Confirmar Solución del Incidente</h4>
                     <form method="POST" action="{{ route('tickets.estado', $ticket) }}">
                         @csrf
                         <input type="hidden" name="estado" value="resuelto">
@@ -246,23 +250,23 @@
                             @endif
                         </div>
                         <div style="display: flex; gap: 0.5rem;">
-                            <button type="submit" class="boton" style="background: #10b981; border-color: #10b981;">Guardar y Resolver</button>
+                            <button type="submit" class="boton">Guardar y Resolver</button>
                             <button type="button" class="boton secundario" onclick="document.getElementById('modal-resolver').style.display='none'">Cancelar</button>
                         </div>
                     </form>
                 </div>
 
-                {{-- Modal desplegable para Reabrir ticket (RF-31) --}}
+                {{-- Modal desplegable para Reabrir ticket --}}
                 <div id="modal-reabrir" style="display: none; margin-top: 1rem; padding: 1rem; background: rgba(239, 68, 68, 0.08); border: 1px solid #ef4444; border-radius: 6px;">
-                    <h4 style="margin: 0 0 0.5rem 0; color: #991b1b;">Reapertura de Ticket no Solucionado</h4>
+                    <h4 style="margin: 0 0 0.5rem 0; color: var(--peligro);">Reapertura de Ticket no Solucionado</h4>
                     <form method="POST" action="{{ route('tickets.reabrir', $ticket) }}">
                         @csrf
                         <div class="campo" style="margin-bottom: 0.75rem;">
-                            <label for="motivo-reabrir" style="font-size: 0.8rem; font-weight: 600;">Motivo formal de la reapertura (RF-31) *:</label>
+                            <label for="motivo-reabrir" style="font-size: 0.8rem; font-weight: 600;">Motivo formal de la reapertura *:</label>
                             <textarea id="motivo-reabrir" name="motivo" rows="2" placeholder="Ej: El cliente manifiesta que luego de 2 horas volvió a sufrir pérdida de paquetes..." required></textarea>
                         </div>
                         <div style="display: flex; gap: 0.5rem;">
-                            <button type="submit" class="boton" style="background: #ef4444; border-color: #ef4444;">Confirmar Reapertura</button>
+                            <button type="submit" class="boton peligro" style="border-color: var(--peligro);">Confirmar Reapertura</button>
                             <button type="button" class="boton secundario" onclick="document.getElementById('modal-reabrir').style.display='none'">Cancelar</button>
                         </div>
                     </form>
@@ -272,11 +276,11 @@
             </div>
         @endif
 
-        {{-- Tarjeta de Notas Internas Técnicas (RF-32) --}}
+        {{-- Tarjeta de Notas Internas Técnicas --}}
         <div class="tarjeta" style="padding: 1.25rem;">
             <h3 style="margin-top: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
                 <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2;" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                Notas Internas y Bitácora Técnica (RF-32)
+                Notas Internas y Bitácora Técnica
             </h3>
             <p class="texto-suave" style="font-size: 0.85rem; margin-top: -0.25rem; margin-bottom: 1rem;">
                 Anotaciones confidenciales registradas por el personal operativo para seguimiento interno del incidente.
@@ -303,7 +307,7 @@
                             <strong>{{ $nota->usuario?->nombre_usuario ?? 'Sistema' }}</strong>
                             <span class="texto-suave">{{ $nota->fecha_hora?->format('d/m/Y H:i') }} hs</span>
                         </div>
-                        <div style="font-size: 0.88rem; line-height: 1.4; color: var(--color-texto, #1f2937);">
+                        <div style="font-size: 0.88rem; line-height: 1.4; color: var(--texto);">
                             {{ $nota->contenido }}
                         </div>
                     </div>
@@ -318,4 +322,5 @@
     </div>
 
 </div>
+</section>
 @endsection
