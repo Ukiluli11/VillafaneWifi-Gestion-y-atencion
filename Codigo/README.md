@@ -13,5 +13,5 @@ Implementación vigente del sistema con Laravel 13, PHP, JavaScript y MariaDB.
 - `resources/views`: pantallas Blade del panel.
 - `tests`: pruebas funcionales y de dominio.
 
-La preparación completa se explica en el `README.md` de la raíz. El alcance,
-los diagramas y la trazabilidad se encuentran en `../teoria/`.
+Los diagramas están en `../Diagramas/`; el informe y los manuales se encuentran
+en `../Documentación/`.
