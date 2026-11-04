@@ -447,6 +447,7 @@ class Modulo2WhatsappTest extends TestCase
     public function test_cuota_vencida_usa_la_plantilla_y_el_texto_de_demostracion_correctos(): void
     {
         config([
+            'services.whatsapp.plantilla_vencida' => 'recordatorio_cuota_vencida',
             'services.whatsapp.modo_simulacion' => false,
             'services.whatsapp.access_token' => 'token-de-prueba',
             'services.whatsapp.phone_number_id' => 'telefono-de-prueba',
