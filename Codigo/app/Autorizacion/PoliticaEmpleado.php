@@ -20,19 +20,22 @@ class PoliticaEmpleado implements PoliticaAcceso
             AccionSistema::GestionarConversaciones,
             AccionSistema::ConsultarComprobantes, AccionSistema::GestionarComprobantes,
             AccionSistema::ConsultarTickets, AccionSistema::GestionarTickets,
+            AccionSistema::ConsultarReportes, AccionSistema::ExportarReportes,
         ],
         AreaEmpleado::Soporte->value => [
             AccionSistema::ConsultarClientes, AccionSistema::ConsultarServicios,
             AccionSistema::ConsultarConversaciones,
             AccionSistema::GestionarConversaciones,
             AccionSistema::ConsultarTickets, AccionSistema::GestionarTickets,
+            AccionSistema::ConsultarReportes,
         ],
         AreaEmpleado::AtencionCliente->value => [
             AccionSistema::ConsultarClientes, AccionSistema::ConsultarCuentas,
             AccionSistema::ConsultarPagos, AccionSistema::ConsultarConversaciones,
             AccionSistema::GestionarConversaciones,
-            AccionSistema::ConsultarPagos, AccionSistema::ConsultarComprobantes,
+            AccionSistema::ConsultarComprobantes,
             AccionSistema::ConsultarTickets, AccionSistema::GestionarTickets,
+            AccionSistema::ConsultarReportes,
         ],
     ];
 

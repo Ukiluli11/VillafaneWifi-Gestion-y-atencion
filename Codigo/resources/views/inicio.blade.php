@@ -50,6 +50,9 @@
             @if ($navegacionPermitida['cobranza'])
                 <a class="accion-rapida" href="{{ route('cuentas-receptoras.index') }}"><span>$</span><span><strong>Gestionar cobranza</strong><small>Cuentas receptoras</small></span></a>
             @endif
+            @if ($navegacionPermitida['reportes'] ?? false)
+                <a class="accion-rapida" href="{{ route('reportes.dashboard') }}"><span>📊</span><span><strong>Dashboard y Métricas</strong><small>KPIs y reportes ejecutivos</small></span></a>
+            @endif
         </div>
     </article>
     <article class="tarjeta panel-estado">

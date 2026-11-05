@@ -48,6 +48,8 @@ class AppServiceProvider extends ServiceProvider
                 'gestionar_comprobantes' => $puede(AccionSistema::GestionarComprobantes),
                 'tickets' => $puede(AccionSistema::ConsultarTickets),
                 'gestionar_tickets' => $puede(AccionSistema::GestionarTickets),
+                'reportes' => $puede(AccionSistema::ConsultarReportes),
+                'exportar_reportes' => $puede(AccionSistema::ExportarReportes),
                 'usuarios' => $puede(AccionSistema::GestionarUsuarios),
             ]);
         });

@@ -10,6 +10,7 @@ use App\Http\Controllers\Web\CuotaController;
 use App\Http\Controllers\Web\InicioController;
 use App\Http\Controllers\Web\PagoController;
 use App\Http\Controllers\Web\PlanController;
+use App\Http\Controllers\Web\ReporteController;
 use App\Http\Controllers\Web\ServicioController;
 use App\Http\Controllers\Web\SimuladorWhatsappController;
 use App\Http\Controllers\Web\TicketController;
@@ -110,6 +111,17 @@ Route::middleware('auth')->group(function (): void {
         Route::post('/tickets/{ticket}/cerrar', [TicketController::class, 'cerrar'])->name('tickets.cerrar');
         Route::post('/tickets/{ticket}/reabrir', [TicketController::class, 'reabrir'])->name('tickets.reabrir');
         Route::post('/tickets/{ticket}/notas', [TicketController::class, 'agregarNota'])->name('tickets.notas.store');
+    });
+
+    // Módulo 5: Métricas, Reportes y Dashboard Ejecutivo
+    Route::middleware('accion:consultar_reportes')->group(function (): void {
+        Route::get('/reportes', [ReporteController::class, 'dashboard'])->name('reportes.dashboard');
+        Route::get('/reportes/morosidad', [ReporteController::class, 'morosidad'])->name('reportes.morosidad');
+        Route::get('/reportes/ingresos', [ReporteController::class, 'ingresos'])->name('reportes.ingresos');
+        Route::get('/reportes/tickets', [ReporteController::class, 'tickets'])->name('reportes.tickets');
+        Route::get('/reportes/alertas', [ReporteController::class, 'alertas'])->name('reportes.alertas');
+        Route::post('/reportes/alertas/notificar', [ReporteController::class, 'notificarAlerta'])->name('reportes.alertas.notificar');
+        Route::get('/reportes/{tipo}/exportar', [ReporteController::class, 'exportar'])->name('reportes.exportar');
     });
 
     Route::get('/usuarios', [UsuarioController::class, 'index'])->middleware('accion:gestionar_usuarios')->name('usuarios.index');

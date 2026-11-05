@@ -80,6 +80,13 @@
                     </a>
                 @endif
 
+                @if ($navegacionPermitida['reportes'] ?? false)
+                    <a class="enlace-navegacion {{ request()->routeIs('reportes.*') ? 'activo' : '' }}" href="{{ route('reportes.dashboard') }}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18M7 16v-4M12 16V8M17 16v-7"/></svg>
+                        <span>Reportes y Métricas</span>
+                    </a>
+                @endif
+
                 @if ($navegacionPermitida['planes'] || $navegacionPermitida['cobranza'])
                     <span class="grupo-navegacion">Administración</span>
                 @endif
