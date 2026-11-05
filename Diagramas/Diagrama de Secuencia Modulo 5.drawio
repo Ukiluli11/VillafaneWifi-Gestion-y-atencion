@@ -1,0 +1,354 @@
+<mxfile host="Electron" modified="2026-11-04T22:10:00.000Z" agent="Antigravity" version="29.6.6" type="device">
+  <diagram id="diag_seq_m5" name="Secuencia Módulo 5">
+    <mxGraphModel dx="2400" dy="1600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2400" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title Banner -->
+        <mxCell id="title_seq_m5" value="Diagrama de Secuencia – Módulo 5: Generación de Reportes Financieros, Métricas de Tickets y Exportación (PDF / Excel)" style="text;html=1;fontSize=14;fontStyle=1;align=center;verticalAlign=middle;fillColor=#E0F7FA;strokeColor=#00838F;rounded=1;arcSize=10;fontColor=#00695C;" vertex="1" parent="1">
+          <mxGeometry x="150" y="25" width="1900" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Lifeline 1: Actor -->
+        <mxCell id="ll_actor" value="Dueño / Admin / Empleado&#xa;(Actor)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#ECEFF1;strokeColor=#455A64;fontColor=#263238;" vertex="1" parent="1">
+          <mxGeometry x="100" y="90" width="170" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="line_actor" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=none;strokeColor=#90A4AE;strokeWidth=1;" edge="1" source="ll_actor" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="185" y="1120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Lifeline 2: UI -->
+        <mxCell id="ll_ui" value="Panel Web&#xa;(Dashboard &amp; Reportes)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#E0F7FA;strokeColor=#00838F;fontColor=#00695C;" vertex="1" parent="1">
+          <mxGeometry x="380" y="90" width="170" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="line_ui" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=none;strokeColor=#90A4AE;strokeWidth=1;" edge="1" source="ll_ui" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="465" y="1120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Lifeline 3: Controller -->
+        <mxCell id="ll_ctrl" value="ReporteController&#xa;(Controlador Web)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontColor=#7B1FA2;" vertex="1" parent="1">
+          <mxGeometry x="680" y="90" width="170" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="line_ctrl" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=none;strokeColor=#90A4AE;strokeWidth=1;" edge="1" source="ll_ctrl" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="1120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Lifeline 4: Domain Service -->
+        <mxCell id="ll_srv" value="ReporteService&#xa;(Dominio / Métricas)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#FFF8E1;strokeColor=#B28900;fontColor=#B28900;" vertex="1" parent="1">
+          <mxGeometry x="980" y="90" width="170" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="line_srv" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=none;strokeColor=#90A4AE;strokeWidth=1;" edge="1" source="ll_srv" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1065" y="1120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Lifeline 5: Eloquent Models -->
+        <mxCell id="ll_models" value="Modelos Eloquent&#xa;(Pago, Ticket, Cuota, Cliente)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#FFEBEE;strokeColor=#C62828;fontColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="90" width="180" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="line_models" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=none;strokeColor=#90A4AE;strokeWidth=1;" edge="1" source="ll_models" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1380" y="1120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Lifeline 6: Export Engine -->
+        <mxCell id="ll_export" value="ExportService&#xa;(DomPDF / Laravel Excel)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="90" width="180" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="line_export" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=none;strokeColor=#90A4AE;strokeWidth=1;" edge="1" source="ll_export" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1690" y="1120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Lifeline 7: Database -->
+        <mxCell id="ll_db" value="Base de Datos&#xa;(MariaDB / MySQL)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#ECEFF1;strokeColor=#455A64;fontColor=#263238;" vertex="1" parent="1">
+          <mxGeometry x="1910" y="90" width="170" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="line_db" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=none;strokeColor=#90A4AE;strokeWidth=1;" edge="1" source="ll_db" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1995" y="1120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ==================== FASE 1: CARGA DE DASHBOARD GENERAL ==================== -->
+        <mxCell id="m1" value="1: Acceder al Dashboard General" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="185" y="175" as="sourcePoint" />
+            <mxPoint x="465" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m2" value="GET /dashboard" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="465" y="195" as="sourcePoint" />
+            <mxPoint x="765" y="195" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m3" value="obtenerMetricasDashboard()" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="215" as="sourcePoint" />
+            <mxPoint x="1065" y="215" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m4" value="calcularKPIsGenerales(mesActual)" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1065" y="235" as="sourcePoint" />
+            <mxPoint x="1380" y="235" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m5" value="SELECT COUNT(*) as activos, SUM(CASE WHEN c.monto_adeudado > 0 THEN 1 ELSE 0 END) FROM cliente..." style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1380" y="255" as="sourcePoint" />
+            <mxPoint x="1995" y="255" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m6" value="SELECT SUM(monto) FROM pago WHERE fecha BETWEEN mes_inicio AND mes_fin" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1380" y="275" as="sourcePoint" />
+            <mxPoint x="1995" y="275" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m7" value="SELECT estado, COUNT(*) FROM ticket GROUP BY estado" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1380" y="295" as="sourcePoint" />
+            <mxPoint x="1995" y="295" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m8" value="return: datasets agrupados (ingresos, tickets, morosidad)" style="endArrow=open;dashed=1;startArrow=none;endFill=0;html=1;fontSize=11;fontColor=#546E7A;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1995" y="325" as="sourcePoint" />
+            <mxPoint x="1380" y="325" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m9" value="return: matriz estructurada de KPIs y series numéricas" style="endArrow=open;dashed=1;startArrow=none;endFill=0;html=1;fontSize=11;fontColor=#546E7A;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1380" y="345" as="sourcePoint" />
+            <mxPoint x="1065" y="345" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m10" value="return: vista dashboard con variables $kpis y series Chart.js" style="endArrow=open;dashed=1;startArrow=none;endFill=0;html=1;fontSize=11;fontColor=#546E7A;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1065" y="365" as="sourcePoint" />
+            <mxPoint x="765" y="365" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m11" value="render: vista general con tarjetas de KPI, alertas y gráficos" style="endArrow=open;dashed=1;startArrow=none;endFill=0;html=1;fontSize=11;fontColor=#546E7A;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="385" as="sourcePoint" />
+            <mxPoint x="465" y="385" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m12" value="Visualización de métricas en tiempo real e indicadores" style="endArrow=open;dashed=1;startArrow=none;endFill=0;html=1;fontSize=11;fontColor=#546E7A;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="465" y="405" as="sourcePoint" />
+            <mxPoint x="185" y="405" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ==================== FASE 2: CONSULTA Y FILTRADO DE REPORTES ==================== -->
+        <mxCell id="m13" value="2: Seleccionar reporte de ingresos y aplicar filtros (fechas, método)" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="185" y="455" as="sourcePoint" />
+            <mxPoint x="465" y="455" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m14" value="GET /reportes/ingresos?desde=2026-10-01&amp;hasta=2026-10-31&amp;metodo=todos" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="465" y="475" as="sourcePoint" />
+            <mxPoint x="765" y="475" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m15" value="generarReporteIngresos(filtros)" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="495" as="sourcePoint" />
+            <mxPoint x="1065" y="495" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m16" value="consultarPagosFiltrados(rangoFechas, formaPago)" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1065" y="515" as="sourcePoint" />
+            <mxPoint x="1380" y="515" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m17" value="SELECT p.*, c.nombre, c.apellido, fp.nombre FROM pago p JOIN cuota ... JOIN cliente c WHERE ..." style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1380" y="535" as="sourcePoint" />
+            <mxPoint x="1995" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m18" value="return: colección de pagos e importes conciliados" style="endArrow=open;dashed=1;startArrow=none;endFill=0;html=1;fontSize=11;fontColor=#546E7A;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1995" y="565" as="sourcePoint" />
+            <mxPoint x="1380" y="565" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m19" value="return: resumen con subtotales por método y total general" style="endArrow=open;dashed=1;startArrow=none;endFill=0;html=1;fontSize=11;fontColor=#546E7A;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1380" y="585" as="sourcePoint" />
+            <mxPoint x="1065" y="585" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m20" value="return: vista con tabla paginada y gráfico de distribución" style="endArrow=open;dashed=1;startArrow=none;endFill=0;html=1;fontSize=11;fontColor=#546E7A;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1065" y="605" as="sourcePoint" />
+            <mxPoint x="765" y="605" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m21" value="render: grilla interactiva de ingresos con opciones de exportación" style="endArrow=open;dashed=1;startArrow=none;endFill=0;html=1;fontSize=11;fontColor=#546E7A;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="625" as="sourcePoint" />
+            <mxPoint x="465" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ==================== FASE 3: BLOQUE CONDICIONAL ALT (EXPORTACIÓN) ==================== -->
+        <mxCell id="alt_frame" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#00838F;strokeWidth=2;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
+          <mxGeometry x="120" y="680" width="1920" height="390" as="geometry" />
+        </mxCell>
+
+        <mxCell id="alt_tag" value="alt" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#00838F;strokeColor=#00838F;fontColor=#FFFFFF;fontStyle=1;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="120" y="680" width="60" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="alt_lbl1" value="[formato == &quot;PDF&quot; – Generación de informe formal membretado para gerencia]" style="text;html=1;fontSize=11;fontStyle=1;fontColor=#00695C;align=left;" vertex="1" parent="1">
+          <mxGeometry x="190" y="685" width="500" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m22" value="3a: Click en botón &quot;Exportar a PDF&quot;" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="185" y="730" as="sourcePoint" />
+            <mxPoint x="465" y="730" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m23" value="GET /reportes/ingresos/export?formato=pdf&amp;desde=...&amp;hasta=..." style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="465" y="750" as="sourcePoint" />
+            <mxPoint x="765" y="750" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m24" value="exportarPDF(&quot;ingresos&quot;, $dataset, $filtros)" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="770" as="sourcePoint" />
+            <mxPoint x="1690" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m25" value="loadView(&quot;reportes.pdf.ingresos&quot;, datos) -&gt; render() con membrete" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1690" y="795" as="sourcePoint" />
+            <mxPoint x="1690" y="825" as="targetPoint">
+              <Array as="points">
+                <mxPoint x="1740" y="795" />
+                <mxPoint x="1740" y="825" />
+              </Array>
+            </mxPoint>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m26" value="return: stream binario PDF (Content-Type: application/pdf)" style="endArrow=open;dashed=1;startArrow=none;endFill=0;html=1;fontSize=11;fontColor=#546E7A;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1690" y="845" as="sourcePoint" />
+            <mxPoint x="765" y="845" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m27" value="response: descarga de archivo Reporte_Ingresos_VillafaneWifi.pdf" style="endArrow=open;dashed=1;startArrow=none;endFill=0;html=1;fontSize=11;fontColor=#546E7A;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="865" as="sourcePoint" />
+            <mxPoint x="185" y="865" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Divider Line inside ALT -->
+        <mxCell id="alt_divider" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=none;strokeColor=#00838F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="120" y="895" as="sourcePoint" />
+            <mxPoint x="2040" y="895" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="alt_lbl2" value="[formato == &quot;EXCEL&quot; – Exportación de planilla de datos para auditoría contable / CSV]" style="text;html=1;fontSize=11;fontStyle=1;fontColor=#00695C;align=left;" vertex="1" parent="1">
+          <mxGeometry x="190" y="905" width="550" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m28" value="3b: Click en botón &quot;Exportar a Excel&quot;" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="185" y="945" as="sourcePoint" />
+            <mxPoint x="465" y="945" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m29" value="GET /reportes/ingresos/export?formato=excel&amp;desde=...&amp;hasta=..." style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="465" y="965" as="sourcePoint" />
+            <mxPoint x="765" y="965" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m30" value="exportarExcel(new IngresosExport($filtros))" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="985" as="sourcePoint" />
+            <mxPoint x="1690" y="985" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m31" value="generarHojaCalculo() con estilos, encabezados y fórmulas SUM" style="endArrow=block;startArrow=none;endFill=1;html=1;fontSize=11;fontColor=#263238;strokeColor=#37474F;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1690" y="1005" as="sourcePoint" />
+            <mxPoint x="1690" y="1035" as="targetPoint">
+              <Array as="points">
+                <mxPoint x="1740" y="1005" />
+                <mxPoint x="1740" y="1035" />
+              </Array>
+            </mxPoint>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m32" value="return: stream binario XLSX / CSV" style="endArrow=open;dashed=1;startArrow=none;endFill=0;html=1;fontSize=11;fontColor=#546E7A;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1690" y="1045" as="sourcePoint" />
+            <mxPoint x="765" y="1045" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m33" value="response: descarga inmediata de archivo Reporte_Ingresos.xlsx" style="endArrow=open;dashed=1;startArrow=none;endFill=0;html=1;fontSize=11;fontColor=#546E7A;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="1060" as="sourcePoint" />
+            <mxPoint x="185" y="1060" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

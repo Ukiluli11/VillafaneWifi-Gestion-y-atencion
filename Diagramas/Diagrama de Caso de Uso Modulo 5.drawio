@@ -1,0 +1,199 @@
+<mxfile host="Electron" modified="2026-11-04T22:00:00.000Z" agent="Antigravity" version="29.6.6" type="device">
+  <diagram id="diag_cu_m5" name="Módulo 5 - Reportes y Dashboard">
+    <mxGraphModel dx="2400" dy="1600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2400" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- System Boundary / Title Box -->
+        <mxCell id="box_m5" value="Sistema de Gestión Villafañe Wifi – Módulo 5: Métricas, Reportes y Dashboard Ejecutivo" style="text;html=1;strokeColor=#00838F;fillColor=#E0F7FA;align=center;verticalAlign=top;whiteSpace=wrap;overflow=hidden;fontStyle=1;fontSize=15;fontColor=#00695C;rounded=1;arcSize=4;strokeWidth=2;spacingTop=16;" vertex="1" parent="1">
+          <mxGeometry x="220" y="40" width="1860" height="960" as="geometry" />
+        </mxCell>
+
+        <!-- External Actor Left: WhatsApp Cloud API -->
+        <mxCell id="act_wa" value="«external»&#xa;Bot de WhatsApp&#xa;(Meta Cloud API)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeWidth=1.5;fillColor=#ECEFF1;strokeColor=#455A64;fontColor=#263238;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="70" y="480" width="100" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- Internal Actors Right: Empleado and Administrador -->
+        <mxCell id="act_empleado" value="Empleado" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeWidth=1.5;fillColor=#ECEFF1;strokeColor=#455A64;fontColor=#263238;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="2180" y="260" width="100" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="act_admin" value="Dueño / Administrador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeWidth=1.5;fillColor=#ECEFF1;strokeColor=#455A64;fontColor=#263238;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="2180" y="680" width="100" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- Use Cases: Right Column (User Facing) -->
+        <mxCell id="cu_dashboard" value="Consultar Dashboard General&#xa;con KPIs ejecutivos" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;strokeWidth=1.5;fillColor=#E0F7FA;strokeColor=#00838F;fontColor=#004D40;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1720" y="120" width="260" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_alertas" value="Visualizar alertas de&#xa;vencimiento y morosidad" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;strokeWidth=1.5;fillColor=#E0F7FA;strokeColor=#00838F;fontColor=#004D40;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1720" y="270" width="260" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_rep_tickets" value="Generar reporte de tickets y&#xa;eficiencia por técnico" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;strokeWidth=1.5;fillColor=#E0F7FA;strokeColor=#00838F;fontColor=#004D40;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1720" y="420" width="260" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_rep_morosidad" value="Generar reporte de clientes&#xa;al día y en mora" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;strokeWidth=1.5;fillColor=#E0F7FA;strokeColor=#00838F;fontColor=#004D40;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1720" y="580" width="260" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_rep_ingresos" value="Generar reporte financiero&#xa;de ingresos por período" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;strokeWidth=1.5;fillColor=#E0F7FA;strokeColor=#00838F;fontColor=#004D40;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1720" y="740" width="260" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Middle Column: Included and Extended Cases -->
+        <mxCell id="cu_graficos" value="Visualizar gráficos estadísticos&#xa;interactivos (Chart.js)" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E0F7FA;strokeColor=#00838F;fontColor=#004D40;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="120" width="240" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_notif_wa" value="Enviar recordatorio de&#xa;vencimiento por WhatsApp" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E0F7FA;strokeColor=#00838F;fontColor=#004D40;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="270" width="240" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_filtro_fechas" value="Aplicar filtros por rango&#xa;de fechas y métodos" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E0F7FA;strokeColor=#00838F;fontColor=#004D40;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="660" width="240" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Left / Central Column: Exportation Hubs -->
+        <mxCell id="cu_export_pdf" value="Exportar reporte a PDF&#xa;con membrete oficial (DomPDF)" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E0F7FA;strokeColor=#00838F;fontColor=#004D40;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="840" y="490" width="250" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cu_export_excel" value="Exportar reporte a formato&#xa;Excel / CSV (Auditoría contable)" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;strokeWidth=1.5;fillColor=#E0F7FA;strokeColor=#00838F;fontColor=#004D40;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="840" y="660" width="250" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Actor Associations (Solid Lines) -->
+        <!-- Empleado connections -->
+        <mxCell id="ea_emp_dash" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" source="act_empleado" target="cu_dashboard" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_emp_alertas" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" source="act_empleado" target="cu_alertas" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_emp_tickets" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" source="act_empleado" target="cu_rep_tickets" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_emp_mora" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" source="act_empleado" target="cu_rep_morosidad" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Administrador connections -->
+        <mxCell id="ea_adm_dash" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" source="act_admin" target="cu_dashboard" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2120" y="700" />
+              <mxPoint x="2120" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea_adm_alertas" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" source="act_admin" target="cu_alertas" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2090" y="720" />
+              <mxPoint x="2090" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea_adm_tickets" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" source="act_admin" target="cu_rep_tickets" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2060" y="740" />
+              <mxPoint x="2060" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ea_adm_mora" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" source="act_admin" target="cu_rep_morosidad" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_adm_ingresos" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" source="act_admin" target="cu_rep_ingresos" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- External Actor WhatsApp connection -->
+        <mxCell id="ea_wa_notif" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" edge="1" source="act_wa" target="cu_notif_wa" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="535" />
+              <mxPoint x="200" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- UML Relationships: Include and Extend -->
+        <!-- Include: Dashboard -> Graficos -->
+        <mxCell id="rel_inc_graficos" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" edge="1" source="cu_dashboard" target="cu_graficos" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Extend: Alertas -> Notificar WhatsApp -->
+        <mxCell id="rel_ext_notif" value="«extend»&#xa;[disparo de aviso]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" edge="1" source="cu_notif_wa" target="cu_alertas" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Include: Ingresos -> Filtro fechas -->
+        <mxCell id="rel_inc_filtro" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" edge="1" source="cu_rep_ingresos" target="cu_filtro_fechas" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Include: Morosidad -> Filtro fechas -->
+        <mxCell id="rel_inc_filtro_mora" value="«include»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" edge="1" source="cu_rep_morosidad" target="cu_filtro_fechas" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Extend: Exportar PDF from Reportes -->
+        <mxCell id="rel_ext_pdf_ingresos" value="«extend»&#xa;[formato PDF]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" edge="1" source="cu_export_pdf" target="cu_rep_ingresos" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="965" y="440" />
+              <mxPoint x="1650" y="440" />
+              <mxPoint x="1650" y="780" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="rel_ext_pdf_mora" value="«extend»&#xa;[formato PDF]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" edge="1" source="cu_export_pdf" target="cu_rep_morosidad" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1120" y="530" />
+              <mxPoint x="1120" y="620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="rel_ext_pdf_tickets" value="«extend»&#xa;[formato PDF]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" edge="1" source="cu_export_pdf" target="cu_rep_tickets" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="965" y="460" />
+              <mxPoint x="1720" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Extend: Exportar Excel from Reportes -->
+        <mxCell id="rel_ext_excel_ingresos" value="«extend»&#xa;[formato Excel]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" edge="1" source="cu_export_excel" target="cu_rep_ingresos" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1120" y="700" />
+              <mxPoint x="1120" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="rel_ext_excel_mora" value="«extend»&#xa;[formato Excel]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" edge="1" source="cu_export_excel" target="cu_rep_morosidad" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="965" y="640" />
+              <mxPoint x="1680" y="640" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
