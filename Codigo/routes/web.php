@@ -21,13 +21,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/webhooks/whatsapp', [WebhookWhatsappController::class, 'verificar'])->name('whatsapp.verificar');
 Route::post('/webhooks/whatsapp', [WebhookWhatsappController::class, 'recibir'])->name('whatsapp.recibir');
 
+Route::view('/', 'portada')->name('portada');
+
 Route::middleware('guest')->group(function (): void {
     Route::get('/iniciar-sesion', [AutenticacionController::class, 'create'])->name('sesion.crear');
     Route::post('/iniciar-sesion', [AutenticacionController::class, 'store'])->middleware('throttle:5,1')->name('sesion.guardar');
 });
 
 Route::middleware('auth')->group(function (): void {
-    Route::get('/', InicioController::class)->name('inicio');
+    Route::get('/panel', InicioController::class)->name('inicio');
     Route::post('/cerrar-sesion', [AutenticacionController::class, 'destroy'])->name('sesion.destruir');
 
     Route::middleware('accion:consultar_clientes')->group(function (): void {
