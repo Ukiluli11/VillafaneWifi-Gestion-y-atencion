@@ -1,9 +1,12 @@
 @extends('layouts.panel')
-@section('titulo', 'Alertas de Vencimiento y Morosidad (RF-37)')
+@section('titulo', 'Alertas de Vencimiento y Morosidad')
 @section('contenido')
+@php
+    $hoy = now('America/Argentina/Buenos_Aires')->toDateString();
+@endphp
 <div class="encabezado">
     <div>
-        <p class="sobrelinea">Módulo 5 – Requerimiento Funcional RF-37</p>
+        <p class="sobrelinea">Reportes y métricas</p>
         <h1>Bandeja de Alertas de Vencimiento y Cobranza</h1>
         <p>Monitoreo proactivo de vencimientos de cuotas y disparo de notificaciones automáticas por WhatsApp.</p>
     </div>
@@ -16,21 +19,21 @@
 
 <nav style="display: flex; gap: 10px; margin-bottom: 24px; border-bottom: 1px solid var(--borde); padding-bottom: 12px; overflow-x: auto;">
     <a href="{{ route('reportes.dashboard') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Tablero Principal</a>
-    <a href="{{ route('reportes.morosidad') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Clientes y Morosidad (RF-34)</a>
-    <a href="{{ route('reportes.ingresos') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Cobranzas e Ingresos (RF-35)</a>
-    <a href="{{ route('reportes.tickets') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Rendimiento de Tickets (RF-36)</a>
-    <a href="{{ route('reportes.alertas') }}" style="padding: 8px 16px; border-radius: 8px; background: #00838F; color: #fff; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Alertas de Vencimiento (RF-37)</a>
+    <a href="{{ route('reportes.morosidad') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Clientes y Morosidad</a>
+    <a href="{{ route('reportes.ingresos') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Cobranzas e Ingresos</a>
+    <a href="{{ route('reportes.tickets') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Rendimiento de Tickets</a>
+    <a href="{{ route('reportes.alertas') }}" style="padding: 8px 16px; border-radius: 8px; background: #00838F; color: #fff; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Alertas de Vencimiento</a>
 </nav>
 
 <section class="metricas" aria-label="Resumen de alertas">
     <article class="metrica" style="border-left: 4px solid #C62828;">
         <div class="metrica-cabecera"><span>CUOTAS VENCIDAS</span><span class="metrica-icono" style="background: #FFEBEE; color: #C62828;">!</span></div>
-        <strong style="color: #C62828;">{{ $cuotas->filter(fn($c) => $c->fecha_vencimiento->isPast())->count() }}</strong>
+        <strong style="color: #C62828;">{{ $cuotas->filter(fn($c) => $c->fecha_vencimiento->toDateString() < $hoy)->count() }}</strong>
         <small>requieren aviso urgente</small>
     </article>
     <article class="metrica" style="border-left: 4px solid #F57F17;">
         <div class="metrica-cabecera"><span>PRÓXIMAS A VENCER</span><span class="metrica-icono" style="background: #FFF9C4; color: #F57F17;">⏰</span></div>
-        <strong style="color: #F57F17;">{{ $cuotas->filter(fn($c) => !$c->fecha_vencimiento->isPast())->count() }}</strong>
+        <strong style="color: #F57F17;">{{ $cuotas->filter(fn($c) => $c->fecha_vencimiento->toDateString() >= $hoy)->count() }}</strong>
         <small>vencen en los próximos 7 días</small>
     </article>
     <article class="metrica" style="border-left: 4px solid #00838F;">
@@ -73,7 +76,7 @@
                 <tbody>
                     @foreach ($cuotas as $cuota)
                         @php
-                            $esVencida = $cuota->fecha_vencimiento->isPast();
+                            $esVencida = $cuota->fecha_vencimiento->toDateString() < $hoy;
                             $cliente = $cuota->servicio?->cliente;
                         @endphp
                         <tr>

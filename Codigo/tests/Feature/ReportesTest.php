@@ -10,12 +10,14 @@ use App\Enums\EstadoTicket;
 use App\Enums\MedioPago;
 use App\Enums\TipoCuentaReceptora;
 use App\Models\Cliente;
+use App\Models\Comprobante;
 use App\Models\CuentaReceptora;
 use App\Models\Cuota;
 use App\Models\Pago;
 use App\Models\Plan;
 use App\Models\Servicio;
 use App\Models\Ticket;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
@@ -60,6 +62,9 @@ class ReportesTest extends TestCase
     public function test_acceso_al_dashboard_ejecutivo_autenticado(): void
     {
         $admin = $this->crearAdmin();
+        $cliente = Cliente::factory()->create();
+        Comprobante::create(['id_cliente' => $cliente->id_cliente, 'hash_archivo' => hash('sha256', 'pendiente-reporte'), 'estado_validacion' => 'pendiente']);
+        Comprobante::create(['id_cliente' => $cliente->id_cliente, 'hash_archivo' => hash('sha256', 'aprobado-reporte'), 'estado_validacion' => 'aprobado']);
 
         $response = $this->actingAs($admin)->get(route('reportes.dashboard'));
 
@@ -68,6 +73,8 @@ class ReportesTest extends TestCase
         $response->assertSee('Dashboard Ejecutivo y Métricas');
         $response->assertSee('CLIENTES ACTIVOS');
         $response->assertSee('MOROSIDAD EN CARTERA');
+        $response->assertSee('COMPROBANTES POR VALIDAR');
+        $response->assertViewHas('metricas', fn (array $metricas): bool => $metricas['comprobantes_pendientes'] === 1);
     }
 
     public function test_empleado_de_administracion_puede_ver_dashboard_y_reportes(): void
@@ -89,6 +96,7 @@ class ReportesTest extends TestCase
 
     public function test_reporte_morosidad_filtra_clientes_al_dia_y_en_mora(): void
     {
+        $this->travelTo(Carbon::parse('2026-11-05 12:00:00', 'America/Argentina/Buenos_Aires'));
         $admin = $this->crearAdmin();
         $plan = Plan::create(['nombre' => 'Fibra 50M', 'velocidad' => 50, 'precio_vigente' => 15000]);
         $cuenta = CuentaReceptora::create(['nombre' => 'Banco Formosa', 'tipo' => TipoCuentaReceptora::Banco, 'identificador' => '0123456789012345678901']);
@@ -109,6 +117,7 @@ class ReportesTest extends TestCase
         $responseMora->assertOk();
         $responseMora->assertSee('Carlos Moroso');
         $responseMora->assertDontSee('Juan Al Día');
+        $responseMora->assertViewHas('items', fn (array $items): bool => $items[0]['dias_atraso'] === 56);
 
         // Consulta filtrando al día
         $responseAlDia = $this->actingAs($admin)->get(route('reportes.morosidad', ['estado_financiero' => 'al_dia']));
@@ -136,6 +145,9 @@ class ReportesTest extends TestCase
         $response->assertOk();
         $response->assertSee('15.000,00');
         $response->assertDontSee('12.000,00');
+        $response->assertSee('Hoy');
+        $response->assertSee('Esta semana');
+        $response->assertSee('Este mes');
     }
 
     public function test_reporte_tickets_calcula_metricas_y_mttr(): void
@@ -169,6 +181,7 @@ class ReportesTest extends TestCase
 
     public function test_alertas_de_vencimiento_y_notificacion_whatsapp(): void
     {
+        $this->travelTo(Carbon::parse('2026-11-06 02:00:00', 'UTC'));
         $admin = $this->crearAdmin();
         $plan = Plan::create(['nombre' => 'Plan Alerta', 'velocidad' => 30, 'precio_vigente' => 10000]);
         $cliente = Cliente::create(['nombre_razon_social' => 'Mariana Alerta', 'tipo_documento' => 'DNI', 'numero_documento' => '35123456', 'telefono_whatsapp' => '5493704998877']);
@@ -179,7 +192,7 @@ class ReportesTest extends TestCase
             'periodo' => '2026-11',
             'monto' => 10000,
             'fecha_emision' => '2026-11-01',
-            'fecha_vencimiento' => now()->addDays(2)->toDateString(),
+            'fecha_vencimiento' => '2026-11-05',
             'estado' => EstadoCuota::Pendiente,
         ]);
 
@@ -187,6 +200,7 @@ class ReportesTest extends TestCase
         $response->assertOk();
         $response->assertSee('Mariana Alerta');
         $response->assertSee('PRÓXIMO VENCIMIENTO');
+        $response->assertDontSee('MORA VENCIDA');
 
         // Notificar por WhatsApp
         $responseNotif = $this->actingAs($admin)->post(route('reportes.alertas.notificar'), [
@@ -210,6 +224,29 @@ class ReportesTest extends TestCase
         $this->assertStringContainsString('Reporte_Morosidad_VillafaneWifi', (string) $response->headers->get('Content-Disposition'));
     }
 
+    public function test_exportar_reportes_exige_permiso_independiente_de_la_consulta(): void
+    {
+        foreach ([AreaEmpleado::Soporte, AreaEmpleado::AtencionCliente] as $area) {
+            $empleado = $this->crearEmpleado($area);
+            $this->actingAs($empleado)
+                ->get(route('reportes.dashboard'))
+                ->assertOk()
+                ->assertDontSee('Reportes para Descarga');
+
+            foreach (['csv', 'xlsx', 'pdf'] as $formato) {
+                $this->actingAs($empleado)
+                    ->get(route('reportes.exportar', ['tipo' => 'morosidad', 'formato' => $formato]))
+                    ->assertForbidden();
+            }
+        }
+
+        $empleadoAdministracion = $this->crearEmpleado(AreaEmpleado::Administracion);
+
+        $this->actingAs($empleadoAdministracion)
+            ->get(route('reportes.exportar', ['tipo' => 'morosidad', 'formato' => 'csv']))
+            ->assertOk();
+    }
+
     public function test_exportar_reporte_a_imprimir_pdf(): void
     {
         $admin = $this->crearAdmin();
@@ -224,5 +261,95 @@ class ReportesTest extends TestCase
         $response->assertSee('VILLAFAÑE WIFI');
         $response->assertSee('Documento Oficial Certificado');
         $response->assertSee('Imprimir / Guardar como PDF');
+    }
+
+    public function test_descarga_archivos_pdf_y_excel_validos_para_los_tres_reportes(): void
+    {
+        $this->actingAs($this->crearAdmin());
+        $cuenta = CuentaReceptora::create(['nombre' => '=1+1', 'tipo' => TipoCuentaReceptora::Banco, 'identificador' => '0123456789012345678901']);
+        Pago::create(['id_cuenta' => $cuenta->id_cuenta, 'fecha' => now()->toDateString(), 'monto_total' => 1250.50, 'medio_pago' => MedioPago::Transferencia]);
+
+        foreach (['morosidad', 'ingresos', 'tickets'] as $tipo) {
+            $pdf = $this->get(route('reportes.exportar', ['tipo' => $tipo, 'formato' => 'pdf']));
+            $pdf->assertOk()->assertHeader('Content-Type', 'application/pdf');
+            $this->assertStringStartsWith('%PDF-', $pdf->getContent());
+
+            $excel = $this->get(route('reportes.exportar', ['tipo' => $tipo, 'formato' => 'xlsx']));
+            $excel->assertOk()->assertHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            $archivo = tempnam(sys_get_temp_dir(), 'test_xlsx_');
+            try {
+                file_put_contents($archivo, $excel->streamedContent());
+                $zip = new \ZipArchive;
+                $this->assertTrue($zip->open($archivo));
+                $this->assertNotFalse($zip->getFromName('xl/workbook.xml'));
+                $this->assertNotFalse($zip->getFromName('xl/worksheets/sheet1.xml'));
+                if ($tipo === 'ingresos') {
+                    $contenido = $zip->getFromName('xl/worksheets/sheet1.xml');
+                    $this->assertStringContainsString('<v>1250.5</v>', $contenido);
+                    $this->assertStringContainsString('TOTAL', $contenido);
+                    $this->assertStringNotContainsString('<f>', $contenido);
+                }
+                $zip->close();
+            } finally {
+                unlink($archivo);
+            }
+        }
+    }
+
+    public function test_los_filtros_invalidos_se_rechazan_en_pantalla_y_exportaciones(): void
+    {
+        $this->actingAs($this->crearAdmin());
+        $casos = [
+            ['morosidad', ['estado_financiero' => 'desconocido'], 'estado_financiero'],
+            ['morosidad', ['busqueda' => ['nombre']], 'busqueda'],
+            ['morosidad', ['id_plan' => 999999], 'id_plan'],
+            ['ingresos', ['fecha_desde' => '2026-02-30'], 'fecha_desde'],
+            ['ingresos', ['fecha_desde' => ['2026-01-01']], 'fecha_desde'],
+            ['ingresos', ['fecha_desde' => '2026-10-31', 'fecha_hasta' => '2026-10-01'], 'fecha_hasta'],
+            ['ingresos', ['medio_pago' => 'inventado'], 'medio_pago'],
+            ['ingresos', ['id_cuenta' => 999999], 'id_cuenta'],
+            ['tickets', ['estado' => 'inventado'], 'estado'],
+            ['tickets', ['id_usuario_asignado' => ['1']], 'id_usuario_asignado'],
+            ['tickets', ['id_usuario_asignado' => 999999], 'id_usuario_asignado'],
+            ['tickets', ['tipo' => 'inventado'], 'tipo'],
+        ];
+        foreach ($casos as [$tipo, $filtros, $campo]) {
+            $this->getJson(route('reportes.'.$tipo, $filtros))
+                ->assertUnprocessable()->assertJsonValidationErrors($campo);
+            foreach (['pdf', 'xlsx', 'csv'] as $formato) {
+                $this->getJson(route('reportes.exportar', ['tipo' => $tipo, 'formato' => $formato]).'&'.http_build_query($filtros))
+                    ->assertUnprocessable()->assertJsonValidationErrors($campo);
+            }
+        }
+        $this->get(route('reportes.ingresos', ['fecha_desde' => '2026-10-31', 'fecha_hasta' => '2026-10-01']))
+            ->assertRedirect(route('reportes.ingresos'))
+            ->assertSessionHasErrors(['fecha_hasta' => 'La fecha hasta debe ser igual o posterior a la fecha desde.']);
+    }
+
+    public function test_filtros_vacios_usen_el_mes_actual_y_admitan_responsables_administradores(): void
+    {
+        $this->travelTo(Carbon::parse('2026-11-05 12:00:00', 'America/Argentina/Buenos_Aires'));
+        $admin = $this->crearAdmin();
+        $this->actingAs($admin)->get(route('reportes.ingresos', ['fecha_desde' => '', 'fecha_hasta' => '']))
+            ->assertOk()->assertViewHas('resumen', fn (array $resumen): bool => $resumen['desde'] === '2026-11-01' && $resumen['hasta'] === '2026-11-30');
+        $this->get(route('reportes.tickets', ['id_usuario_asignado' => $admin->id_usuario]))
+            ->assertOk()->assertViewHas('tecnicos', fn ($tecnicos): bool => $tecnicos->contains('id_usuario', $admin->id_usuario));
+        $this->get(route('reportes.tickets', ['id_usuario_asignado' => 'sin_asignar']))->assertOk();
+    }
+
+    public function test_dashboard_no_duplica_meses_al_consultar_el_ultimo_dia_del_mes(): void
+    {
+        $this->travelTo(Carbon::parse('2026-05-31 12:00:00', 'America/Argentina/Buenos_Aires'));
+        Pago::factory()->create(['fecha' => '2025-12-01', 'monto_total' => 20]);
+        Pago::factory()->create(['fecha' => '2026-04-10', 'monto_total' => 150]);
+        Pago::factory()->create(['fecha' => '2026-05-25', 'monto_total' => 300]);
+
+        $this->actingAs($this->crearAdmin())->get(route('reportes.dashboard'))
+            ->assertOk()->assertViewHas('metricas', function (array $metricas): bool {
+                return $metricas['recaudacion_mes_anterior'] === 150.0
+                    && $metricas['recaudacion_mes_actual'] === 300.0
+                    && $metricas['variacion_recaudacion_pct'] === 100.0
+                    && array_column($metricas['serie_ingresos'], 'total') === [20.0, 0.0, 0.0, 0.0, 150.0, 300.0];
+            });
     }
 }

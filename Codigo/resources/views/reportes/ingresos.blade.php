@@ -1,28 +1,30 @@
 @extends('layouts.panel')
-@section('titulo', 'Reporte Financiero de Ingresos (RF-35)')
+@section('titulo', 'Reporte Financiero de Ingresos')
 @section('contenido')
 <div class="encabezado">
     <div>
-        <p class="sobrelinea">Módulo 5 – Requerimiento Funcional RF-35</p>
+        <p class="sobrelinea">Reportes y métricas</p>
         <h1>Reporte Financiero de Ingresos</h1>
         <p>Control de cobranzas, imputaciones de pagos y auditoría contable por período.</p>
     </div>
+    @if ($navegacionPermitida['exportar_reportes'] ?? false)
     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <a class="boton" href="{{ route('reportes.exportar', ['tipo' => 'ingresos', 'formato' => 'csv'] + request()->all()) }}">
-            📥 Exportar Excel (CSV)
+        <a class="boton" href="{{ route('reportes.exportar', ['tipo' => 'ingresos', 'formato' => 'xlsx'] + request()->all()) }}">
+            📥 Exportar Excel (.xlsx)
         </a>
-        <a class="boton" target="_blank" href="{{ route('reportes.exportar', ['tipo' => 'ingresos', 'formato' => 'imprimir'] + request()->all()) }}" style="background: #00838F; color: #fff;">
-            🖨️ Imprimir / PDF
+        <a class="boton" target="_blank" href="{{ route('reportes.exportar', ['tipo' => 'ingresos', 'formato' => 'pdf'] + request()->all()) }}" style="background: #00838F; color: #fff;">
+            🖨️ Descargar PDF
         </a>
     </div>
+    @endif
 </div>
 
 <nav style="display: flex; gap: 10px; margin-bottom: 24px; border-bottom: 1px solid var(--borde); padding-bottom: 12px; overflow-x: auto;">
     <a href="{{ route('reportes.dashboard') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Tablero Principal</a>
-    <a href="{{ route('reportes.morosidad') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Clientes y Morosidad (RF-34)</a>
-    <a href="{{ route('reportes.ingresos') }}" style="padding: 8px 16px; border-radius: 8px; background: #00838F; color: #fff; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Cobranzas e Ingresos (RF-35)</a>
-    <a href="{{ route('reportes.tickets') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Rendimiento de Tickets (RF-36)</a>
-    <a href="{{ route('reportes.alertas') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Alertas de Vencimiento (RF-37)</a>
+    <a href="{{ route('reportes.morosidad') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Clientes y Morosidad</a>
+    <a href="{{ route('reportes.ingresos') }}" style="padding: 8px 16px; border-radius: 8px; background: #00838F; color: #fff; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Cobranzas e Ingresos</a>
+    <a href="{{ route('reportes.tickets') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Rendimiento de Tickets</a>
+    <a href="{{ route('reportes.alertas') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Alertas de Vencimiento</a>
 </nav>
 
 {{-- KPIs de Recaudación --}}
@@ -75,6 +77,13 @@
 
 {{-- Filtros dinámicos por rango de fechas y cuentas --}}
 <article class="tarjeta" style="margin-bottom: 20px;">
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;">
+        @foreach ($periodos as $nombre => [$desde, $hasta])
+            <a class="boton" href="{{ route('reportes.ingresos', ['fecha_desde' => $desde, 'fecha_hasta' => $hasta, 'medio_pago' => $filtros['medio_pago'], 'id_cuenta' => $filtros['id_cuenta']]) }}" style="background: transparent; border: 1px solid var(--borde); color: var(--texto);">
+                {{ $nombre }}
+            </a>
+        @endforeach
+    </div>
     <form method="GET" action="{{ route('reportes.ingresos') }}" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) 120px 100px; gap: 14px; align-items: end;">
         <div>
             <label for="fecha_desde" style="font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 4px;">Fecha Desde</label>

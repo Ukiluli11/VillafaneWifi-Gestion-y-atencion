@@ -26,6 +26,7 @@ const actualizarBotonTema = () => {
     botonTema?.setAttribute('aria-pressed', String(oscuro));
     botonTema?.setAttribute('aria-label', etiqueta);
     botonTema?.setAttribute('title', etiqueta);
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', oscuro ? '#141917' : '#f7f8fa');
 };
 
 botonBarra?.addEventListener('click', () => {
@@ -43,12 +44,33 @@ actualizarBotonTema();
 
 document.querySelectorAll('.enlace-navegacion').forEach((enlace) => {
     enlace.title = enlace.textContent.trim();
+    if (enlace.classList.contains('activo')) {
+        enlace.setAttribute('aria-current', 'page');
+    }
 });
 
+const barraLateral = document.querySelector('#barra-lateral');
+const pantallaMovil = window.matchMedia('(max-width: 820px)');
+const actualizarAccesoMenu = () => {
+    if (barraLateral) {
+        barraLateral.inert = pantallaMovil.matches && !cuerpo.classList.contains('menu-abierto');
+    }
+};
+
 const alternarMenu = (abierto) => {
+    const estabaAbierto = cuerpo.classList.contains('menu-abierto');
     cuerpo.classList.toggle('menu-abierto', abierto);
     botonAbrir?.setAttribute('aria-expanded', String(abierto));
+    actualizarAccesoMenu();
+    if (abierto) {
+        barraLateral?.querySelector('a')?.focus();
+    } else if (estabaAbierto && pantallaMovil.matches) {
+        botonAbrir?.focus();
+    }
 };
+
+actualizarAccesoMenu();
+pantallaMovil.addEventListener('change', () => alternarMenu(false));
 
 botonAbrir?.addEventListener('click', () => alternarMenu(true));
 document.querySelectorAll('[data-cerrar-menu]').forEach((elemento) => {

@@ -192,14 +192,36 @@
             thead { display: table-header-group; }
             tfoot { display: table-footer-group; }
         }
+        @if ($esPdf ?? false)
+        @page { margin: 24pt; }
+        @media print { body { padding: 18pt !important; } }
+        body { font-family: 'DejaVu Sans', sans-serif; background: white; padding: 0; font-size: 9px; }
+        .hoja-impresion { width: 94%; max-width: none; margin: 20px auto !important; padding: 0; box-shadow: none; }
+        .membrete, .membrete-logo, .resumen-grid { display: block; }
+        .membrete { display: table; width: 100%; }
+        .membrete-logo, .membrete-datos { display: table-cell; width: 50%; vertical-align: top; }
+        .info-reporte, .resumen-cajas, .firmas { display: table; width: 100%; table-layout: fixed; }
+        .info-item, .caja-resumen { display: table-cell; width: 25%; padding: 8px; }
+        .caja-resumen strong { font-size: 12px; }
+        .firmas { margin-top: 30px; padding: 0; }
+        .linea-firma { display: table-cell; width: 50%; }
+        table { font-size: 9px; }
+        th { font-size: 8px; padding: 6px; }
+        td { padding: 6px; }
+        .barra-acciones { display: none; }
+        thead { display: table-header-group; }
+        tr { page-break-inside: avoid; }
+        @endif
     </style>
 </head>
 <body>
 
+@unless ($esPdf ?? false)
 <div class="barra-acciones">
     <a href="javascript:window.history.back()" class="btn-accion btn-volver">← Volver al Panel</a>
     <button onclick="window.print()" class="btn-accion">🖨️ Imprimir / Guardar como PDF</button>
 </div>
+@endunless
 
 <div class="hoja-impresion">
     {{-- Membrete Oficial --}}
@@ -228,7 +250,7 @@
     <div class="info-reporte">
         <div class="info-item">
             <strong>Fecha y Hora de Emisión</strong>
-            <span>{{ now()->format('d/m/Y H:i:s') }}</span>
+            <span>{{ now('America/Argentina/Buenos_Aires')->format('d/m/Y H:i:s') }}</span>
         </div>
         <div class="info-item">
             <strong>Usuario Responsable</strong>
@@ -239,8 +261,8 @@
             <span>Documento Oficial Certificado</span>
         </div>
         <div class="info-item">
-            <strong>Módulo del Sistema</strong>
-            <span>Módulo 5 – Reportes y KPIs (RF-39)</span>
+            <strong>Área del sistema</strong>
+            <span>Reportes y métricas</span>
         </div>
     </div>
 

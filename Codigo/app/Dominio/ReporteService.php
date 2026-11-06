@@ -3,6 +3,7 @@
 namespace App\Dominio;
 
 use App\Enums\EstadoCliente;
+use App\Enums\EstadoComprobante;
 use App\Enums\EstadoCuota;
 use App\Enums\EstadoServicio;
 use App\Enums\EstadoTicket;
@@ -13,7 +14,6 @@ use App\Models\Pago;
 use App\Models\Plan;
 use App\Models\Servicio;
 use App\Models\Ticket;
-use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -36,8 +36,8 @@ class ReporteService
         $hoy = CarbonImmutable::today('America/Argentina/Buenos_Aires');
         $inicioMesActual = $hoy->startOfMonth()->toDateString();
         $finMesActual = $hoy->endOfMonth()->toDateString();
-        $inicioMesAnterior = $hoy->subMonth()->startOfMonth()->toDateString();
-        $finMesAnterior = $hoy->subMonth()->endOfMonth()->toDateString();
+        $inicioMesAnterior = $hoy->startOfMonth()->subMonth()->toDateString();
+        $finMesAnterior = $hoy->startOfMonth()->subMonth()->endOfMonth()->toDateString();
 
         // 1. Clientes y Servicios
         $totalClientes = Cliente::count();
@@ -80,12 +80,12 @@ class ReporteService
         $ticketsCerrados = Ticket::where('estado', EstadoTicket::Cerrado->value)->count();
 
         // 4. Comprobantes pendientes
-        $comprobantesPendientes = Comprobante::where('estado', 'pendiente')->count();
+        $comprobantesPendientes = Comprobante::where('estado_validacion', EstadoComprobante::Pendiente->value)->count();
 
         // 5. Serie histórica de ingresos (últimos 6 meses para Chart.js)
         $serieIngresos = [];
         for ($i = 5; $i >= 0; $i--) {
-            $mesRef = $hoy->subMonths($i);
+            $mesRef = $hoy->startOfMonth()->subMonths($i);
             $ini = $mesRef->startOfMonth()->toDateString();
             $fin = $mesRef->endOfMonth()->toDateString();
             $totalMes = (float) Pago::whereBetween('fecha', [$ini, $fin])->sum('monto_total');
@@ -132,7 +132,7 @@ class ReporteService
     /**
      * Genera el dataset del reporte de clientes al día y en mora (RF-34).
      *
-     * @param array<string, mixed> $filtros
+     * @param  array<string, mixed>  $filtros
      * @return array{items: array<int, array<string, mixed>>, resumen: array<string, mixed>}
      */
     public function obtenerReporteMorosidad(array $filtros = []): array
@@ -199,7 +199,7 @@ class ReporteService
 
             $cuotaMasAntigua = $cuotasImpagas->first();
             $diasAtraso = $cuotaMasAntigua
-                ? max(0, $hoy->diffInDays($cuotaMasAntigua->fecha_vencimiento, false) * -1)
+                ? max(0, (int) CarbonImmutable::parse($cuotaMasAntigua->fecha_vencimiento->toDateString(), $hoy->timezone)->diffInDays($hoy, false))
                 : 0;
 
             $servicioPrincipal = $cliente->servicios->first();
@@ -247,7 +247,7 @@ class ReporteService
     /**
      * Genera el dataset del reporte financiero de ingresos por período (RF-35).
      *
-     * @param array<string, mixed> $filtros
+     * @param  array<string, mixed>  $filtros
      * @return array{items: Collection<int, Pago>, resumen: array<string, mixed>}
      */
     public function obtenerReporteIngresos(array $filtros = []): array
@@ -306,7 +306,7 @@ class ReporteService
     /**
      * Genera el dataset del reporte de tickets y eficiencia por técnico (RF-36).
      *
-     * @param array<string, mixed> $filtros
+     * @param  array<string, mixed>  $filtros
      * @return array{items: Collection<int, Ticket>, resumen: array<string, mixed>}
      */
     public function obtenerReporteTickets(array $filtros = []): array
@@ -384,7 +384,6 @@ class ReporteService
     /**
      * Obtiene cuotas en alerta de vencimiento (RF-37).
      *
-     * @param int $diasAnticipacion
      * @return Collection<int, Cuota>
      */
     public function obtenerAlertasVencimiento(int $diasAnticipacion = 5): Collection
@@ -404,9 +403,8 @@ class ReporteService
     /**
      * Genera una respuesta de descarga en formato CSV UTF-8 con BOM compatible con Microsoft Excel (RF-39).
      *
-     * @param string $nombreArchivo
-     * @param array<int, string> $encabezados
-     * @param iterable<array<int, mixed>> $filas
+     * @param  array<int, string>  $encabezados
+     * @param  iterable<array<int, mixed>>  $filas
      */
     public function exportarCsv(string $nombreArchivo, array $encabezados, iterable $filas): StreamedResponse
     {

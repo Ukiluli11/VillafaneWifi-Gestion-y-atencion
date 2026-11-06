@@ -1,28 +1,30 @@
 @extends('layouts.panel')
-@section('titulo', 'Reporte de Tickets y Eficiencia Técnica (RF-36)')
+@section('titulo', 'Reporte de Tickets y Eficiencia Técnica')
 @section('contenido')
 <div class="encabezado">
     <div>
-        <p class="sobrelinea">Módulo 5 – Requerimiento Funcional RF-36</p>
+        <p class="sobrelinea">Reportes y métricas</p>
         <h1>Reporte de Tickets y Eficiencia por Técnico</h1>
         <p>Evaluación del servicio de soporte, tasa de resolución, tiempos medios (MTTR) y productividad del equipo.</p>
     </div>
+    @if ($navegacionPermitida['exportar_reportes'] ?? false)
     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <a class="boton" href="{{ route('reportes.exportar', ['tipo' => 'tickets', 'formato' => 'csv'] + request()->all()) }}">
-            📥 Exportar Excel (CSV)
+        <a class="boton" href="{{ route('reportes.exportar', ['tipo' => 'tickets', 'formato' => 'xlsx'] + request()->all()) }}">
+            📥 Exportar Excel (.xlsx)
         </a>
-        <a class="boton" target="_blank" href="{{ route('reportes.exportar', ['tipo' => 'tickets', 'formato' => 'imprimir'] + request()->all()) }}" style="background: #00838F; color: #fff;">
-            🖨️ Imprimir / PDF
+        <a class="boton" target="_blank" href="{{ route('reportes.exportar', ['tipo' => 'tickets', 'formato' => 'pdf'] + request()->all()) }}" style="background: #00838F; color: #fff;">
+            🖨️ Descargar PDF
         </a>
     </div>
+    @endif
 </div>
 
 <nav style="display: flex; gap: 10px; margin-bottom: 24px; border-bottom: 1px solid var(--borde); padding-bottom: 12px; overflow-x: auto;">
     <a href="{{ route('reportes.dashboard') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Tablero Principal</a>
-    <a href="{{ route('reportes.morosidad') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Clientes y Morosidad (RF-34)</a>
-    <a href="{{ route('reportes.ingresos') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Cobranzas e Ingresos (RF-35)</a>
-    <a href="{{ route('reportes.tickets') }}" style="padding: 8px 16px; border-radius: 8px; background: #00838F; color: #fff; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Rendimiento de Tickets (RF-36)</a>
-    <a href="{{ route('reportes.alertas') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Alertas de Vencimiento (RF-37)</a>
+    <a href="{{ route('reportes.morosidad') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Clientes y Morosidad</a>
+    <a href="{{ route('reportes.ingresos') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Cobranzas e Ingresos</a>
+    <a href="{{ route('reportes.tickets') }}" style="padding: 8px 16px; border-radius: 8px; background: #00838F; color: #fff; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Rendimiento de Tickets</a>
+    <a href="{{ route('reportes.alertas') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Alertas de Vencimiento</a>
 </nav>
 
 {{-- KPIs de Rendimiento Técnico --}}

@@ -121,7 +121,9 @@ Route::middleware('auth')->group(function (): void {
         Route::get('/reportes/tickets', [ReporteController::class, 'tickets'])->name('reportes.tickets');
         Route::get('/reportes/alertas', [ReporteController::class, 'alertas'])->name('reportes.alertas');
         Route::post('/reportes/alertas/notificar', [ReporteController::class, 'notificarAlerta'])->name('reportes.alertas.notificar');
-        Route::get('/reportes/{tipo}/exportar', [ReporteController::class, 'exportar'])->name('reportes.exportar');
+        Route::get('/reportes/{tipo}/exportar', [ReporteController::class, 'exportar'])
+            ->middleware('accion:exportar_reportes')
+            ->name('reportes.exportar');
     });
 
     Route::get('/usuarios', [UsuarioController::class, 'index'])->middleware('accion:gestionar_usuarios')->name('usuarios.index');

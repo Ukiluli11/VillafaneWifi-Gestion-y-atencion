@@ -2,17 +2,24 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Dominio\ExportService;
 use App\Dominio\ReporteService;
 use App\Dominio\ServicioNotificacionesVencimiento;
+use App\Enums\EstadoTicket;
 use App\Enums\MedioPago;
 use App\Http\Controllers\Controller;
 use App\Models\CuentaReceptora;
 use App\Models\Cuota;
 use App\Models\Plan;
 use App\Models\Usuario;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ReporteController extends Controller
@@ -34,11 +41,7 @@ class ReporteController extends Controller
      */
     public function morosidad(Request $request): View
     {
-        $filtros = [
-            'estado_financiero' => $request->query('estado_financiero', 'todos'),
-            'id_plan' => $request->query('id_plan'),
-            'busqueda' => $request->query('busqueda'),
-        ];
+        $filtros = $this->validarFiltros($request, 'morosidad');
 
         $reporte = $this->reporteService->obtenerReporteMorosidad($filtros);
         $planes = Plan::orderBy('nombre')->get();
@@ -56,16 +59,17 @@ class ReporteController extends Controller
      */
     public function ingresos(Request $request): View
     {
-        $filtros = [
-            'fecha_desde' => $request->query('fecha_desde', now()->startOfMonth()->toDateString()),
-            'fecha_hasta' => $request->query('fecha_hasta', now()->endOfMonth()->toDateString()),
-            'medio_pago' => $request->query('medio_pago', 'todos'),
-            'id_cuenta' => $request->query('id_cuenta'),
-        ];
+        $hoy = CarbonImmutable::today('America/Argentina/Buenos_Aires');
+        $filtros = $this->validarFiltros($request, 'ingresos');
 
         $reporte = $this->reporteService->obtenerReporteIngresos($filtros);
         $cuentas = CuentaReceptora::orderBy('nombre')->get();
         $medios = MedioPago::cases();
+        $periodos = [
+            'Hoy' => [$hoy->toDateString(), $hoy->toDateString()],
+            'Esta semana' => [$hoy->startOfWeek()->toDateString(), $hoy->endOfWeek()->toDateString()],
+            'Este mes' => [$hoy->startOfMonth()->toDateString(), $hoy->endOfMonth()->toDateString()],
+        ];
 
         return view('reportes.ingresos', [
             'pagos' => $reporte['items'],
@@ -73,6 +77,7 @@ class ReporteController extends Controller
             'filtros' => $filtros,
             'cuentas' => $cuentas,
             'medios' => $medios,
+            'periodos' => $periodos,
         ]);
     }
 
@@ -81,16 +86,10 @@ class ReporteController extends Controller
      */
     public function tickets(Request $request): View
     {
-        $filtros = [
-            'fecha_desde' => $request->query('fecha_desde', now()->startOfMonth()->toDateString()),
-            'fecha_hasta' => $request->query('fecha_hasta', now()->endOfMonth()->toDateString()),
-            'estado' => $request->query('estado', 'todos'),
-            'id_usuario_asignado' => $request->query('id_usuario_asignado'),
-            'tipo' => $request->query('tipo'),
-        ];
+        $filtros = $this->validarFiltros($request, 'tickets');
 
         $reporte = $this->reporteService->obtenerReporteTickets($filtros);
-        $tecnicos = Usuario::whereHas('empleado')->orderBy('nombre_usuario')->get();
+        $tecnicos = Usuario::orderBy('nombre_usuario')->get();
 
         return view('reportes.tickets', [
             'tickets' => $reporte['items'],
@@ -133,9 +132,9 @@ class ReporteController extends Controller
     /**
      * Exportación de reportes a formatos estándar (Excel/CSV o Documento Imprimible/PDF) (RF-39).
      */
-    public function exportar(Request $request, string $tipo): View|StreamedResponse
+    public function exportar(Request $request, string $tipo): View|Response
     {
-        $formato = $request->query('formato', 'csv');
+        $formato = $request->validate(['formato' => 'sometimes|in:csv,xlsx,pdf,imprimir'])['formato'] ?? 'csv';
 
         return match ($tipo) {
             'morosidad' => $this->exportarMorosidad($request, $formato),
@@ -145,18 +144,14 @@ class ReporteController extends Controller
         };
     }
 
-    private function exportarMorosidad(Request $request, string $formato): View|StreamedResponse
+    private function exportarMorosidad(Request $request, string $formato): View|Response
     {
-        $filtros = [
-            'estado_financiero' => $request->query('estado_financiero', 'todos'),
-            'id_plan' => $request->query('id_plan'),
-            'busqueda' => $request->query('busqueda'),
-        ];
+        $filtros = $this->validarFiltros($request, 'morosidad');
 
         $reporte = $this->reporteService->obtenerReporteMorosidad($filtros);
 
         if ($formato === 'pdf' || $formato === 'imprimir') {
-            return view('reportes.imprimir', [
+            return $this->documento($formato, [
                 'titulo' => 'Reporte de Clientes y Estado de Morosidad',
                 'subtitulo' => 'Auditoría de cartera, saldos adeudados y situación financiera de abonados',
                 'tipo' => 'morosidad',
@@ -184,22 +179,17 @@ class ReporteController extends Controller
             ];
         }, $reporte['items']);
 
-        return $this->reporteService->exportarCsv('Reporte_Morosidad_VillafaneWifi_'.date('Ymd_His'), $encabezados, $filas);
+        return $this->planilla($formato, 'Reporte_Morosidad_VillafaneWifi_'.date('Ymd_His'), $encabezados, $filas);
     }
 
-    private function exportarIngresos(Request $request, string $formato): View|StreamedResponse
+    private function exportarIngresos(Request $request, string $formato): View|Response
     {
-        $filtros = [
-            'fecha_desde' => $request->query('fecha_desde', now()->startOfMonth()->toDateString()),
-            'fecha_hasta' => $request->query('fecha_hasta', now()->endOfMonth()->toDateString()),
-            'medio_pago' => $request->query('medio_pago', 'todos'),
-            'id_cuenta' => $request->query('id_cuenta'),
-        ];
+        $filtros = $this->validarFiltros($request, 'ingresos');
 
         $reporte = $this->reporteService->obtenerReporteIngresos($filtros);
 
         if ($formato === 'pdf' || $formato === 'imprimir') {
-            return view('reportes.imprimir', [
+            return $this->documento($formato, [
                 'titulo' => 'Reporte Financiero de Ingresos y Recaudación',
                 'subtitulo' => sprintf('Período: %s al %s', date('d/m/Y', strtotime($reporte['resumen']['desde'])), date('d/m/Y', strtotime($reporte['resumen']['hasta']))),
                 'tipo' => 'ingresos',
@@ -225,23 +215,17 @@ class ReporteController extends Controller
             ];
         }
 
-        return $this->reporteService->exportarCsv('Reporte_Ingresos_VillafaneWifi_'.date('Ymd_His'), $encabezados, $filas);
+        return $this->planilla($formato, 'Reporte_Ingresos_VillafaneWifi_'.date('Ymd_His'), $encabezados, $filas);
     }
 
-    private function exportarTickets(Request $request, string $formato): View|StreamedResponse
+    private function exportarTickets(Request $request, string $formato): View|Response
     {
-        $filtros = [
-            'fecha_desde' => $request->query('fecha_desde', now()->startOfMonth()->toDateString()),
-            'fecha_hasta' => $request->query('fecha_hasta', now()->endOfMonth()->toDateString()),
-            'estado' => $request->query('estado', 'todos'),
-            'id_usuario_asignado' => $request->query('id_usuario_asignado'),
-            'tipo' => $request->query('tipo'),
-        ];
+        $filtros = $this->validarFiltros($request, 'tickets');
 
         $reporte = $this->reporteService->obtenerReporteTickets($filtros);
 
         if ($formato === 'pdf' || $formato === 'imprimir') {
-            return view('reportes.imprimir', [
+            return $this->documento($formato, [
                 'titulo' => 'Reporte de Eficiencia y Resolución de Tickets',
                 'subtitulo' => sprintf('Período: %s al %s', date('d/m/Y', strtotime($reporte['resumen']['desde'])), date('d/m/Y', strtotime($reporte['resumen']['hasta']))),
                 'tipo' => 'tickets',
@@ -271,6 +255,85 @@ class ReporteController extends Controller
             ];
         }
 
-        return $this->reporteService->exportarCsv('Reporte_Tickets_VillafaneWifi_'.date('Ymd_His'), $encabezados, $filas);
+        return $this->planilla($formato, 'Reporte_Tickets_VillafaneWifi_'.date('Ymd_His'), $encabezados, $filas);
+    }
+
+    /** @return array<string, mixed> */
+    private function validarFiltros(Request $request, string $tipo): array
+    {
+        $hoy = CarbonImmutable::today('America/Argentina/Buenos_Aires');
+        $periodo = [
+            'fecha_desde' => $hoy->startOfMonth()->toDateString(),
+            'fecha_hasta' => $hoy->endOfMonth()->toDateString(),
+        ];
+        $predeterminados = match ($tipo) {
+            'morosidad' => ['estado_financiero' => 'todos', 'id_plan' => null, 'busqueda' => null],
+            'ingresos' => $periodo + ['medio_pago' => 'todos', 'id_cuenta' => null],
+            'tickets' => $periodo + ['estado' => 'todos', 'id_usuario_asignado' => null, 'tipo' => null],
+        };
+        $datos = array_replace($predeterminados, array_intersect_key($request->query(), $predeterminados));
+        foreach ($predeterminados as $campo => $valor) {
+            $datos[$campo] ??= $valor;
+        }
+
+        $reglasPeriodo = [
+            'fecha_desde' => ['bail', 'required', 'date_format:Y-m-d'],
+            'fecha_hasta' => ['bail', 'required', 'date_format:Y-m-d', ...(is_string($datos['fecha_desde'] ?? null) ? ['after_or_equal:fecha_desde'] : [])],
+        ];
+        $reglas = match ($tipo) {
+            'morosidad' => [
+                'estado_financiero' => ['required', Rule::in(['todos', 'al_dia', 'en_mora'])],
+                'id_plan' => ['bail', 'nullable', 'integer', 'exists:plan,id_plan'],
+                'busqueda' => ['nullable', 'string', 'max:200'],
+            ],
+            'ingresos' => $reglasPeriodo + [
+                'medio_pago' => ['required', Rule::in(['todos', ...array_column(MedioPago::cases(), 'value')])],
+                'id_cuenta' => ['bail', 'nullable', 'integer', 'exists:cuenta_receptora,id_cuenta'],
+            ],
+            'tickets' => $reglasPeriodo + [
+                'estado' => ['required', Rule::in(['todos', ...array_column(EstadoTicket::cases(), 'value')])],
+                'id_usuario_asignado' => [
+                    'bail', 'nullable', 'regex:/^(sin_asignar|[1-9][0-9]*)$/',
+                    Rule::when($datos['id_usuario_asignado'] !== 'sin_asignar', 'exists:usuario,id_usuario'),
+                ],
+                'tipo' => ['nullable', Rule::in(['tecnico', 'administrativo', 'instalacion', 'reclamo'])],
+            ],
+        };
+        $validador = Validator::make($datos, $reglas, [
+            'required' => 'Completá el campo :attribute.',
+            'date_format' => 'El campo :attribute debe contener una fecha válida.',
+            'after_or_equal' => 'La fecha hasta debe ser igual o posterior a la fecha desde.',
+            'exists' => 'La opción seleccionada en :attribute ya no está disponible.',
+            'in' => 'Seleccioná una opción válida para :attribute.',
+            'integer' => 'Seleccioná una opción válida para :attribute.',
+            'regex' => 'Seleccioná un responsable válido.',
+            'string' => 'El campo :attribute debe ser un texto.',
+            'max' => 'El campo :attribute no puede superar los :max caracteres.',
+        ], [
+            'fecha_desde' => 'fecha desde', 'fecha_hasta' => 'fecha hasta',
+            'estado_financiero' => 'situación financiera', 'id_plan' => 'plan',
+            'busqueda' => 'búsqueda', 'medio_pago' => 'medio de pago',
+            'id_cuenta' => 'cuenta receptora', 'estado' => 'estado del ticket',
+            'id_usuario_asignado' => 'responsable', 'tipo' => 'tipo de ticket',
+        ]);
+        if ($validador->fails()) {
+            throw (new ValidationException($validador))->redirectTo(route('reportes.'.$tipo));
+        }
+
+        return $validador->validated();
+    }
+
+    private function documento(string $formato, array $datos): View|Response
+    {
+        return $formato === 'pdf'
+            ? app(ExportService::class)->pdf($datos)
+            : view('reportes.imprimir', $datos);
+    }
+
+    private function planilla(string $formato, string $nombre, array $encabezados, iterable $filas): StreamedResponse
+    {
+        return $formato === 'xlsx'
+            ? app(ExportService::class)->excel($nombre, $encabezados, $filas)
+            : $this->reporteService->exportarCsv($nombre, $encabezados, $filas);
     }
 }

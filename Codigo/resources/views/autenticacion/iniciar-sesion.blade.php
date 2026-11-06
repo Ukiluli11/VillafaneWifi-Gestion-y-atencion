@@ -11,7 +11,7 @@
     <p>Ingresá tus credenciales para administrar clientes y servicios.</p>
     <form method="POST" action="{{ route('sesion.guardar') }}" class="formulario">
         @csrf
-        <label>Usuario<input name="nombre_usuario" value="{{ old('nombre_usuario') }}" autocomplete="username" placeholder="Tu usuario" required autofocus></label>
+        <label>Usuario<input name="nombre_usuario" value="{{ old('nombre_usuario') }}" autocomplete="username" spellcheck="false" autocapitalize="none" placeholder="Tu usuario" required></label>
         <label>Contraseña<input type="password" name="contrasena" autocomplete="current-password" placeholder="Tu contraseña" required></label>
         <button type="submit">Ingresar al sistema</button>
     </form>

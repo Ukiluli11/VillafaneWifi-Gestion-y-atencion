@@ -1,9 +1,12 @@
 @extends('layouts.panel')
 @section('titulo', 'Métricas y Dashboard Ejecutivo')
 @section('contenido')
+@php
+    $hoy = now('America/Argentina/Buenos_Aires')->toDateString();
+@endphp
 <div class="encabezado">
     <div>
-        <p class="sobrelinea">Módulo 5 – Inteligencia de Negocio y Control</p>
+        <p class="sobrelinea">Reportes y métricas</p>
         <h1>Dashboard Ejecutivo y Métricas</h1>
         <p>Visión global del ISP Villafañe Wifi: clientes, recaudación, salud financiera y soporte técnico en tiempo real.</p>
     </div>
@@ -16,10 +19,10 @@
 
 <nav style="display: flex; gap: 10px; margin-bottom: 24px; border-bottom: 1px solid var(--borde); padding-bottom: 12px; overflow-x: auto;">
     <a href="{{ route('reportes.dashboard') }}" style="padding: 8px 16px; border-radius: 8px; background: #00838F; color: #fff; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Tablero Principal</a>
-    <a href="{{ route('reportes.morosidad') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Clientes y Morosidad (RF-34)</a>
-    <a href="{{ route('reportes.ingresos') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Cobranzas e Ingresos (RF-35)</a>
-    <a href="{{ route('reportes.tickets') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Rendimiento de Tickets (RF-36)</a>
-    <a href="{{ route('reportes.alertas') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Alertas de Vencimiento (RF-37)</a>
+    <a href="{{ route('reportes.morosidad') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Clientes y Morosidad</a>
+    <a href="{{ route('reportes.ingresos') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Cobranzas e Ingresos</a>
+    <a href="{{ route('reportes.tickets') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Rendimiento de Tickets</a>
+    <a href="{{ route('reportes.alertas') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Alertas de Vencimiento</a>
 </nav>
 
 {{-- Sección de KPIs Ejecutivos Principales --}}
@@ -64,6 +67,14 @@
         </div>
         <strong>{{ $metricas['tickets_pendientes'] }} pend.</strong>
         <small>{{ $metricas['tickets_en_proceso'] }} en proceso · {{ $metricas['tickets_resueltos'] }} resueltos</small>
+    </article>
+    <article class="metrica" style="border-left: 4px solid #00838F;">
+        <div class="metrica-cabecera">
+            <span>COMPROBANTES POR VALIDAR</span>
+            <span class="metrica-icono">CP</span>
+        </div>
+        <strong>{{ $metricas['comprobantes_pendientes'] }}</strong>
+        <small>Pendientes de revisión</small>
     </article>
 </section>
 
@@ -117,7 +128,7 @@
     <article class="tarjeta" style="margin: 0;">
         <div class="tarjeta-cabecera">
             <div>
-                <h2 style="font-size: 1.1rem; margin: 0;">Alertas de Vencimiento y Morosidad (RF-37)</h2>
+                <h2 style="font-size: 1.1rem; margin: 0;">Alertas de Vencimiento y Morosidad</h2>
                 <p>Cuotas vencidas o con vencimiento en los próximos 5 días que requieren gestión</p>
             </div>
             <a class="boton" href="{{ route('reportes.alertas') }}" style="font-size: 0.8rem; padding: 6px 12px;">Ver todas las alertas</a>
@@ -141,7 +152,7 @@
                     <tbody>
                         @foreach ($metricas['alertas_vencimiento'] as $alerta)
                             @php
-                                $esVencida = $alerta->fecha_vencimiento->isPast();
+                                $esVencida = $alerta->fecha_vencimiento->toDateString() < $hoy;
                             @endphp
                             <tr>
                                 <td>
@@ -179,28 +190,30 @@
         @endif
     </article>
 
-    {{-- Tarjeta de Accesos Rápidos a Exportaciones Oficiales (RF-39) --}}
+    @if ($navegacionPermitida['exportar_reportes'] ?? false)
+    {{-- Tarjeta de Accesos Rápidos a Exportaciones Oficiales --}}
     <article class="tarjeta panel-estado" style="margin: 0; background: linear-gradient(145deg, #006064, #00838F);">
         <div>
-            <span class="sello" style="background: rgba(255,255,255,0.2); color: #fff;">Exportación Oficial (RF-39)</span>
+            <span class="sello" style="background: rgba(255,255,255,0.2); color: #fff;">Exportación Oficial</span>
             <h2 style="margin-top: 18px; color: #fff; font-size: 1.25rem;">Reportes para Descarga</h2>
             <p style="color: #E0F7FA; font-size: 0.85rem; margin-top: 8px;">
                 Descargue las planillas contables estructuradas para Microsoft Excel o genere informes PDF con membrete institucional formal de Villafañe Wifi.
             </p>
             <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
-                <a href="{{ route('reportes.exportar', ['tipo' => 'morosidad', 'formato' => 'csv']) }}" class="boton" style="background: #fff; color: #006064; text-align: center; font-weight: 600;">
-                    📥 Exportar Morosidad (CSV/Excel)
+                <a href="{{ route('reportes.exportar', ['tipo' => 'morosidad', 'formato' => 'xlsx']) }}" class="boton" style="background: #fff; color: #006064; text-align: center; font-weight: 600;">
+                    📥 Exportar Morosidad (Excel)
                 </a>
-                <a href="{{ route('reportes.exportar', ['tipo' => 'ingresos', 'formato' => 'csv']) }}" class="boton" style="background: #fff; color: #006064; text-align: center; font-weight: 600;">
-                    📥 Exportar Ingresos (CSV/Excel)
+                <a href="{{ route('reportes.exportar', ['tipo' => 'ingresos', 'formato' => 'xlsx']) }}" class="boton" style="background: #fff; color: #006064; text-align: center; font-weight: 600;">
+                    📥 Exportar Ingresos (Excel)
                 </a>
-                <a href="{{ route('reportes.exportar', ['tipo' => 'tickets', 'formato' => 'imprimir']) }}" target="_blank" class="boton" style="background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.4); text-align: center;">
-                    🖨️ Imprimir Reporte Tickets (PDF)
+                <a href="{{ route('reportes.exportar', ['tipo' => 'tickets', 'formato' => 'pdf']) }}" target="_blank" class="boton" style="background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.4); text-align: center;">
+                    🖨️ Descargar Tickets (PDF)
                 </a>
             </div>
         </div>
         <small style="color: #B2EBF2; margin-top: 16px; display: block;">Villafañe Wifi · Sistema de Gestión v2.0</small>
     </article>
+    @endif
 </section>
 
 {{-- Integración de Chart.js --}}
