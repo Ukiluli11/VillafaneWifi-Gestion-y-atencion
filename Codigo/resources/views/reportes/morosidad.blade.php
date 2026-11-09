@@ -12,7 +12,7 @@
         <a class="boton" href="{{ route('reportes.exportar', ['tipo' => 'morosidad', 'formato' => 'xlsx'] + request()->all()) }}">
             📥 Exportar Excel (.xlsx)
         </a>
-        <a class="boton" target="_blank" href="{{ route('reportes.exportar', ['tipo' => 'morosidad', 'formato' => 'pdf'] + request()->all()) }}" style="background: #00838F; color: #fff;">
+        <a class="boton" target="_blank" href="{{ route('reportes.exportar', ['tipo' => 'morosidad', 'formato' => 'pdf'] + request()->all()) }}" style="background: var(--verde-950); color: #faf6ed;">
             🖨️ Descargar PDF
         </a>
     </div>
@@ -21,7 +21,7 @@
 
 <nav style="display: flex; gap: 10px; margin-bottom: 24px; border-bottom: 1px solid var(--borde); padding-bottom: 12px; overflow-x: auto;">
     <a href="{{ route('reportes.dashboard') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Tablero Principal</a>
-    <a href="{{ route('reportes.morosidad') }}" style="padding: 8px 16px; border-radius: 8px; background: #00838F; color: #fff; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Clientes y Morosidad</a>
+    <a href="{{ route('reportes.morosidad') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--verde-950); color: #faf6ed; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Clientes y Morosidad</a>
     <a href="{{ route('reportes.ingresos') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Cobranzas e Ingresos</a>
     <a href="{{ route('reportes.tickets') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Rendimiento de Tickets</a>
     <a href="{{ route('reportes.alertas') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Alertas de Vencimiento</a>
@@ -34,14 +34,14 @@
         <strong>{{ $resumen['total_evaluados'] }}</strong>
         <small>abonados filtrados</small>
     </article>
-    <article class="metrica" style="border-left: 4px solid #2E7D32;">
-        <div class="metrica-cabecera"><span>AL DÍA</span><span class="metrica-icono" style="background: #E8F5E9; color: #2E7D32;">OK</span></div>
-        <strong style="color: #2E7D32;">{{ $resumen['total_al_dia'] }}</strong>
+    <article class="metrica" style="border-left: 4px solid var(--verde-700);">
+        <div class="metrica-cabecera"><span>AL DÍA</span><span class="metrica-icono" style="background: var(--verde-100); color: var(--verde-700);">OK</span></div>
+        <strong style="color: var(--verde-700);">{{ $resumen['total_al_dia'] }}</strong>
         <small>{{ $resumen['total_evaluados'] > 0 ? round(($resumen['total_al_dia'] / $resumen['total_evaluados']) * 100, 1) : 0 }}% de la cartera</small>
     </article>
-    <article class="metrica" style="border-left: 4px solid #C62828;">
-        <div class="metrica-cabecera"><span>EN MORA</span><span class="metrica-icono" style="background: #FFEBEE; color: #C62828;">MR</span></div>
-        <strong style="color: #C62828;">{{ $resumen['total_en_mora'] }}</strong>
+    <article class="metrica" style="border-left: 4px solid var(--peligro);">
+        <div class="metrica-cabecera"><span>EN MORA</span><span class="metrica-icono" style="background: var(--fondo-error); color: var(--peligro);">MR</span></div>
+        <strong style="color: var(--peligro);">{{ $resumen['total_en_mora'] }}</strong>
         <small>{{ $resumen['porcentaje_mora'] }}% tasa de mora</small>
     </article>
     <article class="metrica" style="border-left: 4px solid #D84315;">
@@ -132,11 +132,11 @@
                             </td>
                             <td>
                                 @if ($item['estado_financiero'] === 'en_mora')
-                                    <span style="background: #FFEBEE; color: #C62828; padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; display: inline-block;">
+                                    <span style="background: var(--fondo-error); color: var(--peligro); padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; display: inline-block;">
                                         EN MORA
                                     </span>
                                 @else
-                                    <span style="background: #E8F5E9; color: #2E7D32; padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; display: inline-block;">
+                                    <span style="background: var(--verde-100); color: var(--verde-700); padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; display: inline-block;">
                                         AL DÍA
                                     </span>
                                 @endif
@@ -144,14 +144,14 @@
                             <td style="text-align: center; font-weight: 600;">
                                 {{ $item['cuotas_vencidas'] }}
                             </td>
-                            <td style="text-align: right; font-weight: 700; color: {{ $item['deuda_total'] > 0 ? '#C62828' : '#2E7D32' }};">
+                            <td style="text-align: right; font-weight: 700; color: {{ $item['deuda_total'] > 0 ? 'var(--peligro)' : 'var(--verde-700)' }};">
                                 ${{ number_format($item['deuda_total'], 2, ',', '.') }}
                             </td>
                             <td style="text-align: center;">
                                 @if ($item['dias_atraso'] > 0)
                                     <span style="color: #D84315; font-weight: 600;">{{ $item['dias_atraso'] }} días</span>
                                 @else
-                                    <span style="color: #2E7D32;">0</span>
+                                    <span style="color: var(--verde-700);">0</span>
                                 @endif
                             </td>
                             <td>{{ $item['ultimo_pago'] }}</td>

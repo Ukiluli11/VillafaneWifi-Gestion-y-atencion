@@ -22,28 +22,28 @@
     <a href="{{ route('reportes.morosidad') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Clientes y Morosidad</a>
     <a href="{{ route('reportes.ingresos') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Cobranzas e Ingresos</a>
     <a href="{{ route('reportes.tickets') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Rendimiento de Tickets</a>
-    <a href="{{ route('reportes.alertas') }}" style="padding: 8px 16px; border-radius: 8px; background: #00838F; color: #fff; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Alertas de Vencimiento</a>
+    <a href="{{ route('reportes.alertas') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--verde-950); color: #faf6ed; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Alertas de Vencimiento</a>
 </nav>
 
 <section class="metricas" aria-label="Resumen de alertas">
-    <article class="metrica" style="border-left: 4px solid #C62828;">
-        <div class="metrica-cabecera"><span>CUOTAS VENCIDAS</span><span class="metrica-icono" style="background: #FFEBEE; color: #C62828;">!</span></div>
-        <strong style="color: #C62828;">{{ $cuotas->filter(fn($c) => $c->fecha_vencimiento->toDateString() < $hoy)->count() }}</strong>
+    <article class="metrica" style="border-left: 4px solid var(--peligro);">
+        <div class="metrica-cabecera"><span>CUOTAS VENCIDAS</span><span class="metrica-icono" style="background: var(--fondo-error); color: var(--peligro);">!</span></div>
+        <strong style="color: var(--peligro);">{{ $cuotas->filter(fn($c) => $c->fecha_vencimiento->toDateString() < $hoy)->count() }}</strong>
         <small>requieren aviso urgente</small>
     </article>
-    <article class="metrica" style="border-left: 4px solid #F57F17;">
-        <div class="metrica-cabecera"><span>PRÓXIMAS A VENCER</span><span class="metrica-icono" style="background: #FFF9C4; color: #F57F17;">⏰</span></div>
-        <strong style="color: #F57F17;">{{ $cuotas->filter(fn($c) => $c->fecha_vencimiento->toDateString() >= $hoy)->count() }}</strong>
+    <article class="metrica" style="border-left: 4px solid var(--aviso);">
+        <div class="metrica-cabecera"><span>PRÓXIMAS A VENCER</span><span class="metrica-icono" style="background: var(--fondo-aviso); color: var(--aviso);">⏰</span></div>
+        <strong style="color: var(--aviso);">{{ $cuotas->filter(fn($c) => $c->fecha_vencimiento->toDateString() >= $hoy)->count() }}</strong>
         <small>vencen en los próximos 7 días</small>
     </article>
     <article class="metrica" style="border-left: 4px solid #00838F;">
-        <div class="metrica-cabecera"><span>MONTO TOTAL EN ALERTA</span><span class="metrica-icono" style="background: #E0F7FA; color: #00838F;">$</span></div>
+        <div class="metrica-cabecera"><span>MONTO TOTAL EN ALERTA</span><span class="metrica-icono" style="background: #E0F7FA; color: var(--verde-700);">$</span></div>
         <strong>${{ number_format((float) $cuotas->sum('monto'), 2, ',', '.') }}</strong>
         <small>compromiso de cobranza en seguimiento</small>
     </article>
     <article class="metrica" style="border-left: 4px solid #25D366;">
-        <div class="metrica-cabecera"><span>CANAL AUTOMATIZADO</span><span class="metrica-icono" style="background: #E8F5E9; color: #25D366;">WA</span></div>
-        <strong style="color: #2E7D32;">Meta API</strong>
+        <div class="metrica-cabecera"><span>CANAL AUTOMATIZADO</span><span class="metrica-icono" style="background: var(--verde-100); color: #25D366;">WA</span></div>
+        <strong style="color: var(--verde-700);">Meta API</strong>
         <small>Notificación directa vía WhatsApp</small>
     </article>
 </section>
@@ -95,12 +95,12 @@
                                 @if ($cliente?->telefono_whatsapp)
                                     <strong>{{ $cliente->telefono_whatsapp }}</strong>
                                 @else
-                                    <span style="color: #C62828;">Sin número</span>
+                                    <span style="color: var(--peligro);">Sin número</span>
                                 @endif
                             </td>
                             <td>{{ $cuota->servicio?->plan?->nombre ?? 'Plan General' }}</td>
                             <td>
-                                <strong style="{{ $esVencida ? 'color: #C62828;' : 'color: #F57F17;' }}">
+                                <strong style="{{ $esVencida ? 'color: var(--peligro);' : 'color: var(--aviso);' }}">
                                     {{ $cuota->fecha_vencimiento->format('d/m/Y') }}
                                 </strong>
                             </td>
@@ -109,11 +109,11 @@
                             </td>
                             <td>
                                 @if ($esVencida)
-                                    <span style="background: #FFEBEE; color: #C62828; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">
+                                    <span style="background: var(--fondo-error); color: var(--peligro); padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">
                                         MORA VENCIDA
                                     </span>
                                 @else
-                                    <span style="background: #FFF9C4; color: #F57F17; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">
+                                    <span style="background: var(--fondo-aviso); color: var(--aviso); padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">
                                         PRÓXIMO VENCIMIENTO
                                     </span>
                                 @endif

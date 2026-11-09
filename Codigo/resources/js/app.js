@@ -26,7 +26,7 @@ const actualizarBotonTema = () => {
     botonTema?.setAttribute('aria-pressed', String(oscuro));
     botonTema?.setAttribute('aria-label', etiqueta);
     botonTema?.setAttribute('title', etiqueta);
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', oscuro ? '#141917' : '#f7f8fa');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', oscuro ? '#141917' : '#f3e9d7');
 };
 
 botonBarra?.addEventListener('click', () => {

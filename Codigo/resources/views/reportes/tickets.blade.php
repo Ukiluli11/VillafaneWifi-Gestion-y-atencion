@@ -12,7 +12,7 @@
         <a class="boton" href="{{ route('reportes.exportar', ['tipo' => 'tickets', 'formato' => 'xlsx'] + request()->all()) }}">
             📥 Exportar Excel (.xlsx)
         </a>
-        <a class="boton" target="_blank" href="{{ route('reportes.exportar', ['tipo' => 'tickets', 'formato' => 'pdf'] + request()->all()) }}" style="background: #00838F; color: #fff;">
+        <a class="boton" target="_blank" href="{{ route('reportes.exportar', ['tipo' => 'tickets', 'formato' => 'pdf'] + request()->all()) }}" style="background: var(--verde-950); color: #faf6ed;">
             🖨️ Descargar PDF
         </a>
     </div>
@@ -23,7 +23,7 @@
     <a href="{{ route('reportes.dashboard') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Tablero Principal</a>
     <a href="{{ route('reportes.morosidad') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Clientes y Morosidad</a>
     <a href="{{ route('reportes.ingresos') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Cobranzas e Ingresos</a>
-    <a href="{{ route('reportes.tickets') }}" style="padding: 8px 16px; border-radius: 8px; background: #00838F; color: #fff; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Rendimiento de Tickets</a>
+    <a href="{{ route('reportes.tickets') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--verde-950); color: #faf6ed; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Rendimiento de Tickets</a>
     <a href="{{ route('reportes.alertas') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Alertas de Vencimiento</a>
 </nav>
 
@@ -34,9 +34,9 @@
         <strong>{{ $resumen['total_tickets'] }}</strong>
         <small>reclamos generados en el período</small>
     </article>
-    <article class="metrica" style="border-left: 4px solid #2E7D32;">
-        <div class="metrica-cabecera"><span>RESUELTOS</span><span class="metrica-icono" style="background: #E8F5E9; color: #2E7D32;">✓</span></div>
-        <strong style="color: #2E7D32;">{{ $resumen['tickets_resueltos'] }}</strong>
+    <article class="metrica" style="border-left: 4px solid var(--verde-700);">
+        <div class="metrica-cabecera"><span>RESUELTOS</span><span class="metrica-icono" style="background: var(--verde-100); color: var(--verde-700);">✓</span></div>
+        <strong style="color: var(--verde-700);">{{ $resumen['tickets_resueltos'] }}</strong>
         <small>{{ $resumen['tasa_resolucion'] }}% tasa de resolución</small>
     </article>
     <article class="metrica" style="border-left: 4px solid #1976D2;">
@@ -76,7 +76,7 @@
                         </div>
                         <div>
                             <span style="font-size: 0.75rem; color: var(--texto-suave);">Resueltos</span>
-                            <div style="font-size: 1.2rem; font-weight: 700; color: #2E7D32;">{{ $tecnico['resueltos'] }}</div>
+                            <div style="font-size: 1.2rem; font-weight: 700; color: var(--verde-700);">{{ $tecnico['resueltos'] }}</div>
                         </div>
                     </div>
                 </div>
@@ -194,12 +194,12 @@
                                 @php
                                     $est = $ticket->estado instanceof \BackedEnum ? $ticket->estado->value : (string) $ticket->estado;
                                     $colores = [
-                                        'pendiente' => ['#FFF9C4', '#F57F17'],
+                                        'pendiente' => ['var(--fondo-aviso)', 'var(--aviso)'],
                                         'asignado' => ['#E3F2FD', '#1565C0'],
                                         'en_proceso' => ['#E1F5FE', '#0288D1'],
-                                        'resuelto' => ['#E8F5E9', '#2E7D32'],
+                                        'resuelto' => ['var(--verde-100)', 'var(--verde-700)'],
                                         'cerrado' => ['#ECEFF1', '#546E7A'],
-                                        'reabierto' => ['#FFEBEE', '#C62828'],
+                                        'reabierto' => ['var(--fondo-error)', 'var(--peligro)'],
                                     ];
                                     $bg = $colores[$est][0] ?? '#ECEFF1';
                                     $fg = $colores[$est][1] ?? '#333';
@@ -210,7 +210,7 @@
                             </td>
                             <td>
                                 @if ($horas !== null)
-                                    <strong style="color: #2E7D32;">{{ $horas }} hs</strong><br>
+                                    <strong style="color: var(--verde-700);">{{ $horas }} hs</strong><br>
                                     <small style="color: var(--texto-suave);">{{ $ticket->fecha_resolucion?->format('d/m H:i') }}</small>
                                 @else
                                     <span style="color: var(--texto-suave);">En curso</span>

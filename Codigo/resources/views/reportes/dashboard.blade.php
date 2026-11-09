@@ -18,7 +18,7 @@
 </div>
 
 <nav style="display: flex; gap: 10px; margin-bottom: 24px; border-bottom: 1px solid var(--borde); padding-bottom: 12px; overflow-x: auto;">
-    <a href="{{ route('reportes.dashboard') }}" style="padding: 8px 16px; border-radius: 8px; background: #00838F; color: #fff; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Tablero Principal</a>
+    <a href="{{ route('reportes.dashboard') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--verde-950); color: #faf6ed; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Tablero Principal</a>
     <a href="{{ route('reportes.morosidad') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Clientes y Morosidad</a>
     <a href="{{ route('reportes.ingresos') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Cobranzas e Ingresos</a>
     <a href="{{ route('reportes.tickets') }}" style="padding: 8px 16px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-weight: 500; font-size: 0.88rem;">Rendimiento de Tickets</a>
@@ -30,40 +30,40 @@
     <article class="metrica" style="border-left: 4px solid #00838F;">
         <div class="metrica-cabecera">
             <span>CLIENTES ACTIVOS</span>
-            <span class="metrica-icono" style="background: #E0F7FA; color: #00838F;">CL</span>
+            <span class="metrica-icono" style="background: #E0F7FA; color: var(--verde-700);">CL</span>
         </div>
         <strong>{{ $metricas['clientes_activos'] }}</strong>
         <small>{{ $metricas['servicios_activos'] }} servicios activos en {{ $metricas['total_clientes'] }} registrados</small>
     </article>
 
-    <article class="metrica" style="border-left: 4px solid #C62828;">
+    <article class="metrica" style="border-left: 4px solid var(--peligro);">
         <div class="metrica-cabecera">
             <span>MOROSIDAD EN CARTERA</span>
-            <span class="metrica-icono" style="background: #FFEBEE; color: #C62828;">MR</span>
+            <span class="metrica-icono" style="background: var(--fondo-error); color: var(--peligro);">MR</span>
         </div>
-        <strong style="color: #C62828;">{{ $metricas['porcentaje_morosidad'] }}%</strong>
+        <strong style="color: var(--peligro);">{{ $metricas['porcentaje_morosidad'] }}%</strong>
         <small>{{ $metricas['clientes_en_mora'] }} clientes con deuda (${{ number_format($metricas['monto_total_deuda'], 2, ',', '.') }})</small>
     </article>
 
-    <article class="metrica" style="border-left: 4px solid #2E7D32;">
+    <article class="metrica" style="border-left: 4px solid var(--verde-700);">
         <div class="metrica-cabecera">
             <span>RECAUDACIÓN DEL MES</span>
-            <span class="metrica-icono" style="background: #E8F5E9; color: #2E7D32;">$</span>
+            <span class="metrica-icono" style="background: var(--verde-100); color: var(--verde-700);">$</span>
         </div>
-        <strong style="color: #2E7D32;">${{ number_format($metricas['recaudacion_mes_actual'], 2, ',', '.') }}</strong>
+        <strong style="color: var(--verde-700);">${{ number_format($metricas['recaudacion_mes_actual'], 2, ',', '.') }}</strong>
         <small>
             @if ($metricas['variacion_recaudacion_pct'] >= 0)
-                <span style="color: #2E7D32; font-weight: bold;">↑ +{{ $metricas['variacion_recaudacion_pct'] }}%</span> vs mes anterior
+                <span style="color: var(--verde-700); font-weight: bold;">↑ +{{ $metricas['variacion_recaudacion_pct'] }}%</span> vs mes anterior
             @else
-                <span style="color: #C62828; font-weight: bold;">↓ {{ $metricas['variacion_recaudacion_pct'] }}%</span> vs mes anterior
+                <span style="color: var(--peligro); font-weight: bold;">↓ {{ $metricas['variacion_recaudacion_pct'] }}%</span> vs mes anterior
             @endif
         </small>
     </article>
 
-    <article class="metrica" style="border-left: 4px solid #F57F17;">
+    <article class="metrica" style="border-left: 4px solid var(--aviso);">
         <div class="metrica-cabecera">
             <span>SOPORTE Y TICKETS</span>
-            <span class="metrica-icono" style="background: #FFF9C4; color: #F57F17;">TK</span>
+            <span class="metrica-icono" style="background: var(--fondo-aviso); color: var(--aviso);">TK</span>
         </div>
         <strong>{{ $metricas['tickets_pendientes'] }} pend.</strong>
         <small>{{ $metricas['tickets_en_proceso'] }} en proceso · {{ $metricas['tickets_resueltos'] }} resueltos</small>
@@ -87,7 +87,7 @@
                 <h2 style="font-size: 1.1rem; margin: 0;">Evolución de Ingresos</h2>
                 <p>Cobranzas registradas e imputadas (últimos 6 meses)</p>
             </div>
-            <span style="font-size: 0.8rem; font-weight: 600; background: #E8F5E9; color: #2E7D32; padding: 4px 8px; border-radius: 6px;">Histórico</span>
+            <span style="font-size: 0.8rem; font-weight: 600; background: var(--verde-100); color: var(--verde-700); padding: 4px 8px; border-radius: 6px;">Histórico</span>
         </div>
         <div style="position: relative; height: 240px;">
             <canvas id="graficoIngresos"></canvas>
@@ -101,7 +101,7 @@
                 <h2 style="font-size: 1.1rem; margin: 0;">Distribución de Planes</h2>
                 <p>Conexiones activas según velocidad y tarifa</p>
             </div>
-            <span style="font-size: 0.8rem; font-weight: 600; background: #E0F7FA; color: #00838F; padding: 4px 8px; border-radius: 6px;">Comercial</span>
+            <span style="font-size: 0.8rem; font-weight: 600; background: #E0F7FA; color: var(--verde-700); padding: 4px 8px; border-radius: 6px;">Comercial</span>
         </div>
         <div style="position: relative; height: 240px;">
             <canvas id="graficoPlanes"></canvas>
@@ -115,7 +115,7 @@
                 <h2 style="font-size: 1.1rem; margin: 0;">Estado de Tickets de Soporte</h2>
                 <p>Carga técnica acumulada en la plataforma</p>
             </div>
-            <span style="font-size: 0.8rem; font-weight: 600; background: #FFF9C4; color: #F57F17; padding: 4px 8px; border-radius: 6px;">Operativo</span>
+            <span style="font-size: 0.8rem; font-weight: 600; background: var(--fondo-aviso); color: var(--aviso); padding: 4px 8px; border-radius: 6px;">Operativo</span>
         </div>
         <div style="position: relative; height: 240px;">
             <canvas id="graficoTickets"></canvas>
@@ -161,23 +161,23 @@
                                 </td>
                                 <td>{{ $alerta->servicio?->plan?->nombre ?? 'Plan' }}</td>
                                 <td>
-                                    <span style="{{ $esVencida ? 'color: #C62828; font-weight: bold;' : 'color: #E65100;' }}">
+                                    <span style="{{ $esVencida ? 'color: var(--peligro); font-weight: bold;' : 'color: #E65100;' }}">
                                         {{ $alerta->fecha_vencimiento->format('d/m/Y') }}
                                     </span>
                                 </td>
                                 <td><strong>${{ number_format((float) $alerta->monto, 2, ',', '.') }}</strong></td>
                                 <td>
                                     @if ($esVencida)
-                                        <span style="background: #FFEBEE; color: #C62828; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">VENCIDA</span>
+                                        <span style="background: var(--fondo-error); color: var(--peligro); padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">VENCIDA</span>
                                     @else
-                                        <span style="background: #FFF9C4; color: #F57F17; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">PRÓXIMA</span>
+                                        <span style="background: var(--fondo-aviso); color: var(--aviso); padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">PRÓXIMA</span>
                                     @endif
                                 </td>
                                 <td style="text-align: right;">
                                     <form method="POST" action="{{ route('reportes.alertas.notificar') }}" style="display: inline;">
                                         @csrf
                                         <input type="hidden" name="id_cuota" value="{{ $alerta->id_cuota }}">
-                                        <button type="submit" class="boton" style="padding: 4px 10px; font-size: 0.78rem; background: #2E7D32; color: #fff;">
+                                        <button type="submit" class="boton" style="padding: 4px 10px; font-size: 0.78rem; background: var(--verde-700); color: #fff;">
                                             💬 Enviar WhatsApp
                                         </button>
                                     </form>
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     label: 'Recaudación ($)',
                     data: ingresosData.map(i => i.total),
                     backgroundColor: 'rgba(46, 125, 50, 0.8)',
-                    borderColor: '#2E7D32',
+                    borderColor: 'var(--verde-700)',
                     borderRadius: 6,
                 }]
             },
@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         {{ $metricas['tickets_resueltos'] }},
                         {{ $metricas['tickets_cerrados'] }}
                     ],
-                    backgroundColor: ['#F57F17', '#1976D2', '#2E7D32', '#546E7A']
+                    backgroundColor: ['var(--aviso)', '#1976D2', 'var(--verde-700)', '#546E7A']
                 }]
             },
             options: {
