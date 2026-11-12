@@ -185,10 +185,22 @@ dt { color: var(--texto-suave); font-size: .8rem; font-weight: 500; }
 dd { margin: 0; min-width: 0; font-size: .84rem; overflow-wrap: anywhere; }
 
 .pagina-acceso { position: relative; display: grid; min-height: 100vh; place-items: center; overflow: hidden; padding: 28px; background: var(--fondo); }
-.pagina-acceso::before { position: absolute; inset: 0 50% 0 0; border-right: 1px solid var(--borde); background: var(--verde-50); content: ""; }
-.acceso { position: relative; width: min(100%, 440px); margin: 0; padding: 38px; border-radius: 16px; box-shadow: 0 16px 50px rgba(20, 50, 30, .04); }
+.pagina-acceso::before {
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-radial-gradient(circle at 14% 25%, transparent 0 66px, rgba(232, 215, 189, .18) 67px 68px, transparent 69px 110px),
+        linear-gradient(145deg, var(--verde-950), var(--verde-900));
+    clip-path: polygon(0 0, 66% 0, 40% 100%, 0 100%);
+    content: "";
+}
+.acceso { position: relative; width: min(100%, 460px); margin: 0; padding: 38px; border-radius: 20px; box-shadow: 0 20px 60px rgba(12, 36, 25, .23); }
 .acceso-marca { display: flex; align-items: center; gap: 11px; margin-bottom: 30px; }
-.acceso-marca .marca-simbolo { color: var(--verde-700); background: var(--verde-100); }
+.acceso-logo { flex: none; border-radius: 50%; object-fit: contain; background: #fff; }
+.acceso-contrasena { display: flex; gap: 8px; margin-top: 8px; }
+.acceso-contrasena input { flex: 1; min-width: 0; }
+.acceso-contrasena button[hidden] { display: none; }
+.acceso-volver { display: inline-block; margin-top: 22px; font-size: .82rem; }
 .acceso-marca strong, .acceso-marca small { display: block; }
 .acceso-marca small { color: var(--texto-suave); }
 .acceso h1 { margin: 6px 0 9px; }
@@ -330,7 +342,6 @@ textarea:focus { border-color: var(--verde-500); outline: 0; box-shadow: 0 0 0 4
 .tema-oscuro .mensaje-chat { background: #22372b; }
 .tema-oscuro .mensaje-chat.bot, .tema-oscuro .mensaje-chat.usuario_interno, .tema-oscuro .mensaje-chat.sistema { border-color: #3d7055; background: #244b36; }
 .tema-oscuro .pagina-acceso { background: var(--fondo); }
-.tema-oscuro .acceso-marca .marca-simbolo { color: var(--verde-700); }
 .tema-oscuro .panel-estado { background: linear-gradient(145deg, #174b40, #176b55); }
 
 .metrica-comprobante.pendiente .valor-comprobante { color: #b45309; }

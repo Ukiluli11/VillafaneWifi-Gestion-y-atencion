@@ -3,6 +3,17 @@ const botonAbrir = document.querySelector('[data-abrir-menu]');
 const raiz = document.documentElement;
 const botonBarra = document.querySelector('[data-alternar-barra]');
 const botonTema = document.querySelector('[data-alternar-tema]');
+const botonContrasena = document.querySelector('[data-alternar-contrasena]');
+const campoContrasena = document.getElementById(botonContrasena?.getAttribute('aria-controls'));
+
+if (botonContrasena && campoContrasena) {
+    botonContrasena.hidden = false;
+    botonContrasena.addEventListener('click', () => {
+        const mostrar = campoContrasena.type === 'password';
+        campoContrasena.type = mostrar ? 'text' : 'password';
+        botonContrasena.textContent = mostrar ? 'Ocultar contraseña' : 'Mostrar contraseña';
+    });
+}
 
 const guardarPreferencia = (clave, valor) => {
     try {
