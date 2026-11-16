@@ -39,7 +39,7 @@ class ServicioCuentaCorriente
 
     /**
      * @return array{total_pendiente: string, total_vencido: string, cantidad_pendientes: int,
-     * cantidad_vencidas: int, proximo_vencimiento: ?string, estado: string}
+     * cantidad_vencidas: int, proximo_vencimiento: ?string, vencimiento_impago_mas_antiguo: ?string, estado: string}
      */
     public function resumir(Cliente $cliente): array
     {
@@ -54,6 +54,8 @@ class ServicioCuentaCorriente
             'total_vencido' => (string) $totalVencido,
             'cantidad_pendientes' => $pendientes->count(),
             'cantidad_vencidas' => $vencidas->count(),
+            'vencimiento_impago_mas_antiguo' => $vencidas
+                ->sortBy('fecha_vencimiento')->first()?->fecha_vencimiento?->toDateString(),
             'proximo_vencimiento' => $pendientes->where('estado', EstadoCuota::Pendiente)
                 ->sortBy('fecha_vencimiento')->first()?->fecha_vencimiento?->toDateString(),
             'estado' => $totalVencido->isGreaterThan(BigDecimal::zero())

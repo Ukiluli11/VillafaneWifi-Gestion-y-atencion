@@ -76,8 +76,7 @@ class ServicioAtencionWhatsapp
         if (in_array($comando, ['pagar', 'como pagar', 'datos de pago', 'alias', 'mercado pago'], true)) {
             $conversacion->update(['paso_actual' => null, 'intencion_actual' => null, 'intentos_interpretacion' => 0]);
 
-            return $this->servicioCuentaCorriente->instruccionesTransferencia($cliente)
-                ?? 'Los datos de la cuenta receptora no están disponibles. Escribí MENU para consultar tu cuenta o hablar con un operador antes de transferir.';
+            return $this->responderDatosPago($cliente);
         }
 
         if (in_array($comando, ['menu', 'hola', 'buenas', 'buen dia', 'buenos dias', 'buenas tardes', 'buenas noches'], true)) {
@@ -87,7 +86,9 @@ class ServicioAtencionWhatsapp
                 'intentos_interpretacion' => 0,
             ]);
 
-            return $this->mensajeBienvenida($cliente);
+            return $comando !== 'menu' && $this->iaService->proveedorActivo($conversacion->numero_whatsapp) !== null
+                ? "¡Hola {$cliente->nombre_razon_social}! Contame qué necesitás y te ayudo con tu cuenta, un pago o un problema con la conexión."
+                : $this->mensajeBienvenida($cliente);
         }
 
         if (in_array($comando, ['gracias', 'muchas gracias', 'ok gracias', 'dale gracias'], true)) {
@@ -112,14 +113,21 @@ class ServicioAtencionWhatsapp
             return $this->registrarReclamo($conversacion, $cliente, (string) $mensaje->contenido);
         }
 
-        $resultado = $this->iaService->interpretarIntencion(
-            (string) $mensaje->contenido,
-            $this->construirContexto($conversacion),
-        );
+        $consultaVencimiento = preg_match(
+            '/^(?:y )?(?:cuando|que dia|en que fecha) (?:(?:me |se )?(?:vence|vencia|vencio)|(?:vence|vencia|vencio) (?:mi cuota|la cuota|el pago))$/D',
+            $comando,
+        ) === 1;
+        $resultado = $consultaVencimiento
+            ? ['intencion' => IntencionConversacion::ConsultaCuenta, 'pregunta' => null]
+            : $this->iaService->interpretarIntencion(
+                (string) $mensaje->contenido,
+                $this->iaService->proveedorActivo($conversacion->numero_whatsapp) === null ? '' : $this->construirContexto($conversacion, $cliente),
+                $conversacion->numero_whatsapp,
+            );
         $intencion = $resultado['intencion'];
 
         if ($intencion === IntencionConversacion::Desconocida) {
-            return $this->manejarIntencionDesconocida($conversacion);
+            return $this->manejarIntencionDesconocida($conversacion, $resultado['pregunta']);
         }
 
         $conversacion->reiniciarInterpretacion();
@@ -136,8 +144,9 @@ class ServicioAtencionWhatsapp
 
         return match ($intencion) {
             IntencionConversacion::ConsultaCuenta => $this->responderEstadoCuenta($conversacion, $cliente),
-            IntencionConversacion::ReclamoSoporte => 'Entendí que necesitás registrar un reclamo. Contame brevemente qué problema estás teniendo.',
-            IntencionConversacion::EnvioComprobante => 'Entendí que querés enviar un comprobante. Podés adjuntar una imagen o un archivo PDF.',
+            IntencionConversacion::ReclamoSoporte => 'Contame un poco más sobre lo que pasa con tu conexión y registro el reclamo.',
+            IntencionConversacion::EnvioComprobante => 'Podés adjuntar una foto clara o el PDF de tu comprobante por acá.',
+            IntencionConversacion::DatosPago => $this->responderDatosPago($cliente),
             default => $this->mensajeBienvenida($cliente),
         };
     }
@@ -202,24 +211,35 @@ class ServicioAtencionWhatsapp
     private function responderEstadoCuenta(Conversacion $conversacion, Cliente $cliente): string
     {
         $resumen = $this->servicioCuentaCorriente->resumir($cliente);
-        $estado = match ($resumen['estado']) {
-            'con_deuda' => 'EN MORA',
-            'al_dia_con_cuotas' => 'AL DÍA CON CUOTAS PENDIENTES',
-            default => 'AL DÍA',
-        };
         $total = number_format((float) $resumen['total_pendiente'], 2, ',', '.');
-        $respuesta = "Tu cuenta está {$estado}. Total pendiente: \${$total}.";
+        $respuesta = match ($resumen['estado']) {
+            'con_deuda' => "Hay cuotas vencidas en tu cuenta. Total pendiente: \${$total}.",
+            'al_dia_con_cuotas' => "No tenés cuotas vencidas. Total pendiente: \${$total}.",
+            default => 'Estás al día, sin cuotas pendientes.',
+        };
 
+        if ($resumen['vencimiento_impago_mas_antiguo'] !== null) {
+            $fechaVencida = CarbonImmutable::parse($resumen['vencimiento_impago_mas_antiguo'])->format('d/m/Y');
+            $respuesta .= $resumen['cantidad_vencidas'] === 1
+                ? " La cuota venció el {$fechaVencida}."
+                : " La cuota impaga más antigua venció el {$fechaVencida}.";
+        }
         if ($resumen['proximo_vencimiento'] !== null) {
             $fecha = CarbonImmutable::parse($resumen['proximo_vencimiento'])->format('d/m/Y');
-            $respuesta .= " Próximo vencimiento: {$fecha}.";
+            $respuesta .= " Tu próxima cuota vence el {$fecha}.";
         }
         $conversacion->cerrar();
 
         return $respuesta;
     }
 
-    private function manejarIntencionDesconocida(Conversacion $conversacion): string
+    private function responderDatosPago(Cliente $cliente): string
+    {
+        return $this->servicioCuentaCorriente->instruccionesTransferencia($cliente)
+            ?? 'La cuenta receptora todavía no está disponible. Si querés, puedo derivarte con un operador antes de que hagas la transferencia.';
+    }
+
+    private function manejarIntencionDesconocida(Conversacion $conversacion, ?string $pregunta): string
     {
         $conversacion->registrarIntentoFallido();
 
@@ -231,7 +251,7 @@ class ServicioAtencionWhatsapp
 
         $conversacion->update(['paso_actual' => 'esperando_reformulacion']);
 
-        return 'No logré entender tu mensaje. ¿Podrías indicarme con otras palabras si querés consultar tu cuenta, registrar un reclamo o enviar un comprobante?';
+        return $pregunta ?? '¿Me lo contás con otras palabras? Puedo ayudarte con tu cuenta, un comprobante o un problema de conexión.';
     }
 
     private function pasoPara(IntencionConversacion $intencion): ?string
@@ -240,24 +260,29 @@ class ServicioAtencionWhatsapp
             IntencionConversacion::ConsultaCuenta => 'consultando_cuenta',
             IntencionConversacion::ReclamoSoporte => 'recopilando_reclamo',
             IntencionConversacion::EnvioComprobante => 'esperando_comprobante',
+            IntencionConversacion::DatosPago => null,
             IntencionConversacion::AtencionHumana => 'esperando_operador',
             IntencionConversacion::Desconocida => null,
         };
     }
 
-    private function construirContexto(Conversacion $conversacion): string
+    private function construirContexto(Conversacion $conversacion, Cliente $cliente): string
     {
-        return $conversacion->mensajes()
-            ->latest('id_mensaje')
-            ->limit(6)
-            ->get()
-            ->reverse()
-            ->map(fn (Mensaje $mensaje): string => sprintf(
-                '%s: %s',
-                $mensaje->tipo_emisor->value,
-                mb_substr((string) $mensaje->contenido, 0, 300),
-            ))
-            ->implode("\n");
+        // Solo se comparte la intención, sin reenviar el historial ni datos de cuenta.
+        if ($conversacion->intencion_actual !== null) {
+            return $conversacion->intencion_actual->value;
+        }
+
+        $anterior = Conversacion::query()
+            ->where('id_cliente', $cliente->id_cliente)
+            ->where('numero_whatsapp', $conversacion->numero_whatsapp)
+            ->where('modo_atencion', ModoAtencion::Bot->value)
+            ->where('fecha_hora_cierre', '>=', now()->subMinutes(10))
+            ->latest('fecha_hora_cierre')
+            ->latest('id_conversacion')
+            ->first();
+
+        return $anterior?->intencion_actual?->value ?? '';
     }
 
     private function mensajeBienvenida(Cliente $cliente): string

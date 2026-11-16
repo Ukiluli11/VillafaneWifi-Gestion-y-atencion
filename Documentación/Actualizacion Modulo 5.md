@@ -17,7 +17,11 @@ Este documento complementa el Informe del Sistema con el comportamiento implemen
 
 La exportación se concentra en `ExportService`. El PDF se genera con `dompdf/dompdf` 3.1 y el Excel con `openspout/openspout` 5.13. No se utiliza Maatwebsite/Laravel-Excel. Las planillas contienen importes numéricos y totales calculados; no incluyen fórmulas de Excel. OpenSpout requiere PHP 8.4 o superior dentro de las versiones que admite el paquete; el entorno de desarrollo utiliza PHP 8.5. El despliegue debe ejecutar `composer install` desde el archivo de bloqueo e incluir las extensiones exigidas por esas dependencias.
 
-Las consultas del servicio combinan agregaciones SQL y procesamiento de colecciones en PHP. El reporte de morosidad aún carga las cuotas de los clientes y consulta su último pago por cliente; la descripción anterior de agregaciones SQL optimizadas no representa todas las consultas actuales. Para grandes volúmenes conviene medir y optimizar esa consulta antes de ampliar la carga.
+Las consultas del servicio combinan agregaciones SQL y procesamiento en PHP.
+Desde el 16 de noviembre, Morosidad agrupa el último pago por cliente en SQL
+y carga las cuotas impagas relevantes. Morosidad y Alertas muestran 20 filas
+por página y conservan los totales del conjunto completo. El dashboard
+consulta las seis alertas que muestra.
 
 El permiso `ExportarReportes` se exige en la ruta de descarga, además de `ConsultarReportes`. Los enlaces se muestran únicamente cuando la política de acceso concede exportación. Administración y Administrador pueden exportar; Soporte y Atención al Cliente conservan consulta.
 
@@ -34,3 +38,14 @@ La versión publicada es `20261106T024137Z-34565` y el respaldo previo es `respa
 Antes de publicar: conservar el respaldo y la configuración compartida, comprobar la plataforma PHP del VPS, instalar las dependencias, publicar mediante el script existente y comprobar salud HTTP y reportes autenticados. Las alertas de Composer sobre paquetes existentes deben atenderse en una actualización independiente del módulo.
 
 El manual operativo se encuentra en `Manuales/Manual de usuario Modulo 5.md`. El membrete institucional heredado requiere corroboración de los datos fiscales y de contacto antes de utilizarlo externamente.
+
+## Verificación del 16 de noviembre de 2026
+
+La versión `20261116T161503Z-23572` quedó activa en el VPS y procesó el reporte
+de Morosidad en MariaDB con 11 clientes. Se verificó visualmente que Alertas
+muestra el botón de envío únicamente en la fila habilitada de la demostración
+y el estado de recordatorios desactivados en las demás filas visibles.
+La comprobación de 800 clientes se realizó con datos ficticios en SQLite.
+El [procedimiento de cierre](../Codigo/README.md#cierre-de-los-requerimientos-de-la-demostración)
+incluye cómo repetir el ensayo con MariaDB y verificar el recordatorio
+automático en el VPS.

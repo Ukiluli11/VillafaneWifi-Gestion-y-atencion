@@ -62,12 +62,23 @@ return [
         'timeout' => (int) env('OCR_TIMEOUT', 25),
     ],
 
+    'ia' => [
+        'proveedor' => env('IA_PROVEEDOR', 'openai'),
+        'destinatarios_demo' => env('IA_DESTINATARIOS_DEMO', ''),
+        'confianza_minima' => env('IA_CONFIANZA_MINIMA', 0.65),
+    ],
+
+    'gemini' => [
+        'api_key' => env('GEMINI_API_KEY'),
+        'model' => env('GEMINI_MODEL', 'gemini-2.5-flash-lite'),
+        'timeout' => (int) env('GEMINI_TIMEOUT', 6),
+    ],
+
     'openai' => [
         'api_key' => env('OPENAI_API_KEY'),
         'model' => env('OPENAI_MODEL'),
         'base_url' => env('OPENAI_BASE_URL', 'https://api.openai.com/v1'),
         'timeout' => env('OPENAI_TIMEOUT', 15),
-        'confianza_minima' => env('IA_CONFIANZA_MINIMA', 0.65),
     ],
 
     'postmark' => [

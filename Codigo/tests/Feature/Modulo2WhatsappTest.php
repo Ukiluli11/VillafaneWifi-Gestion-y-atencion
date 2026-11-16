@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Dominio\IAService;
 use App\Dominio\ServicioAtencionHumana;
 use App\Dominio\ServicioAtencionWhatsapp;
 use App\Dominio\ServicioClientes;
@@ -13,6 +14,7 @@ use App\Dominio\ServicioUsuarios;
 use App\Dominio\WhatsAppService;
 use App\Enums\EstadoConversacion;
 use App\Enums\EstadoEnvioMensaje;
+use App\Enums\IntencionConversacion;
 use App\Enums\ModoAtencion;
 use App\Enums\TipoEmisorMensaje;
 use App\Enums\TipoMensaje;
@@ -199,6 +201,7 @@ class Modulo2WhatsappTest extends TestCase
         $this->assertSame('543704061032', $cliente->fresh()->telefono_whatsapp);
         $this->assertSame(EstadoConversacion::Escalada, $conversacion->estado);
         $this->assertFalse($conversacion->mensajes()->where('contenido', 'like', '%Total pendiente%')->exists());
+        $this->assertFalse($conversacion->mensajes()->where('contenido', 'like', '%Estás al día%')->exists());
 
         $legitima = app(ServicioConversaciones::class)->obtenerOCrearConversacion('5493704061032');
         $this->assertTrue($cliente->is(app(ServicioIdentificacion::class)->identificarCliente($legitima, '5493704061032')));
@@ -616,8 +619,143 @@ class Modulo2WhatsappTest extends TestCase
         $this->assertDatabaseHas('comprobante', ['id_mensaje' => $mensaje->id_mensaje]);
     }
 
-    public function test_simulador_procesa_un_mensaje_sin_credenciales_externas(): void
+    public function test_ia_clasifica_y_recurre_a_reglas_si_falla_el_proveedor(): void
     {
+        config([
+            'services.whatsapp.modo_simulacion' => false,
+            'services.openai.api_key' => 'credencial-ficticia',
+            'services.openai.model' => 'modelo-ficticio',
+            'services.openai.base_url' => 'https://ia.ejemplo.test/v1',
+        ]);
+        Http::preventStrayRequests();
+        Http::fake(['https://ia.ejemplo.test/v1/responses' => Http::sequence()
+            ->push(['output' => [['type' => 'message', 'content' => [[
+                'type' => 'output_text', 'text' => '{"intencion":"consulta_cuenta","confianza":0.98}',
+            ]]]]])
+            ->pushStatus(503)]);
+
+        $ia = app(IAService::class);
+        $this->assertSame(IntencionConversacion::ConsultaCuenta, $ia->interpretarIntencion('Quisiera saber cómo estoy')['intencion']);
+        $this->assertSame(IntencionConversacion::ReclamoSoporte, $ia->interpretarIntencion('Estoy sin internet')['intencion']);
+        Http::assertSentCount(2);
+    }
+
+    public function test_gemini_responde_repreguntas_sin_compartir_el_historial_de_cuenta(): void
+    {
+        $this->configurarGeminiFicticio();
+        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent';
+        $clasificacion = ['intencion' => 'consulta_cuenta', 'confianza' => 0.98, 'pregunta' => ''];
+        $salida = ['candidates' => [['content' => ['parts' => [['text' => json_encode($clasificacion)]]]]]];
+        Http::fake([$url => Http::sequence()->push($salida)->push($salida)]);
+
+        $cliente = Cliente::factory()->create();
+        $servicio = Servicio::factory()->for($cliente)->create();
+        Cuota::factory()->for($servicio)->create([
+            'monto' => '100.00',
+            'periodo' => '2026-11',
+            'fecha_emision' => '2026-11-01',
+            'fecha_vencimiento' => '2026-11-15',
+            'estado' => 'vencida',
+        ]);
+        $conversaciones = app(ServicioConversaciones::class);
+        $atencion = app(ServicioAtencionWhatsapp::class);
+
+        foreach (['Quisiera saber cuánto me queda por abonar', 'Y cuando vence ?', '¿Y cuándo? Mi documento es 30.111.222'] as $indice => $texto) {
+            $conversacion = $conversaciones->obtenerOCrearConversacion($cliente->telefono_whatsapp);
+            $conversacion->update(['id_cliente' => $cliente->id_cliente]);
+            $mensaje = $conversaciones->registrarMensajeEntrante($conversacion, [
+                'id_externo' => "wamid.gemini.{$indice}",
+                'telefono' => $cliente->telefono_whatsapp,
+                'tipo' => 'texto',
+                'contenido' => $texto,
+                'fecha_hora' => CarbonImmutable::now(),
+                'referencia_archivo' => null,
+            ]);
+
+            $this->assertSame(
+                'Hay cuotas vencidas en tu cuenta. Total pendiente: $100,00. La cuota venció el 15/11/2026.',
+                $atencion->procesarMensaje($conversacion, $mensaje, $cliente),
+            );
+            $this->assertSame(EstadoConversacion::Cerrada, $conversacion->fresh()->estado);
+        }
+
+        Http::assertSentCount(2);
+        $solicitud = Http::recorded()->last()[0];
+        $entrada = $solicitud['contents'][0]['parts'][0]['text'];
+        $this->assertStringContainsString('Contexto: consulta_cuenta', $entrada);
+        $this->assertStringContainsString('[dato omitido]', $entrada);
+        $this->assertStringNotContainsString('30.111.222', $entrada);
+        $this->assertStringNotContainsString('Total pendiente', $entrada);
+        $this->assertTrue($solicitud->hasHeader('x-goog-api-key', 'credencial-gemini-ficticia'));
+        $this->assertSame(0, $solicitud['generationConfig']['thinkingConfig']['thinkingBudget']);
+    }
+
+    public function test_gemini_filtra_preguntas_con_datos_sensibles_y_usa_respaldo_ante_fallo(): void
+    {
+        $this->configurarGeminiFicticio();
+        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent';
+        $salida = fn (string $pregunta): array => ['candidates' => [['content' => ['parts' => [['text' => json_encode([
+            'intencion' => 'desconocida', 'confianza' => 0.98, 'pregunta' => $pregunta,
+        ])]]]]]];
+        Http::fake([$url => Http::sequence()
+            ->push($salida('¿Querés revisar tu cuenta o tenés un problema de conexión?'))
+            ->push($salida('¿Cuál es tu contraseña?'))
+            ->pushStatus(503)]);
+
+        $ia = app(IAService::class);
+        $this->assertSame('¿Querés revisar tu cuenta o tenés un problema de conexión?', $ia->interpretarIntencion('Eso mismo')['pregunta']);
+        $this->assertNull($ia->interpretarIntencion('Tengo una consulta')['pregunta']);
+        $this->assertSame(IntencionConversacion::ReclamoSoporte, $ia->interpretarIntencion('Estoy sin internet')['intencion']);
+        $this->assertSame(IntencionConversacion::ConsultaCuenta, $ia->interpretarIntencion('1')['intencion']);
+        Http::assertSentCount(3);
+
+        config(['services.ia.destinatarios_demo' => '5493704000000']);
+        $this->assertNull($ia->proveedorActivo('5493704000001'));
+        $this->assertSame('gemini', $ia->proveedorActivo('543704000000'));
+        $this->assertSame(IntencionConversacion::ReclamoSoporte, $ia->interpretarIntencion('Estoy sin internet', telefono: '5493704000001')['intencion']);
+        Http::assertSentCount(3);
+    }
+
+    private function configurarGeminiFicticio(): void
+    {
+        config([
+            'services.whatsapp.modo_simulacion' => false,
+            'services.ia.proveedor' => 'gemini',
+            'services.gemini.api_key' => 'credencial-gemini-ficticia',
+            'services.gemini.model' => 'gemini-2.5-flash-lite',
+        ]);
+        Http::preventStrayRequests();
+    }
+
+    public function test_registro_y_contratacion_desde_numero_nuevo(): void
+    {
+        Http::preventStrayRequests();
+        $plan = Plan::factory()->create(['estado' => 'activo']);
+        $numero = '5493704000101';
+        $mensajes = [
+            'hola', 'REGISTRARME', 'DNI', '39999991', 'Cliente Sintético', 'PARTICULAR',
+            'Calle Uno | 10 | Villafañe', (string) $plan->getKey(), 'Calle Dos | 20 | Villafañe', '15',
+        ];
+
+        foreach ($mensajes as $indice => $texto) {
+            $this->postJson('/webhooks/whatsapp', ['entry' => [['changes' => [['value' => ['messages' => [[
+                'id' => "wamid.registro.$indice", 'from' => $numero, 'timestamp' => (string) now()->timestamp,
+                'type' => 'text', 'text' => ['body' => $texto],
+            ]]]]]]]])->assertOk();
+        }
+
+        $cliente = Cliente::where('numero_documento', '39999991')->sole();
+        $servicio = Servicio::where('id_cliente', $cliente->getKey())->sole();
+        $this->assertEquals($plan->getKey(), $servicio->id_plan);
+        $this->assertEquals(15, $servicio->dia_vencimiento);
+        $this->assertSame(EstadoConversacion::Cerrada, Conversacion::where('id_cliente', $cliente->getKey())->sole()->estado);
+    }
+
+    public function test_simulador_procesa_un_mensaje_sin_contactar_proveedores_aunque_haya_credenciales(): void
+    {
+        config(['services.openai.api_key' => 'credencial-ficticia', 'services.openai.model' => 'modelo-ficticio']);
+        Http::fake();
+        Cliente::factory()->create(['telefono_whatsapp' => '5493704555666']);
         $usuario = app(ServicioUsuarios::class)->crear([
             'nombre_usuario' => 'operador-simulador',
             'contrasena' => 'clave-segura',
@@ -628,11 +766,12 @@ class Modulo2WhatsappTest extends TestCase
         $respuesta = $this->actingAs($usuario)->post('/simulador-whatsapp', [
             'telefono' => '5493704555666',
             'tipo' => 'texto',
-            'contenido' => 'Mi DNI es 30.111.222',
+            'contenido' => '¿Tengo deuda?',
         ]);
 
         $conversacion = Conversacion::where('numero_whatsapp', '5493704555666')->firstOrFail();
         $respuesta->assertRedirect(route('conversaciones.show', $conversacion));
         $this->assertSame(2, $conversacion->mensajes()->count());
+        Http::assertNothingSent();
     }
 }
