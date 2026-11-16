@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Dominio\ServicioClientes;
 use App\Dominio\ServicioUsuarios;
 use App\Enums\AreaEmpleado;
 use App\Enums\EstadoCuota;
@@ -19,6 +20,7 @@ use App\Models\Servicio;
 use App\Models\Ticket;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
@@ -120,6 +122,28 @@ class ReportesTest extends TestCase
         $respuesta->assertOk()->assertViewHas('resumen', fn (array $resumen): bool => $resumen['total_en_mora'] === 800
             && $resumen['monto_total_deuda'] === 80000.0);
         $this->assertLessThan(25, $consultas);
+        $primeraPagina = $respuesta->viewData('items');
+        $this->assertSame(800, $primeraPagina->total());
+        $this->assertCount(20, $primeraPagina);
+
+        $segundaPagina = $this->get(route('reportes.morosidad', ['estado_financiero' => 'en_mora', 'page' => 2]))
+            ->assertOk()
+            ->viewData('items');
+        $this->assertNotSame($primeraPagina->items()[0]['id_cliente'], $segundaPagina->items()[0]['id_cliente']);
+        $this->assertStringContainsString('estado_financiero=en_mora', $segundaPagina->nextPageUrl());
+
+        $alertas = $this->get(route('reportes.alertas', ['page' => 2]))
+            ->assertOk()
+            ->assertViewHas('vencidas', 800)
+            ->assertViewHas('monto', 80000.0)
+            ->viewData('cuotas');
+        $this->assertSame(800, $alertas->total());
+        $this->assertSame(2, $alertas->currentPage());
+        $this->assertCount(20, $alertas);
+
+        $this->get(route('reportes.dashboard'))
+            ->assertOk()
+            ->assertViewHas('metricas', fn (array $metricas): bool => $metricas['alertas_vencimiento']->count() === 6);
     }
 
     public function test_reporte_morosidad_filtra_clientes_al_dia_y_en_mora(): void
@@ -134,6 +158,13 @@ class ReportesTest extends TestCase
         $servicio1 = $this->crearServicio($clienteAlDia->id_cliente, $plan->id_plan);
         $pago = Pago::create(['id_cuenta' => $cuenta->id_cuenta, 'fecha' => '2026-10-05', 'monto_total' => 15000, 'medio_pago' => MedioPago::Transferencia]);
         Cuota::create(['id_servicio' => $servicio1->id_servicio, 'periodo' => '2026-10', 'monto' => 15000, 'fecha_emision' => '2026-10-01', 'fecha_vencimiento' => '2026-10-10', 'estado' => EstadoCuota::Pagada, 'id_pago' => $pago->id_pago]);
+        $otroServicio = $this->crearServicio($clienteAlDia->id_cliente, $plan->id_plan);
+        $pagoAnterior = Pago::factory()->for($cuenta, 'cuenta')->create(['fecha' => '2026-09-05']);
+        Cuota::factory()->for($otroServicio, 'servicio')->create([
+            'periodo' => '2026-09',
+            'id_pago' => $pagoAnterior->id_pago,
+            'estado' => EstadoCuota::Pagada,
+        ]);
 
         // Cliente 2: En mora (cuota vencida sin pago)
         $clienteEnMora = Cliente::create(['nombre_razon_social' => 'Carlos Moroso', 'tipo_documento' => 'DNI', 'numero_documento' => '30333444', 'telefono_whatsapp' => '5493704003344']);
@@ -145,11 +176,14 @@ class ReportesTest extends TestCase
         $responseMora->assertOk();
         $responseMora->assertSee('Carlos Moroso');
         $responseMora->assertDontSee('Juan Al Día');
-        $responseMora->assertViewHas('items', fn (array $items): bool => $items[0]['dias_atraso'] === 56);
+        $responseMora->assertViewHas('items', fn (LengthAwarePaginator $items): bool => $items->items()[0]['dias_atraso'] === 56
+            && $items->items()[0]['ultimo_pago'] === 'Sin registros');
 
         // Consulta filtrando al día
         $responseAlDia = $this->actingAs($admin)->get(route('reportes.morosidad', ['estado_financiero' => 'al_dia']));
         $responseAlDia->assertOk();
+        $responseAlDia->assertViewHas('items', fn (LengthAwarePaginator $items): bool => $items->total() === 1
+            && $items->items()[0]['ultimo_pago'] === '05/10/2026');
         $responseAlDia->assertSee('Juan Al Día');
         $responseAlDia->assertDontSee('Carlos Moroso');
     }
@@ -210,6 +244,10 @@ class ReportesTest extends TestCase
     public function test_alertas_de_vencimiento_y_notificacion_whatsapp(): void
     {
         $this->travelTo(Carbon::parse('2026-11-06 02:00:00', 'UTC'));
+        config([
+            'services.whatsapp.recordatorios_habilitados' => true,
+            'services.whatsapp.modo_simulacion' => true,
+        ]);
         $admin = $this->crearAdmin();
         $plan = Plan::create(['nombre' => 'Plan Alerta', 'velocidad' => 30, 'precio_vigente' => 10000]);
         $cliente = Cliente::create(['nombre_razon_social' => 'Mariana Alerta', 'tipo_documento' => 'DNI', 'numero_documento' => '35123456', 'telefono_whatsapp' => '5493704998877']);
@@ -229,13 +267,51 @@ class ReportesTest extends TestCase
         $response->assertSee('Mariana Alerta');
         $response->assertSee('PRÓXIMO VENCIMIENTO');
         $response->assertDontSee('MORA VENCIDA');
+        $response->assertSee('Recordatorios desactivados');
+        $response->assertDontSee(route('reportes.alertas.notificar'));
 
-        // Notificar por WhatsApp
-        $responseNotif = $this->actingAs($admin)->post(route('reportes.alertas.notificar'), [
-            'id_cuota' => $cuota->id_cuota,
+        $bandeja = route('reportes.alertas');
+        $destino = route('reportes.alertas.notificar');
+        $datos = ['id_cuota' => $cuota->id_cuota];
+
+        $this->from($bandeja)->post($destino, $datos)
+            ->assertRedirect($bandeja)
+            ->assertSessionHas('aviso_recordatorio')
+            ->assertSessionMissing('exito');
+        $this->assertDatabaseCount('mensaje', 0);
+
+        app(ServicioClientes::class)->configurarRecordatorios($cliente, true);
+        $this->get($bandeja)->assertOk()->assertSee('Enviar recordatorio');
+        $this->from($bandeja)->post($destino, $datos)
+            ->assertRedirect($bandeja)
+            ->assertSessionHas('exito', 'Simulación registrada. No se envió un mensaje real.');
+        $this->get($bandeja)->assertOk()->assertSee('Simulación registrada.');
+
+        $this->from($bandeja)->post($destino, $datos)
+            ->assertRedirect($bandeja)
+            ->assertSessionHas('aviso_recordatorio')
+            ->assertSessionMissing('exito');
+        $this->assertDatabaseCount('mensaje', 1);
+
+        config([
+            'services.whatsapp.modo_simulacion' => false,
+            'services.whatsapp.plantillas_reales_habilitadas' => true,
+            'services.whatsapp.access_token' => '',
         ]);
-        $responseNotif->assertRedirect();
-        $responseNotif->assertSessionHas('exito');
+        $cuotaVencida = Cuota::factory()->for($servicio, 'servicio')->create([
+            'periodo' => '2026-10',
+            'fecha_vencimiento' => '2026-10-05',
+            'estado' => EstadoCuota::Vencida,
+            'id_pago' => null,
+        ]);
+        $this->from($bandeja)->post($destino, ['id_cuota' => $cuotaVencida->id_cuota])
+            ->assertRedirect($bandeja)
+            ->assertSessionHas('error_recordatorio')
+            ->assertSessionMissing('exito');
+        $this->assertDatabaseHas('mensaje', [
+            'clave_idempotencia' => 'vencimiento:vencida:'.$cuotaVencida->id_cuota,
+            'estado_envio' => 'fallido',
+        ]);
     }
 
     public function test_exportar_reporte_morosidad_a_csv(): void

@@ -167,14 +167,31 @@ class Modulo2WhatsappTest extends TestCase
 
     public function test_dni_desde_numero_desconocido_no_vincula_ni_cambia_el_telefono(): void
     {
+        $secreto = 'secreto-webhook-de-prueba';
+        config([
+            'services.whatsapp.validar_firma' => true,
+            'services.whatsapp.app_secret' => $secreto,
+        ]);
         $cliente = Cliente::factory()->create(['telefono_whatsapp' => '543704061032', 'numero_documento' => '30111222', 'tipo_documento' => 'DNI']);
         $telefono = '5493704111222';
 
         foreach (['Mi DNI es 30.111.222', '1', 'REGISTRARME', 'DNI', '30111222'] as $indice => $texto) {
-            $this->postJson('/webhooks/whatsapp', ['entry' => [['changes' => [['value' => ['messages' => [[
+            $payload = ['entry' => [['changes' => [['value' => ['messages' => [[
                 'id' => 'wamid.verificacion.'.$indice, 'from' => $telefono,
                 'timestamp' => (string) now()->timestamp, 'type' => 'text', 'text' => ['body' => $texto],
-            ]]]]]]]])->assertOk();
+            ]]]]]]]];
+            $firma = 'sha256='.hash_hmac('sha256', json_encode($payload, JSON_THROW_ON_ERROR), $secreto);
+
+            if ($indice === 0) {
+                $this->postJson('/webhooks/whatsapp', $payload)->assertUnauthorized();
+                $adulterado = $payload;
+                $adulterado['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'] = 'PAGAR';
+                $this->postJson('/webhooks/whatsapp', $adulterado, ['X-Hub-Signature-256' => $firma])->assertUnauthorized();
+                $this->assertDatabaseCount('conversacion', 0);
+                $this->assertDatabaseCount('mensaje', 0);
+            }
+
+            $this->postJson('/webhooks/whatsapp', $payload, ['X-Hub-Signature-256' => $firma])->assertOk();
         }
 
         $conversacion = Conversacion::where('numero_whatsapp', $telefono)->sole();

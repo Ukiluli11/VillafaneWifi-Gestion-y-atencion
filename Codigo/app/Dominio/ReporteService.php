@@ -17,6 +17,7 @@ use App\Models\Ticket;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
@@ -105,7 +106,9 @@ class ReporteService
         ])->toArray();
 
         // 7. Alertas de vencimiento inminente (próximos 5 días o ya vencidas)
-        $alertasVencimiento = $this->obtenerAlertasVencimiento(5)->take(6);
+        $alertasVencimiento = $this->consultaAlertasVencimiento($hoy, 5)
+            ->limit(6)
+            ->get();
 
         return [
             'total_clientes' => $totalClientes,
@@ -139,18 +142,25 @@ class ReporteService
     {
         $hoy = CarbonImmutable::today('America/Argentina/Buenos_Aires');
 
-        $ultimaFechaPago = Pago::query()->select('pago.fecha')
+        $ultimosPagos = Pago::query()
+            ->select('servicio.id_cliente')
+            ->selectRaw('MAX(pago.fecha) AS ultima_fecha')
             ->join('cuota', 'cuota.id_pago', '=', 'pago.id_pago')
             ->join('servicio', 'servicio.id_servicio', '=', 'cuota.id_servicio')
-            ->whereColumn('servicio.id_cliente', 'cliente.id_cliente')
-            ->latest('pago.fecha')->limit(1);
+            ->groupBy('servicio.id_cliente');
         $query = Cliente::query()
-            ->addSelect(['ultimo_pago_fecha' => $ultimaFechaPago])
+            ->select('cliente.*', 'ultimos_pagos.ultima_fecha AS ultimo_pago_fecha')
+            ->leftJoinSub($ultimosPagos, 'ultimos_pagos', 'ultimos_pagos.id_cliente', '=', 'cliente.id_cliente')
             ->withCasts(['ultimo_pago_fecha' => 'date'])
             ->with([
                 'servicios.plan',
-                'cuotas' => function ($q) {
-                    $q->orderBy('fecha_vencimiento', 'asc');
+                'cuotas' => function ($q) use ($hoy) {
+                    $q->whereNull('cuota.id_pago')
+                        ->where(function (Builder $cuotas) use ($hoy) {
+                            $cuotas->where('cuota.estado', EstadoCuota::Vencida->value)
+                                ->orWhere('cuota.fecha_vencimiento', '<', $hoy->toDateString());
+                        })
+                        ->orderBy('cuota.fecha_vencimiento');
                 },
             ]);
 
@@ -169,7 +179,7 @@ class ReporteService
             });
         }
 
-        $clientes = $query->orderBy('nombre_razon_social')->get();
+        $clientes = $query->orderBy('nombre_razon_social')->orderBy('cliente.id_cliente')->get();
 
         $items = [];
         $totalDeudaAcumulada = 0.0;
@@ -177,12 +187,7 @@ class ReporteService
         $totalEnMora = 0;
 
         foreach ($clientes as $cliente) {
-            $cuotasImpagas = $cliente->cuotas->filter(function (Cuota $c) use ($hoy) {
-                return $c->id_pago === null && (
-                    $c->estado === EstadoCuota::Vencida
-                    || $c->fecha_vencimiento->toDateString() < $hoy->toDateString()
-                );
-            });
+            $cuotasImpagas = $cliente->cuotas;
 
             $montoDeuda = (float) $cuotasImpagas->sum('monto');
             $cantCuotasVencidas = $cuotasImpagas->count();
@@ -387,11 +392,27 @@ class ReporteService
     /**
      * Obtiene cuotas en alerta de vencimiento (RF-37).
      *
-     * @return Collection<int, Cuota>
+     * @return array{cuotas: LengthAwarePaginator<int, Cuota>, vencidas: int, monto: float, hoy: string}
      */
-    public function obtenerAlertasVencimiento(int $diasAnticipacion = 5): Collection
+    public function obtenerReporteAlertasVencimiento(): array
     {
         $hoy = CarbonImmutable::today('America/Argentina/Buenos_Aires');
+        $consulta = $this->consultaAlertasVencimiento($hoy, 7);
+        $totales = (clone $consulta)->reorder()->toBase()
+            ->selectRaw('COUNT(*) AS total, SUM(monto) AS monto, SUM(CASE WHEN fecha_vencimiento < ? THEN 1 ELSE 0 END) AS vencidas', [$hoy->toDateString()])
+            ->first();
+
+        return [
+            'cuotas' => $consulta->paginate(20, total: (int) $totales->total),
+            'vencidas' => (int) $totales->vencidas,
+            'monto' => (float) $totales->monto,
+            'hoy' => $hoy->toDateString(),
+        ];
+    }
+
+    /** @return Builder<Cuota> */
+    private function consultaAlertasVencimiento(CarbonImmutable $hoy, int $diasAnticipacion): Builder
+    {
         $limite = $hoy->addDays($diasAnticipacion)->toDateString();
 
         return Cuota::query()
@@ -399,8 +420,8 @@ class ReporteService
             ->whereNull('id_pago')
             ->whereIn('estado', [EstadoCuota::Pendiente->value, EstadoCuota::Vencida->value])
             ->where('fecha_vencimiento', '<=', $limite)
-            ->orderBy('fecha_vencimiento', 'asc')
-            ->get();
+            ->orderBy('fecha_vencimiento')
+            ->orderBy('id_cuota');
     }
 
     /**

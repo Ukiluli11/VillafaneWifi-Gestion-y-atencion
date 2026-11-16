@@ -15,6 +15,7 @@ use App\Models\Usuario;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -45,9 +46,20 @@ class ReporteController extends Controller
 
         $reporte = $this->reporteService->obtenerReporteMorosidad($filtros);
         $planes = Plan::orderBy('nombre')->get();
+        $pagina = LengthAwarePaginator::resolveCurrentPage();
+        $porPagina = 20;
+        $total = count($reporte['items']);
+        $desplazamiento = min($pagina - 1, (int) ceil($total / $porPagina)) * $porPagina;
+        $items = new LengthAwarePaginator(
+            array_slice($reporte['items'], $desplazamiento, $porPagina),
+            $total,
+            $porPagina,
+            $pagina,
+            ['path' => $request->url()],
+        );
 
         return view('reportes.morosidad', [
-            'items' => $reporte['items'],
+            'items' => $items->appends($filtros),
             'resumen' => $reporte['resumen'],
             'filtros' => $filtros,
             'planes' => $planes,
@@ -104,9 +116,7 @@ class ReporteController extends Controller
      */
     public function alertas(): View
     {
-        $cuotas = $this->reporteService->obtenerAlertasVencimiento(7);
-
-        return view('reportes.alertas', compact('cuotas'));
+        return view('reportes.alertas', $this->reporteService->obtenerReporteAlertasVencimiento());
     }
 
     /**
@@ -119,14 +129,22 @@ class ReporteController extends Controller
         $resultado = $notificador->enviar($idCuota);
 
         if ($resultado['enviadas'] > 0) {
-            return back()->with('exito', 'Notificación de vencimiento enviada exitosamente por WhatsApp.');
+            $mensaje = config('services.whatsapp.modo_simulacion')
+                ? 'Simulación registrada. No se envió un mensaje real.'
+                : 'Recordatorio enviado a WhatsApp.';
+
+            return back()->with('exito', $mensaje);
         }
 
-        if ($resultado['omitidas'] > 0) {
-            return back()->with('exito', 'El aviso fue reservado u omitido según las reglas de simulación de WhatsApp.');
+        if ($resultado['fallidas'] > 0) {
+            return back()->with('error_recordatorio', 'Falló el envío del recordatorio. Revisá el estado del mensaje en Conversaciones.');
         }
 
-        return back()->with('exito', 'Proceso de notificación registrado en el sistema.');
+        $mensaje = $resultado['omitidas'] > 0
+            ? 'Aviso omitido. Revisá la autorización del cliente o si ya hay un recordatorio registrado para esta cuota.'
+            : 'Aviso no enviado. Revisá la configuración de recordatorios, el vencimiento y el estado de la cuota y del servicio.';
+
+        return back()->with('aviso_recordatorio', $mensaje);
     }
 
     /**

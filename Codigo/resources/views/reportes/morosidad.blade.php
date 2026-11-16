@@ -94,11 +94,11 @@
     <div class="tarjeta-cabecera">
         <div>
             <h2 style="font-size: 1.1rem; margin: 0;">Detalle de Abonados</h2>
-            <p>Mostrando {{ count($items) }} clientes bajo los filtros seleccionados</p>
+            <p>{{ $items->total() }} clientes bajo los filtros seleccionados</p>
         </div>
     </div>
 
-    @if (empty($items))
+    @if ($items->isEmpty())
         <p style="padding: 24px; text-align: center; color: var(--texto-suave);">No se encontraron clientes bajo los filtros aplicados.</p>
     @else
         <div class="tabla-contenedor" style="margin: 0;">
@@ -166,5 +166,6 @@
             </table>
         </div>
     @endif
+    {{ $items->links() }}
 </article>
 @endsection

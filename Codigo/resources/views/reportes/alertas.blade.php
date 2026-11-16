@@ -1,9 +1,12 @@
 @extends('layouts.panel')
 @section('titulo', 'Alertas de Vencimiento y Morosidad')
 @section('contenido')
-@php
-    $hoy = now('America/Argentina/Buenos_Aires')->toDateString();
-@endphp
+@if (session('error_recordatorio'))
+    <div class="alerta error" role="alert">{{ session('error_recordatorio') }}</div>
+@endif
+@if (session('aviso_recordatorio'))
+    <div class="alerta" role="status" style="color: var(--aviso); background: var(--fondo-aviso);">{{ session('aviso_recordatorio') }}</div>
+@endif
 <div class="encabezado">
     <div>
         <p class="sobrelinea">Reportes y métricas</p>
@@ -28,17 +31,17 @@
 <section class="metricas" aria-label="Resumen de alertas">
     <article class="metrica" style="border-left: 4px solid var(--peligro);">
         <div class="metrica-cabecera"><span>CUOTAS VENCIDAS</span><span class="metrica-icono" style="background: var(--fondo-error); color: var(--peligro);">!</span></div>
-        <strong style="color: var(--peligro);">{{ $cuotas->filter(fn($c) => $c->fecha_vencimiento->toDateString() < $hoy)->count() }}</strong>
+        <strong style="color: var(--peligro);">{{ $vencidas }}</strong>
         <small>requieren aviso urgente</small>
     </article>
     <article class="metrica" style="border-left: 4px solid var(--aviso);">
         <div class="metrica-cabecera"><span>PRÓXIMAS A VENCER</span><span class="metrica-icono" style="background: var(--fondo-aviso); color: var(--aviso);">⏰</span></div>
-        <strong style="color: var(--aviso);">{{ $cuotas->filter(fn($c) => $c->fecha_vencimiento->toDateString() >= $hoy)->count() }}</strong>
+        <strong style="color: var(--aviso);">{{ $cuotas->total() - $vencidas }}</strong>
         <small>vencen en los próximos 7 días</small>
     </article>
     <article class="metrica" style="border-left: 4px solid #00838F;">
         <div class="metrica-cabecera"><span>MONTO TOTAL EN ALERTA</span><span class="metrica-icono" style="background: #E0F7FA; color: var(--verde-700);">$</span></div>
-        <strong>${{ number_format((float) $cuotas->sum('monto'), 2, ',', '.') }}</strong>
+        <strong>${{ number_format($monto, 2, ',', '.') }}</strong>
         <small>compromiso de cobranza en seguimiento</small>
     </article>
     <article class="metrica" style="border-left: 4px solid #25D366;">
@@ -119,13 +122,19 @@
                                 @endif
                             </td>
                             <td style="text-align: right;">
-                                <form method="POST" action="{{ route('reportes.alertas.notificar') }}" style="display: inline;">
-                                    @csrf
-                                    <input type="hidden" name="id_cuota" value="{{ $cuota->id_cuota }}">
-                                    <button type="submit" class="boton" style="padding: 4px 10px; font-size: 0.78rem; background: #25D366; color: #fff;">
-                                        💬 Disparar Aviso WhatsApp
-                                    </button>
-                                </form>
+                                @if (! $cliente?->recordatorios_whatsapp)
+                                    <span style="color: var(--texto-suave);">Recordatorios desactivados</span>
+                                @elseif (! $cliente->telefono_whatsapp)
+                                    <span style="color: var(--texto-suave);">Sin número de WhatsApp</span>
+                                @else
+                                    <form method="POST" action="{{ route('reportes.alertas.notificar') }}" style="display: inline;">
+                                        @csrf
+                                        <input type="hidden" name="id_cuota" value="{{ $cuota->id_cuota }}">
+                                        <button type="submit" class="boton" style="padding: 4px 10px; font-size: 0.78rem;">
+                                            Enviar recordatorio
+                                        </button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -133,5 +142,6 @@
             </table>
         </div>
     @endif
+    {{ $cuotas->links() }}
 </article>
 @endsection
