@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Dominio\ServicioContrataciones;
 use App\Dominio\ServicioFacturacion;
+use App\Dominio\ServicioUsuarios;
 use App\Enums\EstadoCuota;
 use App\Enums\MedioPago;
 use App\Models\Cliente;
@@ -12,6 +13,7 @@ use App\Models\Cuota;
 use App\Models\Plan;
 use App\Models\Servicio;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
@@ -50,6 +52,41 @@ class ServiciosFacturacionTest extends TestCase
         $this->assertSame($primera->id_cuota, $segunda->id_cuota);
         $this->assertSame('12500.50', $primera->monto);
         $this->assertSame(1, Cuota::count());
+    }
+
+    public function test_emision_del_mes_es_repetible_y_omite_servicios_suspendidos(): void
+    {
+        $this->travelTo(Carbon::parse('2026-11-15 13:00:00'));
+        $servicio = Servicio::factory()->create(['fecha_alta' => '2026-10-01']);
+        $suspendido = Servicio::factory()->create(['estado' => 'suspendido', 'fecha_alta' => '2026-10-01']);
+
+        $this->artisan('cuotas:generar-mensuales')->assertSuccessful();
+        $this->artisan('cuotas:generar-mensuales')->assertSuccessful();
+
+        $this->assertSame('2026-11', $servicio->cuotas()->sole()->periodo);
+        $this->assertFalse($suspendido->cuotas()->exists());
+    }
+
+    public function test_baja_por_mora_es_irreversible_desde_el_panel(): void
+    {
+        $this->travelTo(Carbon::parse('2026-11-15 13:00:00'));
+        $admin = app(ServicioUsuarios::class)->crear([
+            'nombre_usuario' => 'admin-baja', 'contrasena' => 'clave-segura', 'tipo' => 'administrador',
+        ]);
+        $servicio = Servicio::factory()->create();
+        Cuota::factory()->for($servicio, 'servicio')->create([
+            'periodo' => '2026-09', 'fecha_vencimiento' => '2026-09-10', 'id_pago' => null, 'estado' => EstadoCuota::Pendiente,
+        ]);
+
+        $this->actingAs($admin)->delete(route('servicios.destroy', $servicio))->assertSessionHasErrors('estado');
+        $this->assertSame('activo', $servicio->fresh()->estado->value);
+
+        Cuota::factory()->for($servicio, 'servicio')->create([
+            'periodo' => '2026-10', 'fecha_vencimiento' => '2026-10-10', 'id_pago' => null, 'estado' => EstadoCuota::Vencida,
+        ]);
+        $this->delete(route('servicios.destroy', $servicio))->assertSessionHasNoErrors();
+        $this->post(route('servicios.reactivar', $servicio))->assertSessionHasErrors('estado');
+        $this->assertSame('baja', $servicio->fresh()->estado->value);
     }
 
     public function test_pago_cancela_varias_cuotas_del_mismo_cliente(): void

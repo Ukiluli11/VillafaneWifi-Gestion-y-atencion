@@ -28,7 +28,7 @@ Route::middleware('guest')->group(function (): void {
     Route::post('/iniciar-sesion', [AutenticacionController::class, 'store'])->middleware('throttle:5,1')->name('sesion.guardar');
 });
 
-Route::middleware('auth')->group(function (): void {
+Route::middleware(['auth', 'auth.session'])->group(function (): void {
     Route::get('/panel', InicioController::class)->name('inicio');
     Route::post('/cerrar-sesion', [AutenticacionController::class, 'destroy'])->name('sesion.destruir');
 
@@ -39,8 +39,10 @@ Route::middleware('auth')->group(function (): void {
     Route::middleware('accion:gestionar_clientes')->group(function (): void {
         Route::get('/clientes-nuevo', [ClienteController::class, 'create'])->name('clientes.create');
         Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
+        Route::post('/clientes/alta-completa', [ClienteController::class, 'store'])->middleware('accion:gestionar_servicios')->name('clientes.alta-completa');
         Route::get('/clientes/{cliente}/editar', [ClienteController::class, 'edit'])->name('clientes.edit');
         Route::put('/clientes/{cliente}', [ClienteController::class, 'update'])->name('clientes.update');
+        Route::patch('/clientes/{cliente}/recordatorios', [ClienteController::class, 'configurarRecordatorios'])->name('clientes.recordatorios');
         Route::delete('/clientes/{cliente}', [ClienteController::class, 'destroy'])->name('clientes.destroy');
     });
 
@@ -51,6 +53,8 @@ Route::middleware('auth')->group(function (): void {
         Route::get('/planes/{plan}/editar', [PlanController::class, 'edit'])->name('planes.edit');
         Route::put('/planes/{plan}', [PlanController::class, 'update'])->name('planes.update');
         Route::delete('/planes/{plan}', [PlanController::class, 'destroy'])->name('planes.destroy');
+        Route::post('/planes/{plan}/reactivar', [PlanController::class, 'reactivar'])->name('planes.reactivar');
+        Route::delete('/planes/{plan}/eliminar', [PlanController::class, 'eliminar'])->name('planes.eliminar');
     });
 
     Route::get('/servicios', [ServicioController::class, 'index'])->middleware('accion:consultar_servicios')->name('servicios.index');
@@ -85,7 +89,10 @@ Route::middleware('auth')->group(function (): void {
 
     Route::get('/cuentas-receptoras', [CuentaReceptoraController::class, 'index'])->middleware('accion:consultar_cuentas')->name('cuentas-receptoras.index');
     Route::post('/cuentas-receptoras', [CuentaReceptoraController::class, 'store'])->middleware('accion:gestionar_cuentas')->name('cuentas-receptoras.store');
+    Route::get('/cuentas-receptoras/{cuentaReceptora}/editar', [CuentaReceptoraController::class, 'edit'])->middleware('accion:gestionar_cuentas')->name('cuentas-receptoras.edit');
     Route::put('/cuentas-receptoras/{cuentaReceptora}', [CuentaReceptoraController::class, 'update'])->middleware('accion:gestionar_cuentas')->name('cuentas-receptoras.update');
+    Route::patch('/cuentas-receptoras/{cuentaReceptora}/estado', [CuentaReceptoraController::class, 'cambiarEstado'])->middleware('accion:gestionar_cuentas')->name('cuentas-receptoras.estado');
+    Route::delete('/cuentas-receptoras/{cuentaReceptora}', [CuentaReceptoraController::class, 'destroy'])->middleware('accion:gestionar_cuentas')->name('cuentas-receptoras.destroy');
 
     Route::middleware('accion:consultar_conversaciones')->group(function (): void {
         Route::get('/conversaciones', [ConversacionController::class, 'index'])->name('conversaciones.index');
@@ -128,6 +135,12 @@ Route::middleware('auth')->group(function (): void {
             ->name('reportes.exportar');
     });
 
+    Route::get('/mi-cuenta/contrasena', [UsuarioController::class, 'editarContrasena'])->name('cuenta.contrasena');
+    Route::put('/mi-cuenta/contrasena', [UsuarioController::class, 'actualizarContrasena'])->middleware('throttle:5,1')->name('cuenta.contrasena.actualizar');
+
+    Route::get('/usuarios/{usuario}/editar', [UsuarioController::class, 'edit'])->middleware('accion:gestionar_usuarios')->name('usuarios.edit');
+    Route::put('/usuarios/{usuario}', [UsuarioController::class, 'update'])->middleware('accion:gestionar_usuarios')->name('usuarios.update');
+    Route::post('/usuarios/{usuario}/activar', [UsuarioController::class, 'activar'])->middleware('accion:gestionar_usuarios')->name('usuarios.activar');
     Route::get('/usuarios', [UsuarioController::class, 'index'])->middleware('accion:gestionar_usuarios')->name('usuarios.index');
     Route::post('/usuarios', [UsuarioController::class, 'store'])->middleware('accion:gestionar_usuarios')->name('usuarios.store');
     Route::delete('/usuarios/{usuario}', [UsuarioController::class, 'destroy'])->middleware('accion:gestionar_usuarios')->name('usuarios.destroy');

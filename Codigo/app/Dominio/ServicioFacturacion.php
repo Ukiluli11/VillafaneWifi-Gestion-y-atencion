@@ -27,20 +27,17 @@ class ServicioFacturacion
             throw ValidationException::withMessages(['periodo' => 'No se generan cuotas para servicios dados de baja.']);
         }
 
-        $primerDia = CarbonImmutable::createFromFormat('!Y-m', $periodo);
-        if (! $primerDia || $primerDia->format('Y-m') !== $periodo) {
-            throw ValidationException::withMessages(['periodo' => 'El período debe usar el formato AAAA-MM.']);
-        }
+        $primerDia = $this->inicioPeriodo($periodo);
 
         $vencimiento = $primerDia->day(min($servicio->dia_vencimiento, $primerDia->daysInMonth));
-        $alta = CarbonImmutable::parse($servicio->fecha_alta);
-        if ($alta->greaterThan($vencimiento)) {
+        $alta = CarbonImmutable::parse($servicio->fecha_alta->toDateString(), $primerDia->timezone);
+        if ($alta->greaterThan($primerDia->endOfMonth())) {
             throw ValidationException::withMessages(['periodo' => 'El servicio aún no estaba contratado en ese período.']);
         }
 
         $emision = $alta->greaterThan($primerDia) ? $alta : $primerDia;
         $vencimiento = $vencimiento->greaterThanOrEqualTo($emision) ? $vencimiento : $emision;
-        $estado = $vencimiento->isBefore(CarbonImmutable::today()) ? EstadoCuota::Vencida : EstadoCuota::Pendiente;
+        $estado = $vencimiento->isBefore(CarbonImmutable::today($primerDia->timezone)) ? EstadoCuota::Vencida : EstadoCuota::Pendiente;
 
         $cuota = Cuota::firstOrCreate(
             ['id_servicio' => $servicio->id_servicio, 'periodo' => $periodo],
@@ -59,26 +56,36 @@ class ServicioFacturacion
     public function generarParaServiciosActivos(string $periodo): int
     {
         $creadas = 0;
-        Servicio::query()->where('estado', EstadoServicio::Activo->value)->with('plan')->chunkById(
-            100,
-            function (Collection $servicios) use ($periodo, &$creadas): void {
-                foreach ($servicios as $servicio) {
-                    $existia = Cuota::where('id_servicio', $servicio->id_servicio)->where('periodo', $periodo)->exists();
-                    try {
-                        $this->generarCuota($servicio, $periodo);
-                        $creadas += $existia ? 0 : 1;
-                    } catch (ValidationException $error) {
-                        $mensajePeriodo = $error->errors()['periodo'][0] ?? '';
-                        if (! str_contains($mensajePeriodo, 'aún no estaba contratado')) {
-                            throw $error;
-                        }
+        $hoy = CarbonImmutable::today('America/Argentina/Buenos_Aires');
+        Servicio::query()->where('estado', EstadoServicio::Activo->value)
+            ->whereDate('fecha_alta', '<=', min($hoy, $this->inicioPeriodo($periodo)->endOfMonth())->toDateString())
+            ->whereDoesntHave('cuotas', fn ($cuotas) => $cuotas->where('periodo', $periodo))->chunkById(
+                100,
+                function (Collection $servicios) use ($periodo, &$creadas): void {
+                    foreach ($servicios as $servicio) {
+                        $creadas += DB::transaction(function () use ($servicio, $periodo): int {
+                            $actual = Servicio::query()->lockForUpdate()->findOrFail($servicio->getKey());
+                            if ($actual->estado !== EstadoServicio::Activo || $actual->fecha_alta->format('Y-m') > $periodo) {
+                                return 0;
+                            }
+
+                            return $this->generarCuota($actual, $periodo)->wasRecentlyCreated ? 1 : 0;
+                        }, 3);
                     }
-                }
-            },
-            'id_servicio',
-        );
+                },
+                'id_servicio',
+            );
 
         return $creadas;
+    }
+
+    private function inicioPeriodo(string $periodo): CarbonImmutable
+    {
+        if (! preg_match('/\A\d{4}-(?:0[1-9]|1[0-2])\z/', $periodo)) {
+            throw ValidationException::withMessages(['periodo' => 'El período debe usar el formato AAAA-MM.']);
+        }
+
+        return CarbonImmutable::createFromFormat('!Y-m', $periodo, 'America/Argentina/Buenos_Aires');
     }
 
     /** @param list<int> $identificadoresCuota */
@@ -87,9 +94,11 @@ class ServicioFacturacion
         if ($identificadoresCuota === []) {
             throw ValidationException::withMessages(['cuotas' => 'Debe seleccionar al menos una cuota.']);
         }
-        $this->validarCuentaReceptora($cuenta);
 
         return DB::transaction(function () use ($identificadoresCuota, $cuenta, $medio, $fecha, $idComprobante): Pago {
+            $cuenta = CuentaReceptora::query()->lockForUpdate()->findOrFail($cuenta->getKey());
+            $this->validarCuentaReceptora($cuenta);
+
             $cuotas = Cuota::query()
                 ->whereIn('id_cuota', array_unique($identificadoresCuota))
                 ->with('servicio')

@@ -2,6 +2,7 @@
 
 namespace App\Dominio;
 
+use App\Enums\AreaEmpleado;
 use App\Enums\EstadoServicio;
 use App\Enums\EstadoTicket;
 use App\Enums\EstadoUsuario;
@@ -64,7 +65,8 @@ class ServicioTickets
                 throw ValidationException::withMessages(['id_conversacion' => 'La conversación debe pertenecer al cliente del servicio.']);
             }
             if (! empty($datos['id_usuario_asignado'])) {
-                $this->validarResponsable(Usuario::findOrFail($datos['id_usuario_asignado']), $creador);
+                $responsable = Usuario::query()->lockForUpdate()->findOrFail($datos['id_usuario_asignado']);
+                $this->validarResponsable($responsable, $creador);
             }
             $ticket = Ticket::create([
                 'id_conversacion' => $datos['id_conversacion'] ?? null,
@@ -85,12 +87,45 @@ class ServicioTickets
         });
     }
 
+    public function asignarPendientes(): int
+    {
+        return DB::transaction(function (): int {
+            $tecnicos = Usuario::query()->where('estado', EstadoUsuario::Activo->value)
+                ->whereHas('empleado', fn ($empleado) => $empleado->where('area', AreaEmpleado::Soporte->value))
+                ->whereDoesntHave('administrador')
+                ->orderBy('id_usuario')->lockForUpdate()->get();
+            $asignados = 0;
+
+            foreach ($tecnicos as $tecnico) {
+                $ocupado = $tecnico->ticketsAsignados()
+                    ->whereIn('estado', [EstadoTicket::Asignado->value, EstadoTicket::EnProceso->value, EstadoTicket::Reabierto->value])
+                    ->lockForUpdate()->first(['id_ticket']);
+                if ($ocupado !== null) {
+                    continue;
+                }
+
+                $ticket = Ticket::query()->where('estado', EstadoTicket::Pendiente->value)
+                    ->whereNull('id_usuario_asignado')
+                    ->orderBy('fecha_creacion')->orderBy('id_ticket')->lockForUpdate()->first();
+                if ($ticket === null) {
+                    break;
+                }
+
+                $ticket->asignar($tecnico);
+                $asignados++;
+            }
+
+            return $asignados;
+        }, 3);
+    }
+
     /**
      * Caso de Uso: Asignar ticket a técnico
      */
     public function asignarTicket(Ticket $ticket, Usuario $tecnico, Usuario $autor, string $campo = 'id_usuario_asignado'): void
     {
         DB::transaction(function () use ($ticket, $tecnico, $autor, $campo): void {
+            $tecnico = Usuario::query()->lockForUpdate()->findOrFail($tecnico->getKey());
             $actual = Ticket::query()->lockForUpdate()->findOrFail($ticket->id_ticket);
             $this->validarResponsable($tecnico, $autor, $campo);
             if (! $autor->administrador()->exists() && ! in_array($actual->id_usuario_asignado, [null, $autor->id_usuario], true)) {

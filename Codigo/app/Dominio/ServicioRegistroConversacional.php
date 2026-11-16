@@ -7,6 +7,8 @@ use App\Models\Cliente;
 use App\Models\Conversacion;
 use App\Models\Mensaje;
 use App\Models\Plan;
+use Illuminate\Database\UniqueConstraintViolationException;
+use Illuminate\Support\Facades\DB;
 
 class ServicioRegistroConversacional
 {
@@ -76,13 +78,7 @@ class ServicioRegistroConversacional
             ->first();
 
         if ($existente !== null) {
-            $conversacion->update([
-                'id_cliente' => $existente->id_cliente,
-                'paso_actual' => null,
-                'contexto' => null,
-            ]);
-
-            return "Encontré tu registro, {$existente->nombre_razon_social}. ¿Querés consultar tu cuenta, registrar un reclamo o hablar con un operador?";
+            return $this->derivarVerificacion($conversacion);
         }
 
         $this->actualizar($conversacion, 'registro_nombre', ['numero_documento' => $numero]);
@@ -126,14 +122,28 @@ class ServicioRegistroConversacional
             'localidad_contacto' => $direccion['localidad'],
             'telefono_whatsapp' => $conversacion->numero_whatsapp,
         ]);
-        $cliente = $this->servicioClientes->crear($datos);
-        $conversacion->update([
-            'id_cliente' => $cliente->id_cliente,
-            'paso_actual' => 'registro_plan',
-            'contexto' => ['registro' => []],
-        ]);
+        try {
+            DB::transaction(function () use ($conversacion, $datos): void {
+                $cliente = $this->servicioClientes->crear($datos);
+                $conversacion->update([
+                    'id_cliente' => $cliente->id_cliente,
+                    'paso_actual' => 'registro_plan',
+                    'contexto' => ['registro' => []],
+                ]);
+            });
+        } catch (UniqueConstraintViolationException) {
+            return $this->derivarVerificacion($conversacion);
+        }
 
         return 'Registro creado correctamente. '.$this->listaPlanes();
+    }
+
+    private function derivarVerificacion(Conversacion $conversacion): string
+    {
+        $conversacion->update(['paso_actual' => null, 'contexto' => null]);
+        $conversacion->escalar();
+
+        return 'Para continuar de forma segura, un operador tiene que verificar tu identidad. Te transferimos con un asesor.';
     }
 
     private function guardarPlan(Conversacion $conversacion, string $contenido): string

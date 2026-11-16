@@ -22,8 +22,13 @@ class GuardarServicioRequest extends FormRequest
      */
     public function rules(): array
     {
+        return ['id_cliente' => ['required', 'integer', 'exists:cliente,id_cliente']] + self::reglasInstalacion();
+    }
+
+    /** @return array<string, mixed> */
+    public static function reglasInstalacion(): array
+    {
         return [
-            'id_cliente' => ['required', 'integer', 'exists:cliente,id_cliente'],
             'id_plan' => ['required', 'integer', 'exists:plan,id_plan'],
             'calle_instalacion' => ['required', 'string', 'max:100'],
             'numero_instalacion' => ['nullable', 'string', 'max:10'],

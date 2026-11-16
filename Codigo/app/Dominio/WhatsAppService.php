@@ -2,6 +2,8 @@
 
 namespace App\Dominio;
 
+use App\Enums\EstadoCliente;
+use App\Models\Cliente;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
@@ -209,6 +211,35 @@ class WhatsAppService
     /** @param list<string> $parametros */
     public function enviarPlantilla(string $numero, string $nombre, string $idioma, array $parametros): string
     {
+        return $this->publicarPlantilla($numero, $nombre, $idioma, $parametros);
+    }
+
+    /** @param list<string> $parametros */
+    public function enviarRecordatorio(Cliente $cliente, bool $vencida, array $parametros): string
+    {
+        if (! config('services.whatsapp.recordatorios_habilitados')
+            || (! $this->modoSimulacion() && ! config('services.whatsapp.plantillas_reales_habilitadas'))) {
+            throw new RuntimeException('Los recordatorios de WhatsApp están desactivados.');
+        }
+
+        $actual = app(ServicioIdentificacion::class)->clientePorTelefono((string) $cliente->telefono_whatsapp);
+        if ($actual === null || ! $actual->is($cliente)
+            || ! $actual->recordatorios_whatsapp || $actual->estado !== EstadoCliente::Activo) {
+            throw new RuntimeException('El cliente no está autorizado para recibir recordatorios de WhatsApp.');
+        }
+
+        return $this->publicarPlantilla(
+            $actual->telefono_whatsapp,
+            (string) config($vencida ? 'services.whatsapp.plantilla_vencida' : 'services.whatsapp.plantilla_vencimiento'),
+            (string) config('services.whatsapp.idioma_plantilla', 'es_AR'),
+            $parametros,
+            esRecordatorio: true,
+        );
+    }
+
+    /** @param list<string> $parametros */
+    private function publicarPlantilla(string $numero, string $nombre, string $idioma, array $parametros, bool $esRecordatorio = false): string
+    {
         if ($this->modoSimulacion()) {
             return 'wamid.simulado.plantilla.'.Str::uuid();
         }
@@ -236,7 +267,7 @@ class WhatsAppService
                     ),
                 ]],
             ],
-        ]);
+        ], $esRecordatorio);
 
         $respuesta->throw();
         $idMensaje = data_get($respuesta->json(), 'messages.0.id');
@@ -248,15 +279,15 @@ class WhatsAppService
     }
 
     /** @param array<string, mixed> $payload */
-    private function publicarMensaje(string $token, string $version, string $idTelefono, string $numero, array $payload): Response
+    private function publicarMensaje(string $token, string $version, string $idTelefono, string $numero, array $payload, bool $esRecordatorio = false): Response
     {
         $destino = preg_replace('/\D+/', '', $numero) ?? $numero;
-        if (! $this->destinatarioPermitido($destino)) {
+        if (! $esRecordatorio && ! $this->destinatarioPermitido($destino)) {
             throw new RuntimeException('El destinatario no está autorizado para los envíos de prueba de WhatsApp.');
         }
 
         app(ServicioConsumoWhatsapp::class)->reservar(
-            ($payload['type'] ?? null) === 'template', $destino, data_get($payload, 'template.name'),
+            ($payload['type'] ?? null) === 'template', $destino, data_get($payload, 'template.name'), $esRecordatorio,
         );
 
         $url = "https://graph.facebook.com/{$version}/{$idTelefono}/messages";

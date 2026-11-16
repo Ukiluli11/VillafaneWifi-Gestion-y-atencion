@@ -25,6 +25,11 @@ class GuardarClienteRequest extends FormRequest
      */
     public function rules(): array
     {
+        $reglasServicio = [];
+        foreach (GuardarServicioRequest::reglasInstalacion() as $campo => $reglas) {
+            $reglasServicio['servicio.'.$campo] = ['exclude_without:servicio', ...$reglas];
+        }
+
         return [
             'tipo_documento' => ['required', Rule::enum(TipoDocumento::class)],
             'numero_documento' => [
@@ -37,7 +42,11 @@ class GuardarClienteRequest extends FormRequest
             'numero_contacto' => ['nullable', 'string', 'max:10'],
             'localidad_contacto' => ['nullable', 'string', 'max:100'],
             'telefono_whatsapp' => ['nullable', 'string', 'max:20', 'regex:/^[+0-9()\-\s]+$/'],
-        ];
+            'servicio' => [
+                $this->routeIs('clientes.alta-completa') ? 'required' : 'sometimes',
+                'required', 'array:'.implode(',', array_keys(GuardarServicioRequest::reglasInstalacion())),
+            ],
+        ] + $reglasServicio;
     }
 
     protected function prepareForValidation(): void

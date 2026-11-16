@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Dominio\ServicioAtencionHumana;
 use App\Dominio\ServicioConsumoWhatsapp;
 use App\Enums\EstadoConversacion;
+use App\Enums\ModoAtencion;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResponderConversacionRequest;
 use App\Models\Conversacion;
@@ -27,30 +28,31 @@ class ConversacionController extends Controller
      */
     public function index(Request $request, ServicioConsumoWhatsapp $consumo): View
     {
-        $estado = $request->string('estado')->toString();
-        $busqueda = trim($request->string('buscar')->toString());
-        $permitidos = array_map(
-            static fn (EstadoConversacion $item): string => $item->value,
-            EstadoConversacion::cases(),
-        );
+        $estadoSeleccionado = EstadoConversacion::tryFrom($request->query->getString('estado'));
+        $modo = ModoAtencion::tryFrom($request->query->getString('modo'));
+        $asignacion = $request->query->getString('asignacion');
+        $busqueda = trim($request->query->getString('buscar'));
 
         $consulta = Conversacion::query()
             ->with(['cliente', 'usuarioAtencion'])
             ->withCount('mensajes')
-            ->withMax('mensajes', 'fecha_hora');
-
-        if (in_array($estado, $permitidos, true)) {
-            $consulta->where('estado', $estado);
-        }
+            ->withMax('mensajes', 'fecha_hora')
+            ->when($estadoSeleccionado, fn ($consulta) => $consulta->where('estado', $estadoSeleccionado->value))
+            ->when($modo, fn ($consulta) => $consulta->where('modo_atencion', $modo->value))
+            ->when($asignacion === 'sin_asignar', fn ($consulta) => $consulta->whereNull('id_usuario_atencion'))
+            ->when($asignacion === 'propias', fn ($consulta) => $consulta->where('id_usuario_atencion', $request->user()->getKey()));
 
         if ($busqueda !== '') {
             $numero = preg_replace('/\D+/', '', $busqueda) ?? '';
-            $consulta->where(function ($filtro) use ($busqueda, $numero): void {
-                $filtro->whereHas('cliente', fn ($cliente) => $cliente
-                    ->where('nombre_razon_social', 'like', "%{$busqueda}%")
-                    ->orWhere('numero_documento', 'like', "%{$numero}%"));
+            $idBuscado = filter_var(ltrim($busqueda, '#'), FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+            $consulta->where(function ($filtro) use ($busqueda, $numero, $idBuscado): void {
+                $filtro->whereHas('cliente', fn ($cliente) => $cliente->whereLike('nombre_razon_social', "%{$busqueda}%"));
                 if ($numero !== '') {
-                    $filtro->orWhere('numero_whatsapp', 'like', "%{$numero}%");
+                    $filtro->orWhereLike('numero_whatsapp', "%{$numero}%")
+                        ->orWhereHas('cliente', fn ($cliente) => $cliente->whereLike('numero_documento', "%{$numero}%"));
+                }
+                if ($idBuscado !== false) {
+                    $filtro->orWhere('id_conversacion', $idBuscado);
                 }
             });
         }
@@ -59,9 +61,12 @@ class ConversacionController extends Controller
             'conversaciones' => $consulta
                 ->orderByRaw("CASE WHEN estado = 'escalada' THEN 0 WHEN estado = 'en_atencion' THEN 1 ELSE 2 END")
                 ->orderByDesc('mensajes_max_fecha_hora')
+                ->orderByDesc('id_conversacion')
                 ->paginate(20)
                 ->withQueryString(),
-            'estadoSeleccionado' => $estado,
+            'estadoSeleccionado' => $estadoSeleccionado,
+            'modo' => $modo,
+            'asignacion' => $asignacion,
             'busqueda' => $busqueda,
             'estados' => EstadoConversacion::cases(),
             'consumoWhatsapp' => $consumo->resumir(),

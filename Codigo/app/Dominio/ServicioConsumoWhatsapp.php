@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class ServicioConsumoWhatsapp
 {
-    public function reservar(bool $esPlantilla, string $destinatario, ?string $nombrePlantilla = null): void
+    public function reservar(bool $esPlantilla, string $destinatario, ?string $nombrePlantilla = null, bool $esRecordatorio = false): void
     {
         if (! config('services.whatsapp.control_consumo_habilitado', true)) {
             return;
@@ -23,10 +23,10 @@ class ServicioConsumoWhatsapp
             };
             $nombres = array_filter([
                 config('services.whatsapp.plantilla_vencimiento'), config('services.whatsapp.plantilla_vencida'),
-                config('services.comprobantes.plantilla_aprobado'), config('services.comprobantes.plantilla_rechazado'),
+                config('services.comprobantes.plantilla_aprobado'), config('services.comprobantes.plantilla_rechazado'), config('services.comprobantes.plantilla_reenvio'),
             ]);
             if (! config('services.whatsapp.plantillas_reales_habilitadas', false)
-                || ! in_array($normalizar($destinatario), array_map($normalizar, $permitidos), true)
+                || (! $esRecordatorio && ! in_array($normalizar($destinatario), array_map($normalizar, $permitidos), true))
                 || ! in_array($nombrePlantilla, $nombres, true)) {
                 throw new LimiteConsumoWhatsappException('Envío de plantilla bloqueado: solo se permiten pruebas habilitadas a los teléfonos configurados. Las pruebas simuladas no requieren un envío real.');
             }

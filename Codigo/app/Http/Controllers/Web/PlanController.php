@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Web;
 
 use App\Dominio\ServicioPlanes;
+use App\Enums\EstadoPlan;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ActualizarPlanRequest;
 use App\Http\Requests\GuardarPlanRequest;
 use App\Models\Plan;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
@@ -21,9 +23,21 @@ class PlanController extends Controller
     /**
      * Muestra el catalogo completo de planes con sus precios y velocidades.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        return view('planes.index', ['planes' => Plan::orderBy('nombre')->paginate(20)]);
+        $busqueda = trim($request->query->getString('buscar'));
+        $estado = EstadoPlan::tryFrom($request->query->getString('estado'));
+        $uso = $request->query->getString('uso');
+        $planes = Plan::query()->withExists('servicios')
+            ->when($busqueda !== '', fn ($consulta) => $consulta->where(fn ($filtro) => $filtro
+                ->whereLike('nombre', "%{$busqueda}%")
+                ->orWhereLike('velocidad', "%{$busqueda}%")))
+            ->when($estado, fn ($consulta) => $consulta->where('estado', $estado->value))
+            ->when($uso === 'con_servicios', fn ($consulta) => $consulta->has('servicios'))
+            ->when($uso === 'sin_servicios', fn ($consulta) => $consulta->doesntHave('servicios'))
+            ->orderBy('nombre')->orderBy('id_plan')->paginate(20)->withQueryString();
+
+        return view('planes.index', compact('planes', 'busqueda', 'estado', 'uso'));
     }
 
     /**
@@ -70,5 +84,19 @@ class PlanController extends Controller
         $servicio->desactivar($plan);
 
         return back()->with('exito', 'Plan desactivado correctamente.');
+    }
+
+    public function reactivar(Plan $plan, ServicioPlanes $servicio): RedirectResponse
+    {
+        $servicio->activar($plan);
+
+        return back()->with('exito', 'Plan reactivado correctamente.');
+    }
+
+    public function eliminar(Plan $plan, ServicioPlanes $servicio): RedirectResponse
+    {
+        $servicio->eliminar($plan);
+
+        return back()->with('exito', 'Plan eliminado correctamente.');
     }
 }

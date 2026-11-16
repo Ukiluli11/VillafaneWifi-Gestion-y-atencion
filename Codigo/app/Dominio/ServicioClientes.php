@@ -2,26 +2,60 @@
 
 namespace App\Dominio;
 
+use App\Enums\EstadoCliente;
+use App\Enums\TipoCliente;
 use App\Models\Cliente;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class ServicioClientes
 {
+    public function __construct(private readonly ServicioContrataciones $contrataciones) {}
+
     /** @param array<string, mixed> $datos */
     public function crear(array $datos): Cliente
     {
-        return DB::transaction(fn (): Cliente => Cliente::create($datos));
+        return DB::transaction(function () use ($datos): Cliente {
+            $instalacion = $datos['servicio'] ?? null;
+            unset($datos['servicio']);
+            $cliente = Cliente::create($datos);
+            if ($instalacion !== null) {
+                $this->contrataciones->crear($cliente, $instalacion, emitirCuotaInicial: true);
+                $cliente->load('servicios.plan');
+            }
+
+            return $cliente;
+        }, 3);
     }
 
     /** @param array<string, mixed> $datos */
     public function actualizar(Cliente $cliente, array $datos): Cliente
     {
         return DB::transaction(function () use ($cliente, $datos): Cliente {
-            $cliente->update($datos);
+            $cliente = Cliente::query()->lockForUpdate()->findOrFail($cliente->getKey());
+            $cliente->fill($datos);
+            if ($cliente->isDirty('telefono_whatsapp')) {
+                $cliente->recordatorios_whatsapp = false;
+            }
+            $cliente->save();
 
             return $cliente->refresh();
+        });
+    }
+
+    public function configurarRecordatorios(Cliente $cliente, bool $habilitados): void
+    {
+        DB::transaction(function () use ($cliente, $habilitados): void {
+            $cliente = Cliente::query()->lockForUpdate()->findOrFail($cliente->getKey());
+            if ($habilitados && (blank($cliente->telefono_whatsapp) || $cliente->estado !== EstadoCliente::Activo)) {
+                throw ValidationException::withMessages([
+                    'recordatorios_whatsapp' => 'Para habilitar los recordatorios, el cliente debe estar activo y tener un número de WhatsApp registrado.',
+                ]);
+            }
+
+            $cliente->forceFill(['recordatorios_whatsapp' => $habilitados])->save();
         });
     }
 
@@ -34,13 +68,15 @@ class ServicioClientes
         });
     }
 
-    public function buscar(string $termino = ''): LengthAwarePaginator
+    public function buscar(string $termino = '', ?EstadoCliente $estado = null, ?TipoCliente $tipo = null): LengthAwarePaginator
     {
         $termino = trim($termino);
         $numero = preg_replace('/\D+/', '', $termino) ?? '';
 
         return Cliente::query()
             ->with(['servicios.plan'])
+            ->when($estado, fn (Builder $consulta) => $consulta->where('estado', $estado->value))
+            ->when($tipo, fn (Builder $consulta) => $consulta->where('tipo_cliente', $tipo->value))
             ->when($termino !== '', function (Builder $consulta) use ($termino, $numero): void {
                 $consulta->where(function (Builder $filtro) use ($termino, $numero): void {
                     $filtro->where('nombre_razon_social', 'like', "%{$termino}%")

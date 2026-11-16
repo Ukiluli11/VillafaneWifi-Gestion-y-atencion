@@ -30,7 +30,6 @@ return [
         'plantilla_vencida' => env('WHATSAPP_TEMPLATE_VENCIDA', 'recordatorio_cuota_vencida'),
         'idioma_plantilla' => env('WHATSAPP_TEMPLATE_LANGUAGE', 'es_AR'),
         'recordatorios_habilitados' => env('WHATSAPP_RECORDATORIOS_HABILITADOS', false),
-        'recordatorios_destinatarios' => env('WHATSAPP_RECORDATORIOS_DESTINATARIOS', ''),
         'control_consumo_habilitado' => env('WHATSAPP_CONTROL_CONSUMO_HABILITADO', true),
         'limite_servicios_mes' => (int) env('WHATSAPP_LIMITE_SERVICIOS_MES', 900),
         'plantillas_reales_habilitadas' => env('WHATSAPP_PLANTILLAS_REALES_HABILITADAS', false),
@@ -43,6 +42,7 @@ return [
         'notificar_resultado' => env('COMPROBANTES_NOTIFICAR_RESULTADO', false),
         'plantillas_fuera_ventana' => env('COMPROBANTES_PLANTILLAS_FUERA_VENTANA', false),
         'plantilla_aprobado' => env('WHATSAPP_TEMPLATE_PAGO_APROBADO', 'demo_pago_aprobado_v1'),
+        'plantilla_reenvio' => env('WHATSAPP_TEMPLATE_REENVIO_OCR'),
         'plantilla_rechazado' => env('WHATSAPP_TEMPLATE_PAGO_RECHAZADO', 'demo_pago_rechazado_v1'),
     ],
 

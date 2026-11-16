@@ -28,6 +28,7 @@ class ServicioAtencionWhatsapp
         private readonly ServicioTickets $servicioTickets,
         private readonly ServicioRegistroConversacional $servicioRegistro,
         private readonly ServicioRecepcionComprobantes $servicioComprobantes,
+        private readonly NotificacionService $notificaciones,
     ) {}
 
     public function procesarMensaje(
@@ -53,13 +54,23 @@ class ServicioAtencionWhatsapp
         }
 
         if ($cliente === null) {
+            if (in_array($comando, ['4', 'operador', 'asesor', 'humano', 'cambiar numero'], true)) {
+                $conversacion->escalar();
+
+                return 'Te transferimos con un operador para verificar tu identidad y ayudarte con tu cuenta.';
+            }
+
             $conversacion->update(['paso_actual' => 'esperando_identificacion']);
 
             return implode(' ', [
                 '¡Hola! No encontramos un cliente asociado a este número.',
-                'Por favor, indicanos tu DNI para identificarte.',
+                'Si ya sos cliente, escribí OPERADOR para verificar tu identidad o escribinos desde el número que tenés registrado.',
                 'Si todavía no sos cliente, escribí REGISTRARME para iniciar el alta.',
             ]);
+        }
+
+        if ($mensaje->tipo === TipoMensaje::Texto) {
+            $this->notificaciones->retomarReenvioOcr($cliente, $conversacion, $mensaje);
         }
 
         if (in_array($comando, ['pagar', 'como pagar', 'datos de pago', 'alias', 'mercado pago'], true)) {

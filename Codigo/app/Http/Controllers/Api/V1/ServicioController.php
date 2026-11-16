@@ -37,9 +37,9 @@ class ServicioController extends Controller
         return new ServicioResource($dominio->actualizar($servicio, $request->validated())->load(['cliente', 'plan']));
     }
 
-    public function destroy(Servicio $servicio): Response
+    public function destroy(Servicio $servicio, ServicioContrataciones $dominio): Response
     {
-        $servicio->update(['estado' => 'baja']);
+        $dominio->darDeBajaPorMora($servicio);
 
         return response()->noContent();
     }

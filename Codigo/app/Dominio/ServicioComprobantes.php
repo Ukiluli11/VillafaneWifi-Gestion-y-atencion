@@ -35,7 +35,7 @@ class ServicioComprobantes
     ): Comprobante {
         $esArchivo = $archivo instanceof UploadedFile;
         $hash = $esArchivo ? hash_file('sha256', $archivo->getRealPath()) : hash('sha256', $archivo);
-        if (Comprobante::where('hash_archivo', $hash)->exists()) {
+        if (Comprobante::registrarDuplicadoPorHash($hash) !== null) {
             throw ValidationException::withMessages(['comprobante' => 'El archivo ya fue registrado previamente. Buscá el comprobante existente.']);
         }
         $ruta = null;
@@ -66,7 +66,7 @@ class ServicioComprobantes
             if ($ruta !== null && ! Comprobante::where('ruta_archivo', $ruta)->exists()) {
                 Storage::disk('local')->delete($ruta);
             }
-            if (Comprobante::where('hash_archivo', $hash)->exists()) {
+            if (Comprobante::registrarDuplicadoPorHash($hash) !== null) {
                 throw ValidationException::withMessages(['comprobante' => 'El archivo ya fue registrado previamente.']);
             }
             throw $error;
@@ -126,12 +126,13 @@ class ServicioComprobantes
                 'fecha_hora_validacion' => CarbonImmutable::now(),
                 'estado_validacion' => EstadoComprobante::Aprobado,
                 'motivo_rechazo' => null,
+                'aviso_resultado_pendiente' => (bool) config('services.comprobantes.notificar_resultado'),
             ]);
 
             return $pago;
         });
         $comprobante->refresh();
-        $this->notificacionService->notificarPagoAprobado($comprobante->cliente, $pago, $comprobante);
+        $this->notificacionService->notificarResultadoComprobante($comprobante);
 
         return $pago;
     }
@@ -150,10 +151,11 @@ class ServicioComprobantes
                 'fecha_hora_validacion' => CarbonImmutable::now(),
                 'estado_validacion' => EstadoComprobante::Rechazado,
                 'motivo_rechazo' => $motivo,
+                'aviso_resultado_pendiente' => (bool) config('services.comprobantes.notificar_resultado'),
             ]);
         });
         $comprobante->refresh();
-        $this->notificacionService->notificarPagoRechazado($comprobante->cliente, $comprobante, $motivo);
+        $this->notificacionService->notificarResultadoComprobante($comprobante);
 
         return $comprobante;
     }

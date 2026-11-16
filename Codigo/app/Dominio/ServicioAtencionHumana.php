@@ -21,6 +21,7 @@ class ServicioAtencionHumana
     public function __construct(
         private readonly WhatsAppService $whatsAppService,
         private readonly ServicioConversaciones $servicioConversaciones,
+        private readonly ServicioIdentificacion $identificacion,
     ) {}
 
     public function tomar(Conversacion $conversacion, Usuario $usuario): Conversacion
@@ -28,6 +29,7 @@ class ServicioAtencionHumana
         $conversacion = DB::transaction(function () use ($conversacion, $usuario): Conversacion {
             $actual = Conversacion::query()->lockForUpdate()->findOrFail($conversacion->id_conversacion);
             $this->verificarAbierta($actual);
+            $this->verificarNumeroAsociado($actual);
 
             if ($actual->id_usuario_atencion !== null && $actual->id_usuario_atencion !== $usuario->id_usuario) {
                 throw ValidationException::withMessages([
@@ -74,6 +76,7 @@ class ServicioAtencionHumana
     {
         $conversacion->refresh();
         $this->verificarAsignacion($conversacion, $usuario);
+        $this->verificarNumeroAsociado($conversacion);
         $contenido = trim($contenido);
 
         try {
@@ -123,6 +126,16 @@ class ServicioAtencionHumana
         if ($conversacion->id_usuario_atencion !== $usuario->id_usuario) {
             throw ValidationException::withMessages([
                 'conversacion' => 'Primero debés tomar la conversación para poder gestionarla.',
+            ]);
+        }
+    }
+
+    private function verificarNumeroAsociado(Conversacion $conversacion): void
+    {
+        if ($conversacion->id_cliente !== null
+            && $this->identificacion->clientePorTelefono($conversacion->numero_whatsapp)?->id_cliente !== $conversacion->id_cliente) {
+            throw ValidationException::withMessages([
+                'conversacion' => 'El número ya no está asociado a esta cuenta. Usá una conversación con el número registrado actual.',
             ]);
         }
     }

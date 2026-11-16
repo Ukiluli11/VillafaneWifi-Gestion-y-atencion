@@ -1,6 +1,12 @@
 @extends('layouts.panel')
 @section('titulo', "Comprobante #{$comprobante->id_comprobante} · Conciliación")
 @section('contenido')
+@if ($comprobante->estaPendiente() && $comprobante->reenvio_ocr_pendiente && ($comprobante->monto_ocr === null || $comprobante->fecha_ocr === null))
+    <p class="alerta" role="status">La solicitud de un nuevo archivo está pendiente. El comprobante original sigue disponible.</p>
+@endif
+@if ($comprobante->intentos_duplicados > 0)
+    <p class="alerta error" role="status">Archivo repetido {{ $comprobante->intentos_duplicados }} vez/veces. Último intento: {{ $comprobante->ultimo_duplicado_at?->format('d/m/Y H:i') }}.</p>
+@endif
 <div class="encabezado">
     <div>
         <p class="sobrelinea">Auditoría y Conciliación de Pagos</p>

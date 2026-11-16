@@ -15,6 +15,8 @@ use InvalidArgumentException;
 
 class ServicioConversaciones
 {
+    public function __construct(private readonly ServicioIdentificacion $identificacion) {}
+
     public function obtenerOCrearConversacion(string $numeroWhatsapp): Conversacion
     {
         $numeroNormalizado = $this->normalizarNumeroWhatsapp($numeroWhatsapp);
@@ -28,7 +30,11 @@ class ServicioConversaciones
                 ->first();
 
             if ($conversacion !== null) {
-                return $conversacion;
+                if ($conversacion->id_cliente === null || $this->identificacion->clientePorTelefono($numeroNormalizado)?->id_cliente === $conversacion->id_cliente) {
+                    return $conversacion;
+                }
+
+                $conversacion->cerrar();
             }
 
             return Conversacion::create([

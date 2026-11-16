@@ -36,6 +36,7 @@ class Cliente extends Model
     protected $attributes = [
         'tipo_cliente' => 'particular',
         'estado' => 'activo',
+        'recordatorios_whatsapp' => false,
     ];
 
     protected function casts(): array
@@ -44,6 +45,7 @@ class Cliente extends Model
             'tipo_documento' => TipoDocumento::class,
             'tipo_cliente' => TipoCliente::class,
             'estado' => EstadoCliente::class,
+            'recordatorios_whatsapp' => 'boolean',
         ];
     }
 
@@ -122,7 +124,7 @@ class Cliente extends Model
      */
     public function darDeBaja(): void
     {
-        $this->update(['estado' => EstadoCliente::Baja]);
+        $this->forceFill(['estado' => EstadoCliente::Baja, 'recordatorios_whatsapp' => false])->save();
         $this->servicios()->where('estado', '!=', EstadoServicio::Baja->value)->update(['estado' => EstadoServicio::Baja->value]);
     }
 }

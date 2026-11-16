@@ -181,6 +181,24 @@ class TicketsTest extends TestCase
         $resBusqueda->assertDontSee('Solicitud de cambio de clave de acceso');
     }
 
+    public function test_reparto_asigna_el_mas_antiguo_a_un_tecnico_libre(): void
+    {
+        $ocupado = $this->crearTecnicoSoporte('tecnico-ocupado');
+        $libre = $this->crearTecnicoSoporte('tecnico-libre');
+        $ticketOcupado = Ticket::factory()->create(['id_usuario_asignado' => $ocupado->id_usuario, 'estado' => EstadoTicket::EnProceso]);
+        $reciente = Ticket::factory()->create(['fecha_creacion' => now()->subMinute()]);
+        $antiguo = Ticket::factory()->create(['fecha_creacion' => now()->subHour()]);
+
+        $this->artisan('tickets:asignar-pendientes')->assertSuccessful();
+        $this->assertSame($libre->id_usuario, $antiguo->fresh()->id_usuario_asignado);
+        $this->assertSame(EstadoTicket::Asignado, $antiguo->fresh()->estado);
+        $this->assertNull($reciente->fresh()->id_usuario_asignado);
+
+        $ticketOcupado->resolver();
+        $this->artisan('tickets:asignar-pendientes')->assertSuccessful();
+        $this->assertSame($ocupado->id_usuario, $reciente->fresh()->id_usuario_asignado);
+    }
+
     public function test_asignar_ticket_a_tecnico(): void
     {
         $admin = $this->crearAdministrador();
@@ -365,6 +383,7 @@ class TicketsTest extends TestCase
         $this->assertSame(EstadoTicket::Asignado, $ticket->fresh()->estado);
         $this->assertDatabaseCount('nota_interna', 0);
 
+        $this->flushSession();
         $this->actingAs($otro)->post(route('tickets.estado', $ticket), ['estado' => 'cerrado'])->assertSessionHasErrors('estado');
         $this->assertSame(EstadoTicket::Asignado, $ticket->fresh()->estado);
     }

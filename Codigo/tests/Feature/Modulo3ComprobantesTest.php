@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Dominio\NotificacionService;
 use App\Dominio\OCRService;
+use App\Dominio\ServicioAtencionWhatsapp;
 use App\Dominio\ServicioComprobantes;
 use App\Dominio\ServicioRecepcionComprobantes;
 use App\Dominio\ServicioUsuarios;
@@ -73,6 +74,7 @@ class Modulo3ComprobantesTest extends TestCase
         $this->get(route('comprobantes.archivo', $comprobante))->assertRedirect(route('sesion.crear'));
         $soporte = app(ServicioUsuarios::class)->crear(['nombre_usuario' => 'soporte-m3', 'contrasena' => 'clave-soporte', 'tipo' => 'empleado', 'area' => 'soporte']);
         $this->actingAs($soporte)->get(route('comprobantes.archivo', $comprobante))->assertForbidden();
+        $this->flushSession();
         $respuesta = $this->actingAs($this->admin())->get(route('comprobantes.archivo', $comprobante));
         $respuesta->assertOk()->assertDownload('privado.pdf');
         $this->assertSame($contenido, $respuesta->streamedContent());
@@ -108,6 +110,30 @@ class Modulo3ComprobantesTest extends TestCase
         $this->artisan('comprobantes:privatizar')->assertFailed();
         Storage::disk('public')->assertExists($comprobante->ruta_archivo);
         Storage::disk('local')->assertMissing($comprobante->ruta_archivo);
+    }
+
+    public function test_verificacion_de_integridad_detecta_archivos_danados_o_faltantes_sin_modificarlos(): void
+    {
+        $original = 'archivo original';
+        $privado = Storage::disk('local');
+        $comprobante = $this->comprobante(atributos: [
+            'ruta_archivo' => 'comprobantes/recuperacion.pdf',
+            'hash_archivo' => hash('sha256', $original),
+        ]);
+        $privado->put($comprobante->ruta_archivo, $original);
+        $this->artisan('comprobantes:privatizar', ['--verificar' => true])->assertSuccessful();
+
+        $privado->put($comprobante->ruta_archivo, 'archivo dañado');
+        $this->artisan('comprobantes:privatizar', ['--verificar' => true])
+            ->expectsOutputToContain('no coincide con el SHA-256')->assertFailed();
+        $this->assertSame('archivo dañado', $privado->get($comprobante->ruta_archivo));
+
+        $privado->delete($comprobante->ruta_archivo);
+        Storage::disk('public')->put($comprobante->ruta_archivo, $original);
+        $this->artisan('comprobantes:privatizar', ['--verificar' => true])
+            ->expectsOutputToContain('Falta el archivo privado')->assertFailed();
+        $privado->assertMissing($comprobante->ruta_archivo);
+        Storage::disk('public')->assertExists($comprobante->ruta_archivo);
     }
 
     public function test_ocr_normaliza_importes_y_rechaza_fechas_imposibles(): void
@@ -336,6 +362,63 @@ class Modulo3ComprobantesTest extends TestCase
         Http::assertNothingSent();
     }
 
+    public function test_el_cliente_recibe_los_resultados_pendientes_al_volver_a_escribir(): void
+    {
+        config([
+            'services.comprobantes.notificar_resultado' => true,
+            'services.comprobantes.plantillas_fuera_ventana' => false,
+            'services.whatsapp.validar_firma' => false,
+        ]);
+        $cliente = Cliente::factory()->create(['telefono_whatsapp' => '543704000000']);
+        $conversacion = Conversacion::factory()->create([
+            'id_cliente' => $cliente->id_cliente,
+            'numero_whatsapp' => $cliente->telefono_whatsapp,
+        ]);
+        Mensaje::factory()->create(['id_conversacion' => $conversacion->id_conversacion, 'fecha_hora' => now()->subHours(25)]);
+        $cuota = $this->cuota($cliente);
+        $aprobado = $this->comprobante($cliente);
+        $rechazado = $this->comprobante($cliente);
+        $admin = $this->admin();
+        $this->actingAs($admin)->post(route('comprobantes.aprobar', $aprobado), [
+            'id_cuenta' => CuentaReceptora::factory()->create()->id_cuenta,
+            'medio_pago' => 'transferencia',
+            'monto' => '18000.00',
+            'fecha' => today()->toDateString(),
+            'numero_operacion' => 'OP-PENDIENTE-01',
+        ])->assertSessionHasNoErrors()->assertRedirect();
+        app(ServicioComprobantes::class)->rechazarComprobante($rechazado, 'Fecha incorrecta', $admin);
+        $this->assertTrue($aprobado->fresh()->aviso_resultado_pendiente);
+        $this->assertTrue($rechazado->fresh()->aviso_resultado_pendiente);
+
+        $enviar = function (string $id, string $telefono): void {
+            $this->postJson('/webhooks/whatsapp', ['entry' => [['changes' => [['value' => ['messages' => [[
+                'id' => $id,
+                'from' => $telefono,
+                'timestamp' => (string) now()->timestamp,
+                'type' => 'text',
+                'text' => ['body' => 'MENU'],
+            ]]]]]]]])->assertOk();
+        };
+
+        $enviar('wamid.otro', '5493704000001');
+        $this->assertTrue($aprobado->fresh()->aviso_resultado_pendiente);
+        $this->assertTrue($rechazado->fresh()->aviso_resultado_pendiente);
+
+        $enviar('wamid.titular.1', '5493704000000');
+        $enviar('wamid.titular.1', '5493704000000');
+        $this->assertFalse($aprobado->fresh()->aviso_resultado_pendiente);
+        $this->assertTrue($rechazado->fresh()->aviso_resultado_pendiente);
+        $enviar('wamid.titular.2', '5493704000000');
+        $enviar('wamid.titular.3', '5493704000000');
+        $this->assertFalse($rechazado->fresh()->aviso_resultado_pendiente);
+        $this->assertSame(2, Mensaje::where('clave_idempotencia', 'like', 'comprobante:%')->count());
+        $this->assertDatabaseHas('mensaje', ['clave_idempotencia' => 'comprobante:aprobado:'.$aprobado->getKey(), 'estado_envio' => 'enviado']);
+        $this->assertDatabaseHas('mensaje', ['clave_idempotencia' => 'comprobante:rechazado:'.$rechazado->getKey(), 'estado_envio' => 'enviado']);
+        $this->assertSame(EstadoCuota::Pagada, $cuota->fresh()->estado);
+        $this->assertDatabaseCount('pago', 1);
+        Http::assertNothingSent();
+    }
+
     public function test_pdf_se_convierte_y_procesa_sin_reemplazar_valores_manuales(): void
     {
         config(['services.ocr.habilitado' => true, 'services.ocr.tesseract_bin' => 'tesseract']);
@@ -469,6 +552,106 @@ class Modulo3ComprobantesTest extends TestCase
         Storage::disk('public')->assertMissing($comprobante->ruta_archivo);
         Queue::assertPushed(ProcesarOcrComprobante::class);
         Http::assertSentCount(2);
+    }
+
+    public function test_ocr_incompleto_solicita_un_reenvio_y_conserva_el_original(): void
+    {
+        config(['services.ocr.habilitado' => true]);
+        $ruta = 'comprobantes/ilegible.pdf';
+        Storage::disk('local')->put($ruta, '%PDF-1.4 comprobante ilegible');
+        Process::fake(fn () => Process::result(exitCode: 1));
+        $cliente = Cliente::factory()->create(['telefono_whatsapp' => '5493704000000']);
+        $conversacion = Conversacion::factory()->create(['id_cliente' => $cliente->id_cliente, 'numero_whatsapp' => $cliente->telefono_whatsapp]);
+        $entrada = Mensaje::factory()->create(['id_conversacion' => $conversacion->id_conversacion]);
+        $comprobante = $this->comprobante($cliente, [
+            'ruta_archivo' => $ruta, 'estado_ocr' => 'en_cola', 'monto_ocr' => null, 'fecha_ocr' => null,
+            'id_conversacion' => $conversacion->getKey(), 'id_mensaje' => $entrada->getKey(), 'origen' => 'whatsapp',
+        ]);
+
+        $job = new ProcesarOcrComprobante($comprobante->getKey());
+        $job->handle(app(OCRService::class));
+        $comprobante->update(['estado_ocr' => 'en_cola']);
+        $job->handle(app(OCRService::class));
+
+        $aviso = Mensaje::where('clave_idempotencia', 'comprobante:reenvio:'.$comprobante->getKey())->sole();
+        $this->assertSame(EstadoEnvioMensaje::Enviado, $aviso->estado_envio);
+        $this->assertSame($conversacion->getKey(), $aviso->id_conversacion);
+        $this->assertStringContainsString('Enviá una imagen más clara', $aviso->contenido);
+        Storage::disk('local')->assertExists($ruta);
+        $this->assertSame(EstadoComprobante::Pendiente, $comprobante->fresh()->estado_validacion);
+        Http::assertNothingSent();
+    }
+
+    public function test_reenvio_fuera_de_ventana_se_entrega_al_volver_a_escribir(): void
+    {
+        $cliente = Cliente::factory()->create(['telefono_whatsapp' => '5493704000000']);
+        $conversacion = Conversacion::factory()->create(['id_cliente' => $cliente->id_cliente, 'numero_whatsapp' => $cliente->telefono_whatsapp]);
+        $entrada = Mensaje::factory()->create(['id_conversacion' => $conversacion->id_conversacion, 'fecha_hora' => now()->subDays(2)]);
+        $comprobante = $this->comprobante($cliente, [
+            'id_conversacion' => $conversacion->getKey(), 'id_mensaje' => $entrada->getKey(), 'origen' => 'whatsapp', 'monto_ocr' => null,
+        ]);
+        $clave = 'comprobante:reenvio:'.$comprobante->getKey();
+        $notificaciones = app(NotificacionService::class);
+
+        $notificaciones->solicitarReenvioComprobante($comprobante);
+        $this->assertTrue($comprobante->fresh()->reenvio_ocr_pendiente);
+        $this->assertDatabaseMissing('mensaje', ['clave_idempotencia' => $clave]);
+
+        $nuevo = Mensaje::factory()->create(['id_conversacion' => $conversacion->getKey(), 'contenido' => 'Hola']);
+        app(ServicioAtencionWhatsapp::class)->procesarMensaje($conversacion, $nuevo, $cliente);
+        app(ServicioAtencionWhatsapp::class)->procesarMensaje($conversacion, $nuevo, $cliente);
+
+        $this->assertSame(EstadoEnvioMensaje::Enviado, Mensaje::where('clave_idempotencia', $clave)->sole()->estado_envio);
+        $this->assertFalse($comprobante->fresh()->reenvio_ocr_pendiente);
+        Http::assertNothingSent();
+    }
+
+    public function test_reenvio_fuera_de_ventana_usa_plantilla_configurada(): void
+    {
+        config([
+            'services.comprobantes.plantillas_fuera_ventana' => true,
+            'services.comprobantes.plantilla_reenvio' => 'pedir_archivo_ocr',
+            'services.whatsapp.modo_simulacion' => false,
+            'services.whatsapp.access_token' => 'token-de-prueba',
+            'services.whatsapp.phone_number_id' => 'telefono-de-prueba',
+            'services.whatsapp.destinatarios_permitidos' => '5493704000000',
+        ]);
+        Http::fake(['*' => Http::response(['messages' => [['id' => 'wamid.reenvio']]])]);
+
+        $cliente = Cliente::factory()->create(['telefono_whatsapp' => '5493704000000']);
+        $conversacion = Conversacion::factory()->create(['id_cliente' => $cliente->id_cliente, 'numero_whatsapp' => $cliente->telefono_whatsapp]);
+        $entrada = Mensaje::factory()->create(['id_conversacion' => $conversacion->id_conversacion, 'fecha_hora' => now()->subDays(2)]);
+        $comprobante = $this->comprobante($cliente, [
+            'id_conversacion' => $conversacion->getKey(), 'id_mensaje' => $entrada->getKey(), 'origen' => 'whatsapp', 'monto_ocr' => null,
+        ]);
+
+        app(NotificacionService::class)->solicitarReenvioComprobante($comprobante);
+
+        Http::assertSent(fn ($solicitud): bool => $solicitud['type'] === 'template'
+            && $solicitud['template']['name'] === 'pedir_archivo_ocr'
+            && $solicitud['template']['components'][0]['parameters'][0]['text'] === (string) $comprobante->getKey());
+        $this->assertFalse($comprobante->fresh()->reenvio_ocr_pendiente);
+    }
+
+    public function test_carga_duplicada_genera_alerta_visible_en_conciliacion(): void
+    {
+        $cliente = Cliente::factory()->create();
+        $servicio = app(ServicioComprobantes::class);
+        $original = $servicio->registrarComprobante($cliente, 'contenido repetido');
+        $admin = $this->admin();
+
+        $this->actingAs($admin);
+        try {
+            $servicio->registrarComprobante($cliente, 'contenido repetido');
+            $this->fail('Se aceptó el archivo duplicado.');
+        } catch (ValidationException $error) {
+            $this->assertArrayHasKey('comprobante', $error->errors());
+        }
+
+        $this->get(route('comprobantes.index', ['duplicados' => 1]))
+            ->assertOk()->assertSee('Reenvíos duplicados: 1');
+        $this->assertSame(1, $original->fresh()->intentos_duplicados);
+        $this->assertDatabaseCount('comprobante', 1);
     }
 
     public function test_error_de_cola_no_pierde_el_comprobante_recibido(): void

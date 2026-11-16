@@ -28,6 +28,25 @@ class AutenticacionTest extends TestCase
         $this->assertGuest();
     }
 
+    public function test_empleado_cambia_su_clave_con_la_actual_y_conserva_su_sesion(): void
+    {
+        $usuario = app(ServicioUsuarios::class)->crear([
+            'nombre_usuario' => 'usuario-clave', 'contrasena' => 'clave-original',
+            'tipo' => 'empleado', 'area' => 'soporte',
+        ]);
+        $datos = ['contrasena_nueva' => 'clave-renovada', 'contrasena_nueva_confirmation' => 'clave-renovada'];
+
+        $this->actingAs($usuario)->get(route('cuenta.contrasena'))->assertOk();
+        $this->put(route('cuenta.contrasena.actualizar'), $datos + ['contrasena_actual' => 'incorrecta'])
+            ->assertSessionHasErrors('contrasena_actual')->assertSessionMissing('_old_input.contrasena_nueva');
+        $this->put(route('cuenta.contrasena.actualizar'), $datos + ['contrasena_actual' => 'clave-original'])
+            ->assertRedirect(route('cuenta.contrasena'));
+
+        $this->get(route('cuenta.contrasena'))->assertOk();
+        $this->assertTrue($usuario->fresh()->autenticar('clave-renovada'));
+        $this->assertFalse($usuario->fresh()->autenticar('clave-original'));
+    }
+
     public function test_credenciales_incorrectas_no_inician_sesion(): void
     {
         app(ServicioUsuarios::class)->crear([

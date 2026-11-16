@@ -31,6 +31,10 @@
             @endforelse
         </div>
 
+        @if ($conversacion->estado->value !== 'cerrada' && !$conversacion->cliente)
+            <p class="alerta" role="status">Número sin verificar. Confirmá la identidad por un contacto previamente registrado o en persona antes de compartir datos de la cuenta. El personal autorizado puede actualizar el teléfono en la ficha del cliente.</p>
+        @endif
+
         @if ($conversacion->estado->value !== 'cerrada')
             @if ($conversacion->id_usuario_atencion === null)
                 <form method="POST" action="{{ route('conversaciones.tomar', $conversacion) }}">

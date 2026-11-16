@@ -2,8 +2,10 @@
 
 namespace App\Dominio;
 
+use App\Enums\EstadoCliente;
 use App\Enums\EstadoCuota;
 use App\Enums\EstadoServicio;
+use App\Models\Cliente;
 use App\Models\Cuota;
 use App\Models\Mensaje;
 use Carbon\CarbonImmutable;
@@ -19,6 +21,7 @@ class ServicioNotificacionesVencimiento
     public function __construct(
         private readonly WhatsAppService $whatsAppService,
         private readonly ServicioConversaciones $servicioConversaciones,
+        private readonly ServicioIdentificacion $identificacion,
     ) {}
 
     /**
@@ -34,7 +37,8 @@ class ServicioNotificacionesVencimiento
         $limite = $hoy->addDays(3);
         $resultado = ['enviadas' => 0, 'omitidas' => 0, 'fallidas' => 0];
 
-        if (! config('services.whatsapp.recordatorios_habilitados', false)) {
+        if (! config('services.whatsapp.recordatorios_habilitados', false)
+            || (! config('services.whatsapp.modo_simulacion') && ! config('services.whatsapp.plantillas_reales_habilitadas'))) {
             return $resultado;
         }
 
@@ -60,7 +64,15 @@ class ServicioNotificacionesVencimiento
                     $estadoAviso = $cuota->fecha_vencimiento->toDateString() < $hoy->toDateString() ? 'vencida' : 'proxima';
                     $clave = "vencimiento:{$estadoAviso}:{$cuota->id_cuota}";
                     $cliente = $cuota->servicio->cliente;
-                    if (! $this->destinatarioDeRecordatorios($cliente->telefono_whatsapp)) {
+                    if (! $cliente->recordatorios_whatsapp) {
+                        $resultado['omitidas']++;
+
+                        continue;
+                    }
+
+                    $actual = $this->identificacion->clientePorTelefono($cliente->telefono_whatsapp);
+                    if ($actual === null || $actual->id_cliente !== $cliente->id_cliente
+                        || ! $actual->recordatorios_whatsapp || $actual->estado !== EstadoCliente::Activo) {
                         $resultado['omitidas']++;
 
                         continue;
@@ -76,7 +88,7 @@ class ServicioNotificacionesVencimiento
                         continue;
                     }
 
-                    if ($this->enviarMensaje($mensaje, $cliente->telefono_whatsapp, $cliente->nombre_razon_social, $cuota, $estadoAviso)) {
+                    if ($this->enviarMensaje($mensaje, $actual, $cuota, $estadoAviso)) {
                         $resultado['enviadas']++;
                     } else {
                         $resultado['fallidas']++;
@@ -87,35 +99,14 @@ class ServicioNotificacionesVencimiento
         return $resultado;
     }
 
-    private function destinatarioDeRecordatorios(string $telefono): bool
-    {
-        if (! $this->whatsAppService->destinatarioPermitido($telefono)) {
-            return false;
-        }
-        if (config('services.whatsapp.modo_simulacion')) {
-            return true;
-        }
-        $normalizar = static function (string $numero): string {
-            $numero = preg_replace('/\D/', '', $numero) ?? '';
-
-            return str_starts_with($numero, '549') ? '54'.substr($numero, 3) : $numero;
-        };
-        $permitidos = array_filter(array_map('trim', explode(',', (string) config('services.whatsapp.recordatorios_destinatarios'))));
-
-        return in_array($normalizar($telefono), array_map($normalizar, $permitidos), true);
-    }
-
-    private function enviarMensaje(Mensaje $mensaje, string $telefono, string $cliente, Cuota $cuota, string $estadoAviso): bool
+    private function enviarMensaje(Mensaje $mensaje, Cliente $cliente, Cuota $cuota, string $estadoAviso): bool
     {
         try {
-            $idExterno = $this->whatsAppService->enviarPlantilla(
-                $telefono,
-                (string) config($estadoAviso === 'vencida'
-                    ? 'services.whatsapp.plantilla_vencida'
-                    : 'services.whatsapp.plantilla_vencimiento'),
-                (string) config('services.whatsapp.idioma_plantilla', 'es_AR'),
+            $idExterno = $this->whatsAppService->enviarRecordatorio(
+                $cliente,
+                $estadoAviso === 'vencida',
                 [
-                    $cliente,
+                    $cliente->nombre_razon_social,
                     $cuota->fecha_vencimiento->format('d/m/Y'),
                     '$'.number_format((float) $cuota->monto, 2, ',', '.'),
                 ],

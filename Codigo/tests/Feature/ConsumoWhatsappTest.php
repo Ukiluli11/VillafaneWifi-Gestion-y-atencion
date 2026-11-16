@@ -134,6 +134,28 @@ class ConsumoWhatsappTest extends TestCase
         }
     }
 
+    public function test_recordatorio_a_cliente_habilitado_respeta_el_tope_de_plantillas(): void
+    {
+        config([
+            'services.whatsapp.recordatorios_habilitados' => true,
+            'services.whatsapp.plantillas_reales_habilitadas' => true,
+            'services.whatsapp.limite_plantillas_dia' => 1,
+        ]);
+        $this->simularRespuestaMeta();
+        $cliente = Cliente::factory()->create(['telefono_whatsapp' => '5493704000000', 'recordatorios_whatsapp' => true]);
+        $wa = app(WhatsAppService::class);
+        $parametros = ['Cliente', '23/10/2026', '$100,00'];
+        $wa->enviarRecordatorio($cliente, false, $parametros);
+
+        try {
+            $wa->enviarRecordatorio($cliente, true, $parametros);
+            $this->fail('El recordatorio excedió el cupo de plantillas.');
+        } catch (LimiteConsumoWhatsappException) {
+            Http::assertSentCount(1);
+            $this->assertSame(1, app(ServicioConsumoWhatsapp::class)->resumir()['plantillas_hoy']);
+        }
+    }
+
     public function test_simulacion_no_usa_meta_ni_consume_los_cupos(): void
     {
         config(['services.whatsapp.modo_simulacion' => true, 'services.whatsapp.limite_servicios_mes' => 0]);

@@ -9,6 +9,7 @@ use App\Models\Cliente;
 use App\Models\Comprobante;
 use App\Models\Conversacion;
 use App\Models\Mensaje;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -59,12 +60,9 @@ class ServicioRecepcionComprobantes
             }
 
             $hash = hash('sha256', $archivo['contenido']);
-            $duplicado = Comprobante::query()->where('hash_archivo', $hash)->first();
+            $duplicado = Comprobante::registrarDuplicadoPorHash($hash);
             if ($duplicado !== null) {
-                $conversacion->update(['paso_actual' => null]);
-                $conversacion->cerrar();
-
-                return "El archivo coincide con el comprobante #{$duplicado->id_comprobante}, que ya está registrado.";
+                return $this->responderDuplicado($conversacion, $cliente, $duplicado);
             }
 
             $disco = 'local';
@@ -98,6 +96,12 @@ class ServicioRecepcionComprobantes
                 });
             } catch (Throwable $error) {
                 Storage::disk($disco)->delete($ruta);
+                if ($error instanceof UniqueConstraintViolationException) {
+                    $duplicado = Comprobante::registrarDuplicadoPorHash($hash);
+                    if ($duplicado !== null) {
+                        return $this->responderDuplicado($conversacion, $cliente, $duplicado);
+                    }
+                }
                 throw $error;
             }
 
@@ -115,5 +119,17 @@ class ServicioRecepcionComprobantes
 
             return 'No pudimos guardar el archivo. Verificá que sea JPG, PNG o PDF y que no supere el tamaño permitido.';
         }
+    }
+
+    private function responderDuplicado(Conversacion $conversacion, Cliente $cliente, Comprobante $original): string
+    {
+        $conversacion->update(['paso_actual' => null]);
+        $conversacion->cerrar();
+
+        if ($original->id_cliente === $cliente->id_cliente && $original->estaAprobado()) {
+            return 'Ese comprobante corresponde a un pago que ya fue validado.';
+        }
+
+        return 'Este archivo ya está registrado. Si necesitás revisar el comprobante, comunicate con un operador.';
     }
 }

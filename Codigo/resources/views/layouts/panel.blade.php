@@ -110,6 +110,7 @@
                 @endif
             </nav>
 
+            <a class="enlace-navegacion" href="{{ route('cuenta.contrasena') }}">Cambiar contraseña</a>
             <div class="usuario-lateral">
                 <span class="avatar">{{ mb_strtoupper(mb_substr(auth()->user()->nombre_usuario, 0, 1)) }}</span>
                 <span class="datos-usuario"><strong>{{ auth()->user()->nombre_usuario }}</strong><small>Sesión activa</small></span>

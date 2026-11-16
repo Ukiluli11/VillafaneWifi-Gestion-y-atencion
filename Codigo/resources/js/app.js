@@ -106,10 +106,12 @@ document.querySelectorAll('form[data-confirmar]').forEach((formulario) => {
 
 const selectorTipo = document.querySelector('[data-tipo-usuario]');
 const camposEmpleado = document.querySelector('[data-campos-empleado]');
+const camposAdministrador = document.querySelector('[data-campos-administrador]');
 
-if (selectorTipo && camposEmpleado) {
+if (selectorTipo && camposEmpleado && camposAdministrador) {
     const actualizar = () => {
         camposEmpleado.hidden = selectorTipo.value !== 'empleado';
+        camposAdministrador.hidden = selectorTipo.value !== 'administrador';
     };
 
     selectorTipo.addEventListener('change', actualizar);

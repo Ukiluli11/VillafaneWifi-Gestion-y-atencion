@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Dominio\NotificacionService;
 use App\Dominio\OCRService;
 use App\Models\Comprobante;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -59,12 +60,24 @@ class ProcesarOcrComprobante implements ShouldQueue
                 'error_ocr' => 'No se pudo leer el archivo automáticamente. Revisá el original o reintentá la lectura.',
             ]);
         }
+        $this->solicitarReenvioSiHaceFalta();
     }
 
     public function failed(?Throwable $exception): void
     {
-        Comprobante::whereKey($this->idComprobante)->where('estado_ocr', 'procesando')->update([
+        $actualizado = Comprobante::whereKey($this->idComprobante)->where('estado_ocr', 'procesando')->update([
             'estado_ocr' => 'fallido', 'error_ocr' => 'La lectura se interrumpió. Podés reintentar desde el detalle.',
         ]);
+        if ($actualizado) {
+            $this->solicitarReenvioSiHaceFalta();
+        }
+    }
+
+    private function solicitarReenvioSiHaceFalta(): void
+    {
+        $comprobante = Comprobante::find($this->idComprobante);
+        if ($comprobante !== null && ($comprobante->monto_ocr === null || $comprobante->fecha_ocr === null)) {
+            app(NotificacionService::class)->solicitarReenvioComprobante($comprobante);
+        }
     }
 }

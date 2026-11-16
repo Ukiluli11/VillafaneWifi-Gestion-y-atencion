@@ -130,6 +130,12 @@ h3 { margin: 0; color: var(--texto); font-size: .94rem; font-weight: 600; }
 .buscador { display: flex; gap: 10px; margin-bottom: 18px; padding: 10px; border: 1px solid var(--borde); border-radius: 10px; background: var(--blanco); }
 .buscador input { flex: 1; border-color: transparent; background: transparent; }
 .buscador input:focus { outline: 0; box-shadow: none; }
+.filtros-listado { flex-wrap: wrap; align-items: end; gap: 12px; padding: 16px; }
+.filtros-listado label { display: grid; gap: 6px; flex: 1 1 150px; min-width: 0; color: var(--texto); font-size: .8rem; font-weight: 600; }
+.filtros-listado .filtro-busqueda { flex-basis: 260px; }
+.filtros-listado input, .filtros-listado select { width: 100%; min-width: 0; border-color: var(--borde); }
+.filtros-listado input:focus-visible, .filtros-listado select:focus-visible { outline: 2px solid var(--verde-500); outline-offset: 2px; }
+.filtros-listado .filtros-acciones { flex: 0 0 auto; gap: 8px; }
 .tabla-contenedor { overflow-x: auto; margin: 18px 0; }
 table { width: 100%; min-width: 720px; border-collapse: collapse; }
 th, td { padding: 17px 20px; border-bottom: 1px solid var(--borde); text-align: left; vertical-align: middle; font-variant-numeric: tabular-nums; }
@@ -244,6 +250,9 @@ nav[aria-label="Paginación"] span, nav[aria-label="Paginación"] a { border-col
     .formulario.fila { align-items: stretch; flex-direction: column; }
     .formulario.fila label, .formulario.fila button { width: 100%; }
     .buscador { flex-direction: column; }
+    .filtros-listado { align-items: stretch; }
+    .filtros-listado label, .filtros-listado .filtro-busqueda { flex-basis: auto; }
+    .filtros-listado .filtros-acciones > * { flex: 1; }
     .tarjeta { padding: 20px; border-radius: 15px; }
     .acceso { padding: 28px 23px; }
     dl { grid-template-columns: 1fr; gap: 3px; }
@@ -329,7 +338,8 @@ textarea:focus { border-color: var(--verde-500); outline: 0; box-shadow: 0 0 0 4
 .tema-oscuro tbody tr:hover { background: var(--verde-50); }
 .tema-oscuro .boton.secundario { color: var(--texto); background: var(--blanco); }
 .tema-oscuro .boton.secundario:hover { background: var(--verde-50); }
-.tema-oscuro button:not(.alternar-barra):not(.alternar-tema):not(.abrir-menu):not(.cerrar-menu):not(.boton-salir):not(.secundario), .tema-oscuro .boton:not(.secundario) { color: #0d3023; }
+.tema-oscuro button:not(.alternar-barra):not(.alternar-tema):not(.abrir-menu):not(.cerrar-menu):not(.boton-salir):not(.secundario):not(.enlace), .tema-oscuro .boton:not(.secundario) { color: #0d3023; }
+.tema-oscuro .enlace:hover { color: #a3eec4; }
 .tema-oscuro .estado { color: #c0d4ca; background: #34463e; }
 .tema-oscuro .estado.activo, .tema-oscuro .estado.activa, .tema-oscuro .estado.pagada { color: #a8edc3; background: #214a34; }
 .tema-oscuro .estado.suspendido, .tema-oscuro .estado.pendiente { color: #f4d88a; background: #4c4024; }

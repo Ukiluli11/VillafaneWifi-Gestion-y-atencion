@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Webhooks;
 
+use App\Dominio\NotificacionService;
 use App\Dominio\ServicioAtencionWhatsapp;
 use App\Dominio\ServicioConversaciones;
 use App\Dominio\ServicioIdentificacion;
 use App\Dominio\WhatsAppService;
 use App\Enums\EstadoEnvioMensaje;
 use App\Http\Controllers\Controller;
+use App\Models\Conversacion;
+use App\Models\Mensaje;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -47,7 +50,7 @@ class WebhookWhatsappController extends Controller
     /**
      * Procesa los eventos POST entrantes de WhatsApp: valida la firma SHA-256 y despacha al bot o historial.
      */
-    public function recibir(Request $request): JsonResponse
+    public function recibir(Request $request, NotificacionService $notificaciones): JsonResponse
     {
         if (! $this->whatsAppService->validarFirma(
             $request->getContent(),
@@ -75,7 +78,6 @@ class WebhookWhatsappController extends Controller
             $cliente = $this->servicioIdentificacion->identificarCliente(
                 $conversacion,
                 $evento['telefono'],
-                $evento['contenido'],
             );
 
             $respuesta = $this->servicioAtencionWhatsapp->procesarMensaje(
@@ -84,34 +86,41 @@ class WebhookWhatsappController extends Controller
                 $cliente,
             );
 
-            if ($respuesta === null) {
-                continue;
+            if ($respuesta !== null) {
+                $this->responder($evento['telefono'], $mensaje, $conversacion, $respuesta);
             }
 
-            try {
-                $idExterno = $this->whatsAppService->enviarMensaje($evento['telefono'], $respuesta);
-                $this->servicioConversaciones->registrarMensajeSaliente(
-                    $conversacion,
-                    $respuesta,
-                    $idExterno,
-                    EstadoEnvioMensaje::Enviado,
-                );
-            } catch (Throwable $error) {
-                $this->servicioConversaciones->registrarMensajeSaliente(
-                    $conversacion,
-                    $respuesta,
-                    null,
-                    EstadoEnvioMensaje::Fallido,
-                );
-
-                Log::error('No se pudo responder el mensaje recibido por WhatsApp.', [
-                    'id_conversacion' => $conversacion->id_conversacion,
-                    'id_mensaje' => $mensaje->id_mensaje,
-                    'error' => $error->getMessage(),
-                ]);
+            if ($cliente !== null) {
+                $notificaciones->retomarAvisoDeResultado($cliente, $mensaje);
             }
         }
 
         return response()->json(['recibido' => true]);
+    }
+
+    private function responder(string $telefono, Mensaje $mensaje, Conversacion $conversacion, string $respuesta): void
+    {
+        try {
+            $idExterno = $this->whatsAppService->enviarMensaje($telefono, $respuesta);
+            $this->servicioConversaciones->registrarMensajeSaliente(
+                $conversacion,
+                $respuesta,
+                $idExterno,
+                EstadoEnvioMensaje::Enviado,
+            );
+        } catch (Throwable $error) {
+            $this->servicioConversaciones->registrarMensajeSaliente(
+                $conversacion,
+                $respuesta,
+                null,
+                EstadoEnvioMensaje::Fallido,
+            );
+
+            Log::error('No se pudo responder el mensaje recibido por WhatsApp.', [
+                'id_conversacion' => $conversacion->id_conversacion,
+                'id_mensaje' => $mensaje->id_mensaje,
+                'error' => $error->getMessage(),
+            ]);
+        }
     }
 }

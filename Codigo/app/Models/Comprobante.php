@@ -27,7 +27,7 @@ class Comprobante extends Model
         'fecha_recepcion', 'nombre_original', 'mime_type', 'tamanio_bytes',
         'hash_archivo', 'numero_operacion', 'monto_ocr', 'fecha_ocr',
         'ruta_archivo', 'disco_archivo', 'estado_ocr', 'error_ocr', 'completitud_ocr',
-        'estado_validacion', 'motivo_rechazo', 'fecha_hora_validacion', 'origen',
+        'estado_validacion', 'motivo_rechazo', 'fecha_hora_validacion', 'origen', 'aviso_resultado_pendiente',
     ];
 
     protected $attributes = [
@@ -44,6 +44,10 @@ class Comprobante extends Model
             'completitud_ocr' => 'decimal:2',
             'fecha_ocr' => 'date',
             'estado_validacion' => EstadoComprobante::class,
+            'intentos_duplicados' => 'integer',
+            'ultimo_duplicado_at' => 'datetime',
+            'reenvio_ocr_pendiente' => 'boolean',
+            'aviso_resultado_pendiente' => 'boolean',
             'fecha_hora_validacion' => 'datetime',
             'origen' => OrigenComprobante::class,
             'created_at' => 'datetime',
@@ -170,12 +174,17 @@ class Comprobante extends Model
         ]);
     }
 
-    /**
-     * Caso de Uso: Verificar duplicidad de comprobante (Módulo 3)
-     * Clase UML: Comprobante
-     * Método UML: + esDuplicado() : boolean
-     * Verifica mediante hash SHA-256 si ya existe otro comprobante aprobado con el mismo archivo.
-     */
+    public static function registrarDuplicadoPorHash(string $hash): ?self
+    {
+        $original = static::where('hash_archivo', $hash)->first();
+        if ($original !== null) {
+            static::whereKey($original->getKey())->increment('intentos_duplicados', 1, ['ultimo_duplicado_at' => now()]);
+        }
+
+        return $original;
+    }
+
+    /** Verifica si otro comprobante aprobado tiene el mismo hash SHA-256. */
     public function esDuplicado(): bool
     {
         if (empty($this->hash_archivo)) {

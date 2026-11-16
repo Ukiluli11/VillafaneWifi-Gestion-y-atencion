@@ -139,7 +139,14 @@ class ReporteService
     {
         $hoy = CarbonImmutable::today('America/Argentina/Buenos_Aires');
 
+        $ultimaFechaPago = Pago::query()->select('pago.fecha')
+            ->join('cuota', 'cuota.id_pago', '=', 'pago.id_pago')
+            ->join('servicio', 'servicio.id_servicio', '=', 'cuota.id_servicio')
+            ->whereColumn('servicio.id_cliente', 'cliente.id_cliente')
+            ->latest('pago.fecha')->limit(1);
         $query = Cliente::query()
+            ->addSelect(['ultimo_pago_fecha' => $ultimaFechaPago])
+            ->withCasts(['ultimo_pago_fecha' => 'date'])
             ->with([
                 'servicios.plan',
                 'cuotas' => function ($q) {
@@ -206,10 +213,6 @@ class ReporteService
             $planNombre = $servicioPrincipal?->plan?->nombre ?? 'Sin plan';
             $planPrecio = (float) ($servicioPrincipal?->plan?->precio_vigente ?? 0);
 
-            $ultimoPago = Pago::whereHas('cuotas.servicio', fn ($q) => $q->where('id_cliente', $cliente->id_cliente))
-                ->latest('fecha')
-                ->first();
-
             $items[] = [
                 'id_cliente' => $cliente->id_cliente,
                 'cliente' => $cliente->nombre_razon_social,
@@ -223,7 +226,7 @@ class ReporteService
                 'cuotas_vencidas' => $cantCuotasVencidas,
                 'deuda_total' => $montoDeuda,
                 'dias_atraso' => $diasAtraso,
-                'ultimo_pago' => $ultimoPago?->fecha?->format('d/m/Y') ?? 'Sin registros',
+                'ultimo_pago' => $cliente->ultimo_pago_fecha?->format('d/m/Y') ?? 'Sin registros',
             ];
         }
 

@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Web;
 
 use App\Dominio\ServicioClientes;
+use App\Enums\EstadoCliente;
+use App\Enums\EstadoPlan;
+use App\Enums\TipoCliente;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ActualizarClienteRequest;
 use App\Http\Requests\GuardarClienteRequest;
 use App\Models\Cliente;
+use App\Models\Plan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -24,7 +28,12 @@ class ClienteController extends Controller
      */
     public function index(Request $request, ServicioClientes $servicio): View
     {
-        return view('clientes.index', ['clientes' => $servicio->buscar($request->string('buscar')->toString())]);
+        $busqueda = trim($request->query->getString('buscar'));
+        $estado = EstadoCliente::tryFrom($request->query->getString('estado'));
+        $tipo = TipoCliente::tryFrom($request->query->getString('tipo'));
+        $clientes = $servicio->buscar($busqueda, $estado, $tipo);
+
+        return view('clientes.index', compact('clientes', 'busqueda', 'estado', 'tipo'));
     }
 
     /**
@@ -32,7 +41,7 @@ class ClienteController extends Controller
      */
     public function create(): View
     {
-        return view('clientes.formulario');
+        return view('clientes.formulario', ['planes' => Plan::where('estado', EstadoPlan::Activo->value)->orderBy('nombre')->get()]);
     }
 
     /**
@@ -69,6 +78,16 @@ class ClienteController extends Controller
         $servicio->actualizar($cliente, $request->validated());
 
         return redirect()->route('clientes.show', $cliente)->with('exito', 'Cliente actualizado correctamente.');
+    }
+
+    public function configurarRecordatorios(Request $request, Cliente $cliente, ServicioClientes $servicio): RedirectResponse
+    {
+        $request->validate(['habilitados' => ['required', 'boolean']]);
+        $habilitados = $request->boolean('habilitados');
+        $servicio->configurarRecordatorios($cliente, $habilitados);
+
+        return redirect()->route('clientes.show', $cliente)
+            ->with('exito', $habilitados ? 'Recordatorios de cuotas habilitados.' : 'Recordatorios de cuotas desactivados.');
     }
 
     /**

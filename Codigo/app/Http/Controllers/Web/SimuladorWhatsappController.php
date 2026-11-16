@@ -45,7 +45,7 @@ class SimuladorWhatsappController extends Controller
 
         $conversacion = $conversaciones->obtenerOCrearConversacion($telefono);
         $mensaje = $conversaciones->registrarMensajeEntrante($conversacion, $evento);
-        $cliente = $identificacion->identificarCliente($conversacion, $telefono, $evento['contenido']);
+        $cliente = $identificacion->identificarCliente($conversacion, $telefono);
         $respuesta = $atencion->procesarMensaje($conversacion, $mensaje, $cliente);
 
         if ($respuesta !== null) {

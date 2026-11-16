@@ -19,6 +19,7 @@ use App\Models\Servicio;
 use App\Models\Ticket;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class ReportesTest extends TestCase
@@ -92,6 +93,33 @@ class ReportesTest extends TestCase
 
         $responseTickets = $this->actingAs($empleado)->get(route('reportes.tickets'));
         $responseTickets->assertOk();
+    }
+
+    public function test_morosidad_procesa_800_clientes_sin_consultar_un_pago_por_cliente(): void
+    {
+        $this->travelTo(Carbon::parse('2026-11-15 12:00:00', 'America/Argentina/Buenos_Aires'));
+        $admin = $this->crearAdmin();
+        $plan = Plan::factory()->create();
+
+        Cliente::factory()->count(800)->create()->each(function (Cliente $cliente) use ($plan): void {
+            $servicio = $this->crearServicio($cliente->id_cliente, $plan->id_plan);
+            Cuota::factory()->for($servicio, 'servicio')->create([
+                'periodo' => '2026-10', 'id_pago' => null, 'estado' => EstadoCuota::Pendiente,
+                'fecha_vencimiento' => '2026-10-10', 'monto' => '100.00',
+            ]);
+        });
+
+        DB::enableQueryLog();
+        try {
+            $respuesta = $this->actingAs($admin)->get(route('reportes.morosidad'));
+            $consultas = count(DB::getQueryLog());
+        } finally {
+            DB::disableQueryLog();
+        }
+
+        $respuesta->assertOk()->assertViewHas('resumen', fn (array $resumen): bool => $resumen['total_en_mora'] === 800
+            && $resumen['monto_total_deuda'] === 80000.0);
+        $this->assertLessThan(25, $consultas);
     }
 
     public function test_reporte_morosidad_filtra_clientes_al_dia_y_en_mora(): void
@@ -228,6 +256,7 @@ class ReportesTest extends TestCase
     {
         foreach ([AreaEmpleado::Soporte, AreaEmpleado::AtencionCliente] as $area) {
             $empleado = $this->crearEmpleado($area);
+            $this->flushSession();
             $this->actingAs($empleado)
                 ->get(route('reportes.dashboard'))
                 ->assertOk()
@@ -240,6 +269,7 @@ class ReportesTest extends TestCase
             }
         }
 
+        $this->flushSession();
         $empleadoAdministracion = $this->crearEmpleado(AreaEmpleado::Administracion);
 
         $this->actingAs($empleadoAdministracion)

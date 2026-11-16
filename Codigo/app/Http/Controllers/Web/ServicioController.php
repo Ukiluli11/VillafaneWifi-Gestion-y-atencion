@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Dominio\ServicioContrataciones;
+use App\Enums\EstadoServicio;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ActualizarServicioRequest;
 use App\Http\Requests\GuardarServicioRequest;
@@ -10,6 +11,7 @@ use App\Models\Cliente;
 use App\Models\Plan;
 use App\Models\Servicio;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
@@ -23,9 +25,26 @@ class ServicioController extends Controller
     /**
      * Lista los servicios de instalacion activos e historicos con su cliente y plan.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        return view('servicios.index', ['servicios' => Servicio::with(['cliente', 'plan'])->orderByDesc('id_servicio')->paginate(20)]);
+        $busqueda = trim($request->query->getString('buscar'));
+        $estado = EstadoServicio::tryFrom($request->query->getString('estado'));
+        $planSeleccionado = filter_var($request->query->getString('plan'), FILTER_VALIDATE_INT) ?: 0;
+        $idBuscado = filter_var(ltrim($busqueda, '#'), FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        $servicios = Servicio::query()->with(['cliente', 'plan'])
+            ->when($busqueda !== '', fn ($consulta) => $consulta->where(fn ($filtro) => $filtro
+                ->whereLike('ipv4', "%{$busqueda}%")
+                ->orWhereLike('mac', '%'.str_replace('-', ':', $busqueda).'%')
+                ->orWhereLike('calle_instalacion', "%{$busqueda}%")
+                ->orWhereLike('localidad_instalacion', "%{$busqueda}%")
+                ->orWhereHas('cliente', fn ($cliente) => $cliente->whereLike('nombre_razon_social', "%{$busqueda}%"))
+                ->when($idBuscado !== false, fn ($coincidencias) => $coincidencias->orWhere('id_servicio', $idBuscado))))
+            ->when($estado, fn ($consulta) => $consulta->where('estado', $estado->value))
+            ->when($planSeleccionado > 0, fn ($consulta) => $consulta->where('id_plan', $planSeleccionado))
+            ->orderByDesc('id_servicio')->paginate(20)->withQueryString();
+        $planes = Plan::orderBy('nombre')->get(['id_plan', 'nombre']);
+
+        return view('servicios.index', compact('servicios', 'busqueda', 'estado', 'planes', 'planSeleccionado'));
     }
 
     /**
@@ -96,9 +115,9 @@ class ServicioController extends Controller
     /**
      * Da de baja definitiva el servicio de internet.
      */
-    public function destroy(Servicio $servicio): RedirectResponse
+    public function destroy(Servicio $servicio, ServicioContrataciones $dominio): RedirectResponse
     {
-        $servicio->update(['estado' => 'baja']);
+        $dominio->darDeBajaPorMora($servicio);
 
         return back()->with('exito', 'Servicio dado de baja.');
     }

@@ -14,12 +14,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->trimStrings(except: ['contrasena', 'contrasena_confirmation', 'contrasena_actual', 'contrasena_nueva', 'contrasena_nueva_confirmation']);
         $middleware->alias(['accion' => VerificarAccion::class]);
         $middleware->preventRequestForgery(except: ['webhooks/whatsapp']);
 
         $middleware->redirectGuestsTo(fn (): string => route('sesion.crear'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->dontFlash(['contrasena', 'contrasena_confirmation', 'contrasena_actual', 'contrasena_nueva', 'contrasena_nueva_confirmation']);
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );

@@ -5,63 +5,50 @@ namespace App\Dominio;
 use App\Models\Cliente;
 use App\Models\Conversacion;
 
-/**
- * ServicioIdentificacion: Identifica abonados a partir del numero de WhatsApp o DNI recibido en el chat.
- * Corresponde al caso de uso: 'Identificar cliente por telefono o DNI'.
- * Vincula la conversacion activa con el modelo Cliente correspondiente.
- */
 class ServicioIdentificacion
 {
-    public function identificarCliente(
-        Conversacion $conversacion,
-        string $numeroWhatsapp,
-        ?string $contenidoMensaje = null,
-    ): ?Cliente {
-        if ($conversacion->id_cliente !== null) {
-            return $conversacion->cliente;
+    public function identificarCliente(Conversacion $conversacion, string $numeroWhatsapp): ?Cliente
+    {
+        $cliente = $this->clientePorTelefono($numeroWhatsapp);
+        if ($cliente === null
+            || ($conversacion->id_cliente !== null && $conversacion->id_cliente !== $cliente->id_cliente)) {
+            return null;
         }
 
-        $telefono = preg_replace('/\D+/', '', $numeroWhatsapp) ?? '';
-        $cliente = $telefono !== ''
-            ? Cliente::query()->where('telefono_whatsapp', $telefono)->first()
-            : null;
-
-        $identificadoPorDocumento = false;
-        if ($cliente === null && $contenidoMensaje !== null) {
-            $documento = $this->extraerDocumento($contenidoMensaje);
-            if ($documento !== null) {
-                $cliente = Cliente::query()->where('numero_documento', $documento)->first();
-                $identificadoPorDocumento = $cliente !== null;
-            }
+        if ($conversacion->id_cliente === null) {
+            $conversacion->update(['id_cliente' => $cliente->id_cliente]);
         }
-
-        if ($cliente !== null) {
-            $cambios = ['id_cliente' => $cliente->id_cliente];
-            if ($identificadoPorDocumento) {
-                $cambios['paso_actual'] = 'identificacion_confirmada';
-            }
-            $conversacion->update($cambios);
-            if ($identificadoPorDocumento && $telefono !== '' && $cliente->telefono_whatsapp !== $telefono) {
-                $cliente->update(['telefono_whatsapp' => $telefono]);
-                $cliente->refresh();
-            }
-            $conversacion->setRelation('cliente', $cliente);
-        }
+        $conversacion->setRelation('cliente', $cliente);
 
         return $cliente;
     }
 
-    private function extraerDocumento(string $contenido): ?string
+    public function clientePorTelefono(string $numeroWhatsapp): ?Cliente
     {
-        preg_match_all('/(?<!\d)(\d[\d.\s-]{5,14}\d)(?!\d)/', $contenido, $coincidencias);
-
-        foreach ($coincidencias[1] ?? [] as $candidato) {
-            $documento = preg_replace('/\D+/', '', $candidato) ?? '';
-            if (strlen($documento) >= 7 && strlen($documento) <= 11) {
-                return $documento;
-            }
+        $telefonos = self::formatosTelefono($numeroWhatsapp);
+        if ($telefonos === []) {
+            return null;
         }
 
-        return null;
+        $clientes = Cliente::query()->whereIn('telefono_whatsapp', $telefonos)->limit(2)->get();
+
+        return $clientes->count() === 1 ? $clientes->first() : null;
+    }
+
+    /** @return list<string> */
+    public static function formatosTelefono(string $numero): array
+    {
+        $numero = preg_replace('/\D+/', '', $numero) ?? '';
+        if ($numero === '') {
+            return [];
+        }
+        if (preg_match('/^549\d{10}$/D', $numero)) {
+            return [$numero, '54'.substr($numero, 3)];
+        }
+        if (preg_match('/^54\d{10}$/D', $numero)) {
+            return [$numero, '549'.substr($numero, 2)];
+        }
+
+        return [$numero];
     }
 }

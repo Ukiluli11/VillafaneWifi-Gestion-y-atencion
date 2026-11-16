@@ -32,7 +32,7 @@
 
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem;">
     <div class="filtros-estado" style="display: flex; gap: 0.5rem;">
-        <a class="boton {{ !request('estado') ? '' : 'secundario' }}" href="{{ route('comprobantes.index') }}">Todos</a>
+        <a class="boton {{ !request('estado') && !request('duplicados') ? '' : 'secundario' }}" href="{{ route('comprobantes.index') }}">Todos</a>
         <a class="boton {{ request('estado') === 'pendiente' ? '' : 'secundario' }}" href="{{ route('comprobantes.index', ['estado' => 'pendiente']) }}">
             Pendientes ({{ $totalPendientes }})
         </a>
@@ -42,11 +42,15 @@
         <a class="boton {{ request('estado') === 'rechazado' ? '' : 'secundario' }}" href="{{ route('comprobantes.index', ['estado' => 'rechazado']) }}">
             Rechazados ({{ $totalRechazados }})
         </a>
+        <a class="boton {{ request('duplicados') ? '' : 'secundario' }}" href="{{ route('comprobantes.index', ['duplicados' => 1]) }}">Alertas de duplicados ({{ $totalConDuplicados }})</a>
     </div>
 
     <form class="buscador" method="GET" role="search" style="margin: 0; max-width: 400px;">
         @if (request('estado'))
             <input type="hidden" name="estado" value="{{ request('estado') }}">
+        @endif
+        @if (request('duplicados'))
+            <input type="hidden" name="duplicados" value="1">
         @endif
         <input name="buscar" value="{{ request('buscar') }}" aria-label="Buscar comprobantes" placeholder="Buscar por cliente, N° operación o hash">
         <button type="submit">Buscar</button>
@@ -72,6 +76,9 @@
                 <tr>
                     <td class="celda-principal">
                         <strong>#{{ $comprobante->id_comprobante }}</strong>
+                        @if ($comprobante->intentos_duplicados > 0)
+                            <small class="estado pendiente">Reenvíos duplicados: {{ $comprobante->intentos_duplicados }}</small>
+                        @endif
                         <small title="{{ $comprobante->hash_archivo }}">Hash: {{ substr($comprobante->hash_archivo, 0, 10) }}...</small>
                     </td>
                     <td>

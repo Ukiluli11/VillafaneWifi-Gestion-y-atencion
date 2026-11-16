@@ -46,7 +46,7 @@
         <div class="campo">
             <label for="id_usuario_asignado">Asignar a Técnico (Opcional)</label>
             <select id="id_usuario_asignado" name="id_usuario_asignado">
-                <option value="">-- Dejar pendiente sin asignar --</option>
+                <option value="">Asignar automáticamente cuando haya un técnico disponible</option>
                 @foreach ($tecnicos as $tec)
                     <option value="{{ $tec->id_usuario }}" @selected(old('id_usuario_asignado') == $tec->id_usuario)>
                         {{ $tec->nombre_usuario }}

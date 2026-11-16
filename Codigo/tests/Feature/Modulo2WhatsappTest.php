@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Dominio\ServicioAtencionHumana;
 use App\Dominio\ServicioAtencionWhatsapp;
+use App\Dominio\ServicioClientes;
 use App\Dominio\ServicioConversaciones;
 use App\Dominio\ServicioCuentaCorriente;
 use App\Dominio\ServicioIdentificacion;
@@ -40,7 +41,7 @@ class Modulo2WhatsappTest extends TestCase
             'services.whatsapp.validar_firma' => false,
             'services.whatsapp.control_consumo_habilitado' => false,
             'services.whatsapp.recordatorios_habilitados' => true,
-            'services.whatsapp.recordatorios_destinatarios' => '543704061032,543704000000',
+            'services.whatsapp.plantillas_reales_habilitadas' => true,
             'services.transferencias.habilitadas' => false,
             'services.openai.api_key' => null,
             'services.openai.model' => null,
@@ -164,20 +165,54 @@ class Modulo2WhatsappTest extends TestCase
         $this->assertSame(EstadoConversacion::Escalada, $conversacion->fresh()->estado);
     }
 
-    public function test_identificacion_por_documento_vincula_el_numero_de_whatsapp(): void
+    public function test_dni_desde_numero_desconocido_no_vincula_ni_cambia_el_telefono(): void
     {
-        $cliente = Cliente::factory()->create(['telefono_whatsapp' => null, 'numero_documento' => '30111222']);
-        $conversacion = Conversacion::factory()->create(['numero_whatsapp' => '5493704111222']);
+        $cliente = Cliente::factory()->create(['telefono_whatsapp' => '543704061032', 'numero_documento' => '30111222', 'tipo_documento' => 'DNI']);
+        $telefono = '5493704111222';
 
-        $identificado = app(ServicioIdentificacion::class)->identificarCliente(
-            $conversacion,
-            '5493704111222',
-            'Mi DNI es 30.111.222',
-        );
+        foreach (['Mi DNI es 30.111.222', '1', 'REGISTRARME', 'DNI', '30111222'] as $indice => $texto) {
+            $this->postJson('/webhooks/whatsapp', ['entry' => [['changes' => [['value' => ['messages' => [[
+                'id' => 'wamid.verificacion.'.$indice, 'from' => $telefono,
+                'timestamp' => (string) now()->timestamp, 'type' => 'text', 'text' => ['body' => $texto],
+            ]]]]]]]])->assertOk();
+        }
 
-        $this->assertTrue($cliente->is($identificado));
-        $this->assertSame('5493704111222', $cliente->fresh()->telefono_whatsapp);
-        $this->assertSame($cliente->id_cliente, $conversacion->fresh()->id_cliente);
+        $conversacion = Conversacion::where('numero_whatsapp', $telefono)->sole();
+        $this->assertNull($conversacion->id_cliente);
+        $this->assertSame('543704061032', $cliente->fresh()->telefono_whatsapp);
+        $this->assertSame(EstadoConversacion::Escalada, $conversacion->estado);
+        $this->assertFalse($conversacion->mensajes()->where('contenido', 'like', '%Total pendiente%')->exists());
+
+        $legitima = app(ServicioConversaciones::class)->obtenerOCrearConversacion('5493704061032');
+        $this->assertTrue($cliente->is(app(ServicioIdentificacion::class)->identificarCliente($legitima, '5493704061032')));
+    }
+
+    public function test_cambio_de_telefono_no_reutiliza_la_conversacion_del_numero_anterior(): void
+    {
+        $cliente = Cliente::factory()->create(['telefono_whatsapp' => '5493704061032']);
+        $anterior = Conversacion::factory()->create(['id_cliente' => $cliente->id_cliente, 'numero_whatsapp' => $cliente->telefono_whatsapp]);
+        $cliente->update(['telefono_whatsapp' => '5493704000000']);
+
+        $operador = app(ServicioUsuarios::class)->crear([
+            'nombre_usuario' => 'operador-cambio-telefono', 'contrasena' => 'clave-segura',
+            'tipo' => 'empleado', 'area' => 'soporte',
+        ]);
+        $this->actingAs($operador)->post(route('conversaciones.tomar', $anterior))->assertSessionHasErrors('conversacion');
+        $this->assertFalse($anterior->mensajes()->exists());
+
+        $conversaciones = app(ServicioConversaciones::class);
+        $nueva = $conversaciones->obtenerOCrearConversacion($anterior->numero_whatsapp);
+        $this->assertFalse($anterior->is($nueva));
+        $this->assertSame(EstadoConversacion::Cerrada, $anterior->fresh()->estado);
+        $this->assertNull(app(ServicioIdentificacion::class)->identificarCliente($nueva, $anterior->numero_whatsapp));
+    }
+
+    public function test_telefono_compartido_no_exhibe_una_cuenta_arbitraria(): void
+    {
+        Cliente::factory()->create(['telefono_whatsapp' => '5493704061032']);
+        Cliente::factory()->create(['telefono_whatsapp' => '543704061032']);
+
+        $this->assertNull(app(ServicioIdentificacion::class)->clientePorTelefono('5493704061032'));
     }
 
     public function test_pagar_muestra_la_misma_cuenta_a_clientes_de_distintos_planes_y_sin_deuda(): void
@@ -394,9 +429,25 @@ class Modulo2WhatsappTest extends TestCase
         ]);
     }
 
+    public function test_recordatorios_omiten_un_telefono_asociado_a_dos_clientes(): void
+    {
+        $cliente = Cliente::factory()->create(['telefono_whatsapp' => '5493704000000', 'recordatorios_whatsapp' => true]);
+        Cliente::factory()->create(['telefono_whatsapp' => '543704000000']);
+        $servicio = Servicio::factory()->for($cliente, 'cliente')->create(['estado' => 'activo']);
+        $cuota = Cuota::factory()->for($servicio, 'servicio')->create([
+            'fecha_vencimiento' => CarbonImmutable::today('America/Argentina/Buenos_Aires')->addDay()->toDateString(),
+        ]);
+
+        $this->assertSame(
+            ['enviadas' => 0, 'omitidas' => 1, 'fallidas' => 0],
+            app(ServicioNotificacionesVencimiento::class)->enviar($cuota->id_cuota),
+        );
+        $this->assertDatabaseCount('mensaje', 0);
+    }
+
     public function test_recordatorios_de_vencimiento_no_se_duplican(): void
     {
-        $cliente = Cliente::factory()->create(['telefono_whatsapp' => '5493704000000']);
+        $cliente = Cliente::factory()->create(['telefono_whatsapp' => '5493704000000', 'recordatorios_whatsapp' => true]);
         $servicio = Servicio::factory()->create(['id_cliente' => $cliente->id_cliente]);
         Cuota::factory()->create([
             'id_servicio' => $servicio->id_servicio,
@@ -409,18 +460,22 @@ class Modulo2WhatsappTest extends TestCase
         $this->assertDatabaseCount('mensaje', 1);
     }
 
-    public function test_comando_envia_solo_la_cuota_elegida_y_omite_destinatarios_no_autorizados(): void
+    public function test_comando_respeta_la_cuota_elegida_y_la_autorizacion_desde_la_ficha(): void
     {
         config([
             'services.whatsapp.modo_simulacion' => false,
             'services.whatsapp.access_token' => 'token-de-prueba',
             'services.whatsapp.phone_number_id' => 'telefono-de-prueba',
             'services.whatsapp.destinatarios_permitidos' => '543704000000',
+            'services.whatsapp.plantillas_destinatarios' => '543704000000',
+            'services.whatsapp.control_consumo_habilitado' => true,
         ]);
-        Http::fake(['*' => Http::response(['messages' => [['id' => 'wamid.cuota-seleccionada']]])]);
+        Http::fakeSequence()
+            ->push(['messages' => [['id' => 'wamid.cuota-seleccionada']]])
+            ->push(['messages' => [['id' => 'wamid.segunda-cuota']]]);
 
         $fechaVencimiento = CarbonImmutable::today('America/Argentina/Buenos_Aires')->addDay()->toDateString();
-        $clientePermitido = Cliente::factory()->create(['telefono_whatsapp' => '5493704000000']);
+        $clientePermitido = Cliente::factory()->create(['telefono_whatsapp' => '5493704000000', 'recordatorios_whatsapp' => true]);
         $clienteNoPermitido = Cliente::factory()->create(['telefono_whatsapp' => '5493704000001']);
         $servicioPermitido = Servicio::factory()->create(['id_cliente' => $clientePermitido->id_cliente]);
         $servicioNoPermitido = Servicio::factory()->create(['id_cliente' => $clienteNoPermitido->id_cliente]);
@@ -442,6 +497,12 @@ class Modulo2WhatsappTest extends TestCase
         $this->artisan('whatsapp:notificar-vencimientos')->assertExitCode(0);
         Http::assertSentCount(1);
         $this->assertDatabaseCount('mensaje', 1);
+
+        app(ServicioClientes::class)->configurarRecordatorios($clienteNoPermitido, true);
+        $this->artisan('whatsapp:notificar-vencimientos')->assertExitCode(0);
+        Http::assertSentCount(2);
+        Http::assertSent(fn ($solicitud): bool => $solicitud['type'] === 'template' && $solicitud['to'] === '5493704000001');
+        $this->assertDatabaseHas('consumo_whatsapp_mes', ['plantillas_reservadas' => 2]);
     }
 
     public function test_cuota_vencida_usa_la_plantilla_y_el_texto_de_demostracion_correctos(): void
@@ -459,6 +520,7 @@ class Modulo2WhatsappTest extends TestCase
         $cliente = Cliente::factory()->create([
             'nombre_razon_social' => 'Cliente de prueba',
             'telefono_whatsapp' => '5493704061032',
+            'recordatorios_whatsapp' => true,
         ]);
         $servicio = Servicio::factory()->create(['id_cliente' => $cliente->id_cliente]);
         $fechaVencimiento = CarbonImmutable::today('America/Argentina/Buenos_Aires')->subDay();
@@ -482,21 +544,37 @@ class Modulo2WhatsappTest extends TestCase
         $this->assertSame('vencimiento:vencida:'.$cuota->id_cuota, Mensaje::query()->sole()->clave_idempotencia);
     }
 
-    public function test_recordatorios_desactivados_o_sin_lista_no_envian_a_clientes_de_la_demo_abierta(): void
+    public function test_recordatorio_vencido_requiere_autorizacion_del_cliente_y_habilitacion_global(): void
     {
-        config(['services.whatsapp.modo_simulacion' => false, 'services.whatsapp.recordatorios_destinatarios' => '',
-            'services.whatsapp.destinatarios_permitidos' => '']);
-        Http::preventStrayRequests();
+        config([
+            'services.whatsapp.modo_simulacion' => false,
+            'services.whatsapp.access_token' => 'token-de-prueba',
+            'services.whatsapp.phone_number_id' => 'telefono-de-prueba',
+            'services.whatsapp.destinatarios_permitidos' => '543704000000',
+            'services.whatsapp.plantillas_reales_habilitadas' => false,
+        ]);
+        Http::fake(['*' => Http::response(['messages' => [['id' => 'wamid.prueba-cliente']]])]);
         $cliente = Cliente::factory()->create(['telefono_whatsapp' => '5493704000000']);
-        $servicio = Servicio::factory()->create(['id_cliente' => $cliente->id_cliente]);
-        Cuota::factory()->create(['id_servicio' => $servicio->id_servicio, 'fecha_vencimiento' => today()->toDateString()]);
+        $servicio = Servicio::factory()->for($cliente, 'cliente')->create(['estado' => 'activo']);
+        $cuota = Cuota::factory()->for($servicio, 'servicio')->create([
+            'fecha_vencimiento' => CarbonImmutable::today('America/Argentina/Buenos_Aires')->subDay()->toDateString(),
+        ]);
 
-        $this->assertSame(['enviadas' => 0, 'omitidas' => 1, 'fallidas' => 0], app(ServicioNotificacionesVencimiento::class)->enviar());
-        config(['services.whatsapp.recordatorios_habilitados' => false]);
-        $this->assertSame(['enviadas' => 0, 'omitidas' => 0, 'fallidas' => 0], app(ServicioNotificacionesVencimiento::class)->enviar());
+        $notificaciones = app(ServicioNotificacionesVencimiento::class);
+        $cliente->forceFill(['recordatorios_whatsapp' => true])->save();
+        $this->assertSame(0, $notificaciones->enviar($cuota->getKey())['enviadas']);
+        config(['services.whatsapp.plantillas_reales_habilitadas' => true, 'services.whatsapp.recordatorios_habilitados' => false]);
+        $this->assertSame(0, $notificaciones->enviar($cuota->getKey())['enviadas']);
 
-        Http::assertNothingSent();
+        config(['services.whatsapp.recordatorios_habilitados' => true]);
+        $cliente->forceFill(['recordatorios_whatsapp' => false])->save();
+        $this->assertSame(1, $notificaciones->enviar($cuota->getKey())['omitidas']);
         $this->assertDatabaseCount('mensaje', 0);
+        Http::assertNothingSent();
+
+        $cliente->forceFill(['recordatorios_whatsapp' => true])->save();
+        $this->assertSame(1, $notificaciones->enviar($cuota->getKey())['enviadas']);
+        Http::assertSentCount(1);
     }
 
     public function test_recibe_comprobante_simulado_y_cierra_la_conversacion(): void

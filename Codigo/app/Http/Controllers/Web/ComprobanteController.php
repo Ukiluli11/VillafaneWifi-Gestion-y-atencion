@@ -49,6 +49,10 @@ class ComprobanteController extends Controller
             $query->where('estado_validacion', $estadoFiltro);
         }
 
+        if ($request->boolean('duplicados')) {
+            $query->where('intentos_duplicados', '>', 0)->orderByDesc('ultimo_duplicado_at');
+        }
+
         if ($busqueda !== '') {
             $query->where(function ($q) use ($busqueda) {
                 $q->where('numero_operacion', 'like', "%{$busqueda}%")
@@ -66,6 +70,7 @@ class ComprobanteController extends Controller
         $totalPendientes = Comprobante::pendientes()->count();
         $totalAprobados = Comprobante::aprobados()->count();
         $totalRechazados = Comprobante::rechazados()->count();
+        $totalConDuplicados = Comprobante::where('intentos_duplicados', '>', 0)->count();
 
         return view('comprobantes.index', compact(
             'comprobantes',
@@ -73,7 +78,8 @@ class ComprobanteController extends Controller
             'busqueda',
             'totalPendientes',
             'totalAprobados',
-            'totalRechazados'
+            'totalRechazados',
+            'totalConDuplicados'
         ));
     }
 
@@ -127,9 +133,7 @@ class ComprobanteController extends Controller
     public function notificar(Comprobante $comprobante, NotificacionService $notificaciones): RedirectResponse
     {
         abort_if($comprobante->estaPendiente(), 409);
-        $resultado = $comprobante->estaAprobado()
-            ? $notificaciones->notificarPagoAprobado($comprobante->cliente, $comprobante->pago, $comprobante)
-            : $notificaciones->notificarPagoRechazado($comprobante->cliente, $comprobante, $comprobante->motivo_rechazo);
+        $resultado = $notificaciones->notificarResultadoComprobante($comprobante);
 
         return back()->with('exito', $resultado['detalle']);
     }

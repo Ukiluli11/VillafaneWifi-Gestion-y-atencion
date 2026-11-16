@@ -5,10 +5,15 @@ namespace App\Providers;
 use App\Autorizacion\ServicioAutorizacion;
 use App\Enums\AccionSistema;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Events\DiagnosingHealth;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\View as Vista;
+use RuntimeException;
+use Throwable;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +31,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot(ServicioAutorizacion $servicioAutorizacion): void
     {
         Model::preventLazyLoading(! $this->app->isProduction());
+
+        Event::listen(DiagnosingHealth::class, function (): void {
+            try {
+                DB::select('SELECT 1');
+            } catch (Throwable $error) {
+                throw new RuntimeException('La base de datos no está disponible.', previous: $error);
+            }
+        });
 
         View::composer('*', function (Vista $vista) use ($servicioAutorizacion): void {
             $usuario = Auth::user();
