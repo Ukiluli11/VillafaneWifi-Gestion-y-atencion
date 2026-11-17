@@ -22,7 +22,7 @@
                 <div class="mensaje-chat {{ $mensaje->tipo_emisor->value }}">
                     <div>
                         <strong>{{ match($mensaje->tipo_emisor->value) { 'cliente' => 'Cliente', 'bot' => 'Asistente', 'usuario_interno' => $mensaje->usuario?->nombre_usuario ?? 'Operador', default => 'Sistema' } }}</strong>
-                        <small>{{ $mensaje->fecha_hora->format('d/m/Y H:i') }} · {{ $mensaje->estado_envio->value }}</small>
+                        <small>{{ $mensaje->fecha_hora->copy()->setTimezone('America/Argentina/Buenos_Aires')->format('d/m/Y H:i') }} · {{ $mensaje->estado_envio->value }}</small>
                     </div>
                     <p>{{ $mensaje->contenido ?: '['.ucfirst($mensaje->tipo->value).']' }}</p>
                 </div>
@@ -64,7 +64,7 @@
                 <dt>Teléfono</dt><dd>+{{ $conversacion->numero_whatsapp }}</dd>
                 <dt>Cliente</dt><dd>{{ $conversacion->cliente?->nombre_razon_social ?? 'Sin identificar' }}</dd>
                 <dt>Responsable</dt><dd>{{ $conversacion->usuarioAtencion?->nombre_usuario ?? 'Sin asignar' }}</dd>
-                <dt>Inicio</dt><dd>{{ $conversacion->fecha_hora_inicio->format('d/m/Y H:i') }}</dd>
+                <dt>Inicio</dt><dd>{{ $conversacion->fecha_hora_inicio->copy()->setTimezone('America/Argentina/Buenos_Aires')->format('d/m/Y H:i') }}</dd>
                 <dt>Intención</dt><dd>{{ $conversacion->intencion_actual?->value ?? 'Sin determinar' }}</dd>
             </dl>
         </article>
@@ -74,7 +74,7 @@
                 <h2>Comprobantes recibidos</h2>
                 @foreach ($conversacion->comprobantes as $comprobante)
                     <p><strong>#{{ $comprobante->id_comprobante }}</strong> · {{ $comprobante->estado_validacion->value }}<br><small class="texto-suave">{{ $comprobante->nombre_original ?? $comprobante->mime_type }} · {{ number_format($comprobante->tamanio_bytes / 1024, 1, ',', '.') }} KB</small></p>
-                    @if ($navegacionPermitida['consultar_comprobantes'] ?? false)
+                    @if ($navegacionPermitida['comprobantes'] ?? false)
                         <a href="{{ route('comprobantes.show', $comprobante) }}">Revisar comprobante</a>
                     @endif
                 @endforeach

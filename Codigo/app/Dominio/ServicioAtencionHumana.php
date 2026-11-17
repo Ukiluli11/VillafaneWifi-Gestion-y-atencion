@@ -4,6 +4,7 @@ namespace App\Dominio;
 
 use App\Enums\EstadoConversacion;
 use App\Enums\EstadoEnvioMensaje;
+use App\Enums\EstadoTicket;
 use App\Enums\TipoEmisorMensaje;
 use App\Models\Conversacion;
 use App\Models\Usuario;
@@ -22,6 +23,7 @@ class ServicioAtencionHumana
         private readonly WhatsAppService $whatsAppService,
         private readonly ServicioConversaciones $servicioConversaciones,
         private readonly ServicioIdentificacion $identificacion,
+        private readonly ServicioTickets $tickets,
     ) {}
 
     public function tomar(Conversacion $conversacion, Usuario $usuario): Conversacion
@@ -38,11 +40,18 @@ class ServicioAtencionHumana
             }
 
             $actual->derivarAUsuario($usuario);
-            $ticket = $actual->tickets()
-                ->whereNull('id_usuario_asignado')
-                ->latest('id_ticket')
-                ->first();
-            $ticket?->asignar($usuario);
+            if ($usuario->administrador()->exists() || $usuario->empleado()->where('area', 'soporte')->exists()) {
+                $ticket = $actual->tickets()
+                    ->whereNull('id_usuario_asignado')
+                    ->where('estado', EstadoTicket::Pendiente)
+                    ->orderBy('fecha_creacion')
+                    ->orderBy('id_ticket')
+                    ->lockForUpdate()
+                    ->first();
+                if ($ticket !== null) {
+                    $this->tickets->asignarTicket($ticket, $usuario, $usuario);
+                }
+            }
 
             return $actual->refresh();
         });

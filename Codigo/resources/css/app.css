@@ -71,6 +71,11 @@ a { color: var(--verde-700); }
 .contenedor { width: 100%; max-width: 1540px; margin: 0 auto; padding: 38px clamp(24px, 3.5vw, 48px) 56px; }
 .encabezado { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 30px; }
 .encabezado h1 { margin: 4px 0 0; }
+.encabezado-con-consumo { position: relative; }
+.encabezado-con-consumo .encabezado { padding-right: 56px; }
+.consumo-whatsapp > summary { position: absolute; top: 4px; right: 0; list-style: none; width: 42px; height: 42px; padding: 0; font-size: 1.2rem; }
+.consumo-whatsapp > summary::-webkit-details-marker { display: none; }
+.consumo-whatsapp > summary:focus-visible { outline: 2px solid var(--verde-500); outline-offset: 3px; }
 .encabezado p:not(.sobrelinea) { max-width: 680px; margin: 9px 0 0; color: var(--texto-suave); font-size: .86rem; }
 h1 { color: var(--texto); font-size: clamp(1.65rem, 2.4vw, 2rem); font-weight: 600; line-height: 1.2; letter-spacing: -.045em; text-wrap: balance; }
 h2 { margin: 0; color: var(--texto); font-size: 1.02rem; font-weight: 600; letter-spacing: -.025em; text-wrap: balance; }
@@ -205,6 +210,8 @@ dd { margin: 0; min-width: 0; font-size: .84rem; overflow-wrap: anywhere; }
 .acceso-logo { flex: none; border-radius: 50%; object-fit: contain; background: #fff; }
 .acceso-contrasena { display: flex; gap: 8px; margin-top: 8px; }
 .acceso-contrasena input { flex: 1; min-width: 0; }
+.acceso-contrasena-boton { flex: 0 0 44px; padding: 0; }
+.acceso-contrasena-boton[aria-pressed="false"] .acceso-contrasena-tachado { display: none; }
 .acceso-contrasena button[hidden] { display: none; }
 .acceso-volver { display: inline-block; margin-top: 22px; font-size: .82rem; }
 .acceso-marca strong, .acceso-marca small { display: block; }

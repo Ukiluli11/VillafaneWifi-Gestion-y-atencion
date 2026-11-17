@@ -90,7 +90,7 @@
                 <h2>Aviso al cliente</h2>
                 @if ($avisoResultado)
                     <p>Estado del aviso: <strong>{{ ucfirst($avisoResultado->estado_envio->value) }}</strong>.</p>
-                    @if ($navegacionPermitida['consultar_conversaciones'] ?? false)
+                    @if ($navegacionPermitida['conversaciones'] ?? false)
                         <a href="{{ route('conversaciones.show', $avisoResultado->id_conversacion) }}">Ver aviso en la conversación</a>
                     @endif
                 @else
@@ -222,13 +222,13 @@
 
                         <div class="campo">
                             <label for="monto">Monto a Imputar ($) *</label>
-                            <input type="number" step="0.01" id="monto" name="monto" value="{{ old('monto', $comprobante->monto_ocr) }}" required>
+                            <input type="number" min="0.01" max="99999999.99" step="0.01" id="monto" name="monto" value="{{ old('monto', $comprobante->monto_ocr) }}" required>
                         </div>
                     </div>
 
                     <div class="campo">
                         <label for="fecha">Fecha de Acreditación *</label>
-                        <input type="date" id="fecha" name="fecha" value="{{ old('fecha', $comprobante->fecha_ocr?->toDateString()) }}" required>
+                        <input type="date" max="{{ now('America/Argentina/Buenos_Aires')->toDateString() }}" id="fecha" name="fecha" value="{{ old('fecha', $comprobante->fecha_ocr?->toDateString()) }}" required>
                     </div>
 
                     <button class="boton" type="submit" style="background: #16a34a; border-color: #16a34a; justify-content: center;">

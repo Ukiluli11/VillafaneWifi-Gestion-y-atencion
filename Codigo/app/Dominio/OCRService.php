@@ -128,10 +128,11 @@ class OCRService
 
     public function extraerMonto(?string $texto): ?string
     {
-        if (! preg_match('/(?:\b(?:total|monto|importe|pagado)(?:\s+(?:enviado|transferido|total))?\s*:?\s*(?:ARS\s*)?\$?\s*|(?:ARS\s*)?\$\s*)(\d[\d.,]*)(?!\d)/iu', $texto ?? '', $coincidencias)) {
+        if (! preg_match('/(?:\b(?:total|monto|importe|pagado)(?:\s+(?:enviado|transferido|total))?\s*:?\s*(?:ARS\s*)?([-−]?)\s*\$?\s*|(?:ARS\s*)?([-−]?)\s*\$\s*)([-−]?)\s*(\d[\d.,]*)(?!\d)/iu', $texto ?? '', $coincidencias)
+            || $coincidencias[1] !== '' || $coincidencias[2] !== '' || $coincidencias[3] !== '') {
             return null;
         }
-        $valor = rtrim($coincidencias[1], '.,');
+        $valor = rtrim($coincidencias[4], '.,');
         if (str_contains($valor, ',') && str_contains($valor, '.')) {
             $decimal = strrpos($valor, ',') > strrpos($valor, '.') ? ',' : '.';
             $valor = str_replace($decimal === ',' ? '.' : ',', '', $valor);

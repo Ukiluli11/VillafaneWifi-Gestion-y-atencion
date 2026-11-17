@@ -15,6 +15,7 @@ use App\Models\Servicio;
 use App\Models\Ticket;
 use App\Models\Usuario;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
@@ -379,6 +380,7 @@ class TicketsTest extends TestCase
 
         $this->actingAs($tecnico)->post(route('tickets.estado', $ticket), ['estado' => 'resuelto'])->assertForbidden();
         $this->post(route('tickets.notas.store', $ticket), ['contenido' => 'Nota no autorizada'])->assertForbidden();
+        $this->post(route('tickets.notificar', $ticket))->assertForbidden();
         $this->post(route('tickets.reabrir', $ticket), ['motivo' => 'Intento no autorizado'])->assertForbidden();
         $this->assertSame(EstadoTicket::Asignado, $ticket->fresh()->estado);
         $this->assertDatabaseCount('nota_interna', 0);
@@ -421,7 +423,7 @@ class TicketsTest extends TestCase
         Http::assertSent(fn ($request) => $request['type'] === 'text'
             && str_contains($request['text']['body'], 'resuelto')
             && ! str_contains($request['text']['body'], 'Clave interna confidencial'));
-        app(NotificacionService::class)->notificarNovedad($ticket);
+        $this->post(route('tickets.notificar', $ticket))->assertRedirect(route('tickets.show', $ticket));
         Http::assertSentCount(1);
 
         Http::fake();
@@ -430,6 +432,58 @@ class TicketsTest extends TestCase
         $resultado = app(NotificacionService::class)->notificarNovedad($ticket);
         $this->assertSame('pendiente', $resultado['estado']);
         Http::assertNothingSent();
+    }
+
+    public function test_se_puede_notificar_un_ticket_resuelto_sin_reabrirlo_y_reintentar_si_falla(): void
+    {
+        $admin = $this->crearAdministrador();
+        $cliente = Cliente::factory()->create(['telefono_whatsapp' => '5493704123456']);
+        $servicio = Servicio::factory()->create(['id_cliente' => $cliente->id_cliente]);
+        $conversacion = Conversacion::factory()->create(['id_cliente' => $cliente->id_cliente, 'numero_whatsapp' => $cliente->telefono_whatsapp]);
+        Mensaje::factory()->create(['id_conversacion' => $conversacion->id_conversacion,
+            'tipo_emisor' => TipoEmisorMensaje::Cliente, 'fecha_hora' => now()->subHour()]);
+        $ticket = Ticket::factory()->create(['id_conversacion' => $conversacion->id_conversacion,
+            'id_servicio' => $servicio->id_servicio, 'estado' => EstadoTicket::Resuelto]);
+        $ticket->agregarNota('Informacion interna privada', $admin);
+        Http::swap(new Factory);
+        Http::preventStrayRequests();
+        Http::fake(['*' => Http::sequence()->push([], 500)->push(['messages' => [['id' => 'wamid.reintento']]])]);
+
+        $this->actingAs($admin)->get(route('tickets.show', $ticket))->assertOk()
+            ->assertSee('Notificar estado por WhatsApp');
+        $this->post(route('tickets.notificar', $ticket))->assertRedirect()->assertSessionHas('exito',
+            fn ($texto) => str_contains($texto, 'no se pudo enviar'));
+        $this->post(route('tickets.notificar', $ticket))->assertRedirect()->assertSessionHas('exito',
+            fn ($texto) => str_contains($texto, 'Meta aceptó'));
+        $this->post(route('tickets.notificar', $ticket))->assertRedirect();
+
+        Http::assertSentCount(2);
+        Http::assertSent(fn ($peticion) => str_contains($peticion['text']['body'], 'resuelto')
+            && ! str_contains($peticion['text']['body'], 'Informacion interna privada'));
+        $this->assertSame(EstadoTicket::Resuelto, $ticket->fresh()->estado);
+        $this->assertSame(1, $ticket->notas()->count());
+        $this->assertSame(1, Mensaje::where('tipo_emisor', TipoEmisorMensaje::Sistema)->count());
+    }
+
+    public function test_el_boton_de_aviso_respeta_configuracion_y_ventana_de_whatsapp(): void
+    {
+        $admin = $this->crearAdministrador();
+        $cliente = Cliente::factory()->create(['telefono_whatsapp' => '5493704123456']);
+        $servicio = Servicio::factory()->create(['id_cliente' => $cliente->id_cliente]);
+        $conversacion = Conversacion::factory()->create(['id_cliente' => $cliente->id_cliente, 'numero_whatsapp' => $cliente->telefono_whatsapp]);
+        Mensaje::factory()->create(['id_conversacion' => $conversacion->id_conversacion,
+            'tipo_emisor' => TipoEmisorMensaje::Cliente, 'fecha_hora' => now()->subHours(25)]);
+        $ticket = Ticket::factory()->create(['id_conversacion' => $conversacion->id_conversacion,
+            'id_servicio' => $servicio->id_servicio, 'estado' => EstadoTicket::Resuelto]);
+
+        $this->actingAs($admin)->post(route('tickets.notificar', $ticket))->assertRedirect()
+            ->assertSessionHas('exito', fn ($texto) => str_contains($texto, 'volver a escribir'));
+        config(['services.tickets.notificar_resultado' => false]);
+        $this->get(route('tickets.show', $ticket))->assertOk()->assertSee('Los avisos de tickets están desactivados');
+        $this->post(route('tickets.notificar', $ticket))->assertRedirect()
+            ->assertSessionHas('exito', fn ($texto) => str_contains($texto, 'desactivadas'));
+        Http::assertNothingSent();
+        $this->assertSame(EstadoTicket::Resuelto, $ticket->fresh()->estado);
     }
 
     public function test_limite_de_consumo_no_deshace_la_resolucion_del_ticket(): void

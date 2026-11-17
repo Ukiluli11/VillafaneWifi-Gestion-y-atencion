@@ -17,11 +17,11 @@ class SubirComprobanteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_cliente' => ['required', 'integer', 'exists:cliente,id_cliente'],
+            'id_cliente' => ['required', 'integer', 'min:1', 'exists:cliente,id_cliente'],
             'archivo' => ['required', 'file', 'mimes:jpeg,jpg,png,pdf', 'max:10240'],
             'numero_operacion' => ['nullable', 'string', 'max:50'],
-            'monto' => ['nullable', 'numeric', 'min:0.01'],
-            'fecha' => ['nullable', 'date'],
+            'monto' => ['nullable', 'numeric', 'min:0.01', 'max:99999999.99', 'decimal:0,2'],
+            'fecha' => ['nullable', 'date_format:Y-m-d', 'before_or_equal:'.today('America/Argentina/Buenos_Aires')->toDateString()],
         ];
     }
 

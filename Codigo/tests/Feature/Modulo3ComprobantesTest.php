@@ -143,6 +143,8 @@ class Modulo3ComprobantesTest extends TestCase
             $this->assertSame('18500.50', $ocr->extraerMonto($texto), $texto);
         }
         $this->assertSame('18000.00', $ocr->extraerMonto('$ 18.000'));
+        $this->assertNull($ocr->extraerMonto('Monto: -$ 18.000'));
+        $this->assertNull($ocr->extraerMonto('Monto: $ -18.000'));
         $this->assertNull($ocr->extraerFecha('Fecha: 31/02/2026'));
         $this->assertNull($ocr->extraerFecha('Fecha: 2026-13-20'));
         $this->assertSame('2026-10-20', $ocr->extraerFecha('Fecha: 20/10/2026'));

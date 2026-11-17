@@ -31,9 +31,17 @@ class ClienteController extends Controller
         $busqueda = trim($request->query->getString('buscar'));
         $estado = EstadoCliente::tryFrom($request->query->getString('estado'));
         $tipo = TipoCliente::tryFrom($request->query->getString('tipo'));
-        $clientes = $servicio->buscar($busqueda, $estado, $tipo);
+        $localidad = trim($request->query->getString('localidad'));
+        $whatsapp = $request->query->getString('whatsapp');
+        $conWhatsapp = match ($whatsapp) {
+            'con_numero' => true,
+            'sin_numero' => false,
+            default => null,
+        };
+        $clientes = $servicio->buscar($busqueda, $estado, $tipo, $localidad, $conWhatsapp);
+        $localidades = $servicio->localidades();
 
-        return view('clientes.index', compact('clientes', 'busqueda', 'estado', 'tipo'));
+        return view('clientes.index', compact('clientes', 'busqueda', 'estado', 'tipo', 'localidad', 'localidades', 'conWhatsapp'));
     }
 
     /**

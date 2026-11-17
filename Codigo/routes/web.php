@@ -16,6 +16,7 @@ use App\Http\Controllers\Web\SimuladorWhatsappController;
 use App\Http\Controllers\Web\TicketController;
 use App\Http\Controllers\Web\UsuarioController;
 use App\Http\Controllers\Webhooks\WebhookWhatsappController;
+use App\Http\Middleware\VerificarUsuarioActivo;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/webhooks/whatsapp', [WebhookWhatsappController::class, 'verificar'])->name('whatsapp.verificar');
@@ -28,7 +29,7 @@ Route::middleware('guest')->group(function (): void {
     Route::post('/iniciar-sesion', [AutenticacionController::class, 'store'])->middleware('throttle:5,1')->name('sesion.guardar');
 });
 
-Route::middleware(['auth', 'auth.session'])->group(function (): void {
+Route::middleware(['auth', 'auth.session', VerificarUsuarioActivo::class])->group(function (): void {
     Route::get('/panel', InicioController::class)->name('inicio');
     Route::post('/cerrar-sesion', [AutenticacionController::class, 'destroy'])->name('sesion.destruir');
 
@@ -116,6 +117,7 @@ Route::middleware(['auth', 'auth.session'])->group(function (): void {
         Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
         Route::post('/tickets/{ticket}/asignar', [TicketController::class, 'asignar'])->name('tickets.asignar');
         Route::post('/tickets/{ticket}/estado', [TicketController::class, 'cambiarEstado'])->name('tickets.estado');
+        Route::post('/tickets/{ticket}/notificar', [TicketController::class, 'notificar'])->name('tickets.notificar');
         Route::post('/tickets/{ticket}/resolver', [TicketController::class, 'resolver'])->name('tickets.resolver');
         Route::post('/tickets/{ticket}/cerrar', [TicketController::class, 'cerrar'])->name('tickets.cerrar');
         Route::post('/tickets/{ticket}/reabrir', [TicketController::class, 'reabrir'])->name('tickets.reabrir');
@@ -129,7 +131,8 @@ Route::middleware(['auth', 'auth.session'])->group(function (): void {
         Route::get('/reportes/ingresos', [ReporteController::class, 'ingresos'])->name('reportes.ingresos');
         Route::get('/reportes/tickets', [ReporteController::class, 'tickets'])->name('reportes.tickets');
         Route::get('/reportes/alertas', [ReporteController::class, 'alertas'])->name('reportes.alertas');
-        Route::post('/reportes/alertas/notificar', [ReporteController::class, 'notificarAlerta'])->name('reportes.alertas.notificar');
+        Route::post('/reportes/alertas/notificar', [ReporteController::class, 'notificarAlerta'])
+            ->middleware('accion:gestionar_cuentas')->name('reportes.alertas.notificar');
         Route::get('/reportes/{tipo}/exportar', [ReporteController::class, 'exportar'])
             ->middleware('accion:exportar_reportes')
             ->name('reportes.exportar');
@@ -140,6 +143,7 @@ Route::middleware(['auth', 'auth.session'])->group(function (): void {
 
     Route::get('/usuarios/{usuario}/editar', [UsuarioController::class, 'edit'])->middleware('accion:gestionar_usuarios')->name('usuarios.edit');
     Route::put('/usuarios/{usuario}', [UsuarioController::class, 'update'])->middleware('accion:gestionar_usuarios')->name('usuarios.update');
+    Route::put('/usuarios/{usuario}/contrasena', [UsuarioController::class, 'restablecerContrasena'])->middleware(['accion:gestionar_usuarios', 'throttle:5,1'])->name('usuarios.contrasena.restablecer');
     Route::post('/usuarios/{usuario}/activar', [UsuarioController::class, 'activar'])->middleware('accion:gestionar_usuarios')->name('usuarios.activar');
     Route::get('/usuarios', [UsuarioController::class, 'index'])->middleware('accion:gestionar_usuarios')->name('usuarios.index');
     Route::post('/usuarios', [UsuarioController::class, 'store'])->middleware('accion:gestionar_usuarios')->name('usuarios.store');

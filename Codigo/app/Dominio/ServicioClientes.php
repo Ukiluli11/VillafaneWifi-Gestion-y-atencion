@@ -68,8 +68,21 @@ class ServicioClientes
         });
     }
 
-    public function buscar(string $termino = '', ?EstadoCliente $estado = null, ?TipoCliente $tipo = null): LengthAwarePaginator
+    /** @return list<string> */
+    public function localidades(): array
     {
+        return Cliente::query()->selectRaw('TRIM(localidad_contacto) AS localidad')
+            ->whereRaw("TRIM(localidad_contacto) <> ''")
+            ->distinct()->orderBy('localidad')->pluck('localidad')->all();
+    }
+
+    public function buscar(
+        string $termino = '',
+        ?EstadoCliente $estado = null,
+        ?TipoCliente $tipo = null,
+        string $localidad = '',
+        ?bool $conWhatsapp = null,
+    ): LengthAwarePaginator {
         $termino = trim($termino);
         $numero = preg_replace('/\D+/', '', $termino) ?? '';
 
@@ -77,6 +90,9 @@ class ServicioClientes
             ->with(['servicios.plan'])
             ->when($estado, fn (Builder $consulta) => $consulta->where('estado', $estado->value))
             ->when($tipo, fn (Builder $consulta) => $consulta->where('tipo_cliente', $tipo->value))
+            ->when($localidad !== '', fn (Builder $consulta) => $consulta->whereRaw('TRIM(localidad_contacto) = ?', [$localidad]))
+            ->when($conWhatsapp === true, fn (Builder $consulta) => $consulta->whereRaw("TRIM(telefono_whatsapp) <> ''"))
+            ->when($conWhatsapp === false, fn (Builder $consulta) => $consulta->whereRaw("COALESCE(TRIM(telefono_whatsapp), '') = ''"))
             ->when($termino !== '', function (Builder $consulta) use ($termino, $numero): void {
                 $consulta->where(function (Builder $filtro) use ($termino, $numero): void {
                     $filtro->where('nombre_razon_social', 'like', "%{$termino}%")

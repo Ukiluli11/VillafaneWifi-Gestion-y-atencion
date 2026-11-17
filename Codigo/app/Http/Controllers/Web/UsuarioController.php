@@ -66,6 +66,18 @@ class UsuarioController extends Controller
         return view('usuarios.contrasena');
     }
 
+    public function restablecerContrasena(Request $request, Usuario $usuario): RedirectResponse
+    {
+        abort_if($usuario->is($request->user()), 403);
+
+        $datos = $request->validate([
+            'contrasena_nueva' => ['required', 'string', 'min:8', 'regex:/\A[^\x00]{1,72}\z/', 'confirmed'],
+        ]);
+        $usuario->cambiarContrasena($datos['contrasena_nueva']);
+
+        return redirect()->route('usuarios.edit', $usuario)->with('exito', 'Contraseña restablecida.');
+    }
+
     public function actualizarContrasena(Request $request, ServicioUsuarios $servicio): RedirectResponse
     {
         $datos = $request->validate([

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Dominio\FormatoDatosCliente;
 use App\Enums\TipoCliente;
 use App\Enums\TipoDocumento;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -33,15 +34,15 @@ class GuardarClienteRequest extends FormRequest
         return [
             'tipo_documento' => ['required', Rule::enum(TipoDocumento::class)],
             'numero_documento' => [
-                'required', 'string', 'max:20', 'regex:/^\d+$/',
+                'required', 'string', 'max:20', 'regex:/\A[0-9]+\z/',
                 Rule::unique('cliente')->where('tipo_documento', $this->input('tipo_documento')),
             ],
             'nombre_razon_social' => ['required', 'string', 'max:150'],
             'tipo_cliente' => ['required', Rule::enum(TipoCliente::class)],
             'calle_contacto' => ['nullable', 'string', 'max:100'],
-            'numero_contacto' => ['nullable', 'string', 'max:10'],
+            'numero_contacto' => ['nullable', 'string', 'max:10', 'regex:'.FormatoDatosCliente::SIN_NUMERO_NEGATIVO],
             'localidad_contacto' => ['nullable', 'string', 'max:100'],
-            'telefono_whatsapp' => ['nullable', 'string', 'max:20', 'regex:/^[+0-9()\-\s]+$/'],
+            'telefono_whatsapp' => ['nullable', 'string', 'regex:/\A[0-9]{8,20}\z/'],
             'servicio' => [
                 $this->routeIs('clientes.alta-completa') ? 'required' : 'sometimes',
                 'required', 'array:'.implode(',', array_keys(GuardarServicioRequest::reglasInstalacion())),
@@ -51,11 +52,11 @@ class GuardarClienteRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->merge([
-            'numero_documento' => preg_replace('/\D+/', '', (string) $this->input('numero_documento')),
-            'telefono_whatsapp' => $this->input('telefono_whatsapp')
-                ? preg_replace('/\D+/', '', (string) $this->input('telefono_whatsapp'))
-                : null,
-        ]);
+        foreach (['numero_documento' => 'documento', 'telefono_whatsapp' => 'telefono'] as $campo => $formato) {
+            $valor = FormatoDatosCliente::{$formato}($this->input($campo));
+            if ($valor !== null) {
+                $this->merge([$campo => $valor]);
+            }
+        }
     }
 }

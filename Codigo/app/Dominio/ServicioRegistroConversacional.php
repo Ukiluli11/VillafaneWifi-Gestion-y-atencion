@@ -3,12 +3,15 @@
 namespace App\Dominio;
 
 use App\Enums\EstadoPlan;
+use App\Enums\TipoMensaje;
 use App\Models\Cliente;
 use App\Models\Conversacion;
 use App\Models\Mensaje;
 use App\Models\Plan;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class ServicioRegistroConversacional
 {
@@ -22,14 +25,24 @@ class ServicioRegistroConversacional
         $contenido = trim((string) $mensaje->contenido);
         $paso = (string) ($conversacion->paso_actual ?? '');
 
-        if ($cliente === null && mb_strtoupper($contenido) === 'REGISTRARME') {
+        if ($mensaje->tipo === TipoMensaje::Texto && $cliente === null && ! str_starts_with($paso, 'registro_')
+            && mb_strtoupper($contenido) === 'REGISTRARME') {
             $this->actualizar($conversacion, 'registro_tipo_documento', []);
 
-            return 'Iniciemos tu registro. Indicá el tipo de documento: DNI, CUIT o CUIL.';
+            return MenuCoquito::saludo($mensaje->fecha_hora)
+                ."\n\n".'Para iniciar tu registro, indicá el tipo de documento: DNI, CUIT o CUIL.';
         }
 
         if (! str_starts_with($paso, 'registro_')) {
             return null;
+        }
+
+        if ($mensaje->tipo !== TipoMensaje::Texto) {
+            return 'Para continuar con el alta, respondé por escrito a la última pregunta.';
+        }
+
+        if ($paso === 'registro_plan' && in_array(mb_strtoupper($contenido), ['MENU', 'MENÚ'], true)) {
+            return $this->listaPlanes();
         }
 
         if (in_array(mb_strtoupper($contenido), ['OPERADOR', 'ASESOR', 'HUMANO'], true)) {
@@ -47,7 +60,7 @@ class ServicioRegistroConversacional
             'registro_direccion_contacto' => $this->guardarDireccionContacto($conversacion, $contenido),
             'registro_plan' => $this->guardarPlan($conversacion, $contenido),
             'registro_direccion_instalacion' => $this->guardarDireccionInstalacion($conversacion, $contenido),
-            'registro_dia_vencimiento' => $this->crearServicio($conversacion, $cliente, $contenido),
+            'registro_dia_vencimiento' => $this->crearServicio($conversacion, $cliente, $contenido, $mensaje),
             default => null,
         };
     }
@@ -66,9 +79,9 @@ class ServicioRegistroConversacional
 
     private function guardarDocumento(Conversacion $conversacion, string $contenido): string
     {
-        $numero = preg_replace('/\D+/', '', $contenido) ?? '';
+        $numero = FormatoDatosCliente::documento($contenido) ?? '';
         if (strlen($numero) < 7 || strlen($numero) > 11) {
-            return 'El número debe tener entre 7 y 11 dígitos. Volvé a ingresarlo.';
+            return 'Ingresá un documento de entre 7 y 11 dígitos. Podés usar puntos o guiones como separadores.';
         }
 
         $contexto = $this->datos($conversacion);
@@ -135,7 +148,7 @@ class ServicioRegistroConversacional
             return $this->derivarVerificacion($conversacion);
         }
 
-        return 'Registro creado correctamente. '.$this->listaPlanes();
+        return "Registro creado correctamente. Elegí un plan para completar el alta.\n\n".$this->listaPlanes();
     }
 
     private function derivarVerificacion(Conversacion $conversacion): string
@@ -148,7 +161,8 @@ class ServicioRegistroConversacional
 
     private function guardarPlan(Conversacion $conversacion, string $contenido): string
     {
-        $idPlan = filter_var($contenido, FILTER_VALIDATE_INT);
+        $numeroPlan = str_starts_with($contenido, '#') ? substr($contenido, 1) : $contenido;
+        $idPlan = filter_var($numeroPlan, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
         $plan = $idPlan === false ? null : Plan::query()->find($idPlan);
         if ($plan === null || $plan->estado !== EstadoPlan::Activo) {
             return 'El plan indicado no está disponible. '.$this->listaPlanes();
@@ -175,7 +189,7 @@ class ServicioRegistroConversacional
         return 'Por último, elegí el día de vencimiento mensual entre 1 y 28.';
     }
 
-    private function crearServicio(Conversacion $conversacion, ?Cliente $cliente, string $contenido): string
+    private function crearServicio(Conversacion $conversacion, ?Cliente $cliente, string $contenido, Mensaje $mensaje): string
     {
         $dia = filter_var($contenido, FILTER_VALIDATE_INT);
         if ($dia === false || $dia < 1 || $dia > 28) {
@@ -190,18 +204,29 @@ class ServicioRegistroConversacional
         }
 
         $datos = $this->datos($conversacion);
-        $servicio = $this->servicioContrataciones->crear($cliente, [
-            'id_plan' => $datos['id_plan'],
-            'calle_instalacion' => $datos['calle_instalacion'],
-            'numero_instalacion' => $datos['numero_instalacion'],
-            'localidad_instalacion' => $datos['localidad_instalacion'],
-            'dia_vencimiento' => $dia,
-            'fecha_alta' => today()->toDateString(),
-        ]);
+        try {
+            $servicio = $this->servicioContrataciones->crear($cliente, [
+                'id_plan' => $datos['id_plan'],
+                'calle_instalacion' => $datos['calle_instalacion'],
+                'numero_instalacion' => $datos['numero_instalacion'],
+                'localidad_instalacion' => $datos['localidad_instalacion'],
+                'dia_vencimiento' => $dia,
+                'fecha_alta' => today('America/Argentina/Buenos_Aires')->toDateString(),
+            ]);
+        } catch (ModelNotFoundException|ValidationException $error) {
+            if ($error instanceof ValidationException && ! array_key_exists('id_plan', $error->errors())) {
+                throw $error;
+            }
+            $conversacion->update(['paso_actual' => 'registro_plan', 'contexto' => ['registro' => []]]);
+
+            return "El plan elegido ya no está disponible.\n\n".$this->listaPlanes();
+        }
         $conversacion->update(['paso_actual' => null, 'contexto' => null]);
         $conversacion->cerrar();
 
-        return "La contratación quedó registrada como Servicio #{$servicio->id_servicio}. Un operador coordinará la instalación.";
+        return "La contratación quedó registrada como Servicio #{$servicio->id_servicio}. Un operador coordinará la instalación."
+            ."\n\n".MenuCoquito::saludo($mensaje->fecha_hora, $cliente->nombre_razon_social)
+            ."\n\n".MenuCoquito::opcionesCliente();
     }
 
     /** @param array<string, mixed> $nuevos */
@@ -226,7 +251,8 @@ class ServicioRegistroConversacional
         if (count($partes) !== 3 || $partes[0] === '' || $partes[2] === '') {
             return null;
         }
-        if (mb_strlen($partes[0]) > 100 || mb_strlen($partes[1]) > 10 || mb_strlen($partes[2]) > 100) {
+        if (mb_strlen($partes[0]) > 100 || mb_strlen($partes[1]) > 10 || mb_strlen($partes[2]) > 100
+            || preg_match(FormatoDatosCliente::SIN_NUMERO_NEGATIVO, $partes[1]) !== 1) {
             return null;
         }
 
@@ -250,8 +276,8 @@ class ServicioRegistroConversacional
             $plan->nombre,
             $plan->velocidad,
             number_format((float) $plan->precio_vigente, 2, ',', '.'),
-        ))->implode(' · ');
+        ))->implode("\n");
 
-        return "Planes disponibles: {$detalle}. Respondé con el número del plan elegido.";
+        return "Planes disponibles:\n{$detalle}\n\nRespondé con el número del plan elegido, con o sin #.";
     }
 }

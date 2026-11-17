@@ -35,13 +35,13 @@
     <div class="grilla-dos-campos separacion-superior">
         <div class="campo">
             <label for="monto">Monto pagado ($)</label>
-            <input type="number" step="0.01" id="monto" name="monto" value="{{ old('monto') }}" placeholder="Ej: 15000.00">
+            <input type="number" min="0.01" max="99999999.99" step="0.01" id="monto" name="monto" value="{{ old('monto') }}" placeholder="Ej: 15000.00">
             <small class="texto-suave">Opcional: Si se deja en blanco, el OCR intentará detectarlo.</small>
         </div>
 
         <div class="campo">
             <label for="fecha">Fecha del pago</label>
-            <input type="date" id="fecha" name="fecha" value="{{ old('fecha') }}">
+            <input type="date" max="{{ now('America/Argentina/Buenos_Aires')->toDateString() }}" id="fecha" name="fecha" value="{{ old('fecha') }}">
             <small class="texto-suave">Fecha en que se realizó la transferencia.</small>
         </div>
     </div>
