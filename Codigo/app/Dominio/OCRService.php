@@ -25,7 +25,13 @@ class OCRService
         }
     }
 
-    /** @return array{numero_operacion: ?string, monto: ?string, fecha: ?string} */
+    /**
+     * Caso de Uso: Procesar archivo OCR (Módulo 3)
+     * Clase UML: OCRService | Método UML: + procesarArchivo(archivo: String) : array
+     * Requerimiento: RF-20
+     *
+     * @return array{numero_operacion: ?string, monto: ?string, fecha: ?string}
+     */
     public function procesarArchivo(string $rutaOContenido, ?string $textoDirecto = null): array
     {
         if ($textoDirecto === null) {
@@ -96,6 +102,11 @@ class OCRService
         }
     }
 
+    /**
+     * Caso de Uso: Extraer datos de transacción (OCR) (Módulo 3)
+     * Clase UML: OCRService | Método UML: + extraerNumeroOperacion(imagen: String) : String
+     * Requerimiento: RF-20
+     */
     public function extraerNumeroOperacion(?string $texto): ?string
     {
         if (preg_match('/(?:operaci[oó]n|transacci[oó]n|transferencia|comprobante|\bop)\s*(?:n[uú]mero|nro\.?|n[°ºo.]|#|:)?\s*([0-9]{6,30})\b/iu', $texto ?? '', $coincidencias)) {
@@ -126,6 +137,11 @@ class OCRService
         return null;
     }
 
+    /**
+     * Caso de Uso: Extraer datos de transacción (OCR) (Módulo 3)
+     * Clase UML: OCRService | Método UML: + extraerMonto(imagen: String) : BigDecimal
+     * Requerimiento: RF-20
+     */
     public function extraerMonto(?string $texto): ?string
     {
         if (! preg_match('/(?:\b(?:total|monto|importe|pagado)(?:\s+(?:enviado|transferido|total))?\s*:?\s*(?:ARS\s*)?\$?\s*|(?:ARS\s*)?\$\s*)(\d[\d.,]*)(?!\d)/iu', $texto ?? '', $coincidencias)) {
@@ -154,6 +170,11 @@ class OCRService
         return number_format((float) $valor, 2, '.', '');
     }
 
+    /**
+     * Caso de Uso: Extraer datos de transacción (OCR) (Módulo 3)
+     * Clase UML: OCRService | Método UML: + extraerFecha(imagen: String) : Date
+     * Requerimiento: RF-20
+     */
     public function extraerFecha(?string $texto): ?string
     {
         if (preg_match('/\b(\d{4})[-\/](\d{2})[-\/](\d{2})\b/', $texto ?? '', $partes)) {
@@ -171,7 +192,13 @@ class OCRService
         return checkdate($mes, $dia, $anio) ? sprintf('%04d-%02d-%02d', $anio, $mes, $dia) : null;
     }
 
-    /** La presencia de campos mide completitud, no certeza de una transferencia. */
+    /**
+     * Caso de Uso: Procesar archivo OCR (Módulo 3)
+     * Clase UML: OCRService | Método UML: + calcularConfianza(datosExtraidos: array) : double
+     * Requerimiento: RF-20
+     *
+     * La presencia de campos mide completitud, no certeza de una transferencia.
+     */
     public function calcularConfianza(array $datosExtraidos): float
     {
         return round((filled($datosExtraidos['numero_operacion'] ?? null) ? 0.4 : 0)

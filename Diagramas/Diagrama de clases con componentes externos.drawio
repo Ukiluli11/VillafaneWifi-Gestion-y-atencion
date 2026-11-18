@@ -1,0 +1,411 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="Electron" agent="Codex" version="29.6.6">
+  <diagram id="diag-clases-ext" name="Diagrama de Clases - Componentes Externos">
+    <mxGraphModel dx="4800" dy="3200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="5200" pageHeight="3400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TITULO -->
+        <mxCell id="title" value="Diagrama de Clases — Componentes Externos · Villafañe Wifi" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=22;fontColor=#263238;" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="4400" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- LEYENDA -->
+        <mxCell id="leg-fw"  value="Laravel Framework" style="rounded=1;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="80"  y="70" width="160" height="26" as="geometry"/></mxCell>
+        <mxCell id="leg-lib" value="Librerías PHP"      style="rounded=1;fillColor=#2E7D32;strokeColor=#2E7D32;fontColor=#FFFFFF;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="254" y="70" width="140" height="26" as="geometry"/></mxCell>
+        <mxCell id="leg-api" value="APIs / Procesos Ext." style="rounded=1;fillColor=#E65100;strokeColor=#E65100;fontColor=#FFFFFF;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="408" y="70" width="160" height="26" as="geometry"/></mxCell>
+        <mxCell id="leg-fe"  value="Frontend"           style="rounded=1;fillColor=#00838F;strokeColor=#00838F;fontColor=#FFFFFF;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="582" y="70" width="120" height="26" as="geometry"/></mxCell>
+        <mxCell id="leg-sys" value="Nuestro Sistema"    style="rounded=1;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="716" y="70" width="140" height="26" as="geometry"/></mxCell>
+
+        <!-- ======================================================== -->
+        <!-- FILA 1: LARAVEL FRAMEWORK                                 -->
+        <!-- ======================================================== -->
+
+        <!-- Eloquent Model -->
+        <mxCell id="ext-model" value="&lt;&lt;framework&gt;&gt;&lt;br&gt;Illuminate\Database\Eloquent\Model" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="120" width="440" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-model-a" value="# table : String&lt;br&gt;# primaryKey : String&lt;br&gt;# fillable : array&lt;br&gt;# attributes : array&lt;br&gt;# hidden : array" style="text;strokeColor=none;fillColor=#BBDEFB;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-model">
+          <mxGeometry x="0" y="46" width="440" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-model-sep" value="" style="line;strokeColor=#1565C0;fillColor=none;" vertex="1" parent="ext-model">
+          <mxGeometry x="0" y="160" width="440" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-model-m" value="+ save() : bool&lt;br&gt;+ update(attrs: array) : bool&lt;br&gt;+ delete() : bool&lt;br&gt;+ create(attrs: array) : static&lt;br&gt;+ find(id) : static|null&lt;br&gt;+ where(col, val) : Builder&lt;br&gt;+ hasMany(related) : HasMany&lt;br&gt;+ belongsTo(related) : BelongsTo&lt;br&gt;+ hasOne(related) : HasOne" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-model">
+          <mxGeometry x="0" y="168" width="440" height="142" as="geometry" />
+        </mxCell>
+
+        <!-- Authenticatable -->
+        <mxCell id="ext-auth" value="&lt;&lt;framework&gt;&gt;&lt;br&gt;Illuminate\Foundation\Auth\User (Authenticatable)" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="120" width="420" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-auth-a" value="# rememberTokenName : String&lt;br&gt;# hidden : array" style="text;strokeColor=none;fillColor=#BBDEFB;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-auth">
+          <mxGeometry x="0" y="46" width="420" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-auth-sep" value="" style="line;strokeColor=#1565C0;fillColor=none;" vertex="1" parent="ext-auth">
+          <mxGeometry x="0" y="100" width="420" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-auth-m" value="+ getAuthIdentifier() : mixed&lt;br&gt;+ getAuthPassword() : String&lt;br&gt;+ getAuthPasswordName() : String&lt;br&gt;+ getRememberToken() : String" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-auth">
+          <mxGeometry x="0" y="108" width="420" height="122" as="geometry" />
+        </mxCell>
+
+        <!-- Controller -->
+        <mxCell id="ext-ctrl" value="&lt;&lt;framework&gt;&gt;&lt;br&gt;Illuminate\Routing\Controller" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="980" y="120" width="380" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-ctrl-a" value="(sin atributos públicos)" style="text;strokeColor=none;fillColor=#BBDEFB;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-ctrl">
+          <mxGeometry x="0" y="46" width="380" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-ctrl-sep" value="" style="line;strokeColor=#1565C0;fillColor=none;" vertex="1" parent="ext-ctrl">
+          <mxGeometry x="0" y="80" width="380" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-ctrl-m" value="+ middleware(mw: String) : void&lt;br&gt;+ callAction(method, params) : Response" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-ctrl">
+          <mxGeometry x="0" y="88" width="380" height="92" as="geometry" />
+        </mxCell>
+
+        <!-- Http Facade -->
+        <mxCell id="ext-http" value="&lt;&lt;framework&gt;&gt;&lt;br&gt;Illuminate\Support\Facades\Http" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="120" width="420" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-http-a" value="(Facade estática — sin estado propio)" style="text;strokeColor=none;fillColor=#BBDEFB;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-http">
+          <mxGeometry x="0" y="46" width="420" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-http-sep" value="" style="line;strokeColor=#1565C0;fillColor=none;" vertex="1" parent="ext-http">
+          <mxGeometry x="0" y="80" width="420" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-http-m" value="+ get(url: String) : Response&lt;br&gt;+ post(url: String, data: array) : Response&lt;br&gt;+ withToken(token: String) : PendingRequest&lt;br&gt;+ withHeaders(headers: array) : PendingRequest&lt;br&gt;+ acceptJson() : PendingRequest&lt;br&gt;+ connectTimeout(s: int) : PendingRequest&lt;br&gt;+ timeout(s: int) : PendingRequest&lt;br&gt;+ throw() : Response" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-http">
+          <mxGeometry x="0" y="88" width="420" height="162" as="geometry" />
+        </mxCell>
+
+        <!-- Hash Facade -->
+        <mxCell id="ext-hash" value="&lt;&lt;framework&gt;&gt;&lt;br&gt;Illuminate\Support\Facades\Hash" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1820" y="120" width="380" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-hash-a" value="(Facade estática — sin estado propio)" style="text;strokeColor=none;fillColor=#BBDEFB;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-hash">
+          <mxGeometry x="0" y="46" width="380" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-hash-sep" value="" style="line;strokeColor=#1565C0;fillColor=none;" vertex="1" parent="ext-hash">
+          <mxGeometry x="0" y="80" width="380" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-hash-m" value="+ make(value: String) : String&lt;br&gt;+ check(value: String, hash: String) : bool" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-hash">
+          <mxGeometry x="0" y="88" width="380" height="92" as="geometry" />
+        </mxCell>
+
+        <!-- Process Facade -->
+        <mxCell id="ext-proc" value="&lt;&lt;framework&gt;&gt;&lt;br&gt;Illuminate\Support\Facades\Process" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2220" y="120" width="400" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-proc-a" value="(Facade estática — sin estado propio)" style="text;strokeColor=none;fillColor=#BBDEFB;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-proc">
+          <mxGeometry x="0" y="46" width="400" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-proc-sep" value="" style="line;strokeColor=#1565C0;fillColor=none;" vertex="1" parent="ext-proc">
+          <mxGeometry x="0" y="80" width="400" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-proc-m" value="+ run(command: array) : ProcessResult&lt;br&gt;+ timeout(seconds: int) : PendingProcess&lt;br&gt;+ env(vars: array) : PendingProcess&lt;br&gt;// ProcessResult:&lt;br&gt;+ successful() : bool&lt;br&gt;+ output() : String" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-proc">
+          <mxGeometry x="0" y="88" width="400" height="122" as="geometry" />
+        </mxCell>
+
+        <!-- ShouldQueue -->
+        <mxCell id="ext-queue" value="&lt;&lt;framework&gt;&gt;&lt;br&gt;Illuminate\Contracts\Queue\ShouldQueue" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2640" y="120" width="420" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-queue-a" value="# connection : String&lt;br&gt;# queue : String&lt;br&gt;# tries : int&lt;br&gt;# timeout : int" style="text;strokeColor=none;fillColor=#BBDEFB;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-queue">
+          <mxGeometry x="0" y="46" width="420" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-queue-sep" value="" style="line;strokeColor=#1565C0;fillColor=none;" vertex="1" parent="ext-queue">
+          <mxGeometry x="0" y="130" width="420" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-queue-m" value="+ handle() : void&lt;br&gt;+ failed(e: Throwable) : void" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-queue">
+          <mxGeometry x="0" y="138" width="420" height="52" as="geometry" />
+        </mxCell>
+
+        <!-- Dompdf -->
+        <mxCell id="ext-dompdf" value="&lt;&lt;library&gt;&gt;&lt;br&gt;Dompdf\Dompdf" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#2E7D32;strokeColor=#2E7D32;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="3100" y="120" width="400" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-dompdf-a" value="# options : array&lt;br&gt;  defaultFont : String&lt;br&gt;  isRemoteEnabled : bool" style="text;strokeColor=none;fillColor=#C8E6C9;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-dompdf">
+          <mxGeometry x="0" y="46" width="400" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-dompdf-sep" value="" style="line;strokeColor=#2E7D32;fillColor=none;" vertex="1" parent="ext-dompdf">
+          <mxGeometry x="0" y="120" width="400" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-dompdf-m" value="+ loadHtml(html: String) : void&lt;br&gt;+ setPaper(size: String, orient: String) : void&lt;br&gt;+ render() : void&lt;br&gt;+ output() : String" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-dompdf">
+          <mxGeometry x="0" y="128" width="400" height="102" as="geometry" />
+        </mxCell>
+
+        <!-- OpenSpout Writer -->
+        <mxCell id="ext-spout" value="&lt;&lt;library&gt;&gt;&lt;br&gt;OpenSpout\Writer\XLSX\Writer" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#2E7D32;strokeColor=#2E7D32;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="3520" y="120" width="420" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-spout-a" value="(sin atributos públicos directos)" style="text;strokeColor=none;fillColor=#C8E6C9;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-spout">
+          <mxGeometry x="0" y="46" width="420" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-spout-sep" value="" style="line;strokeColor=#2E7D32;fillColor=none;" vertex="1" parent="ext-spout">
+          <mxGeometry x="0" y="80" width="420" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-spout-m" value="+ openToFile(path: String) : void&lt;br&gt;+ getCurrentSheet() : Sheet&lt;br&gt;  → setName(name: String) : void&lt;br&gt;  → setColumnWidthForRange(w, s, e) : void&lt;br&gt;+ addRow(row: Row) : void&lt;br&gt;+ close() : void&lt;br&gt;// Row::fromValuesWithStyle(vals, style)&lt;br&gt;// Cell::fromValue(value)" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-spout">
+          <mxGeometry x="0" y="88" width="420" height="162" as="geometry" />
+        </mxCell>
+
+        <!-- ======================================================== -->
+        <!-- FILA 2: APIs EXTERNAS y OCR                               -->
+        <!-- ======================================================== -->
+
+        <!-- WhatsApp Cloud API -->
+        <mxCell id="ext-wsp" value="&lt;&lt;external API&gt;&gt;&lt;br&gt;WhatsApp Cloud API (Meta)" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#E65100;strokeColor=#E65100;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="470" width="440" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-wsp-a" value="baseUrl : https://graph.facebook.com/v25.0/&lt;br&gt;Auth : Bearer Token (WHATSAPP_TOKEN)&lt;br&gt;phoneNumberId : String" style="text;strokeColor=none;fillColor=#FFE0B2;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-wsp">
+          <mxGeometry x="0" y="46" width="440" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-wsp-sep" value="" style="line;strokeColor=#E65100;fillColor=none;" vertex="1" parent="ext-wsp">
+          <mxGeometry x="0" y="120" width="440" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-wsp-m" value="POST /{phoneId}/messages → enviarMensaje()&lt;br&gt;POST /{phoneId}/messages → enviarPlantilla()&lt;br&gt;GET  /{mediaId} → descargarMedia()&lt;br&gt;POST /webhooks → verificarSuscripcion()&lt;br&gt;Webhook entrante → extraerMensajes()&lt;br&gt;Webhook entrante → extraerEstados()" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-wsp">
+          <mxGeometry x="0" y="128" width="440" height="172" as="geometry" />
+        </mxCell>
+
+        <!-- Google Gemini API -->
+        <mxCell id="ext-gemini" value="&lt;&lt;external API&gt;&gt;&lt;br&gt;Google Gemini API" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#E65100;strokeColor=#E65100;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="470" width="440" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-gemini-a" value="baseUrl : https://generativelanguage.googleapis.com/v1beta/&lt;br&gt;Auth : x-goog-api-key (GEMINI_API_KEY)&lt;br&gt;model : gemini-2.5-flash-lite (configurable)" style="text;strokeColor=none;fillColor=#FFE0B2;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-gemini">
+          <mxGeometry x="0" y="46" width="440" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-gemini-sep" value="" style="line;strokeColor=#E65100;fillColor=none;" vertex="1" parent="ext-gemini">
+          <mxGeometry x="0" y="120" width="440" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-gemini-m" value="POST /models/{model}:generateContent&lt;br&gt;  body.systemInstruction : String&lt;br&gt;  body.contents[].parts[].text : String&lt;br&gt;  body.generationConfig.responseMimeType&lt;br&gt;  body.generationConfig.responseJsonSchema&lt;br&gt;  body.generationConfig.maxOutputTokens&lt;br&gt;Respuesta: candidates[0].content.parts[].text" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-gemini">
+          <mxGeometry x="0" y="128" width="440" height="172" as="geometry" />
+        </mxCell>
+
+        <!-- OpenAI API -->
+        <mxCell id="ext-openai" value="&lt;&lt;external API&gt;&gt;&lt;br&gt;OpenAI Responses API" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#E65100;strokeColor=#E65100;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="470" width="440" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-openai-a" value="baseUrl : https://api.openai.com/v1/&lt;br&gt;Auth : Bearer Token (OPENAI_API_KEY)&lt;br&gt;model : configurable (OPENAI_MODEL)" style="text;strokeColor=none;fillColor=#FFE0B2;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-openai">
+          <mxGeometry x="0" y="46" width="440" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-openai-sep" value="" style="line;strokeColor=#E65100;fillColor=none;" vertex="1" parent="ext-openai">
+          <mxGeometry x="0" y="120" width="440" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-openai-m" value="POST /responses&lt;br&gt;  body.model : String&lt;br&gt;  body.instructions : String&lt;br&gt;  body.input : String&lt;br&gt;  body.text.format.type : json_schema&lt;br&gt;  body.text.format.schema : Object&lt;br&gt;Respuesta: output[].content[].text" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-openai">
+          <mxGeometry x="0" y="128" width="440" height="172" as="geometry" />
+        </mxCell>
+
+        <!-- Tesseract OCR -->
+        <mxCell id="ext-tesseract" value="&lt;&lt;external process&gt;&gt;&lt;br&gt;Tesseract OCR v5" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#E65100;strokeColor=#E65100;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="470" width="440" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-tesseract-a" value="binario : tesseract (TESSERACT_BIN)&lt;br&gt;timeout : 25 seg. (configurable)&lt;br&gt;formatos : JPEG, PNG" style="text;strokeColor=none;fillColor=#FFE0B2;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-tesseract">
+          <mxGeometry x="0" y="46" width="440" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-tesseract-sep" value="" style="line;strokeColor=#E65100;fillColor=none;" vertex="1" parent="ext-tesseract">
+          <mxGeometry x="0" y="120" width="440" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-tesseract-m" value="CLI: tesseract {imagen} stdout -l spa+eng --oem 1 --psm 6&lt;br&gt;&lt;br&gt;Parámetros:&lt;br&gt;  -l spa+eng : idiomas español e inglés&lt;br&gt;  --oem 1    : motor LSTM (redes neuronales)&lt;br&gt;  --psm 6    : bloque de texto uniforme&lt;br&gt;&lt;br&gt;Salida: texto plano (String) → OCRService lo parsea" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-tesseract">
+          <mxGeometry x="0" y="128" width="440" height="132" as="geometry" />
+        </mxCell>
+
+        <!-- pdftoppm -->
+        <mxCell id="ext-pdftoppm" value="&lt;&lt;external process&gt;&gt;&lt;br&gt;pdftoppm (Poppler)" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#E65100;strokeColor=#E65100;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1920" y="470" width="420" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-pdftoppm-a" value="binario : pdftoppm (PDFTOPPM_BIN)&lt;br&gt;timeout : 15 seg.&lt;br&gt;formato salida : PNG" style="text;strokeColor=none;fillColor=#FFE0B2;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-pdftoppm">
+          <mxGeometry x="0" y="46" width="420" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-pdftoppm-sep" value="" style="line;strokeColor=#E65100;fillColor=none;" vertex="1" parent="ext-pdftoppm">
+          <mxGeometry x="0" y="120" width="420" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-pdftoppm-m" value="CLI: pdftoppm -f 1 -l 1 -singlefile -scale-to 2000 -png {pdf} {dir}/pagina&lt;br&gt;&lt;br&gt;Convierte la primera página del PDF a PNG&lt;br&gt;de alta resolución para que Tesseract pueda&lt;br&gt;procesar documentos de transferencia en PDF." style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-pdftoppm">
+          <mxGeometry x="0" y="128" width="420" height="122" as="geometry" />
+        </mxCell>
+
+        <!-- ======================================================== -->
+        <!-- FILA 2 DERECHA: FRONTEND                                  -->
+        <!-- ======================================================== -->
+
+        <!-- Chart.js -->
+        <mxCell id="ext-chartjs" value="&lt;&lt;frontend library&gt;&gt;&lt;br&gt;Chart.js v4" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#00838F;strokeColor=#00838F;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2360" y="470" width="440" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-chartjs-a" value="type : line | pie | doughnut | bar&lt;br&gt;data.labels : array&lt;br&gt;data.datasets[].data : array&lt;br&gt;data.datasets[].backgroundColor : array&lt;br&gt;options.responsive : bool" style="text;strokeColor=none;fillColor=#B2EBF2;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-chartjs">
+          <mxGeometry x="0" y="46" width="440" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-chartjs-sep" value="" style="line;strokeColor=#00838F;fillColor=none;" vertex="1" parent="ext-chartjs">
+          <mxGeometry x="0" y="160" width="440" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-chartjs-m" value="new Chart(canvas: HTMLCanvasElement, config: Object)&lt;br&gt;+ update() : void&lt;br&gt;+ destroy() : void&lt;br&gt;+ resize() : void" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-chartjs">
+          <mxGeometry x="0" y="168" width="440" height="112" as="geometry" />
+        </mxCell>
+
+        <!-- Tailwind CSS -->
+        <mxCell id="ext-tailwind" value="&lt;&lt;frontend framework&gt;&gt;&lt;br&gt;Tailwind CSS v4" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#00838F;strokeColor=#00838F;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2820" y="470" width="420" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-tailwind-a" value="Tipo: Framework CSS utility-first&lt;br&gt;Integración: @tailwindcss/vite plugin&lt;br&gt;Entrada: app.css (@import tailwindcss)&lt;br&gt;Salida: CSS compilado en public/build/" style="text;strokeColor=none;fillColor=#B2EBF2;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-tailwind">
+          <mxGeometry x="0" y="46" width="420" height="94" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-tailwind-sep" value="" style="line;strokeColor=#00838F;fillColor=none;" vertex="1" parent="ext-tailwind">
+          <mxGeometry x="0" y="140" width="420" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-tailwind-m" value="Clases utilitarias aplicadas en Blade:&lt;br&gt;flex, grid, p-*, m-*, text-*, bg-*, rounded-*&lt;br&gt;hover:*, focus:*, dark:*, responsive (sm:, md:, lg:)" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-tailwind">
+          <mxGeometry x="0" y="148" width="420" height="82" as="geometry" />
+        </mxCell>
+
+        <!-- Vite -->
+        <mxCell id="ext-vite" value="&lt;&lt;build tool&gt;&gt;&lt;br&gt;Vite v8" style="swimlane;fontStyle=1;fontSize=11;align=center;verticalAlign=top;startSize=46;fillColor=#00838F;strokeColor=#00838F;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="3260" y="470" width="400" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-vite-a" value="Tipo: Bundler / Dev Server moderno&lt;br&gt;Integración: laravel-vite-plugin&lt;br&gt;Entradas: resources/js/app.js, resources/css/app.css&lt;br&gt;Salida: public/build/assets/*" style="text;strokeColor=none;fillColor=#B2EBF2;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-vite">
+          <mxGeometry x="0" y="46" width="400" height="94" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-vite-sep" value="" style="line;strokeColor=#00838F;fillColor=none;" vertex="1" parent="ext-vite">
+          <mxGeometry x="0" y="140" width="400" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-vite-m" value="vite build  → compila y minifica assets para prod&lt;br&gt;vite dev    → hot-reload en desarrollo&lt;br&gt;@vite() helper Blade → inyecta scripts compilados" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=5;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="ext-vite">
+          <mxGeometry x="0" y="148" width="400" height="82" as="geometry" />
+        </mxCell>
+
+        <!-- ======================================================== -->
+        <!-- FILA 3: CLASES DEL SISTEMA (simplificadas)               -->
+        <!-- ======================================================== -->
+
+        <!-- Modelos Eloquent (paquete) -->
+        <mxCell id="sys-models-pkg" value="«Modelos Eloquent del Sistema»" style="swimlane;fontStyle=3;fontSize=12;align=center;verticalAlign=top;startSize=36;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="860" width="600" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="sys-models-body" value="Cliente · Servicio · Plan · Cuota · Pago&lt;br&gt;Ticket · Conversacion · Mensaje · Comprobante&lt;br&gt;NotaInterna · CuentaReceptora · Empleado · Administrador&lt;br&gt;&lt;br&gt;Todos extienden Illuminate\Database\Eloquent\Model" style="text;strokeColor=none;fillColor=#ECEFF1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="sys-models-pkg">
+          <mxGeometry x="0" y="36" width="600" height="164" as="geometry" />
+        </mxCell>
+
+        <!-- Usuario -->
+        <mxCell id="sys-usuario" value="Usuario" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="860" width="360" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="sys-usuario-b" value="extends Authenticatable&lt;br&gt;usa Hash::make() / Hash::check()&lt;br&gt;(ver Diagrama de Clases del Sistema para detalle)" style="text;strokeColor=none;fillColor=#ECEFF1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="sys-usuario">
+          <mxGeometry x="0" y="30" width="360" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- Controladores (paquete) -->
+        <mxCell id="sys-ctrls-pkg" value="«Controladores del Panel Web»" style="swimlane;fontStyle=3;fontSize=12;align=center;verticalAlign=top;startSize=36;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="860" width="500" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="sys-ctrls-body" value="AutenticacionController · ClienteController · ComprobanteController&lt;br&gt;ConversacionController · CuotaController · PagoController&lt;br&gt;PlanController · ReporteController · ServicioController&lt;br&gt;TicketController · UsuarioController · WebhookWhatsappController&lt;br&gt;&lt;br&gt;Todos extienden Illuminate\Routing\Controller" style="text;strokeColor=none;fillColor=#ECEFF1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="sys-ctrls-pkg">
+          <mxGeometry x="0" y="36" width="500" height="124" as="geometry" />
+        </mxCell>
+
+        <!-- IAService -->
+        <mxCell id="sys-ia" value="IAService" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="860" width="380" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="sys-ia-b" value="usa Http (Facade) para llamar&lt;br&gt;a Google Gemini API y OpenAI API.&lt;br&gt;Respaldo: motor local por reglas." style="text;strokeColor=none;fillColor=#ECEFF1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="sys-ia">
+          <mxGeometry x="0" y="30" width="380" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- WhatsAppService -->
+        <mxCell id="sys-wsp" value="WhatsAppService" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2000" y="860" width="380" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="sys-wsp-b" value="usa Http (Facade) para llamar&lt;br&gt;a la WhatsApp Cloud API (Meta).&lt;br&gt;Envía mensajes y recibe webhooks." style="text;strokeColor=none;fillColor=#ECEFF1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="sys-wsp">
+          <mxGeometry x="0" y="30" width="380" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- OCRService -->
+        <mxCell id="sys-ocr" value="OCRService" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2400" y="860" width="380" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="sys-ocr-b" value="usa Process (Facade) para invocar&lt;br&gt;Tesseract OCR (imágenes) y&lt;br&gt;pdftoppm (conversión de PDFs)." style="text;strokeColor=none;fillColor=#ECEFF1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="sys-ocr">
+          <mxGeometry x="0" y="30" width="380" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ExportService -->
+        <mxCell id="sys-export" value="ExportService" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2800" y="860" width="380" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="sys-export-b" value="usa Dompdf para generar PDFs&lt;br&gt;y OpenSpout Writer para generar&lt;br&gt;planillas Excel (.xlsx)." style="text;strokeColor=none;fillColor=#ECEFF1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="sys-export">
+          <mxGeometry x="0" y="30" width="380" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Vistas Blade (paquete) -->
+        <mxCell id="sys-views-pkg" value="«Vistas Blade — dashboard.blade.php»" style="swimlane;fontStyle=3;fontSize=12;align=center;verticalAlign=top;startSize=36;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="3200" y="860" width="500" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="sys-views-body" value="Instancia new Chart(canvas, config) con datos del servidor.&lt;br&gt;Usa clases utilitarias de Tailwind CSS para el diseño visual.&lt;br&gt;Assets compilados y servidos por Vite (laravel-vite-plugin)." style="text;strokeColor=none;fillColor=#ECEFF1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="sys-views-pkg">
+          <mxGeometry x="0" y="36" width="500" height="94" as="geometry" />
+        </mxCell>
+
+        <!-- ProcesarOcrComprobante (Job) -->
+        <mxCell id="sys-job" value="ProcesarOcrComprobante (Job)" style="swimlane;fontStyle=1;fontSize=12;align=center;verticalAlign=top;startSize=30;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;resizeWidth=0;html=1;" vertex="1" parent="1">
+          <mxGeometry x="3720" y="860" width="400" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="sys-job-b" value="implements ShouldQueue.&lt;br&gt;Se encola en base de datos y ejecuta&lt;br&gt;OCRService::procesarArchivo() en background." style="text;strokeColor=none;fillColor=#ECEFF1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;overflow=hidden;rotatable=0;fontSize=10;fontFamily=Courier New;html=1;" vertex="1" parent="sys-job">
+          <mxGeometry x="0" y="30" width="400" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ======================================================== -->
+        <!-- RELACIONES                                                -->
+        <!-- ======================================================== -->
+
+        <!-- Modelos → Eloquent Model (herencia) -->
+        <mxCell id="r-models-model" value="extends" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=0;strokeColor=#1565C0;strokeWidth=2;fontSize=10;" parent="1" source="sys-models-pkg" target="ext-model" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Usuario → Authenticatable (herencia) -->
+        <mxCell id="r-usuario-auth" value="extends" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=0;strokeColor=#1565C0;strokeWidth=2;fontSize=10;" parent="1" source="sys-usuario" target="ext-auth" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Usuario → Hash (dependencia) -->
+        <mxCell id="r-usuario-hash" value="«use»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#1565C0;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-usuario" target="ext-hash" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Controladores → Controller (herencia) -->
+        <mxCell id="r-ctrls-ctrl" value="extends" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=0;strokeColor=#1565C0;strokeWidth=2;fontSize=10;" parent="1" source="sys-ctrls-pkg" target="ext-ctrl" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- IAService → Http -->
+        <mxCell id="r-ia-http" value="«use»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#1565C0;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-ia" target="ext-http" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- IAService → Gemini -->
+        <mxCell id="r-ia-gemini" value="«use»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#E65100;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-ia" target="ext-gemini" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- IAService → OpenAI -->
+        <mxCell id="r-ia-openai" value="«use»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#E65100;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-ia" target="ext-openai" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- WhatsAppService → Http -->
+        <mxCell id="r-wsp-http" value="«use»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#1565C0;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-wsp" target="ext-http" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- WhatsAppService → WhatsApp Cloud API -->
+        <mxCell id="r-wsp-api" value="«use»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#E65100;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-wsp" target="ext-wsp" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- OCRService → Process -->
+        <mxCell id="r-ocr-proc" value="«use»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#1565C0;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-ocr" target="ext-proc" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- OCRService → Tesseract -->
+        <mxCell id="r-ocr-tesseract" value="«use»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#E65100;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-ocr" target="ext-tesseract" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- OCRService → pdftoppm -->
+        <mxCell id="r-ocr-pdftoppm" value="«use»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#E65100;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-ocr" target="ext-pdftoppm" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- ExportService → Dompdf -->
+        <mxCell id="r-export-dompdf" value="«use»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#2E7D32;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-export" target="ext-dompdf" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- ExportService → OpenSpout -->
+        <mxCell id="r-export-spout" value="«use»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#2E7D32;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-export" target="ext-spout" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Vistas → Chart.js -->
+        <mxCell id="r-views-chartjs" value="«use»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#00838F;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-views-pkg" target="ext-chartjs" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Vistas → Tailwind -->
+        <mxCell id="r-views-tailwind" value="«use»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#00838F;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-views-pkg" target="ext-tailwind" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Vistas → Vite -->
+        <mxCell id="r-views-vite" value="«use»" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#00838F;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-views-pkg" target="ext-vite" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Job → ShouldQueue (implements) -->
+        <mxCell id="r-job-queue" value="implements" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=0;strokeColor=#1565C0;strokeWidth=2;fontSize=10;dashed=1;" parent="1" source="sys-job" target="ext-queue" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Job → OCRService -->
+        <mxCell id="r-job-ocr" value="delega a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;strokeColor=#455A64;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" source="sys-job" target="sys-ocr" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

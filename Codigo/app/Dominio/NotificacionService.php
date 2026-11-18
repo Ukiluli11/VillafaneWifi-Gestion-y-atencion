@@ -23,6 +23,11 @@ class NotificacionService
         private readonly ServicioIdentificacion $identificacion,
     ) {}
 
+    /**
+     * Caso de Uso: Notificar novedad por WhatsApp (Módulo 4)
+     * Clase UML: NotificacionService | Método UML: + notificarNovedad(ticket: Ticket, detalle: String) : void
+     * Requerimiento: RF-30
+     */
     public function notificarNovedad(Ticket $ticket, string $detalle = ''): array
     {
         $ticket->refresh();
@@ -34,6 +39,11 @@ class NotificacionService
             $contenido, '', [], 'tickets');
     }
 
+    /**
+     * Caso de Uso: Notificar pago aprobado (Módulo 3)
+     * Clase UML: NotificacionService | Método UML: + notificarPagoAprobado(cliente: Cliente, pago: Pago, comprobante: Comprobante) : void
+     * Requerimiento: RF-26
+     */
     public function notificarPagoAprobado(Cliente $cliente, Pago $pago, ?Comprobante $comprobante = null): array
     {
         $contenido = sprintf('Villafañe Wifi (demostración académica). Hola %s, registramos tu pago de $%s del %s y actualizamos las cuotas correspondientes. No es necesario volver a pagar esas cuotas.',
@@ -44,6 +54,11 @@ class NotificacionService
             [$cliente->nombre_razon_social, '$'.number_format((float) $pago->monto_total, 2, ',', '.'), $pago->fecha->format('d/m/Y')]);
     }
 
+    /**
+     * Caso de Uso: Notificar pago rechazado (Módulo 3)
+     * Clase UML: NotificacionService | Método UML: + notificarPagoRechazado(cliente: Cliente, comprobante: Comprobante, motivo: String) : void
+     * Requerimiento: RF-26
+     */
     public function notificarPagoRechazado(Cliente $cliente, Comprobante $comprobante, string $motivo): array
     {
         $contenido = sprintf('Villafañe Wifi (demostración académica). Hola %s, el comprobante #%d fue rechazado. Motivo: %s. Podés escribirnos para revisar el caso o enviar un comprobante corregido.',
@@ -83,6 +98,11 @@ class NotificacionService
         }
     }
 
+    /**
+     * Caso de Uso: Solicitar reenvío de comprobante (Módulo 3)
+     * Clase UML: NotificacionService | Método UML: + solicitarReenvioComprobante(comprobante: Comprobante) : void
+     * Requerimiento: RF-21
+     */
     public function solicitarReenvioComprobante(Comprobante $comprobante): void
     {
         if ($comprobante->origen !== OrigenComprobante::Whatsapp || ! $comprobante->estaPendiente()

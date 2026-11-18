@@ -1,13 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
   <diagram id="seq-m1-v3" name="Secuencia M1 - Registrar Cliente y Servicio">
-    <mxGraphModel dx="3488" dy="2252" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="2600" math="0" shadow="0">
+    <mxGraphModel dx="3488" dy="2252" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1750" pageHeight="2400" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="2" parent="1" style="text;html=1;fontSize=13;fontStyle=1;align=center;fillColor=none;strokeColor=none;fontColor=default;" value="Diagrama de Secuencia — Módulo 1&#xa;Caso de uso: Registrar Cliente y Servicio" vertex="1">
+        <mxCell id="2" parent="1" style="text;html=1;fontSize=13;fontStyle=1;align=center;fillColor=none;strokeColor=none;fontColor=default;" value="Diagrama de Secuencia — Módulo 1&#10;Caso de uso: Registrar Cliente y Servicio" vertex="1">
           <mxGeometry height="48" width="1560" y="8" as="geometry" />
         </mxCell>
-        <mxCell id="3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;                  fillColor=#455A64;strokeColor=#455A64;fontColor=default;verticalAlign=middle;" value="Empleado /&#xa;Administrador" vertex="1">
+        <mxCell id="3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;                  fillColor=#455A64;strokeColor=#455A64;fontColor=default;verticalAlign=middle;" value="Empleado /&#10;Administrador" vertex="1">
           <mxGeometry height="54" width="170" x="10" y="62" as="geometry" />
         </mxCell>
         <mxCell id="4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;                  fillColor=#1B5E20;strokeColor=#1B5E20;fontColor=default;verticalAlign=middle;" value="Panel Web" vertex="1">
@@ -98,7 +99,7 @@
           <mxGeometry height="22" width="38" x="50" y="640" as="geometry" />
         </mxCell>
         <mxCell id="37" parent="1" style="text;html=1;fontSize=10;fontStyle=2;fillColor=none;strokeColor=none;align=left;fontColor=default;" value="[el cliente ya existe — DNI duplicado]" vertex="1">
-          <mxGeometry height="18" width="300" x="95" y="642" as="geometry" />
+          <mxGeometry height="18" width="210" x="95" y="642" as="geometry" />
         </mxCell>
         <mxCell id="36" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#555555;strokeWidth=1;fontColor=default;" value="">
           <mxGeometry relative="1" as="geometry">
@@ -107,7 +108,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="38" parent="1" style="text;html=1;fontSize=10;fontStyle=2;fillColor=none;strokeColor=none;align=left;fontColor=default;" value="[el cliente no existe — flujo normal]" vertex="1">
-          <mxGeometry height="18" width="300" x="95" y="985" as="geometry" />
+          <mxGeometry height="18" width="210" x="95" y="985" as="geometry" />
         </mxCell>
         <mxCell id="20" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;                  fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;fontColor=default;" value="throw ErrorClienteDuplicado">
           <mxGeometry relative="1" as="geometry">

@@ -19,6 +19,12 @@ use Illuminate\Validation\ValidationException;
 
 class ServicioFacturacion
 {
+    /**
+     * Caso de Uso: Generar cuotas mensuales (Módulo 1)
+     * Clase UML: Cuota | Método UML: + marcarComoVencida() : void
+     * Servicio coordinador: ServicioFacturacion::generarCuota()
+     * Requerimiento: RF-07
+     */
     public function generarCuota(Servicio $servicio, string $periodo): Cuota
     {
         $servicio->loadMissing('plan');
@@ -53,6 +59,11 @@ class ServicioFacturacion
         return $cuota;
     }
 
+    /**
+     * Caso de Uso: Generar cuotas mensuales (Módulo 1)
+     * Servicio coordinador: ServicioFacturacion::generarParaServiciosActivos()
+     * Requerimiento: RF-07
+     */
     public function generarParaServiciosActivos(string $periodo): int
     {
         $creadas = 0;
@@ -138,6 +149,11 @@ class ServicioFacturacion
     }
 
     /**
+     * Caso de Uso: Imputar pago a cuotas pendientes (Módulo 3)
+     * Clase UML: Pago | Método UML: + imputar(cuotas: List) : void
+     * Servicio coordinador: ServicioFacturacion::imputarPagoACuotas()
+     * Requerimientos: RF-25, RF-06
+     *
      * Imputa un monto a las cuotas impagas del cliente en orden cronológico (las más antiguas primero).
      */
     public function imputarPagoACuotas(

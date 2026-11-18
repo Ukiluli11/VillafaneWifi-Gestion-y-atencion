@@ -78,6 +78,12 @@ class ServicioComprobantes
         return $comprobante;
     }
 
+    /**
+     * Caso de Uso: Aprobar comprobante (Módulo 3)
+     * Clase UML: Comprobante | Método UML: + aprobar(usuario: Usuario) : void
+     * Servicio coordinador: ServicioComprobantes::conciliarYAprobar()
+     * Requerimientos: RF-24, RF-25
+     */
     public function conciliarYAprobar(
         Comprobante $comprobante,
         CuentaReceptora $cuenta,
@@ -137,6 +143,12 @@ class ServicioComprobantes
         return $pago;
     }
 
+    /**
+     * Caso de Uso: Rechazar comprobante (Módulo 3)
+     * Clase UML: Comprobante | Método UML: + rechazar(usuario: Usuario, motivo: String) : void
+     * Servicio coordinador: ServicioComprobantes::rechazarComprobante()
+     * Requerimientos: RF-24, RF-26
+     */
     public function rechazarComprobante(Comprobante $comprobante, string $motivo, ?Usuario $usuario = null): Comprobante
     {
         $motivo = trim($motivo);

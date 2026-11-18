@@ -13,7 +13,13 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExportService
 {
-    /** @param array<string, mixed> $datos */
+    /**
+     * Caso de Uso: Exportar reporte a PDF con membrete oficial (DomPDF) (Módulo 5)
+     * Clase UML: ExportService | Método UML: + pdf(datos: array) : Response
+     * Requerimiento: RF-39
+     *
+     * @param array<string, mixed> $datos
+     */
     public function pdf(array $datos): Response
     {
         $motor = new Dompdf(['defaultFont' => 'DejaVu Sans', 'isRemoteEnabled' => false]);
@@ -29,6 +35,10 @@ class ExportService
     }
 
     /**
+     * Caso de Uso: Exportar reporte a formato Excel / CSV (Auditoría contable) (Módulo 5)
+     * Clase UML: ExportService | Método UML: + excel(nombre: String, encabezados: array, filas: iterable) : StreamedResponse
+     * Requerimiento: RF-39
+     *
      * @param  list<string>  $encabezados
      * @param  iterable<array<int, mixed>>  $filas
      */

@@ -38,6 +38,10 @@ class ServicioCuentaCorriente
     }
 
     /**
+     * Caso de Uso: Consultar cuenta corriente (Módulo 1) / Consultar estado de cuenta corriente (Módulo 2)
+     * Servicio coordinador: ServicioCuentaCorriente::resumir()
+     * Requerimientos: RF-05, RF-13
+     *
      * @return array{total_pendiente: string, total_vencido: string, cantidad_pendientes: int,
      * cantidad_vencidas: int, proximo_vencimiento: ?string, vencimiento_impago_mas_antiguo: ?string, estado: string}
      */

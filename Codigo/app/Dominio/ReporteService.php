@@ -28,7 +28,11 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class ReporteService
 {
     /**
-     * Calcula los KPIs generales y las series estadísticas para el Dashboard Ejecutivo (RF-37, RF-38).
+     * Caso de Uso: Consultar Dashboard General con KPIs ejecutivos (Módulo 5)
+     * Clase UML: ReporteService | Método UML: + obtenerMetricasDashboard() : array
+     * Requerimientos: RF-38, RF-37
+     *
+     * Calcula los KPIs generales y las series estadísticas para el Dashboard Ejecutivo.
      *
      * @return array<string, mixed>
      */
@@ -133,7 +137,11 @@ class ReporteService
     }
 
     /**
-     * Genera el dataset del reporte de clientes al día y en mora (RF-34).
+     * Caso de Uso: Generar reporte de clientes al día y en mora (Módulo 5)
+     * Clase UML: ReporteService | Método UML: + obtenerReporteMorosidad(filtros: array) : array
+     * Requerimiento: RF-34
+     *
+     * Genera el dataset del reporte de clientes al día y en mora.
      *
      * @param  array<string, mixed>  $filtros
      * @return array{items: array<int, array<string, mixed>>, resumen: array<string, mixed>}
@@ -253,7 +261,11 @@ class ReporteService
     }
 
     /**
-     * Genera el dataset del reporte financiero de ingresos por período (RF-35).
+     * Caso de Uso: Generar reporte financiero de ingresos por período (Módulo 5)
+     * Clase UML: ReporteService | Método UML: + obtenerReporteIngresos(filtros: array) : array
+     * Requerimiento: RF-35
+     *
+     * Genera el dataset del reporte financiero de ingresos por período.
      *
      * @param  array<string, mixed>  $filtros
      * @return array{items: Collection<int, Pago>, resumen: array<string, mixed>}
@@ -312,7 +324,11 @@ class ReporteService
     }
 
     /**
-     * Genera el dataset del reporte de tickets y eficiencia por técnico (RF-36).
+     * Caso de Uso: Generar reporte de tickets y eficiencia por técnico (Módulo 5)
+     * Clase UML: ReporteService | Método UML: + obtenerReporteTickets(filtros: array) : array
+     * Requerimiento: RF-36
+     *
+     * Genera el dataset del reporte de tickets y eficiencia por técnico.
      *
      * @param  array<string, mixed>  $filtros
      * @return array{items: Collection<int, Ticket>, resumen: array<string, mixed>}
@@ -390,7 +406,11 @@ class ReporteService
     }
 
     /**
-     * Obtiene cuotas en alerta de vencimiento (RF-37).
+     * Caso de Uso: Visualizar alertas de vencimiento y morosidad (Módulo 5)
+     * Clase UML: ReporteService | Método UML: + obtenerReporteAlertasVencimiento() : array
+     * Requerimiento: RF-37
+     *
+     * Obtiene cuotas en alerta de vencimiento.
      *
      * @return array{cuotas: LengthAwarePaginator<int, Cuota>, vencidas: int, monto: float, hoy: string}
      */
@@ -425,7 +445,11 @@ class ReporteService
     }
 
     /**
-     * Genera una respuesta de descarga en formato CSV UTF-8 con BOM compatible con Microsoft Excel (RF-39).
+     * Caso de Uso: Exportar reporte a formato Excel / CSV (Auditoría contable) (Módulo 5)
+     * Clase UML: ReporteService | Método UML: + exportarCsv(nombreArchivo: String, encabezados: array, filas: iterable) : StreamedResponse
+     * Requerimiento: RF-39
+     *
+     * Genera una respuesta de descarga en formato CSV UTF-8 con BOM compatible con Microsoft Excel.
      *
      * @param  array<int, string>  $encabezados
      * @param  iterable<array<int, mixed>>  $filas
