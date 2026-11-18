@@ -37,7 +37,7 @@ La versión publicada es `20261106T024137Z-34565` y el respaldo previo es `respa
 
 Antes de publicar: conservar el respaldo y la configuración compartida, comprobar la plataforma PHP del VPS, instalar las dependencias, publicar mediante el script existente y comprobar salud HTTP y reportes autenticados. Las alertas de Composer sobre paquetes existentes deben atenderse en una actualización independiente del módulo.
 
-El manual operativo se encuentra en `Manuales/Manual de usuario Modulo 5.md`. El membrete institucional heredado requiere corroboración de los datos fiscales y de contacto antes de utilizarlo externamente.
+El manual operativo se encuentra en [Manual de usuario del Módulo 5](Manuales/Manual%20de%20usuario%20Modulo%205.docx). El membrete institucional heredado requiere corroboración de los datos fiscales y de contacto antes de utilizarlo externamente.
 
 ## Verificación del 16 de noviembre de 2026
 

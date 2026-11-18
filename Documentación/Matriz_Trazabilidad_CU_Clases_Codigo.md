@@ -1,7 +1,8 @@
 # Matriz de Trazabilidad Total: Casos de Uso ↔ Diagrama de Clases ↔ Código Fuente
 
-> **Proyecto:** Sistema de Gestión y Atención — Villafañe Wifi  
-> **Propósito:** Guía de referencia rápida ante consultas de cátedra/profesor para ubicar instantáneamente la correlación exacta 1:1 entre:
+> **Proyecto:** Sistema de Gestión y Atención — Villafañe Wifi
+>
+> **Propósito:** Guía de referencia para ubicar la relación entre cada caso de uso, su representación en UML y las funciones que lo implementan:
 > 1. El **Diagrama de Casos de Uso** (nombre exacto en el óvalo del diagrama)
 > 2. El **Diagrama de Clases** (clase y método en el diagrama UML)
 > 3. El **Código Fuente PHP** (archivo de clase y función implementada)
@@ -26,7 +27,7 @@
 | **Registrar y activar cuenta** | Administrador | `CuentaReceptora` | `+ activar() : void` | `app/Models/CuentaReceptora.php`<br>`app/Http/Controllers/Web/CuentaReceptoraController.php` | `CuentaReceptora::activar()`<br>`CuentaReceptoraController::store()` | Da de alta una cuenta con CBU/CVU y la habilita para recibir transferencias. |
 | **Desactivar cuenta receptora** | Administrador | `CuentaReceptora` | `+ desactivar() : void` | `app/Models/CuentaReceptora.php` | `CuentaReceptora::desactivar()` | Deshabilita una cuenta bancaria discontinuada para no mostrarla a clientes. |
 | **Buscar cliente** | Empleado / Administrador | `Cliente` | `Scope / Query` | `app/Dominio/ServicioClientes.php`<br>`app/Http/Controllers/Web/ClienteController.php` | `ServicioClientes::buscar()` | Localiza clientes por nombre, apellido, DNI o número de teléfono. |
-| **Consultar cuenta corriente** | Empleado / Administrador | `ServicioCuentaCorriente` | `+ obtenerEstadoCuenta()` | `app/Dominio/ServicioCuentaCorriente.php` | `ServicioCuentaCorriente::obtenerEstadoCuenta()` | Consolida cuotas adeudadas, pagos imputados y saldo total del abonado. |
+| **Consultar cuenta corriente** | Empleado / Administrador | — | — | `app/Dominio/ServicioCuentaCorriente.php` | `ServicioCuentaCorriente::resumir()`<br>`ServicioCuentaCorriente::cuotasDelCliente()` | Consulta las cuotas con sus pagos y calcula los importes pendientes y vencidos del abonado. |
 
 ---
 
@@ -59,7 +60,7 @@
 |---|---|---|---|---|---|---|
 | **Enviar comprobante de pago** | Cliente | `Conversacion`<br>`Mensaje` | `+ agregarMensaje(...)`<br>`+ marcarEnviado(...)` | `app/Dominio/ServicioRecepcionComprobantes.php` | `ServicioRecepcionComprobantes::procesar()` | El cliente envía un comprobante en imagen o PDF a través del chat. |
 | **Procesar archivo OCR** | Sistema / Empleado | `OCRService` | `+ procesarArchivo(archivo) : array` | `app/Dominio/OCRService.php` | `OCRService::procesarArchivo()` | Procesa la imagen del comprobante y extrae datos bancarios estructurados. |
-| **Verificar duplicidad** | Sistema / Empleado | `Comprobante` | `+ esDuplicado() : boolean` | `app/Models/Comprobante.php`<br>`app/Dominio/ServicioComprobantes.php` | `Comprobante::esDuplicado()`<br>`ServicioComprobantes::esDuplicado()` | Comprueba si el hash SHA-256 o el número de operación ya fueron ingresados. |
+| **Verificar duplicidad** | Sistema / Empleado | `Comprobante` | `+ esDuplicado() : boolean` | `app/Models/Comprobante.php`<br>`app/Dominio/ServicioComprobantes.php` | `Comprobante::esDuplicado()`<br>`Comprobante::registrarDuplicadoPorHash()`<br>`ServicioComprobantes::registrarComprobante()`<br>`ServicioComprobantes::conciliarYAprobar()` | Comprueba el hash SHA-256 al registrar el archivo y el número de operación por cuenta receptora al aprobarlo. |
 | **Extraer datos de transacción (OCR)** | Sistema | `OCRService` | `+ extraerNumeroOperacion()`<br>`+ extraerMonto()`<br>`+ extraerFecha()` | `app/Dominio/OCRService.php` | `OCRService::extraerNumeroOperacion()`<br>`OCRService::extraerMonto()`<br>`OCRService::extraerFecha()` | Reconoce expresiones regulares de montos, fechas e identificador de pago. |
 | **Visualizar bandeja de conciliación** | Empleado / Administrador | `Comprobante` | `Scope / Query` | `app/Http/Controllers/Web/ComprobanteController.php`<br>`app/Models/Comprobante.php` | `ComprobanteController::index()`<br>`Comprobante::scopePendientes()` | Muestra la lista de comprobantes pendientes clasificados por OCR. |
 | **Validar comprobante de pago** | Empleado / Administrador | `Comprobante` | `Scope / Query` | `app/Http/Controllers/Web/ComprobanteController.php` | `ComprobanteController::show()` | Inspección visual del comprobante frente a las cuotas impagas del cliente. |
@@ -77,7 +78,7 @@
 | Caso de Uso (Diagrama CU) | Actor | Clase UML | Método UML | Archivo PHP | Función en Código | Descripción breve |
 |---|---|---|---|---|---|---|
 | **Registrar reclamo técnico** | Cliente / Bot de WhatsApp / Empleado | `ServicioTickets`<br>`Ticket` | `+ crearDesdeConversacion(...)`<br>`+ resolver() : void` | `app/Dominio/ServicioTickets.php`<br>`app/Models/Ticket.php` | `ServicioTickets::crearDesdeConversacion()` | Registra la manifestación de una falla técnica del cliente en el sistema. |
-| **Generar ticket de soporte** | Bot de WhatsApp / Empleado | `Ticket`<br>`ServicioTickets` | `Ticket::create(...)`<br>`+ crearManual(datos, creador) : Ticket` | `app/Models/Ticket.php`<br>`app/Dominio/ServicioTickets.php`<br>`app/Http/Controllers/Web/TicketController.php` | `Ticket::create()`<br>`ServicioTickets::crearManual()`<br>`TicketController::store()` | Instancia el ticket técnico con estado inicial pendiente/asignado asociado al servicio. |
+| **Generar ticket de soporte** | Bot de WhatsApp / Empleado | `Ticket`<br>`ServicioTickets` | `Ticket::create(...)`<br>`+ crearManual(datos, creador) : Ticket` | `app/Dominio/ServicioTickets.php`<br>`app/Http/Controllers/Web/TicketController.php` | `ServicioTickets::crearDesdeConversacion()`<br>`ServicioTickets::crearManual()`<br>`TicketController::store()` | Crea el ticket asociado al servicio desde WhatsApp o desde el panel. Ambos métodos del servicio usan `Ticket::create()` de Eloquent. |
 | **Filtrar y listar tickets** | Empleado / Administrador | `Ticket` | `Scope / Query` | `app/Http/Controllers/Web/TicketController.php`<br>`app/Models/Ticket.php` | `TicketController::index()`<br>`Ticket::scopeFiltrar()` | Permite buscar y filtrar tickets por estado, prioridad, técnico y fecha. |
 | **Consultar tickets asignados** | Empleado | `Empleado` | `+ consultarTicketsAsignados() : List<Ticket>` | `app/Models/Empleado.php` | `Empleado::consultarTicketsAsignados()` | Devuelve los incidentes asignados al operador o técnico en turno. |
 | **Asignar ticket a técnico** | Empleado / Administrador | `Ticket`<br>`ServicioTickets` | `+ asignar(usuario: Usuario) : void`<br>`+ asignarTicket(ticket, tec) : void` | `app/Models/Ticket.php`<br>`app/Dominio/ServicioTickets.php`<br>`app/Http/Controllers/Web/TicketController.php` | `Ticket::asignar()`<br>`ServicioTickets::asignarTicket()`<br>`TicketController::asignar()` | Asigna formalmente el responsable técnico y cambia el estado a Asignado/En Proceso. |
