@@ -126,6 +126,96 @@ h3 { margin: 0; color: var(--texto); font-size: .94rem; font-weight: 600; }
 .panel-estado p { color: #c4ded5; }
 .panel-estado .sello { display: inline-flex; align-items: center; gap: 8px; width: max-content; padding: 7px 10px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: #d9f5e9; background: rgba(255,255,255,.08); font-size: .72rem; font-weight: 750; }
 
+.resumen-panel {
+    --resumen-verde: #2d9c73;
+    --resumen-azul: #458bb8;
+    --resumen-ambar: #b6842a;
+    --resumen-rojo: #c45b51;
+}
+.resumen-bienvenida {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 22px;
+    padding: clamp(24px, 4vw, 48px);
+    border: 1px solid #275e4e;
+    border-radius: 18px;
+    background:
+        repeating-radial-gradient(circle at 96% 105%, transparent 0 33px, #b5edd51c 34px 35px, transparent 36px 56px),
+        linear-gradient(125deg, #173f35 15%, #1b5948 73%, #23694f);
+    color: #effaf3;
+}
+.resumen-bienvenida h1 { margin: 0; color: inherit; font-size: clamp(1.85rem, 4vw, 3rem); overflow-wrap: anywhere; text-wrap: initial; }
+.resumen-bienvenida p { margin: 8px 0 0; color: #d4ecdf; font-size: .9rem; }
+.resumen-bienvenida time { display: grid; gap: 3px; padding: 10px 15px; border: 1px solid #b5edd55c; border-radius: 10px; background: #153e34; }
+.resumen-bienvenida time span { color: #d4ecdf; font-size: .72rem; }
+.resumen-bienvenida time strong { font-size: .95rem; }
+.resumen-panel .resumen-indicadores { gap: 14px; margin-bottom: 22px; }
+.resumen-indicador {
+    --acento: var(--resumen-verde);
+    display: grid;
+    align-content: center;
+    gap: 8px;
+    min-height: 124px;
+    padding: 17px 18px;
+    border-top: 3px solid var(--acento);
+    background: linear-gradient(160deg, color-mix(in srgb, var(--acento) 9%, var(--blanco)), var(--blanco) 65%);
+    text-decoration: none;
+}
+.resumen-azul { --acento: var(--resumen-azul); }
+.resumen-ambar { --acento: var(--resumen-ambar); }
+.resumen-rojo { --acento: var(--resumen-rojo); }
+.resumen-indicador-titulo { color: var(--texto-suave); font-size: .79rem; font-weight: 650; padding-right: 21px; }
+.resumen-indicador strong { margin: 0; font-size: clamp(1.4rem, 2.5vw, 2.1rem); overflow-wrap: anywhere; }
+.resumen-indicador-flecha, .resumen-acceso-flecha { color: var(--verde-700); transition: transform .18s ease; }
+.resumen-indicador-flecha { position: absolute; top: 13px; right: 16px; }
+a.resumen-indicador { transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
+a.resumen-indicador:hover { transform: translateY(-3px); border-color: var(--acento); box-shadow: 0 8px 22px #142c251a; }
+.resumen-indicador:hover .resumen-indicador-flecha { transform: translate(2px, -2px); }
+.resumen-grilla { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.35fr); gap: 20px; align-items: stretch; }
+.resumen-grilla > .tarjeta { margin: 0; }
+.resumen-grilla h2 { font-size: 1.18rem; }
+.resumen-desglose { display: grid; gap: 18px; min-width: 0; margin: 14px 0 0; padding: 0; border: 0; }
+.resumen-desglose legend { padding: 0; margin-bottom: 6px; color: var(--texto-suave); font-size: .75rem; }
+.resumen-selector { display: flex; width: fit-content; flex-wrap: wrap; gap: 4px; padding: 4px; border: 1px solid var(--borde); border-radius: 10px; background: var(--fondo); }
+.resumen-selector label { position: relative; display: inline-flex; cursor: pointer; }
+.resumen-selector input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; }
+.resumen-selector span { display: inline-flex; min-height: 36px; align-items: center; padding: 4px 14px; border: 1px solid transparent; border-radius: 7px; color: var(--texto-suave); font-size: .8rem; font-weight: 650; }
+.resumen-selector input:checked + span { border-color: var(--borde); color: var(--verde-700); background: var(--blanco); }
+.resumen-selector input:focus-visible + span { outline: 2px solid var(--verde-500); outline-offset: 1px; }
+.resumen-desglose-importe,
+.resumen-desglose:has(input[value="importe"]:checked) .resumen-desglose-cantidad { display: none; }
+.resumen-desglose:has(input[value="importe"]:checked) .resumen-desglose-importe { display: block; }
+.resumen-barra + .resumen-barra { margin-top: 16px; }
+.resumen-barra-datos { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 5px 16px; margin-bottom: 7px; font-size: .85rem; }
+.resumen-barra-datos strong { font-variant-numeric: tabular-nums; }
+.resumen-barra-pista { height: 9px; overflow: hidden; border-radius: 999px; background: var(--fondo); }
+.resumen-barra-pista span { display: block; width: var(--avance); height: 100%; border-radius: inherit; background: var(--resumen-ambar); }
+.resumen-barra.vencidas .resumen-barra-pista span { background: var(--resumen-rojo); }
+.resumen-enlace { display: inline-flex; align-items: center; gap: 8px; margin-top: 23px; font-size: .81rem; font-weight: 650; text-decoration: none; }
+.resumen-enlace:hover { text-decoration: underline; }
+.resumen-accesos .acciones-rapidas { margin-top: 16px; }
+.resumen-accesos .accion-rapida { justify-content: space-between; min-width: 0; padding: 12px 13px; }
+.resumen-accesos .accion-rapida > span:first-child { display: block; width: auto; height: auto; min-width: 0; flex: 1; color: var(--texto); background: transparent; }
+.resumen-accesos .accion-rapida > .resumen-acceso-flecha { flex: 0 0 auto; }
+.resumen-accesos .accion-rapida:hover .resumen-acceso-flecha { transform: translateX(3px); }
+@media (max-width: 1100px) {
+    .resumen-grilla { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+    .resumen-panel .resumen-indicadores { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+    .resumen-indicador { min-height: 108px; padding: 12px; }
+    .resumen-indicador-titulo { padding-right: 12px; }
+    .resumen-indicador-flecha { top: 8px; right: 8px; }
+    .resumen-accesos .acciones-rapidas { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .resumen-panel a { transition: none; }
+    .resumen-panel a:hover, .resumen-panel a:hover span { transform: none; }
+}
+
 .tarjeta, .tabla-contenedor { border: 1px solid var(--borde); border-radius: 12px; background: var(--blanco); box-shadow: var(--sombra); }
 .tarjeta { padding: clamp(20px, 2.3vw, 28px); margin: 18px 0; }
 .tarjeta > h2 + p { margin: 7px 0 0; }

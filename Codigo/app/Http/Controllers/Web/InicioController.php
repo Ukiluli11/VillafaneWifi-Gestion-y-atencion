@@ -14,11 +14,22 @@ class InicioController extends Controller
 {
     public function __invoke(): View
     {
+        $cuotasPorEstado = Cuota::query()
+            ->whereIn('estado', [EstadoCuota::Pendiente->value, EstadoCuota::Vencida->value])
+            ->selectRaw('estado, COUNT(*) AS cantidad, SUM(monto) AS importe')
+            ->groupBy('estado')
+            ->get()
+            ->keyBy(fn (Cuota $cuota): string => $cuota->estado->value);
+        $pendientes = $cuotasPorEstado->get(EstadoCuota::Pendiente->value);
+        $vencidas = $cuotasPorEstado->get(EstadoCuota::Vencida->value);
+
         return view('inicio', [
             'clientesActivos' => Cliente::where('estado', 'activo')->count(),
             'serviciosActivos' => Servicio::where('estado', EstadoServicio::Activo->value)->count(),
-            'cuotasPendientes' => Cuota::whereIn('estado', [EstadoCuota::Pendiente->value, EstadoCuota::Vencida->value])->count(),
-            'deudaVencida' => Cuota::where('estado', EstadoCuota::Vencida->value)->sum('monto'),
+            'cuotasPorCobrar' => [
+                'pendientes' => ['cantidad' => (int) ($pendientes?->cantidad ?? 0), 'importe' => (float) ($pendientes?->importe ?? 0)],
+                'vencidas' => ['cantidad' => (int) ($vencidas?->cantidad ?? 0), 'importe' => (float) ($vencidas?->importe ?? 0)],
+            ],
         ]);
     }
 }
