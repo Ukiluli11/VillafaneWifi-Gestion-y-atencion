@@ -5,6 +5,7 @@ namespace App\Dominio;
 use App\Enums\EstadoConversacion;
 use App\Enums\IntencionConversacion;
 use App\Enums\ModoAtencion;
+use App\Enums\OpcionMenuWhatsapp;
 use App\Enums\TipoEmisorMensaje;
 use App\Enums\TipoMensaje;
 use App\Models\Cliente;
@@ -36,9 +37,9 @@ class ServicioAtencionWhatsapp
         Mensaje $mensaje,
         ?Cliente $cliente,
     ): ?string {
-        $comando = $mensaje->tipo === TipoMensaje::Texto
-            ? trim(preg_replace('/[^a-z0-9]+/', ' ', Str::lower(Str::ascii((string) $mensaje->contenido))))
-            : '';
+        $texto = $mensaje->tipo === TipoMensaje::Texto ? trim((string) $mensaje->contenido) : '';
+        $comando = trim(preg_replace('/[^a-z0-9]+/', ' ', Str::lower(Str::ascii($texto))));
+        $opcion = OpcionMenuWhatsapp::desdeMensaje($texto);
 
         if ($conversacion->modo_atencion === ModoAtencion::Humano) {
             if ($comando !== 'menu' || ! $this->retomarBotEnEspera($conversacion)) {
@@ -54,7 +55,8 @@ class ServicioAtencionWhatsapp
         }
 
         if ($cliente === null) {
-            if (in_array($comando, ['4', 'operador', 'asesor', 'humano', 'cambiar numero'], true)) {
+            if ($opcion === OpcionMenuWhatsapp::HablarOperador
+                || in_array($comando, ['operador', 'asesor', 'humano', 'cambiar numero'], true)) {
                 $conversacion->escalar();
 
                 return 'Te transferimos con un operador para verificar tu identidad y ayudarte con tu cuenta.';
@@ -62,11 +64,7 @@ class ServicioAtencionWhatsapp
 
             $conversacion->update(['paso_actual' => 'esperando_identificacion']);
 
-            return implode(' ', [
-                '¡Hola! No encontramos un cliente asociado a este número.',
-                'Si ya sos cliente, escribí OPERADOR para verificar tu identidad o escribinos desde el número que tenés registrado.',
-                'Si todavía no sos cliente, escribí REGISTRARME para iniciar el alta.',
-            ]);
+            return MenuCoquito::saludo($mensaje->fecha_hora)."\n\n".MenuCoquito::opcionesSinRegistro();
         }
 
         if ($mensaje->tipo === TipoMensaje::Texto) {
@@ -79,22 +77,24 @@ class ServicioAtencionWhatsapp
             return $this->responderDatosPago($cliente);
         }
 
-        if (in_array($comando, ['menu', 'hola', 'buenas', 'buen dia', 'buenos dias', 'buenas tardes', 'buenas noches'], true)) {
+        if ($comando === 'menu' || preg_match('/\A(?:hola+|buenas|buen dia|buenos dias|buenas tardes|buenas noches)(?: coquito)?\z/', $comando) === 1) {
             $conversacion->update([
                 'paso_actual' => null,
                 'intencion_actual' => null,
                 'intentos_interpretacion' => 0,
             ]);
 
-            return $comando !== 'menu' && $this->iaService->proveedorActivo($conversacion->numero_whatsapp) !== null
-                ? "¡Hola {$cliente->nombre_razon_social}! Contame qué necesitás y te ayudo con tu cuenta, un pago o un problema con la conexión."
-                : $this->mensajeBienvenida($cliente);
+            return $this->mensajeBienvenida($cliente, $mensaje);
         }
 
         if (in_array($comando, ['gracias', 'muchas gracias', 'ok gracias', 'dale gracias'], true)) {
             $conversacion->reiniciarInterpretacion();
 
             return '¡De nada! Cuando necesites otra consulta, escribí MENU para ver las opciones.';
+        }
+
+        if ($opcion !== null && in_array($conversacion->paso_actual, ['esperando_comprobante', 'recopilando_reclamo'], true)) {
+            $conversacion->update(['paso_actual' => null]);
         }
 
         $respuestaComprobante = $this->servicioComprobantes->procesar($conversacion, $mensaje, $cliente);
@@ -106,11 +106,19 @@ class ServicioAtencionWhatsapp
             $conversacion->update(['paso_actual' => null]);
             $conversacion->reiniciarInterpretacion();
 
-            return $this->mensajeBienvenida($cliente);
+            return $this->mensajeBienvenida($cliente, $mensaje);
         }
 
         if ($conversacion->paso_actual === 'recopilando_reclamo') {
+            if ($mensaje->tipo !== TipoMensaje::Texto) {
+                return 'Para registrar el reclamo, describí por escrito qué sucede con tu conexión.';
+            }
+
             return $this->registrarReclamo($conversacion, $cliente, (string) $mensaje->contenido);
+        }
+
+        if ($opcion === null && preg_match('/\A[# +−-]*[0-9]{1,3}(?:[.,][0-9]+)?\z/u', $texto) === 1) {
+            return "Esa opción no está disponible.\n\n".MenuCoquito::opcionesCliente();
         }
 
         $consultaVencimiento = preg_match(
@@ -147,7 +155,7 @@ class ServicioAtencionWhatsapp
             IntencionConversacion::ReclamoSoporte => 'Contame un poco más sobre lo que pasa con tu conexión y registro el reclamo.',
             IntencionConversacion::EnvioComprobante => 'Podés adjuntar una foto clara o el PDF de tu comprobante por acá.',
             IntencionConversacion::DatosPago => $this->responderDatosPago($cliente),
-            default => $this->mensajeBienvenida($cliente),
+            default => $this->mensajeBienvenida($cliente, $mensaje),
         };
     }
 
@@ -285,13 +293,9 @@ class ServicioAtencionWhatsapp
         return $anterior?->intencion_actual?->value ?? '';
     }
 
-    private function mensajeBienvenida(Cliente $cliente): string
+    private function mensajeBienvenida(Cliente $cliente, Mensaje $mensaje): string
     {
-        $respuesta = "¡Hola {$cliente->nombre_razon_social}! Elegí una opción: 1. Consultar cuenta · 2. Registrar reclamo · 3. Enviar comprobante · 4. Hablar con un operador.";
-        if ($this->servicioCuentaCorriente->instruccionesTransferencia($cliente) !== null) {
-            $respuesta .= ' Para ver la cuenta de la empresa y las instrucciones de transferencia, escribí PAGAR.';
-        }
-
-        return $respuesta;
+        return MenuCoquito::saludo($mensaje->fecha_hora, $cliente->nombre_razon_social)
+            ."\n\n".MenuCoquito::opcionesCliente();
     }
 }

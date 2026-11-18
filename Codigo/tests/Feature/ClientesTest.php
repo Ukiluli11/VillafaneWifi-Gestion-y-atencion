@@ -36,6 +36,20 @@ class ClientesTest extends TestCase
         $this->assertFalse($cliente->recordatorios_whatsapp);
     }
 
+    public function test_alta_rechaza_documento_telefono_y_altura_negativos(): void
+    {
+        $usuario = app(ServicioUsuarios::class)->crear([
+            'nombre_usuario' => 'admin-formato', 'contrasena' => 'clave-segura', 'tipo' => 'administrador',
+        ]);
+
+        $this->actingAs($usuario)->post('/clientes', [
+            'tipo_documento' => 'DNI', 'numero_documento' => '-35.123.456',
+            'nombre_razon_social' => 'Cliente de prueba', 'tipo_cliente' => 'particular',
+            'numero_contacto' => '-120', 'telefono_whatsapp' => '-54 9 3718 123456',
+        ])->assertSessionHasErrors(['numero_documento', 'telefono_whatsapp', 'numero_contacto']);
+        $this->assertDatabaseCount('cliente', 0);
+    }
+
     public function test_gestionar_recordatorios_desde_la_ficha_y_revalidar_si_cambia_el_telefono(): void
     {
         $admin = app(ServicioUsuarios::class)->crear([

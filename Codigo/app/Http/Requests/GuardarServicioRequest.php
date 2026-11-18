@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Dominio\FormatoDatosCliente;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,19 +23,19 @@ class GuardarServicioRequest extends FormRequest
      */
     public function rules(): array
     {
-        return ['id_cliente' => ['required', 'integer', 'exists:cliente,id_cliente']] + self::reglasInstalacion();
+        return ['id_cliente' => ['required', 'integer', 'min:1', 'exists:cliente,id_cliente']] + self::reglasInstalacion();
     }
 
     /** @return array<string, mixed> */
     public static function reglasInstalacion(): array
     {
         return [
-            'id_plan' => ['required', 'integer', 'exists:plan,id_plan'],
+            'id_plan' => ['required', 'integer', 'min:1', 'exists:plan,id_plan'],
             'calle_instalacion' => ['required', 'string', 'max:100'],
-            'numero_instalacion' => ['nullable', 'string', 'max:10'],
+            'numero_instalacion' => ['nullable', 'string', 'max:10', 'regex:'.FormatoDatosCliente::SIN_NUMERO_NEGATIVO],
             'localidad_instalacion' => ['required', 'string', 'max:100'],
             'dia_vencimiento' => ['required', 'integer', 'between:1,28'],
-            'fecha_alta' => ['required', 'date'],
+            'fecha_alta' => ['required', 'date_format:Y-m-d'],
             'ipv4' => ['nullable', 'ipv4'],
             'mac' => ['nullable', 'regex:/^([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}$/'],
         ];

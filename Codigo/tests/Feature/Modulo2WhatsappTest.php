@@ -29,6 +29,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\TestWith;
 use Tests\TestCase;
 
 class Modulo2WhatsappTest extends TestCase
@@ -285,6 +286,24 @@ class Modulo2WhatsappTest extends TestCase
         }
     }
 
+    #[TestWith(['2026-11-17T13:00:00Z', 'Buenos días'])]
+    #[TestWith(['2026-11-17T22:00:00Z', 'Buenas tardes'])]
+    #[TestWith(['2026-11-18T00:00:00Z', 'Buenas noches'])]
+    public function test_coquito_saluda_en_hora_local_y_muestra_el_menu(string $fecha, string $saludo): void
+    {
+        $cliente = Cliente::factory()->create();
+        $conversacion = Conversacion::factory()->for($cliente, 'cliente')->create();
+        $mensaje = Mensaje::factory()->for($conversacion, 'conversacion')->create([
+            'contenido' => 'Holaaa, Coquito!', 'fecha_hora' => CarbonImmutable::parse($fecha)->utc(),
+        ]);
+        $respuesta = app(ServicioAtencionWhatsapp::class)->procesarMensaje($conversacion, $mensaje, $cliente);
+
+        $this->assertStringContainsString($saludo, $respuesta);
+        $this->assertStringContainsString('Soy Coquito', $respuesta);
+        $this->assertStringContainsString('5. Ver cómo pagar', $respuesta);
+        $this->assertStringContainsString('tus propias palabras', $respuesta);
+    }
+
     public function test_menu_cancela_la_espera_de_comprobante_y_permite_elegir_otra_opcion(): void
     {
         $cliente = Cliente::factory()->create();
@@ -300,8 +319,8 @@ class Modulo2WhatsappTest extends TestCase
 
         $respuesta = app(ServicioAtencionWhatsapp::class)->procesarMensaje($conversacion, $mensaje, $cliente);
 
-        $this->assertStringContainsString('2. Registrar reclamo', $respuesta);
-        $this->assertStringContainsString('3. Enviar comprobante', $respuesta);
+        $this->assertStringContainsString('2. Registrar un reclamo técnico', $respuesta);
+        $this->assertStringContainsString('3. Enviar un comprobante', $respuesta);
         $this->assertNull($conversacion->fresh()->paso_actual);
         $this->assertSame(0, $conversacion->fresh()->intentos_interpretacion);
 
@@ -312,6 +331,11 @@ class Modulo2WhatsappTest extends TestCase
         $respuesta = app(ServicioAtencionWhatsapp::class)->procesarMensaje($conversacion->fresh(), $mensaje, $cliente);
         $this->assertStringContainsString('adjuntar', $respuesta);
         $this->assertSame('esperando_comprobante', $conversacion->fresh()->paso_actual);
+
+        $mensaje = Mensaje::factory()->for($conversacion, 'conversacion')->create(['contenido' => '#4']);
+        $respuesta = app(ServicioAtencionWhatsapp::class)->procesarMensaje($conversacion->fresh(), $mensaje, $cliente);
+        $this->assertStringContainsString('Te transferimos con un operador', $respuesta);
+        $this->assertSame(EstadoConversacion::Escalada, $conversacion->fresh()->estado);
     }
 
     public function test_menu_retoma_el_bot_si_la_derivacion_aun_no_tiene_operador(): void
@@ -727,14 +751,18 @@ class Modulo2WhatsappTest extends TestCase
         Http::preventStrayRequests();
     }
 
-    public function test_registro_y_contratacion_desde_numero_nuevo(): void
+    #[TestWith([''])]
+    #[TestWith(['#'])]
+    public function test_registro_y_contratacion_desde_numero_nuevo(string $prefijoPlan): void
     {
         Http::preventStrayRequests();
         $plan = Plan::factory()->create(['estado' => 'activo']);
         $numero = '5493704000101';
+        $planInactivo = Plan::factory()->create(['estado' => 'inactivo']);
         $mensajes = [
-            'hola', 'REGISTRARME', 'DNI', '39999991', 'Cliente Sintético', 'PARTICULAR',
-            'Calle Uno | 10 | Villafañe', (string) $plan->getKey(), 'Calle Dos | 20 | Villafañe', '15',
+            'hola', 'REGISTRARME', 'DNI', '-39999991', '39999991', 'Cliente Sintético', 'PARTICULAR',
+            'Calle Uno | 10 | Villafañe', $prefijoPlan.$planInactivo->getKey(),
+            $prefijoPlan.$plan->getKey(), 'Calle Dos | -20 | Villafañe', 'Calle Dos | 20 | Villafañe', '-15', '15',
         ];
 
         foreach ($mensajes as $indice => $texto) {
@@ -748,7 +776,11 @@ class Modulo2WhatsappTest extends TestCase
         $servicio = Servicio::where('id_cliente', $cliente->getKey())->sole();
         $this->assertEquals($plan->getKey(), $servicio->id_plan);
         $this->assertEquals(15, $servicio->dia_vencimiento);
-        $this->assertSame(EstadoConversacion::Cerrada, Conversacion::where('id_cliente', $cliente->getKey())->sole()->estado);
+        $conversacion = Conversacion::where('id_cliente', $cliente->getKey())->sole();
+        $this->assertSame(EstadoConversacion::Cerrada, $conversacion->estado);
+        $respuesta = $conversacion->mensajes()->latest('id_mensaje')->firstOrFail()->contenido;
+        $this->assertStringContainsString('Soy Coquito', $respuesta);
+        $this->assertStringContainsString('1. Consultar saldo y vencimientos', $respuesta);
     }
 
     public function test_simulador_procesa_un_mensaje_sin_contactar_proveedores_aunque_haya_credenciales(): void

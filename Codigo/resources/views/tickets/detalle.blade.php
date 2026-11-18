@@ -228,6 +228,16 @@
                     @if ($ticket->estado->value === 'pendiente')
                         <p class="texto-suave">Asigná un responsable para iniciar la atención del ticket.</p>
                     @endif
+                    <form method="POST" action="{{ route('tickets.notificar', $ticket) }}">
+                        @csrf
+                        <button type="submit" class="boton secundario" @disabled(! config('services.tickets.notificar_resultado'))>
+                            Notificar estado por WhatsApp
+                        </button>
+                        <p class="texto-suave">Requiere un mensaje del cliente en las últimas 24 horas. El mismo aviso no se envía dos veces; podés reintentar si falló.</p>
+                        @if (! config('services.tickets.notificar_resultado'))
+                            <p class="texto-suave">Los avisos de tickets están desactivados en esta instalación.</p>
+                        @endif
+                    </form>
                 </div>
 
                 {{-- Modal desplegable para Resolver con detalle --}}

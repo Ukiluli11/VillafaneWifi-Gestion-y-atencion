@@ -17,12 +17,12 @@ class CrearTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_servicio' => ['required', 'integer', 'exists:servicio,id_servicio'],
+            'id_servicio' => ['required', 'integer', 'min:1', 'exists:servicio,id_servicio'],
             'tipo' => ['required', 'string', 'in:tecnico,administrativo,instalacion,reclamo'],
             'descripcion' => ['required', 'string', 'min:5', 'max:2000'],
-            'id_usuario_asignado' => ['nullable', 'integer', 'exists:usuario,id_usuario'],
+            'id_usuario_asignado' => ['nullable', 'integer', 'min:1', 'exists:usuario,id_usuario'],
             'nota_inicial' => ['nullable', 'string', 'max:2000'],
-            'id_conversacion' => ['nullable', 'integer', 'exists:conversacion,id_conversacion'],
+            'id_conversacion' => ['nullable', 'integer', 'min:1', 'exists:conversacion,id_conversacion'],
         ];
     }
 

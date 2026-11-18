@@ -165,7 +165,7 @@
                             <td>{{ $pago->fecha?->format('d/m/Y') }}</td>
                             <td>
                                 @if ($cliente)
-                                    <a href="{{ route('cuentas.show', $cliente->id_cliente) }}" style="color: inherit; font-weight: 600; text-decoration: underline;">
+                                    <a href="{{ $navegacionPermitida['cobranza'] ? route('cuentas.show', $cliente->id_cliente) : route('clientes.show', $cliente->id_cliente) }}" style="color: inherit; font-weight: 600; text-decoration: underline;">
                                         {{ $cliente->nombre_razon_social }}
                                     </a>
                                     <br><small style="color: var(--texto-suave);">DNI: {{ $cliente->numero_documento }}</small>

@@ -26,9 +26,9 @@ class RegistrarPagoRequest extends FormRequest
     {
         return [
             'cuotas' => ['required', 'array', 'min:1'],
-            'cuotas.*' => ['integer', 'distinct', 'exists:cuota,id_cuota'],
-            'id_cuenta' => ['required', 'integer', 'exists:cuenta_receptora,id_cuenta'],
-            'fecha' => ['required', 'date'],
+            'cuotas.*' => ['integer', 'min:1', 'distinct', 'exists:cuota,id_cuota'],
+            'id_cuenta' => ['required', 'integer', 'min:1', 'exists:cuenta_receptora,id_cuenta'],
+            'fecha' => ['required', 'date_format:Y-m-d', 'before_or_equal:'.today('America/Argentina/Buenos_Aires')->toDateString()],
             'medio_pago' => ['required', Rule::enum(MedioPago::class)],
         ];
     }

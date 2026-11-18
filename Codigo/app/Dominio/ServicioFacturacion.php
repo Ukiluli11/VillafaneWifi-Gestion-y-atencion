@@ -129,6 +129,9 @@ class ServicioFacturacion
                 fn (BigDecimal $total, Cuota $cuota): BigDecimal => $total->plus($cuota->monto),
                 BigDecimal::zero(),
             );
+            if ($monto->isLessThanOrEqualTo(0) || $monto->isGreaterThan('99999999.99')) {
+                throw ValidationException::withMessages(['cuotas' => 'El importe total del pago está fuera del rango admitido.']);
+            }
             $pago = Pago::create([
                 'id_cuenta' => $cuenta->id_cuenta,
                 'id_comprobante' => $idComprobante,

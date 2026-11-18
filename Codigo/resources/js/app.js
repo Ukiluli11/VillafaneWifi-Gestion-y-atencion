@@ -11,7 +11,8 @@ if (botonContrasena && campoContrasena) {
     botonContrasena.addEventListener('click', () => {
         const mostrar = campoContrasena.type === 'password';
         campoContrasena.type = mostrar ? 'text' : 'password';
-        botonContrasena.textContent = mostrar ? 'Ocultar contraseña' : 'Mostrar contraseña';
+        botonContrasena.setAttribute('aria-pressed', String(mostrar));
+        botonContrasena.title = mostrar ? 'Ocultar contraseña' : 'Mostrar contraseña';
     });
 }
 

@@ -41,7 +41,7 @@ class TicketController extends Controller
             'busqueda' => ['nullable', 'string', 'max:200'],
             'buscar' => ['nullable', 'string', 'max:200'],
             'tipo' => ['nullable', 'string', 'in:tecnico,administrativo,instalacion,reclamo'],
-            'id_usuario_asignado' => ['nullable', 'regex:/^(sin_asignar|[0-9]+)$/'],
+            'id_usuario_asignado' => ['nullable', 'regex:/^(sin_asignar|[1-9][0-9]*)$/'],
             'fecha_desde' => ['nullable', 'date_format:Y-m-d'],
             'fecha_hasta' => ['nullable', 'date_format:Y-m-d', ...($request->filled('fecha_desde') ? ['after_or_equal:fecha_desde'] : [])],
         ]);
@@ -169,7 +169,7 @@ class TicketController extends Controller
     {
         $campo = $request->has('id_usuario_asignado') ? 'id_usuario_asignado' : 'id_usuario';
         $request->validate([
-            $campo => ['required', 'integer', 'exists:usuario,id_usuario'],
+            $campo => ['required', 'integer', 'min:1', 'exists:usuario,id_usuario'],
         ], [
             'id_usuario_asignado.required' => 'Debe seleccionar un técnico.',
             'id_usuario_asignado.exists' => 'El técnico seleccionado no existe.',
@@ -208,6 +208,18 @@ class TicketController extends Controller
 
         return redirect()->route('tickets.show', $ticket)
             ->with('exito', "Estado del ticket actualizado a: {$nuevoEstado->value}.".(isset($aviso) ? ' '.$aviso['detalle'] : ''));
+    }
+
+    public function notificar(Request $request, Ticket $ticket): RedirectResponse
+    {
+        $usuario = $request->user();
+        abort_unless($usuario->administrador()->exists()
+            || ($usuario->empleado()->where('area', 'soporte')->exists()
+                && $ticket->id_usuario_asignado === $usuario->id_usuario), 403);
+
+        $aviso = $this->notificacionService->notificarNovedad($ticket);
+
+        return redirect()->route('tickets.show', $ticket)->with('exito', $aviso['detalle']);
     }
 
     public function resolver(Request $request, Ticket $ticket): RedirectResponse

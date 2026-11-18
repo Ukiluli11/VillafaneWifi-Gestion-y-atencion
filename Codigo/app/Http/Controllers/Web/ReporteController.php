@@ -124,7 +124,7 @@ class ReporteController extends Controller
      */
     public function notificarAlerta(Request $request, ServicioNotificacionesVencimiento $notificador): RedirectResponse
     {
-        $idCuota = $request->validate(['id_cuota' => 'required|integer|exists:cuota,id_cuota'])['id_cuota'];
+        $idCuota = $request->validate(['id_cuota' => 'required|integer|min:1|exists:cuota,id_cuota'])['id_cuota'];
 
         $resultado = $notificador->enviar($idCuota);
 
@@ -301,12 +301,12 @@ class ReporteController extends Controller
         $reglas = match ($tipo) {
             'morosidad' => [
                 'estado_financiero' => ['required', Rule::in(['todos', 'al_dia', 'en_mora'])],
-                'id_plan' => ['bail', 'nullable', 'integer', 'exists:plan,id_plan'],
+                'id_plan' => ['bail', 'nullable', 'integer', 'min:1', 'exists:plan,id_plan'],
                 'busqueda' => ['nullable', 'string', 'max:200'],
             ],
             'ingresos' => $reglasPeriodo + [
                 'medio_pago' => ['required', Rule::in(['todos', ...array_column(MedioPago::cases(), 'value')])],
-                'id_cuenta' => ['bail', 'nullable', 'integer', 'exists:cuenta_receptora,id_cuenta'],
+                'id_cuenta' => ['bail', 'nullable', 'integer', 'min:1', 'exists:cuenta_receptora,id_cuenta'],
             ],
             'tickets' => $reglasPeriodo + [
                 'estado' => ['required', Rule::in(['todos', ...array_column(EstadoTicket::cases(), 'value')])],

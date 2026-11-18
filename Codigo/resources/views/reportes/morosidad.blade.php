@@ -156,8 +156,8 @@
                             </td>
                             <td>{{ $item['ultimo_pago'] }}</td>
                             <td style="text-align: right;">
-                                <a href="{{ route('cuentas.show', $item['id_cliente']) }}" class="boton" style="font-size: 0.75rem; padding: 4px 8px;" title="Ver cuenta corriente e historial">
-                                    Cuenta ↗
+                                <a href="{{ $navegacionPermitida['cobranza'] ? route('cuentas.show', $item['id_cliente']) : route('clientes.show', $item['id_cliente']) }}" class="boton" style="font-size: 0.75rem; padding: 4px 8px;" title="Ver detalle del cliente">
+                                    {{ $navegacionPermitida['cobranza'] ? 'Cuenta' : 'Ficha' }} ↗
                                 </a>
                             </td>
                         </tr>

@@ -5,7 +5,7 @@
     <div>
         <p class="sobrelinea">Entorno local</p>
         <h1>Simulador de WhatsApp</h1>
-        <p>Probá los flujos del Módulo 2 sin credenciales, número real ni consumo de OpenAI.</p>
+        <p>Probá los flujos del Módulo 2 sin credenciales, número real ni consumo de IA externa.</p>
     </div>
 </div>
 
@@ -13,7 +13,7 @@
     <form class="formulario" method="POST" action="{{ route('simulador-whatsapp.store') }}">
         @csrf
         <label>Número del cliente
-            <input name="telefono" value="{{ old('telefono', '5493704000000') }}" required placeholder="5493704000000">
+            <input name="telefono" type="tel" maxlength="40" value="{{ old('telefono', '5493704000000') }}" required placeholder="5493704000000">
         </label>
         <label>Tipo de mensaje
             <select name="tipo" required>
@@ -25,7 +25,7 @@
         <label>Contenido
             <textarea name="contenido" rows="5" maxlength="4096" placeholder="Ejemplo: 1, quiero registrar un reclamo, o un DNI">{{ old('contenido') }}</textarea>
         </label>
-        <p class="texto-suave">Opciones del menú: 1 cuenta, 2 reclamo, 3 comprobante, 4 operador. Para adjuntos, primero enviá la opción 3.</p>
+        <p class="texto-suave">Opciones del menú: 1 cuenta, 2 reclamo, 3 comprobante, 4 operador, 5 datos de pago. Para adjuntos, primero enviá la opción 3.</p>
         <div class="acciones"><button type="submit">Procesar mensaje</button></div>
     </form>
 </section>

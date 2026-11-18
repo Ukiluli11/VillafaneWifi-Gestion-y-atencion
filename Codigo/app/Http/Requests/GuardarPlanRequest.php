@@ -24,8 +24,8 @@ class GuardarPlanRequest extends FormRequest
     {
         return [
             'nombre' => ['required', 'string', 'max:100'],
-            'velocidad' => ['required', 'string', 'max:50'],
-            'precio_vigente' => ['required', 'numeric', 'gt:0', 'decimal:0,2'],
+            'velocidad' => ['required', 'string', 'max:50', 'not_regex:~(?:\A|/|\s)[-−]\s*[0-9]~u'],
+            'precio_vigente' => ['required', 'numeric', 'gt:0', 'max:99999999.99', 'decimal:0,2'],
         ];
     }
 }

@@ -36,6 +36,28 @@ class FiltrosPanelTest extends TestCase
             ->assertOk()->assertSee('Prueba Comercio Activo')->assertDontSee('Prueba Comercio Suspendido')->assertDontSee('Prueba Particular');
     }
 
+    public function test_clientes_combina_localidad_y_presencia_de_whatsapp_con_los_filtros_existentes(): void
+    {
+        $cliente = Cliente::factory()->create([
+            'nombre_razon_social' => 'Prueba Comercial', 'localidad_contacto' => '  Villafane  ',
+            'estado' => 'activo', 'tipo_cliente' => 'comercio', 'telefono_whatsapp' => null,
+        ]);
+        Cliente::factory()->create([
+            'nombre_razon_social' => 'Prueba Comercial con contacto', 'localidad_contacto' => 'Villafane',
+            'estado' => 'activo', 'tipo_cliente' => 'comercio',
+        ]);
+        Cliente::factory()->create([
+            'nombre_razon_social' => 'Prueba Comercial de Formosa', 'localidad_contacto' => 'Formosa',
+            'estado' => 'activo', 'tipo_cliente' => 'comercio', 'telefono_whatsapp' => null,
+        ]);
+
+        $this->get(route('clientes.index', [
+            'buscar' => 'Prueba', 'estado' => 'activo', 'tipo' => 'comercio',
+            'localidad' => 'Villafane', 'whatsapp' => 'sin_numero',
+        ]))->assertOk()->assertViewHas('localidades', ['Formosa', 'Villafane'])
+            ->assertViewHas('clientes', fn ($resultado): bool => $resultado->total() === 1 && $resultado->first()->is($cliente));
+    }
+
     public function test_puede_buscar_servicios_y_filtrarlos_por_plan_y_estado(): void
     {
         $plan = Plan::factory()->create();

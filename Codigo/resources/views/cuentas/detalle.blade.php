@@ -131,7 +131,7 @@
                     @endforeach
                 </select>
             </label>
-            <label>Fecha<input type="date" name="fecha" value="{{ now()->toDateString() }}"></label>
+            <label>Fecha<input type="date" name="fecha" max="{{ now('America/Argentina/Buenos_Aires')->toDateString() }}" value="{{ now('America/Argentina/Buenos_Aires')->toDateString() }}" required></label>
             <button>Registrar pago</button>
         </div>
     @endif

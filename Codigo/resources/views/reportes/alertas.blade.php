@@ -86,7 +86,7 @@
                             <td><strong>#{{ $cuota->id_cuota }}</strong></td>
                             <td>
                                 @if ($cliente)
-                                    <a href="{{ route('cuentas.show', $cliente->id_cliente) }}" style="color: inherit; font-weight: 600; text-decoration: underline;">
+                                    <a href="{{ $navegacionPermitida['cobranza'] ? route('cuentas.show', $cliente->id_cliente) : route('clientes.show', $cliente->id_cliente) }}" style="color: inherit; font-weight: 600; text-decoration: underline;">
                                         {{ $cliente->nombre_razon_social }}
                                     </a>
                                     <br><small style="color: var(--texto-suave);">DNI: {{ $cliente->numero_documento }}</small>
@@ -122,7 +122,9 @@
                                 @endif
                             </td>
                             <td style="text-align: right;">
-                                @if (! $cliente?->recordatorios_whatsapp)
+                                @if (! $navegacionPermitida['gestionar_cobranza'])
+                                    <span class="texto-suave">Envío reservado a cobranza</span>
+                                @elseif (! $cliente?->recordatorios_whatsapp)
                                     <span style="color: var(--texto-suave);">Recordatorios desactivados</span>
                                 @elseif (! $cliente->telefono_whatsapp)
                                     <span style="color: var(--texto-suave);">Sin número de WhatsApp</span>

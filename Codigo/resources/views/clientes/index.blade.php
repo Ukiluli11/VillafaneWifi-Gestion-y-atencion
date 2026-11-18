@@ -6,6 +6,17 @@
     @if ($navegacionPermitida['gestionar_clientes'])<a class="boton" href="{{ route('clientes.create') }}">+ Nuevo cliente</a>@endif
 </div>
 <x-filtros-listado :ruta="route('clientes.index')" :busqueda="$busqueda" placeholder="Nombre, documento, WhatsApp o localidad">
+    <label>Localidad
+        <select name="localidad">
+            <option value="">Todas las localidades</option>
+            @if ($localidad !== '' && ! in_array($localidad, $localidades, true))
+                <option value="{{ $localidad }}" selected>{{ $localidad }}</option>
+            @endif
+            @foreach ($localidades as $opcion)
+                <option value="{{ $opcion }}" @selected($localidad === $opcion)>{{ $opcion }}</option>
+            @endforeach
+        </select>
+    </label>
     <label>Estado
         <select name="estado">
             <option value="">Todos los estados</option>
@@ -20,6 +31,13 @@
             @foreach (\App\Enums\TipoCliente::cases() as $opcion)
                 <option value="{{ $opcion->value }}" @selected($tipo === $opcion)>{{ ucfirst($opcion->value) }}</option>
             @endforeach
+        </select>
+    </label>
+    <label>WhatsApp
+        <select name="whatsapp">
+            <option value="">Todos los clientes</option>
+            <option value="con_numero" @selected($conWhatsapp === true)>Con número</option>
+            <option value="sin_numero" @selected($conWhatsapp === false)>Sin número</option>
         </select>
     </label>
 </x-filtros-listado>

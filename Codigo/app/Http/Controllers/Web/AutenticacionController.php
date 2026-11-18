@@ -38,6 +38,11 @@ class AutenticacionController extends Controller
             return back()->withErrors(['nombre_usuario' => 'Las credenciales no son válidas.'])->onlyInput('nombre_usuario');
         }
         $request->session()->regenerate();
+        $guardia = Auth::guard();
+        $request->session()->put(
+            'password_hash_'.Auth::getDefaultDriver(),
+            $guardia->hashPasswordForCookie($guardia->user()->getAuthPassword()),
+        );
 
         return redirect()->intended(route('inicio'));
     }
