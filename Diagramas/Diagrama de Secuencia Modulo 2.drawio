@@ -1,394 +1,305 @@
-<?xml version='1.0' encoding='utf-8'?>
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
-  <diagram id="seq-m2-consolidado" name="Secuencia M2 - Atención por WhatsApp">
-    <mxGraphModel dx="2600" dy="3400" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2050" pageHeight="3250" math="0" shadow="0">
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="Electron" agent="draw.io" version="24.0.0">
+  <diagram id="seq_m2" name="Secuencia Modulo 2">
+    <mxGraphModel dx="2750" dy="1580" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2550" pageHeight="1380" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
 
+        <!-- BANNER DE TITULO ESTANDARIZADO -->
+        <mxCell id="title_banner" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;DIAGRAMA DE SECUENCIA — MÓDULO 2: ATENCIÓN, ASISTENCIA CON IA Y ESCALADO (WHATSAPP)&lt;/b&gt;&lt;br&gt;&lt;i style=&quot;font-size: 13px; color: #475569;&quot;&gt;Recepción Omnicanal, Clasificación Semántica con Gemini, Autogestión y Derivación Humana (RF-10 al RF-18)&lt;/i&gt;&lt;/font&gt;" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#475569;strokeWidth=1.5;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="50" y="20" width="2450" height="54" as="geometry" />
+        </mxCell>
+    
+        <mxCell id="p1" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Cliente&lt;br&gt;(Abonado)&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontFamily=Times New Roman;fontStyle=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontColor=#1B5E20;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="50" y="94" width="175" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="line_p1" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#94A3B8;strokeWidth=1.2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="137" y="148" as="sourcePoint" />
+            <mxPoint x="137" y="1340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="p2" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;WhatsApp Cloud API&lt;br&gt;(Gateway Meta)&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontFamily=Times New Roman;fontStyle=1;fillColor=#FCE4EC;strokeColor=#C2185B;strokeWidth=1.5;fontColor=#880E4F;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="380" y="94" width="175" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="line_p2" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#94A3B8;strokeWidth=1.2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="467" y="148" as="sourcePoint" />
+            <mxPoint x="467" y="1340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="p3" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;WebhookController&lt;br&gt;(Boundary / Control)&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontFamily=Times New Roman;fontStyle=1;fillColor=#EDE7F6;strokeColor=#512DA8;strokeWidth=1.5;fontColor=#311B92;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="710" y="94" width="175" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="line_p3" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#94A3B8;strokeWidth=1.2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="797" y="148" as="sourcePoint" />
+            <mxPoint x="797" y="1340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="p4" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;ServicioConversaciones&lt;br&gt;(Dominio)&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontFamily=Times New Roman;fontStyle=1;fillColor=#FFF8E1;strokeColor=#F57F17;strokeWidth=1.5;fontColor=#E65100;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="94" width="175" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="line_p4" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#94A3B8;strokeWidth=1.2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1127" y="148" as="sourcePoint" />
+            <mxPoint x="1127" y="1340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="p5" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;IAService&lt;br&gt;(Google Gemini)&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontFamily=Times New Roman;fontStyle=1;fillColor=#FCE4EC;strokeColor=#C2185B;strokeWidth=1.5;fontColor=#880E4F;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1370" y="94" width="175" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="line_p5" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#94A3B8;strokeWidth=1.2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1457" y="148" as="sourcePoint" />
+            <mxPoint x="1457" y="1340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="p6" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Base de Datos&lt;br&gt;(MariaDB)&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontFamily=Times New Roman;fontStyle=1;fillColor=#ECEFF1;strokeColor=#455A64;strokeWidth=1.5;fontColor=#263238;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1700" y="94" width="175" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="line_p6" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#94A3B8;strokeWidth=1.2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1787" y="148" as="sourcePoint" />
+            <mxPoint x="1787" y="1340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="p7" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;ConversacionController&lt;br&gt;(Panel Web)&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontFamily=Times New Roman;fontStyle=1;fillColor=#EDE7F6;strokeColor=#512DA8;strokeWidth=1.5;fontColor=#311B92;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="2030" y="94" width="175" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="line_p7" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#94A3B8;strokeWidth=1.2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2117" y="148" as="sourcePoint" />
+            <mxPoint x="2117" y="1340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="p8" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Empleado / Operador&lt;br&gt;(Panel Web)&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontFamily=Times New Roman;fontStyle=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontColor=#1B5E20;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="2330" y="94" width="175" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="line_p8" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#94A3B8;strokeWidth=1.2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2417" y="148" as="sourcePoint" />
+            <mxPoint x="2417" y="1340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m1" value="&lt;font face=&quot;Times New Roman&quot;&gt;1: Envía mensaje WhatsApp ('Hola, necesito consultar mi saldo')&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="137" y="180" as="sourcePoint" />
+            <mxPoint x="467" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m2" value="&lt;font face=&quot;Times New Roman&quot;&gt;POST /webhook (Payload entrante de Meta)&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="467" y="215" as="sourcePoint" />
+            <mxPoint x="797" y="215" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m3" value="&lt;font face=&quot;Times New Roman&quot;&gt;procesarWebhook(payload)&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="797" y="255" as="sourcePoint" />
+            <mxPoint x="1127" y="255" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m4" value="&lt;font face=&quot;Times New Roman&quot;&gt;INSERT INTO mensaje (id_conversacion, remitente, contenido)&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1127" y="290" as="sourcePoint" />
+            <mxPoint x="1787" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m5" value="&lt;font face=&quot;Times New Roman&quot;&gt;SELECT * FROM cliente WHERE telefono_whatsapp = ?&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1127" y="325" as="sourcePoint" />
+            <mxPoint x="1787" y="325" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m6" value="&lt;font face=&quot;Times New Roman&quot;&gt;return: Cliente identificado con servicios activos&lt;/font&gt;" style="endArrow=open;dashed=1;html=1;strokeColor=#475569;strokeWidth=1.2;fontSize=11;fontFamily=Times New Roman;fontStyle=2;fontColor=#334155;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1787" y="360" as="sourcePoint" />
+            <mxPoint x="1127" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m7" value="&lt;font face=&quot;Times New Roman&quot;&gt;interpretarIntencion(mensaje, contexto)&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1127" y="400" as="sourcePoint" />
+            <mxPoint x="1457" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m8" value="&lt;font face=&quot;Times New Roman&quot;&gt;return: Intención detectada ('consulta_cuenta', conf: 0.98)&lt;/font&gt;" style="endArrow=open;dashed=1;html=1;strokeColor=#475569;strokeWidth=1.2;fontSize=11;fontFamily=Times New Roman;fontStyle=2;fontColor=#334155;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1457" y="435" as="sourcePoint" />
+            <mxPoint x="1127" y="435" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="alt_ia_box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#64748B;strokeWidth=1.2;" vertex="1" parent="1">
+          <mxGeometry x="117" y="465" width="2320" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="alt_ia_tag" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;alt&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#475569;strokeColor=#475569;fontColor=#FFFFFF;fontSize=11;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="117" y="465" width="45" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="alt_ia_c1" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;i&gt;[intencion == 'consulta_cuenta' — Autogestión por Bot (RF-13)]&lt;/i&gt;&lt;/font&gt;" style="text;html=1;fontSize=11;fontColor=#1E293B;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="172" y="467" width="2255" height="20" as="geometry" />
+        </mxCell>
+    
+        <mxCell id="alt_ia_div" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#64748B;strokeWidth=1.2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="117" y="680" as="sourcePoint" />
+            <mxPoint x="2437" y="680" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="alt_ia_c2" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;i&gt;[intención no reconocida — Fallo de IA y Escalado Humano (RF-11, RF-15)]&lt;/i&gt;&lt;/font&gt;" style="text;html=1;fontSize=11;fontColor=#1E293B;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="129" y="682" width="2296" height="20" as="geometry" />
+        </mxCell>
         
-        <mxCell id="title" parent="1" style="text;html=1;fontSize=13;fontStyle=1;align=center;fillColor=none;strokeColor=none;fontColor=default;" value="Diagrama de Secuencia — Módulo 2&#10;Casos de uso: Atención, Asistencia con IA y Escalado por WhatsApp (RF-10 al RF-19)" vertex="1">
-          <mxGeometry height="48" width="1860" x="40" y="8" as="geometry" />
-        </mxCell>
-
-        
-        <mxCell id="p_cli" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#455A64;strokeColor=#455A64;fontColor=#FFFFFF;verticalAlign=middle;" value="Cliente&#10;(Actor)" vertex="1">
-          <mxGeometry height="54" width="170" x="10" y="62" as="geometry" />
-        </mxCell>
-
-        <mxCell id="p_wa" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#2E7D32;strokeColor=#2E7D32;fontColor=#FFFFFF;verticalAlign=middle;" value="WhatsApp Cloud API&#10;(Gateway Externo)" vertex="1">
-          <mxGeometry height="54" width="170" x="245" y="62" as="geometry" />
-        </mxCell>
-
-        <mxCell id="p_ctrl" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;verticalAlign=middle;" value="WebhookWhatsappController&#10;(Boundary / Control)" vertex="1">
-          <mxGeometry height="54" width="170" x="490" y="62" as="geometry" />
-        </mxCell>
-
-        <mxCell id="p_conv" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;verticalAlign=middle;" value="ServicioConversaciones&#10;(Dominio / Control)" vertex="1">
-          <mxGeometry height="54" width="170" x="735" y="62" as="geometry" />
-        </mxCell>
-
-        <mxCell id="p_ident" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#B28900;strokeColor=#B28900;fontColor=#FFFFFF;verticalAlign=middle;" value="ServicioIdentificacion&#10;(Dominio / Control)" vertex="1">
-          <mxGeometry height="54" width="170" x="980" y="62" as="geometry" />
-        </mxCell>
-
-        <mxCell id="p_ia" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#6A1B9A;strokeColor=#6A1B9A;fontColor=#FFFFFF;verticalAlign=middle;" value="IAService&#10;(Adaptador Externo)" vertex="1">
-          <mxGeometry height="54" width="170" x="1225" y="62" as="geometry" />
-        </mxCell>
-
-        <mxCell id="p_bd" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#37474F;strokeColor=#37474F;fontColor=#FFFFFF;verticalAlign=middle;" value="Base de Datos&#10;(MariaDB / Persistencia)" vertex="1">
-          <mxGeometry height="54" width="170" x="1470" y="62" as="geometry" />
-        </mxCell>
-
-        <mxCell id="p_emp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fontStyle=1;fillColor=#C62828;strokeColor=#C62828;fontColor=#FFFFFF;verticalAlign=middle;" value="Empleado / Admin&#10;(Panel Web)" vertex="1">
-          <mxGeometry height="54" width="170" x="1715" y="62" as="geometry" />
-        </mxCell>
-
-        
-        <mxCell id="line_cli" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="95" y="116" as="sourcePoint" /><mxPoint x="95" y="3180" as="targetPoint" /></mxGeometry>
-        </mxCell>
-        <mxCell id="line_wa" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="116" as="sourcePoint" /><mxPoint x="330" y="3180" as="targetPoint" /></mxGeometry>
-        </mxCell>
-        <mxCell id="line_ctrl" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="116" as="sourcePoint" /><mxPoint x="575" y="3180" as="targetPoint" /></mxGeometry>
-        </mxCell>
-        <mxCell id="line_conv" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="116" as="sourcePoint" /><mxPoint x="820" y="3180" as="targetPoint" /></mxGeometry>
-        </mxCell>
-        <mxCell id="line_ident" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1065" y="116" as="sourcePoint" /><mxPoint x="1065" y="3180" as="targetPoint" /></mxGeometry>
-        </mxCell>
-        <mxCell id="line_ia" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1310" y="116" as="sourcePoint" /><mxPoint x="1310" y="3180" as="targetPoint" /></mxGeometry>
-        </mxCell>
-        <mxCell id="line_bd" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="116" as="sourcePoint" /><mxPoint x="1555" y="3180" as="targetPoint" /></mxGeometry>
-        </mxCell>
-        <mxCell id="line_emp" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=1.5;" value="">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1800" y="116" as="sourcePoint" /><mxPoint x="1800" y="3180" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="sec1_banner" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=11;fontStyle=1;align=left;spacingLeft=10;" value="1. Recepción de mensaje, registro de historial e identificación de cliente (RF-10, RF-12, RF-16)" vertex="1">
-          <mxGeometry height="26" width="1860" x="40" y="130" as="geometry" />
-        </mxCell>
-
-        <mxCell id="m_1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#333;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="envía mensaje de texto por WhatsApp">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="95" y="180" as="sourcePoint" /><mxPoint x="330" y="180" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_2" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="POST /webhooks/whatsapp {entry: [{changes: [messages: [...]]}]}">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="225" as="sourcePoint" /><mxPoint x="575" y="225" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_3" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="procesarEntrada(eventoWebhook)">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="270" as="sourcePoint" /><mxPoint x="820" y="270" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="obtenerOCrearConversacion(telefonoWhatsapp)">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="315" as="sourcePoint" /><mxPoint x="1555" y="315" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_5" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: conversacionActiva (id: 45, estado: 'abierta')">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="355" as="sourcePoint" /><mxPoint x="820" y="355" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_6" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="registrarMensaje(idConv, 'cliente', texto, NOW()) [RF-16]">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="395" as="sourcePoint" /><mxPoint x="1555" y="395" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_7" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="identificarCliente(telefono, textoMensaje)">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="440" as="sourcePoint" /><mxPoint x="1065" y="440" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_8" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="SELECT * FROM cliente WHERE telefono_whatsapp = :tel OR numero_documento = :dni [RF-12]">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1065" y="480" as="sourcePoint" /><mxPoint x="1555" y="480" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_9" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: objetoCliente | null">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="520" as="sourcePoint" /><mxPoint x="1065" y="520" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="box_alt_ident" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#B28900;strokeWidth=1.5;" value="" vertex="1">
-          <mxGeometry height="160" width="1860" x="40" y="540" as="geometry" />
-        </mxCell>
-        <mxCell id="lbl_alt_ident" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B28900;strokeColor=#B28900;fontColor=#FFFFFF;fontSize=11;fontStyle=1;align=center;" value="alt" vertex="1">
-          <mxGeometry height="22" width="40" x="40" y="540" as="geometry" />
-        </mxCell>
-        <mxCell id="cond_no_reg" parent="1" style="text;html=1;fontSize=10;fontStyle=2;fillColor=none;strokeColor=none;align=left;fontColor=#B28900;" value="[cliente == null — Número no registrado como cliente en el sistema]" vertex="1">
-          <mxGeometry height="20" width="550" x="90" y="540" as="geometry" />
-        </mxCell>
-
-        <mxCell id="m_10" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="ofrecerRegistroYPlanes(): enviarMensaje(tel, '¡Bienvenido! ¿Deseas contratar un plan?') [RF-12]">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1065" y="590" as="sourcePoint" /><mxPoint x="330" y="590" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_11" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="entrega opciones de catálogo y registro a cliente">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="630" as="sourcePoint" /><mxPoint x="95" y="630" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_12" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: flujo registro iniciado / detener procesamiento">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1065" y="670" as="sourcePoint" /><mxPoint x="820" y="670" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="sec2_banner" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=11;fontStyle=1;align=left;spacingLeft=10;" value="2. Reconocimiento de intención mediante IA (RF-11)" vertex="1">
-          <mxGeometry height="26" width="1860" x="40" y="730" as="geometry" />
-        </mxCell>
-
-        <mxCell id="m_13" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#6A1B9A;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="interpretarIntencion(mensajeTexto, contextoConversacion) [RF-11]">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="780" as="sourcePoint" /><mxPoint x="1310" y="780" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_14" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#6A1B9A;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: {intencion: 'consulta_cuenta' | 'reclamo_soporte' | 'envio_comprobante' | 'desconocida', confianza: 0.94}">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1310" y="825" as="sourcePoint" /><mxPoint x="820" y="825" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="box_alt_intenciones" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#1565C0;strokeWidth=1.5;" value="" vertex="1">
-          <mxGeometry height="1140" width="1860" x="40" y="870" as="geometry" />
-        </mxCell>
-        <mxCell id="lbl_alt_int" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1565C0;strokeColor=#1565C0;fontColor=#FFFFFF;fontSize=11;fontStyle=1;align=center;" value="alt" vertex="1">
-          <mxGeometry height="22" width="40" x="40" y="870" as="geometry" />
-        </mxCell>
-
-        
-        <mxCell id="cond_cuenta" parent="1" style="text;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=none;align=left;fontColor=#2E7D32;" value="[CASO 1: intencion == 'consulta_cuenta' — RF-13]" vertex="1">
-          <mxGeometry height="20" width="500" x="90" y="870" as="geometry" />
-        </mxCell>
-
-        <mxCell id="m_c1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="consultarEstadoCuenta(idCliente): SELECT c.* FROM cuota c JOIN servicio s ON c.id_servicio=s.id WHERE s.id_cliente=:id">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="920" as="sourcePoint" /><mxPoint x="1555" y="920" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_c2" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: {cuotasPendientes: 1, montoTotal: $12500, proximoVencimiento: '10/10/2026', estado: 'al_dia'}">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="960" as="sourcePoint" /><mxPoint x="820" y="960" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_c3" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarMensajeWhatsApp(tel, 'Tu estado es AL DÍA. Próximo vencimiento 10/10 por $12.500.')">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1005" as="sourcePoint" /><mxPoint x="330" y="1005" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_c4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="entrega información de estado de cuenta en el chat">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="1045" as="sourcePoint" /><mxPoint x="95" y="1045" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="sep_alt_1" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#888888;strokeWidth=1.5;" value="">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="40" y="1090" as="sourcePoint" /><mxPoint x="1900" y="1090" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="cond_reclamo" parent="1" style="text;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=none;align=left;fontColor=#C62828;" value="[CASO 2: intencion == 'reclamo_soporte' — RF-14]" vertex="1">
-          <mxGeometry height="20" width="500" x="90" y="1100" as="geometry" />
-        </mxCell>
-
-        <mxCell id="m_r1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="crearTicketReclamo(idConv, idServicio, descripcion): INSERT INTO ticket (id_conv, id_serv, tipo='tecnico', estado='pendiente')">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1150" as="sourcePoint" /><mxPoint x="1555" y="1150" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_r2" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: idTicket (#1042 generado con éxito)">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="1195" as="sourcePoint" /><mxPoint x="820" y="1195" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_r3" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarMensajeWhatsApp(tel, 'Tu reclamo fue registrado bajo el Ticket #1042. El área técnica lo revisará.')">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1240" as="sourcePoint" /><mxPoint x="330" y="1240" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_r4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="entrega confirmación de ticket al cliente">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="1280" as="sourcePoint" /><mxPoint x="95" y="1280" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="sep_alt_2" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#888888;strokeWidth=1.5;" value="">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="40" y="1325" as="sourcePoint" /><mxPoint x="1900" y="1325" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="cond_pago" parent="1" style="text;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=none;align=left;fontColor=#E65100;" value="[CASO 3: intencion == 'envio_comprobante' — Cliente envía imagen o PDF de comprobante — RF-19]" vertex="1">
-          <mxGeometry height="20" width="600" x="90" y="1335" as="geometry" />
-        </mxCell>
-
-        <mxCell id="m_p1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#333;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="envía archivo adjunto (imagen JPG/PNG o PDF)">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="95" y="1385" as="sourcePoint" /><mxPoint x="330" y="1385" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_p2" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="POST /webhooks/whatsapp {messages: [{type: 'image', id: 'media_123'}]}">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="1425" as="sourcePoint" /><mxPoint x="575" y="1425" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_p3" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="descargarYValidarFormato(mediaId): valida mimetype JPG/PNG/PDF y calcula hash SHA-256">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="1470" as="sourcePoint" /><mxPoint x="820" y="1470" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_p4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="resguardarArchivo(ruta, hash): INSERT INTO comprobante (id_mensaje, ruta_archivo, hash, estado='pendiente')">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1515" as="sourcePoint" /><mxPoint x="1555" y="1515" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_p5" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: comprobante guardado (id: 88, estado: 'pendiente')">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="1555" as="sourcePoint" /><mxPoint x="820" y="1555" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_p6" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarMensajeWhatsApp(tel, '¡Comprobante recibido con éxito! Ha sido guardado para verificación.')">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1600" as="sourcePoint" /><mxPoint x="330" y="1600" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_p7" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="entrega confirmación de recepción a cliente">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="1640" as="sourcePoint" /><mxPoint x="95" y="1640" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="sep_alt_3" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#888888;strokeWidth=1.5;" value="">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="40" y="1685" as="sourcePoint" /><mxPoint x="1900" y="1685" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="cond_cierre_bot" parent="1" style="text;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=none;align=left;fontColor=#455A64;" value="[CASO 4: Trámite resuelto por bot — Cierre automático de sesión — RF-17]" vertex="1">
-          <mxGeometry height="20" width="550" x="90" y="1695" as="geometry" />
-        </mxCell>
-
-        <mxCell id="m_cb1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#455A64;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="finalizarSesionBot(): UPDATE conversacion SET estado='cerrada', fecha_hora_cierre=NOW() WHERE id=:id">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1745" as="sourcePoint" /><mxPoint x="1555" y="1745" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_cb2" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: conversacion marcada como cerrada">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="1785" as="sourcePoint" /><mxPoint x="820" y="1785" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_cb3" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarMensajeWhatsApp(tel, '¿Hay algo más en lo que pueda ayudarte? ¡Gracias por comunicarte!')">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="1830" as="sourcePoint" /><mxPoint x="330" y="1830" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_cb4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="recibe mensaje de despedida y cierre en WhatsApp">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="1870" as="sourcePoint" /><mxPoint x="95" y="1870" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="sec4_banner" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=11;fontStyle=1;align=left;spacingLeft=10;" value="3. Manejo de fallos de interpretación, escalado a atención humana y cierre (RF-11, RF-15, RF-17)" vertex="1">
-          <mxGeometry height="26" width="1860" x="40" y="1930" as="geometry" />
-        </mxCell>
-
-        <mxCell id="box_alt_fallos" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#C62828;strokeWidth=1.5;" value="" vertex="1">
-          <mxGeometry height="650" width="1860" x="40" y="1970" as="geometry" />
-        </mxCell>
-        <mxCell id="lbl_alt_fallos" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C62828;strokeColor=#C62828;fontColor=#FFFFFF;fontSize=11;fontStyle=1;align=center;" value="alt" vertex="1">
-          <mxGeometry height="22" width="40" x="40" y="1970" as="geometry" />
-        </mxCell>
-
-        
-        <mxCell id="cond_primer_fallo" parent="1" style="text;html=1;fontSize=10;fontStyle=2;fillColor=none;strokeColor=none;align=left;fontColor=#C62828;" value="[intentosInterpretacion == 1 — Primer fallo de IA: solicitar reformulación — RF-11]" vertex="1">
-          <mxGeometry height="20" width="550" x="90" y="1970" as="geometry" />
-        </mxCell>
-
-        <mxCell id="m_f1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="incrementarIntentos(idConv): UPDATE conversacion SET intentos = intentos + 1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2015" as="sourcePoint" /><mxPoint x="1555" y="2015" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_f2" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarMensajeWhatsApp(tel, 'No logré entender tu mensaje. ¿Podrías indicarme con otras palabras?')">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2060" as="sourcePoint" /><mxPoint x="330" y="2060" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_f3" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="solicita reformular consulta al cliente">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="2100" as="sourcePoint" /><mxPoint x="95" y="2100" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="sep_fallo" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;strokeColor=#888888;strokeWidth=1.5;" value="">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="40" y="2140" as="sourcePoint" /><mxPoint x="1900" y="2140" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="cond_segundo_fallo" parent="1" style="text;html=1;fontSize=10;fontStyle=2;fillColor=none;strokeColor=none;align=left;fontColor=#C62828;" value="[intentosInterpretacion &gt;= 2 o cliente solicita hablar con humano — Derivación automática — RF-11, RF-15]" vertex="1">
-          <mxGeometry height="20" width="700" x="90" y="2145" as="geometry" />
-        </mxCell>
-
-        <mxCell id="m_e1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="escalarConversacion(idConv): UPDATE conversacion SET modo_atencion='humano', estado='escalada'">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2190" as="sourcePoint" /><mxPoint x="1555" y="2190" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_e2" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarMensajeWhatsApp(tel, 'Te transferimos con un operador. Un asesor responderá a la brevedad.')">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2235" as="sourcePoint" /><mxPoint x="330" y="2235" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_e3" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="notificarPanelWeb('Alerta: conversación escalada esperando atención')">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2280" as="sourcePoint" /><mxPoint x="1800" y="2280" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_e4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="tomarControlConversacion(idConv): POST /conversaciones/{id}/tomar [RF-15]">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1800" y="2330" as="sourcePoint" /><mxPoint x="575" y="2330" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_e5" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="asignarOperador(idConv, idUsuario): UPDATE conversacion SET id_usuario_atencion=:id">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="2375" as="sourcePoint" /><mxPoint x="1555" y="2375" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_e6" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="responderDesdePanel(idConv, texto): POST /conversaciones/{id}/responder">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1800" y="2425" as="sourcePoint" /><mxPoint x="575" y="2425" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_e7" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarMensajeManual(tel, texto): registrarMensaje(emisor='empleado') y enviar vía API">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="2470" as="sourcePoint" /><mxPoint x="330" y="2470" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_e8" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="recibe respuesta humana directa del empleado">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="2510" as="sourcePoint" /><mxPoint x="95" y="2510" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_e9" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#C62828;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="cerrarAtencionEscalada(idConv): POST /conversaciones/{id}/cerrar [RF-17]">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1800" y="2555" as="sourcePoint" /><mxPoint x="575" y="2555" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_e10" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="cerrarConversacion(): UPDATE conversacion SET estado='cerrada', fin_atencion=NOW()">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="2595" as="sourcePoint" /><mxPoint x="1555" y="2595" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="sec5_banner" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#B28900;fontSize=11;fontStyle=1;align=left;spacingLeft=10;" value="4. Proceso programado: Notificación automática de vencimientos por WhatsApp (RF-18)" vertex="1">
-          <mxGeometry height="26" width="1860" x="40" y="2650" as="geometry" />
-        </mxCell>
-
-        <mxCell id="m_v1" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="cron: notificar-vencimientos diario (php artisan whatsapp:notificar-vencimientos) [RF-18]">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="575" y="2700" as="sourcePoint" /><mxPoint x="820" y="2700" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_v2" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="buscarCuotasPorVencerOVencidas(): SELECT c.*, cl.telefono_whatsapp FROM cuota c JOIN servicio s ON c.id_servicio=s.id JOIN cliente cl ON s.id_cliente=cl.id WHERE c.estado != 'pagada' AND c.fecha_vencimiento &lt;= CURDATE() + 3">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2745" as="sourcePoint" /><mxPoint x="1555" y="2745" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_v3" edge="1" parent="1" style="endArrow=open;startArrow=none;endFill=0;dashed=1;html=1;strokeColor=#37474F;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="return: listaCuotasANotificar">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="2790" as="sourcePoint" /><mxPoint x="820" y="2790" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="box_loop_notif" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#B28900;strokeWidth=1.5;" value="" vertex="1">
-          <mxGeometry height="160" width="1860" x="40" y="2820" as="geometry" />
-        </mxCell>
-        <mxCell id="lbl_loop_notif" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B28900;strokeColor=#B28900;fontColor=#FFFFFF;fontSize=11;fontStyle=1;align=center;" value="loop" vertex="1">
-          <mxGeometry height="22" width="40" x="40" y="2820" as="geometry" />
-        </mxCell>
-        <mxCell id="cond_loop_notif" parent="1" style="text;html=1;fontSize=10;fontStyle=2;fillColor=none;strokeColor=none;align=left;fontColor=#B28900;" value="[por cada cliente con cuota próxima a vencer o vencida]" vertex="1">
-          <mxGeometry height="20" width="450" x="90" y="2820" as="geometry" />
-        </mxCell>
-
-        <mxCell id="m_v4" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#B28900;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="enviarPlantillaWhatsApp(tel, 'Tu servicio de Villafañe Wifi tiene una cuota por vencer el DD/MM por $MONTO.')">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2875" as="sourcePoint" /><mxPoint x="330" y="2875" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_v5" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#2E7D32;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="entrega notificación automática de aviso de vencimiento en WhatsApp">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="330" y="2915" as="sourcePoint" /><mxPoint x="95" y="2915" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m_v6" edge="1" parent="1" style="endArrow=block;startArrow=none;endFill=1;html=1;strokeColor=#1565C0;fontSize=10;align=center;verticalAlign=bottom;labelBackgroundColor=#ffffff;" value="registrarMensaje(emisor='sistema', tipo='notificacion_vencimiento')">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="820" y="2955" as="sourcePoint" /><mxPoint x="1555" y="2955" as="targetPoint" /></mxGeometry>
-        </mxCell>
-
-        
-        <mxCell id="nota_bce" parent="1" style="text;html=1;fontSize=9;fontStyle=2;fillColor=#F5F5F5;strokeColor=#CCCCCC;align=left;spacing=8;whiteSpace=wrap;" value="Nota Metodológica de Arquitectura BCE (Boundary - Control - Entity) para el Módulo 2:&#10;• Boundary: WebhookWhatsappController recibe y valida las solicitudes entrantes de la API oficial de WhatsApp Cloud API, y el Panel Web permite la interacción del Empleado.&#10;• Control / Dominio: ServicioConversaciones, ServicioIdentificacion y IAService encapsulan las reglas de negocio (orquestación del chat, identificación de clientes, clasificación de intenciones y derivación humana).&#10;• Entity: La Base de Datos MariaDB persiste las entidades Conversación, Mensaje, Cliente, Cuota, Ticket y Comprobante, manteniendo la integridad referencial y trazabilidad requerida por los requerimientos RF-10 al RF-19." vertex="1">
-          <mxGeometry height="95" width="1860" x="40" y="3030" as="geometry" />
-        </mxCell>
-
+        <mxCell id="m9" value="&lt;font face=&quot;Times New Roman&quot;&gt;obtenerEstadoCuenta(cliente) -> SELECT cuotas pendientes&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1127" y="500" as="sourcePoint" />
+            <mxPoint x="1787" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m10" value="&lt;font face=&quot;Times New Roman&quot;&gt;return: Saldo al día, próxima cuota y CBU/Alias receptores&lt;/font&gt;" style="endArrow=open;dashed=1;html=1;strokeColor=#475569;strokeWidth=1.2;fontSize=11;fontFamily=Times New Roman;fontStyle=2;fontColor=#334155;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1787" y="535" as="sourcePoint" />
+            <mxPoint x="1127" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m11" value="&lt;font face=&quot;Times New Roman&quot;&gt;enviarMensaje(telefono, textoRespuestaConSaldos)&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1127" y="575" as="sourcePoint" />
+            <mxPoint x="467" y="575" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m12" value="&lt;font face=&quot;Times New Roman&quot;&gt;Despacho de mensaje WhatsApp con botones de saldo&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="467" y="610" as="sourcePoint" />
+            <mxPoint x="137" y="610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m13" value="&lt;font face=&quot;Times New Roman&quot;&gt;UPDATE conversacion SET estado='cerrada', fin_atencion=NOW()&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1127" y="645" as="sourcePoint" />
+            <mxPoint x="1787" y="645" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m14" value="&lt;font face=&quot;Times New Roman&quot;&gt;UPDATE conversacion SET estado='esperando_humano'&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1127" y="715" as="sourcePoint" />
+            <mxPoint x="1787" y="715" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m15" value="&lt;font face=&quot;Times New Roman&quot;&gt;enviarMensaje(telefono, 'Te estamos derivando con un operador...')&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1127" y="755" as="sourcePoint" />
+            <mxPoint x="467" y="755" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m16" value="&lt;font face=&quot;Times New Roman&quot;&gt;Aviso de derivación recibido en WhatsApp del abonado&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="467" y="790" as="sourcePoint" />
+            <mxPoint x="137" y="790" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m17" value="&lt;font face=&quot;Times New Roman&quot;&gt;notificarConversacionEscalada(idConversacion)&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1127" y="830" as="sourcePoint" />
+            <mxPoint x="2117" y="830" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m18" value="&lt;font face=&quot;Times New Roman&quot;&gt;render: alerta de conversación derivada en bandeja de atención&lt;/font&gt;" style="endArrow=open;dashed=1;html=1;strokeColor=#475569;strokeWidth=1.2;fontSize=11;fontFamily=Times New Roman;fontStyle=2;fontColor=#334155;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2117" y="865" as="sourcePoint" />
+            <mxPoint x="2417" y="865" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m19" value="&lt;font face=&quot;Times New Roman&quot;&gt;2: Empleado toma control y redacta respuesta personalizada&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2417" y="905" as="sourcePoint" />
+            <mxPoint x="2117" y="905" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m20" value="&lt;font face=&quot;Times New Roman&quot;&gt;POST /conversaciones/{id}/responder {mensajeHumano}&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2117" y="940" as="sourcePoint" />
+            <mxPoint x="1127" y="940" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m21" value="&lt;font face=&quot;Times New Roman&quot;&gt;enviarMensajeManual(telefono, respuestaHumana)&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1127" y="980" as="sourcePoint" />
+            <mxPoint x="467" y="980" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m22" value="&lt;font face=&quot;Times New Roman&quot;&gt;Mensaje del operador humano recibido en WhatsApp del abonado&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="467" y="1015" as="sourcePoint" />
+            <mxPoint x="137" y="1015" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m23" value="&lt;font face=&quot;Times New Roman&quot;&gt;3: Clic en 'Cerrar Conversación' (resuelta por el operador)&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2417" y="1070" as="sourcePoint" />
+            <mxPoint x="2117" y="1070" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m24" value="&lt;font face=&quot;Times New Roman&quot;&gt;POST /conversaciones/{id}/cerrar&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2117" y="1110" as="sourcePoint" />
+            <mxPoint x="1127" y="1110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m25" value="&lt;font face=&quot;Times New Roman&quot;&gt;UPDATE conversacion SET estado='cerrada', modo='humano'&lt;/font&gt;" style="endArrow=block;html=1;strokeColor=#0F172A;strokeWidth=1.3;fontSize=11.5;fontFamily=Times New Roman;fontColor=#0F172A;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1127" y="1150" as="sourcePoint" />
+            <mxPoint x="1787" y="1150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m26" value="&lt;font face=&quot;Times New Roman&quot;&gt;return: sesión cerrada y registrada en bitácora de auditoría&lt;/font&gt;" style="endArrow=open;dashed=1;html=1;strokeColor=#475569;strokeWidth=1.2;fontSize=11;fontFamily=Times New Roman;fontStyle=2;fontColor=#334155;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1127" y="1190" as="sourcePoint" />
+            <mxPoint x="2117" y="1190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
+        <mxCell id="m27" value="&lt;font face=&quot;Times New Roman&quot;&gt;render: bandeja actualizada con conversación finalizada&lt;/font&gt;" style="endArrow=open;dashed=1;html=1;strokeColor=#475569;strokeWidth=1.2;fontSize=11;fontFamily=Times New Roman;fontStyle=2;fontColor=#334155;align=center;verticalAlign=bottom;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2117" y="1230" as="sourcePoint" />
+            <mxPoint x="2417" y="1230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+    
       </root>
     </mxGraphModel>
   </diagram>
