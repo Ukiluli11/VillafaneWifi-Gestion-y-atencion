@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
   <diagram id="general-villafane" name="Caso de uso general">
     <mxGraphModel dx="5891" dy="1609" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3500" pageHeight="2200" math="0" shadow="0">
@@ -35,7 +35,7 @@
         <mxCell id="a-admin" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeWidth=1.5;fillColor=#ECEFF1;strokeColor=#455A64;fontColor=#263238;fontStyle=1;fontSize=13;" value="Dueño / Administrador" vertex="1">
           <mxGeometry height="130" width="140" x="30" y="1380" as="geometry" />
         </mxCell>
-        <mxCell id="a-wa" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeWidth=1.5;fillColor=#E8F5E9;strokeColor=#2E7D32;fontColor=#1B5E20;fontStyle=1;fontSize=13;" value="«external»&#10;Bot de WhatsApp&#10;(Meta API)" vertex="1">
+        <mxCell id="a-wa" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeWidth=1.5;fillColor=#E8F5E9;strokeColor=#2E7D32;fontColor=#1B5E20;fontStyle=1;fontSize=13;" value="«external»&#xA;Bot de WhatsApp&#xA;(Meta API)" vertex="1">
           <mxGeometry height="130" width="140" x="3210" y="30" as="geometry" />
         </mxCell>
         <mxCell id="a-employee-pay" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeWidth=1.5;fillColor=#ECEFF1;strokeColor=#455A64;fontColor=#263238;fontStyle=1;fontSize=13;" value="Empleado" vertex="1">
@@ -226,23 +226,14 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="ea9" edge="1" parent="1" source="a-wa" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" target="uc-attend" value="">
+        <mxCell id="ea9" edge="1" parent="1" source="a-wa" style="rounded=0;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=0;exitY=0.3333;entryX=0.28;entryY=0.051;" target="uc-attend" value="">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="3210" y="145" />
-              <mxPoint x="540" y="145" />
-            </Array>
             <mxPoint x="3160" y="140" as="sourcePoint" />
-          </mxGeometry>
+          <Array as="points"><mxPoint x="3190" y="145" /><mxPoint x="720" y="145" /><mxPoint x="720" y="214" /><mxPoint x="494.4" y="214" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="ea10" edge="1" parent="1" source="a-wa" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" target="uc-receipt" value="">
+        <mxCell id="ea10" edge="1" parent="1" source="a-wa" style="rounded=0;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=0;exitY=0.22;entryX=0.5;entryY=0;" target="uc-receipt" value="">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="3020" y="43" />
-              <mxPoint x="3020" y="200" />
-              <mxPoint x="1850" y="200" />
-            </Array>
-          </mxGeometry>
+          <Array as="points"><mxPoint x="3020" y="58.6" /><mxPoint x="3020" y="155" /><mxPoint x="2070" y="155" /><mxPoint x="2070" y="225" /><mxPoint x="1850" y="225" /></Array></mxGeometry>
         </mxCell>
         <mxCell id="ea11" edge="1" parent="1" source="a-wa" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" target="uc-notify-result" value="">
           <mxGeometry relative="1" as="geometry">
@@ -322,7 +313,7 @@
         <mxCell id="ei9" edge="1" parent="1" source="uc-manage-client" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="uc-search-client" value="«include»">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ei10" edge="1" parent="1" source="uc-export" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="uc-reports" value="«extend»&#10;[solicitud exportación]">
+        <mxCell id="ei10" edge="1" parent="1" source="uc-export" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="uc-reports" value="«extend»&#xA;[solicitud exportación]">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ee1" edge="1" parent="1" source="uc-close" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="uc-intent" value="«extend» [1.er fallo]">
@@ -334,7 +325,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="ee2" edge="1" parent="1" source="uc-escalate" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="uc-attend" value="«extend»&#10;[solicitud o segundo fallo]">
+        <mxCell id="ee2" edge="1" parent="1" source="uc-escalate" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="uc-attend" value="«extend»&#xA;[solicitud o segundo fallo]">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="750" y="608" />
@@ -342,10 +333,10 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="ee3" edge="1" parent="1" source="uc-status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="uc-attend" value="«extend»&#10;[consulta de servicio]">
+        <mxCell id="ee3" edge="1" parent="1" source="uc-status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="uc-attend" value="«extend»&#xA;[consulta de servicio]">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ee4" edge="1" parent="1" source="uc-claim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="uc-attend" value="«extend»&#10;[reclamo]">
+        <mxCell id="ee4" edge="1" parent="1" source="uc-claim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="uc-attend" value="«extend»&#xA;[reclamo]">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="680" y="448" />
@@ -374,14 +365,9 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="ea13" edge="1" parent="1" source="a-employee" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" target="uc-manage-client" value="">
+        <mxCell id="ea13" edge="1" parent="1" source="a-employee" style="rounded=0;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=0.71;exitY=0;entryX=0.77;entryY=0.0792;" target="uc-manage-client" value="">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="160" y="949" />
-              <mxPoint x="160" y="910" />
-              <mxPoint x="1410" y="910" />
-            </Array>
-          </mxGeometry>
+          <Array as="points"><mxPoint x="129.4" y="910" /><mxPoint x="1469.4" y="910" /></Array></mxGeometry>
         </mxCell>
         <mxCell id="ee5" edge="1" parent="1" source="uc-close" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="uc-attend" value="«extend» [atención finalizada]">
           <mxGeometry relative="1" as="geometry">
@@ -397,7 +383,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="ee6" edge="1" parent="1" source="uc-resolve-ticket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="uc-manage-ticket" value="«extend»&#10;[problema persiste]">
+        <mxCell id="ee6" edge="1" parent="1" source="uc-resolve-ticket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;dashPattern=6 4;endArrow=open;endFill=0;strokeWidth=1.5;fontSize=11;strokeColor=#455A64;fontColor=#455A64;" target="uc-manage-ticket" value="«extend»&#xA;[problema persiste]">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="620" y="1277" />
@@ -421,25 +407,13 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="ea17" edge="1" parent="1" source="a-employee" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" target="uc-login" value="">
+        <mxCell id="ea17" edge="1" parent="1" source="a-employee" style="rounded=0;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=1;exitY=0.46;entryX=0.94;entryY=0.2625;" target="uc-login" value="">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="90" y="995" />
-              <mxPoint x="240" y="995" />
-              <mxPoint x="240" y="900" />
-              <mxPoint x="2330" y="900" />
-            </Array>
-          </mxGeometry>
+          <Array as="points"><mxPoint x="240" y="995.8" /><mxPoint x="240" y="900" /><mxPoint x="2356.8" y="900" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="ea18" edge="1" parent="1" source="a-admin" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" target="uc-login" value="">
+        <mxCell id="ea18" edge="1" parent="1" source="a-admin" style="rounded=0;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=1;exitY=0.42;entryX=0.5;entryY=1;" target="uc-login" value="">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="220" y="1435" />
-              <mxPoint x="220" y="1820" />
-              <mxPoint x="2120" y="1820" />
-              <mxPoint x="2120" y="1087" />
-            </Array>
-          </mxGeometry>
+          <Array as="points"><mxPoint x="220" y="1434.6" /><mxPoint x="220" y="1820" /><mxPoint x="2040" y="1820" /><mxPoint x="2040" y="1128" /><mxPoint x="2260" y="1128" /></Array></mxGeometry>
         </mxCell>
         <mxCell id="ea19" edge="1" parent="1" source="a-admin-report" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeWidth=2;strokeColor=#455A64;" target="uc-dashboard" value="">
           <mxGeometry relative="1" as="geometry">

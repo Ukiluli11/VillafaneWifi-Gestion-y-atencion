@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <mxfile host="Electron" agent="draw.io" version="24.0.0">
   <diagram id="dfd-contexto-nucleo" name="DFD Nivel 0 - Contexto">
     <mxGraphModel dx="2200" dy="1400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1400" math="0" shadow="0">
@@ -57,187 +57,139 @@
 
         <!-- ================= FLUJOS: COQUITO ================= -->
         <!-- Coquito -> Núcleo (Rojo, entrada) -->
-        <mxCell id="edge_coquito_in" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#FF0000;strokeColor=#FF0000;strokeWidth=1.5;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0.08;entryY=0.25;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ent_coquito" target="proc_0">
+        <mxCell id="edge_coquito_in" value="" style="rounded=0;html=1;fillColor=#FF0000;strokeColor=#FF0000;strokeWidth=1.5;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=0;exitY=0.28;entryX=0.0729;entryY=0.24;" edge="1" parent="1" source="ent_coquito" target="proc_0">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="600" y="230" />
-              <mxPoint x="600" y="600" />
-            </Array>
-          </mxGeometry>
+          <Array as="points"><mxPoint x="625" y="228" /><mxPoint x="625" y="597" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="lbl_coquito_in" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Solicitud de datos del cliente y registro de comprobantes / reclamos&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_coquito_in">
-          <mxGeometry x="0.1" y="-2" relative="1" as="geometry">
-            <mxPoint as="offset" />
+        <mxCell id="lbl_coquito_in" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Solicitud de datos del cliente y&lt;br&gt;registro de comprobantes / reclamos&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_coquito_in">
+          <mxGeometry x="-0.715" y="0" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="-25" />
           </mxGeometry>
         </mxCell>
 
         <!-- Núcleo -> Coquito (Azul, salida) -->
-        <mxCell id="edge_coquito_out" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;strokeWidth=1.5;exitX=0.02;exitY=0.38;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="proc_0" target="ent_coquito">
+        <mxCell id="edge_coquito_out" value="" style="rounded=0;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;strokeWidth=1.5;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=0.0123;exitY=0.39;entryX=0;entryY=0.72;" edge="1" parent="1" source="proc_0" target="ent_coquito">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="660" y="639" />
-              <mxPoint x="660" y="275" />
-            </Array>
-          </mxGeometry>
+          <Array as="points"><mxPoint x="570" y="642" /><mxPoint x="570" y="272" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="lbl_coquito_out" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Información de cuentas / deuda y notificaciones de avisos&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_coquito_out">
-          <mxGeometry x="0.1" y="-2" relative="1" as="geometry">
-            <mxPoint as="offset" />
+        <mxCell id="lbl_coquito_out" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Información de cuentas / deuda y&lt;br&gt;notificaciones de avisos&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_coquito_out">
+          <mxGeometry x="0.77" y="0" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="24" />
           </mxGeometry>
         </mxCell>
 
         <!-- ================= FLUJOS: MOTOR OCR (TESSERACT) ================= -->
         <!-- Núcleo -> Tesseract (Azul, salida) -->
-        <mxCell id="edge_tesseract_out" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;strokeWidth=1.5;exitX=0;exitY=0.48;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.3;entryDx=0;entryDy=0;" edge="1" parent="1" source="proc_0" target="ent_tesseract">
+        <mxCell id="edge_tesseract_out" value="" style="rounded=0;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;strokeWidth=1.5;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=0.0054;exitY=0.4267;entryX=0;entryY=0.28;" edge="1" parent="1" source="proc_0" target="ent_tesseract">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="550" y="669" />
-              <mxPoint x="550" y="655" />
-            </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="lbl_tesseract_out" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Archivo de comprobante de pago&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_tesseract_out">
-          <mxGeometry x="-0.05" y="-2" relative="1" as="geometry">
-            <mxPoint as="offset" />
+          <mxGeometry x="0" y="0" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="11" />
           </mxGeometry>
         </mxCell>
 
         <!-- Tesseract -> Núcleo (Rojo, entrada) -->
-        <mxCell id="edge_tesseract_in" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#FF0000;strokeColor=#FF0000;strokeWidth=1.5;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.58;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ent_tesseract" target="proc_0">
+        <mxCell id="edge_tesseract_in" value="" style="rounded=0;html=1;fillColor=#FF0000;strokeColor=#FF0000;strokeWidth=1.5;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=0;exitY=0.72;entryX=0.0054;entryY=0.5733;" edge="1" parent="1" source="ent_tesseract" target="proc_0">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="550" y="700" />
-              <mxPoint x="550" y="699" />
-            </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="lbl_tesseract_in" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Texto extraído (monto, fecha, nro. de transacción)&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_tesseract_in">
-          <mxGeometry x="0.05" y="-2" relative="1" as="geometry">
-            <mxPoint as="offset" />
+          <mxGeometry x="0" y="0" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="-11" />
           </mxGeometry>
         </mxCell>
 
         <!-- ================= FLUJOS: SERVICIO DE IA (GEMINI) ================= -->
         <!-- Núcleo -> Gemini (Azul, salida) -->
-        <mxCell id="edge_gemini_out" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;strokeWidth=1.5;exitX=0.03;exitY=0.68;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="proc_0" target="ent_gemini">
+        <mxCell id="edge_gemini_out" value="" style="rounded=0;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;strokeWidth=1.5;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=0.0263;exitY=0.66;entryX=0;entryY=0.28;" edge="1" parent="1" source="proc_0" target="ent_gemini">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="660" y="729" />
-              <mxPoint x="660" y="1075" />
-            </Array>
-          </mxGeometry>
+          <Array as="points"><mxPoint x="570" y="723" /><mxPoint x="570" y="1078" /></Array></mxGeometry>
         </mxCell>
         <mxCell id="lbl_gemini_out" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Texto de consulta a interpretar&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_gemini_out">
-          <mxGeometry x="0.1" y="-2" relative="1" as="geometry">
-            <mxPoint as="offset" />
+          <mxGeometry x="0.767" y="0" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="-17" />
           </mxGeometry>
         </mxCell>
 
         <!-- Gemini -> Núcleo (Rojo, entrada) -->
-        <mxCell id="edge_gemini_in" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#FF0000;strokeColor=#FF0000;strokeWidth=1.5;exitX=1;exitY=0.7;exitDx=0;exitDy=0;entryX=0.08;entryY=0.78;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ent_gemini" target="proc_0">
+        <mxCell id="edge_gemini_in" value="" style="rounded=0;html=1;fillColor=#FF0000;strokeColor=#FF0000;strokeWidth=1.5;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=0;exitY=0.72;entryX=0.0729;entryY=0.76;" edge="1" parent="1" source="ent_gemini" target="proc_0">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="600" y="1120" />
-              <mxPoint x="600" y="759" />
-            </Array>
-          </mxGeometry>
+          <Array as="points"><mxPoint x="625" y="1122" /><mxPoint x="625" y="753" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="lbl_gemini_in" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Interpretación de la consulta e intención detectada&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_gemini_in">
-          <mxGeometry x="0.1" y="-2" relative="1" as="geometry">
-            <mxPoint as="offset" />
+        <mxCell id="lbl_gemini_in" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Interpretación de la consulta e&lt;br&gt;intención detectada&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_gemini_in">
+          <mxGeometry x="-0.715" y="0" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="24" />
           </mxGeometry>
         </mxCell>
 
         <!-- ================= FLUJOS: PERSONAL ADMINISTRATIVO ================= -->
         <!-- Personal -> Núcleo (Rojo, entrada) -->
-        <mxCell id="edge_admin_in" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#FF0000;strokeColor=#FF0000;strokeWidth=1.5;exitX=0;exitY=0.3;exitDx=0;exitDy=0;entryX=0.92;entryY=0.25;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ent_empleado" target="proc_0">
+        <mxCell id="edge_admin_in" value="" style="rounded=0;html=1;fillColor=#FF0000;strokeColor=#FF0000;strokeWidth=1.5;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=1;exitY=0.28;entryX=0.9271;entryY=0.24;" edge="1" parent="1" source="ent_empleado" target="proc_0">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1500" y="230" />
-              <mxPoint x="1500" y="600" />
-            </Array>
-          </mxGeometry>
+          <Array as="points"><mxPoint x="1475" y="228" /><mxPoint x="1475" y="597" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="lbl_admin_in" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Altas de clientes / planes y validación de comprobantes&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_admin_in">
-          <mxGeometry x="-0.1" y="-2" relative="1" as="geometry">
-            <mxPoint as="offset" />
+        <mxCell id="lbl_admin_in" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Altas de clientes / planes y&lt;br&gt;validación de comprobantes&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_admin_in">
+          <mxGeometry x="-0.715" y="0" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="-24" />
           </mxGeometry>
         </mxCell>
 
         <!-- Núcleo -> Personal (Azul, salida) -->
-        <mxCell id="edge_admin_out" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;strokeWidth=1.5;exitX=0.98;exitY=0.38;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="proc_0" target="ent_empleado">
+        <mxCell id="edge_admin_out" value="" style="rounded=0;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;strokeWidth=1.5;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=0.9877;exitY=0.39;entryX=1;entryY=0.72;" edge="1" parent="1" source="proc_0" target="ent_empleado">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1440" y="639" />
-              <mxPoint x="1440" y="275" />
-            </Array>
-          </mxGeometry>
+          <Array as="points"><mxPoint x="1530" y="642" /><mxPoint x="1530" y="272" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="lbl_admin_out" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Bandeja de comprobantes y estado de cuentas corrientes&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_admin_out">
-          <mxGeometry x="-0.1" y="-2" relative="1" as="geometry">
-            <mxPoint as="offset" />
+        <mxCell id="lbl_admin_out" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Bandeja de comprobantes y&lt;br&gt;estado de cuentas corrientes&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_admin_out">
+          <mxGeometry x="0.77" y="0" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="24" />
           </mxGeometry>
         </mxCell>
 
         <!-- ================= FLUJOS: ADMINISTRADOR ================= -->
         <!-- Administrador -> Núcleo (Rojo, entrada) -->
-        <mxCell id="edge_boss_in" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#FF0000;strokeColor=#FF0000;strokeWidth=1.5;exitX=0;exitY=0.3;exitDx=0;exitDy=0;entryX=1;entryY=0.48;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ent_admin" target="proc_0">
+        <mxCell id="edge_boss_in" value="" style="rounded=0;html=1;fillColor=#FF0000;strokeColor=#FF0000;strokeWidth=1.5;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=1;exitY=0.28;entryX=0.9946;entryY=0.4267;" edge="1" parent="1" source="ent_admin" target="proc_0">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1550" y="655" />
-              <mxPoint x="1550" y="669" />
-            </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="lbl_boss_in" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Gestión de usuarios, accesos y tarifas de planes&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_boss_in">
-          <mxGeometry x="0.05" y="-2" relative="1" as="geometry">
-            <mxPoint as="offset" />
+          <mxGeometry x="0" y="0" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="11" />
           </mxGeometry>
         </mxCell>
 
         <!-- Núcleo -> Administrador (Azul, salida) -->
-        <mxCell id="edge_boss_out" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;strokeWidth=1.5;exitX=1;exitY=0.58;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="proc_0" target="ent_admin">
+        <mxCell id="edge_boss_out" value="" style="rounded=0;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;strokeWidth=1.5;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=0.9946;exitY=0.5733;entryX=1;entryY=0.72;" edge="1" parent="1" source="proc_0" target="ent_admin">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1550" y="699" />
-              <mxPoint x="1550" y="700" />
-            </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="lbl_boss_out" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Métricas ejecutivas y reportes financieros (PDF / Excel)&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_boss_out">
-          <mxGeometry x="-0.05" y="-2" relative="1" as="geometry">
-            <mxPoint as="offset" />
+          <mxGeometry x="0" y="0" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="-11" />
           </mxGeometry>
         </mxCell>
 
         <!-- ================= FLUJOS: TÉCNICO DE SOPORTE ================= -->
         <!-- Técnico -> Núcleo (Rojo, entrada) -->
-        <mxCell id="edge_tec_in" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#FF0000;strokeColor=#FF0000;strokeWidth=1.5;exitX=0;exitY=0.3;exitDx=0;exitDy=0;entryX=0.92;entryY=0.78;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ent_tecnico" target="proc_0">
+        <mxCell id="edge_tec_in" value="" style="rounded=0;html=1;fillColor=#FF0000;strokeColor=#FF0000;strokeWidth=1.5;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=1;exitY=0.72;entryX=0.9271;entryY=0.76;" edge="1" parent="1" source="ent_tecnico" target="proc_0">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1500" y="1080" />
-              <mxPoint x="1500" y="759" />
-            </Array>
-          </mxGeometry>
+          <Array as="points"><mxPoint x="1475" y="1122" /><mxPoint x="1475" y="753" /></Array></mxGeometry>
         </mxCell>
         <mxCell id="lbl_tec_in" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Diagnóstico y resolución de averías&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_tec_in">
-          <mxGeometry x="-0.1" y="-2" relative="1" as="geometry">
-            <mxPoint as="offset" />
+          <mxGeometry x="-0.715" y="0" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="16" />
           </mxGeometry>
         </mxCell>
 
         <!-- Núcleo -> Técnico (Azul, salida) -->
-        <mxCell id="edge_tec_out" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;strokeWidth=1.5;exitX=0.98;exitY=0.68;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="proc_0" target="ent_tecnico">
+        <mxCell id="edge_tec_out" value="" style="rounded=0;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;strokeWidth=1.5;noEdgeStyle=1;jumpStyle=arc;jumpSize=9;exitPerimeter=0;entryPerimeter=0;exitX=0.9737;exitY=0.66;entryX=1;entryY=0.28;" edge="1" parent="1" source="proc_0" target="ent_tecnico">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1440" y="729" />
-              <mxPoint x="1440" y="1125" />
-            </Array>
-          </mxGeometry>
+          <Array as="points"><mxPoint x="1530" y="723" /><mxPoint x="1530" y="1078" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="lbl_tec_out" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Tickets asignados y datos técnicos de conectividad&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_tec_out">
-          <mxGeometry x="-0.1" y="-2" relative="1" as="geometry">
-            <mxPoint as="offset" />
+        <mxCell id="lbl_tec_out" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;Tickets asignados y datos técnicos&lt;br&gt;de conectividad&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge_tec_out">
+          <mxGeometry x="0.767" y="0" relative="1" as="geometry">
+            <mxPoint as="offset" x="0" y="-24" />
           </mxGeometry>
         </mxCell>
 
