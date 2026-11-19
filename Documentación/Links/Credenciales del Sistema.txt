@@ -1,0 +1,42 @@
+================================================================================
+VILLAFAÑE WIFI — CREDENCIALES DE SUPERUSUARIO (SISTEMA HOSTEADO EN PRODUCCIÓN)
+================================================================================
+
+1. ACCESO A LA PLATAFORMA EN LA NUBE (VPS DATTAWEB CLOUD):
+   URL del Sistema: https://vps-6524456-x.dattaweb.com/
+   URL de Acceso:   https://vps-6524456-x.dattaweb.com/iniciar-sesion
+
+2. CREDENCIALES DE ACCESO TOTAL (SUPERUSUARIO / ADMINISTRADOR GENERAL):
+   -----------------------------------------------------------------------------
+   Usuario:    admin agus
+   Contraseña: Agus!EAA87C9916C2F6F0
+   Rol:        Administrador
+   Nivel:      Acceso Total (Permisos completos sobre los 6 módulos del sistema)
+   -----------------------------------------------------------------------------
+
+3. MÓDULOS HABILITADOS Y DISPONIBLES PARA EVALUACIÓN:
+   - Módulo 1 (Clientes, Servicios y Cobranzas):
+     • Consulta, filtrado y alta de clientes.
+     • Catálogo de planes de internet y asignación de servicios.
+     • Cuenta corriente, historial de cuotas y gestión de cuentas receptoras.
+   - Módulo 2 (Canal de Atención Inteligente por WhatsApp):
+     • Bandeja de conversaciones en tiempo real.
+     • Asignación a operadores humanos y auto-servicio de clientes.
+   - Módulo 3 (Conciliación de Pagos con Tesseract OCR):
+     • Bandeja de comprobantes recibidos.
+     • Extracción automática de CBU, monto y fecha por OCR.
+     • Aprobación/rechazo de pagos e impacto directo en la cuenta corriente.
+   - Módulo 4 (Gestión Integral de Tickets de Soporte Técnico):
+     • Mesa de ayuda (HelpDesk) y ciclo de vida de incidentes.
+     • Asignación a personal técnico, notas internas y reapertura.
+   - Módulo 5 (Dashboard Ejecutivo, Métricas y Reportes):
+     • Indicadores clave de rendimiento (KPIs) en tiempo real.
+     • Reportes de clientes y morosidad.
+     • Reporte financiero de cobranzas e ingresos por período.
+     • Reporte de rendimiento y tiempos de resolución de tickets.
+     • Centro de alertas de vencimiento.
+     • Exportación oficial de reportes a formatos PDF y Excel.
+   - Módulo 6 (Seguridad, Usuarios y Control de Accesos):
+     • Administración del plantel de usuarios y permisos por rol.
+     • Gestión y restablecimiento de contraseñas.
+================================================================================
