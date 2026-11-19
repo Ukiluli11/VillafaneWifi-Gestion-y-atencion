@@ -1,3 +1,4 @@
+{{-- Presenta el alta y la edición de las cuentas internas del sistema. --}}
 @extends('layouts.panel')
 @section('titulo', 'Editar usuario')
 @section('contenido')

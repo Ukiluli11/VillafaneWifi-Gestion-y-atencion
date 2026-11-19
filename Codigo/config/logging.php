@@ -1,5 +1,7 @@
 <?php
 
+// Define los canales y niveles de registro de eventos de la aplicación.
+
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;

@@ -1,3 +1,4 @@
+{{-- Presenta el historial del chat y los controles para atenderlo desde el panel. --}}
 @extends('layouts.panel')
 @section('titulo', 'Conversación #'.$conversacion->id_conversacion)
 @section('contenido')

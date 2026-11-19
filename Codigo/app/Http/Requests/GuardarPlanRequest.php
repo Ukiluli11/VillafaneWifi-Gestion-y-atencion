@@ -5,6 +5,9 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Valida los campos necesarios para crear un plan comercial.
+ */
 class GuardarPlanRequest extends FormRequest
 {
     /**

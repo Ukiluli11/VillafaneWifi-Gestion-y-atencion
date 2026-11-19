@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
+/**
+ * Recibe las solicitudes JSON de la API para consultar y gestionar clientes.
+ */
 class ClienteController extends Controller
 {
     public function index(Request $request, ServicioClientes $servicio): AnonymousResourceCollection

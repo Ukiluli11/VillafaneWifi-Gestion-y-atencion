@@ -6,6 +6,9 @@ use App\Dominio\FormatoDatosCliente;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Valida los datos del cliente, el plan y las condiciones del servicio que se contrata.
+ */
 class GuardarServicioRequest extends FormRequest
 {
     /**

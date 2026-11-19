@@ -1,3 +1,4 @@
+{{-- Muestra el saldo, las cuotas y los pagos de la cuenta corriente. --}}
 @extends('layouts.panel')
 @section('titulo', 'Cuenta corriente')
 @section('contenido')

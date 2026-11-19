@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\DB;
 use RuntimeException;
 use Tests\TestCase;
 
+/**
+ * Verifica que responda la ruta de salud de la aplicación.
+ */
 class SaludSistemaTest extends TestCase
 {
     public function test_devuelve_estado_disponible_si_responde_la_base_de_datos(): void

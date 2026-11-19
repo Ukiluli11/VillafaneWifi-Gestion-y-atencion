@@ -9,6 +9,9 @@ use App\Http\Resources\CuotaResource;
 use App\Models\Cliente;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * Expone por la API la cuenta corriente y sus movimientos.
+ */
 class CuentaCorrienteController extends Controller
 {
     public function show(

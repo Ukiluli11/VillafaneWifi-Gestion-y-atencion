@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Agrega información para alertar sobre comprobantes posiblemente duplicados.
+ */
 return new class extends Migration
 {
     public function up(): void

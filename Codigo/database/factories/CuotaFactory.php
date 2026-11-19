@@ -7,6 +7,8 @@ use App\Models\Servicio;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
+ * Genera cuotas de prueba vinculadas a servicios contratados.
+ *
  * @extends Factory<Cuota>
  */
 class CuotaFactory extends Factory

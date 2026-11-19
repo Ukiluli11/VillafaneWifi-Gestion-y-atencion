@@ -1,3 +1,4 @@
+{{-- Presenta los campos para asignar o modificar un servicio de internet. --}}
 @extends('layouts.panel')
 @php($edicion = isset($servicio))
 @section('titulo', $edicion ? 'Editar servicio' : 'Nuevo servicio')

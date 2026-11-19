@@ -1,3 +1,4 @@
+{{-- Lista los tickets de soporte y permite filtrarlos para su seguimiento. --}}
 @extends('layouts.panel')
 @section('titulo', 'Bandeja de Tickets de Soporte')
 @section('contenido')

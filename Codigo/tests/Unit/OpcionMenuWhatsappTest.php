@@ -6,6 +6,9 @@ use App\Enums\IntencionConversacion;
 use App\Enums\OpcionMenuWhatsapp;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Comprueba cómo se interpretan las opciones del menú de WhatsApp.
+ */
 class OpcionMenuWhatsappTest extends TestCase
 {
     public function test_convierte_las_opciones_en_intenciones(): void

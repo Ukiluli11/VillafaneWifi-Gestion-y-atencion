@@ -10,6 +10,9 @@ use App\Models\Ticket;
 use App\Models\Usuario;
 use Illuminate\Database\Seeder;
 
+/**
+ * Carga tickets de ejemplo para mostrar el seguimiento de la atención.
+ */
 class TicketsDemostracionSeeder extends Seeder
 {
     public function run(): void

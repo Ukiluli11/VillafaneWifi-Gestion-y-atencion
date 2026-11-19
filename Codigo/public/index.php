@@ -1,5 +1,7 @@
 <?php
 
+// Recibe las solicitudes HTTP y las entrega a la aplicación Laravel.
+
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 

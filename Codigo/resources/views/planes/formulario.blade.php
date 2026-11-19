@@ -1,3 +1,4 @@
+{{-- Presenta los campos para crear o modificar un plan comercial. --}}
 @extends('layouts.panel')
 @php($edicion = isset($plan))
 @section('titulo', $edicion ? 'Editar plan' : 'Nuevo plan')

@@ -1,3 +1,4 @@
+{{-- Presenta la ficha del cliente y los accesos a sus operaciones. --}}
 @extends('layouts.panel')
 @section('titulo', $cliente->nombre_razon_social)
 @section('contenido')

@@ -8,7 +8,11 @@ use App\Models\Servicio;
 use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/** @extends Factory<Ticket> */
+/**
+ * Genera tickets de soporte para reproducir escenarios de atención.
+ *
+ * @extends Factory<Ticket>
+ */
 class TicketFactory extends Factory
 {
     protected $model = Ticket::class;

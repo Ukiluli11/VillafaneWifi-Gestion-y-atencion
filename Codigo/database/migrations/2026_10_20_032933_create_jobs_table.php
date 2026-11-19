@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Crea la tabla donde Laravel almacena los trabajos pendientes de la cola.
+ */
 return new class extends Migration
 {
     /**

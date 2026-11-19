@@ -6,6 +6,8 @@ use App\Models\Cliente;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
+ * Genera fichas de clientes con datos identificatorios y de contacto.
+ *
  * @extends Factory<Cliente>
  */
 class ClienteFactory extends Factory

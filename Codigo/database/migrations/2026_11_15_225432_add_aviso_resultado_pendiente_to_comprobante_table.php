@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Agrega un indicador de aviso pendiente para el resultado de un comprobante.
+ */
 return new class extends Migration
 {
     public function up(): void

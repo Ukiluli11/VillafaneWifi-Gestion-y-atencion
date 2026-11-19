@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
+/**
+ * Gestiona el registro, procesamiento y revisión de los comprobantes de pago.
+ */
 class ServicioComprobantes
 {
     public function __construct(

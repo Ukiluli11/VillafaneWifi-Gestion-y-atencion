@@ -1,3 +1,4 @@
+# Configura en el VPS las funciones de demostración relacionadas con Gemini.
 param(
     [ValidatePattern('^[0-9]{8,20}(,[0-9]{8,20})*$')]
     [string]$TelefonosDemo = '5493704375104',

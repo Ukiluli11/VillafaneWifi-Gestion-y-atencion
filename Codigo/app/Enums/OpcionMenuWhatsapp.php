@@ -2,6 +2,9 @@
 
 namespace App\Enums;
 
+/**
+ * Define las opciones del menú de WhatsApp y su interpretación a partir de respuestas.
+ */
 enum OpcionMenuWhatsapp: string
 {
     case ConsultarCuenta = '1';

@@ -9,6 +9,9 @@ use App\Models\Cliente;
 use App\Models\CuentaReceptora;
 use Illuminate\View\View;
 
+/**
+ * Prepara la vista de cuenta corriente del cliente con la información de cobros.
+ */
 class CuentaCorrienteController extends Controller
 {
     public function show(

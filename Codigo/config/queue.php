@@ -1,5 +1,7 @@
 <?php
 
+// Configura las conexiones de la cola y el registro de trabajos fallidos.
+
 return [
 
     /*

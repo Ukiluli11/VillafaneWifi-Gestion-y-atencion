@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
 /**
+ * Genera cuentas autenticables para las pruebas del sistema.
+ *
  * @extends Factory<Usuario>
  */
 class UsuarioFactory extends Factory

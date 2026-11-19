@@ -12,6 +12,9 @@ use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
+/**
+ * Comprueba las decisiones de autorización para diferentes perfiles y permisos.
+ */
 class ServicioAutorizacionTest extends TestCase
 {
     use LazilyRefreshDatabase;

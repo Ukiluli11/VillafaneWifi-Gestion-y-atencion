@@ -2,6 +2,9 @@
 
 namespace App\Enums;
 
+/**
+ * Identifica quién emitió cada mensaje dentro de una conversación.
+ */
 enum TipoEmisorMensaje: string
 {
     case Cliente = 'cliente';

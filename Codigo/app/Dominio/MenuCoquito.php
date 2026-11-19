@@ -6,6 +6,9 @@ use App\Enums\OpcionMenuWhatsapp;
 use Carbon\CarbonImmutable;
 use DateTimeInterface;
 
+/**
+ * Centraliza los textos y las opciones que ofrece el asistente Coquito en WhatsApp.
+ */
 final class MenuCoquito
 {
     public static function saludo(DateTimeInterface $fecha, ?string $nombre = null): string

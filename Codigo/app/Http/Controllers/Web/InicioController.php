@@ -10,6 +10,9 @@ use App\Models\Cuota;
 use App\Models\Servicio;
 use Illuminate\View\View;
 
+/**
+ * Prepara el inicio del panel según el usuario autenticado y sus permisos.
+ */
 class InicioController extends Controller
 {
     public function __invoke(): View

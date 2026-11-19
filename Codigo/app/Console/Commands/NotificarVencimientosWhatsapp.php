@@ -5,6 +5,9 @@ namespace App\Console\Commands;
 use App\Dominio\ServicioNotificacionesVencimiento;
 use Illuminate\Console\Command;
 
+/**
+ * Ejecuta desde Artisan el envío de recordatorios de vencimiento por WhatsApp.
+ */
 class NotificarVencimientosWhatsapp extends Command
 {
     protected $signature = 'whatsapp:notificar-vencimientos {--id-cuota= : Procesar solo una cuota}';

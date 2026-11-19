@@ -1,3 +1,4 @@
+# Ejecuta las pruebas de escalabilidad contra una instancia temporal de MariaDB.
 param(
     [ValidateRange(1024, 65535)]
     [int]$Puerto = 43317

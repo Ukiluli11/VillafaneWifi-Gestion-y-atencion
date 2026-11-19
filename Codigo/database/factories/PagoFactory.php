@@ -7,6 +7,8 @@ use App\Models\Pago;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
+ * Genera pagos de prueba para las operaciones de cobro.
+ *
  * @extends Factory<Pago>
  */
 class PagoFactory extends Factory

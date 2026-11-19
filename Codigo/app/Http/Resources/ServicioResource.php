@@ -5,6 +5,9 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Define la representación JSON de un servicio contratado.
+ */
 class ServicioResource extends JsonResource
 {
     /**

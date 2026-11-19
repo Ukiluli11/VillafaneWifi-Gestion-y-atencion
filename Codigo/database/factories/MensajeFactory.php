@@ -9,7 +9,11 @@ use App\Models\Conversacion;
 use App\Models\Mensaje;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/** @extends Factory<Mensaje> */
+/**
+ * Genera mensajes asociados a una conversación de prueba.
+ *
+ * @extends Factory<Mensaje>
+ */
 class MensajeFactory extends Factory
 {
     protected $model = Mensaje::class;

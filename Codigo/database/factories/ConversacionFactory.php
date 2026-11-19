@@ -7,7 +7,11 @@ use App\Enums\ModoAtencion;
 use App\Models\Conversacion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/** @extends Factory<Conversacion> */
+/**
+ * Genera conversaciones para reproducir los flujos de atención en pruebas.
+ *
+ * @extends Factory<Conversacion>
+ */
 class ConversacionFactory extends Factory
 {
     protected $model = Conversacion::class;

@@ -1,5 +1,7 @@
 <?php
 
+// Agrupa las rutas públicas, el webhook de WhatsApp y las pantallas protegidas del panel.
+
 use App\Http\Controllers\Web\AutenticacionController;
 use App\Http\Controllers\Web\ClienteController;
 use App\Http\Controllers\Web\ComprobanteController;

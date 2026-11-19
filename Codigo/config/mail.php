@@ -1,5 +1,7 @@
 <?php
 
+// Configura los transportes de correo y el remitente predeterminado.
+
 return [
 
     /*

@@ -11,6 +11,9 @@ use Throwable;
 
 #[Signature('comprobantes:privatizar {--verificar : Comprueba el SHA-256 privado sin copiar ni borrar archivos}')]
 #[Description('Traslada los comprobantes históricos públicos al almacenamiento privado verificando su integridad')]
+/**
+ * Migra los archivos de comprobantes existentes al almacenamiento privado.
+ */
 class PrivatizarComprobantes extends Command
 {
     public function handle(): int

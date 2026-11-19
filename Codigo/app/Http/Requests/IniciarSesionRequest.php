@@ -5,6 +5,9 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Valida el usuario y la contraseña ingresados en el formulario de acceso.
+ */
 class IniciarSesionRequest extends FormRequest
 {
     /**

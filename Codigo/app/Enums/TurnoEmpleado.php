@@ -2,6 +2,9 @@
 
 namespace App\Enums;
 
+/**
+ * Enumera los turnos asignables al personal.
+ */
 enum TurnoEmpleado: string
 {
     case Manana = 'mañana';

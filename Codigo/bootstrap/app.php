@@ -1,5 +1,7 @@
 <?php
 
+// Configura el arranque de Laravel, las rutas, los middleware y el tratamiento de excepciones.
+
 use App\Http\Middleware\VerificarAccion;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;

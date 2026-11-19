@@ -1,3 +1,4 @@
+{{-- Muestra el comprobante, los datos detectados y las acciones de revisión. --}}
 @extends('layouts.panel')
 @section('titulo', "Comprobante #{$comprobante->id_comprobante} · Conciliación")
 @section('contenido')

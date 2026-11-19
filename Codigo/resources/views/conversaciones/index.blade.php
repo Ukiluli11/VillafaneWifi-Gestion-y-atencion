@@ -1,3 +1,4 @@
+{{-- Lista las conversaciones de WhatsApp y sus estados de atención. --}}
 @extends('layouts.panel')
 @section('titulo', 'Conversaciones')
 @section('contenido')

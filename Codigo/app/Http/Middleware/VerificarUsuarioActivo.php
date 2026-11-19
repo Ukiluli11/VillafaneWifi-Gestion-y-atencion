@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Controla que la cuenta autenticada siga habilitada para usar el sistema.
+ */
 class VerificarUsuarioActivo
 {
     /**

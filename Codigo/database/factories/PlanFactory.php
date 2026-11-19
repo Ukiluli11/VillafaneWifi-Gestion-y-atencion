@@ -6,6 +6,8 @@ use App\Models\Plan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
+ * Genera planes comerciales con valores de ejemplo.
+ *
  * @extends Factory<Plan>
  */
 class PlanFactory extends Factory

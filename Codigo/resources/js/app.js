@@ -1,3 +1,5 @@
+// Implementa las interacciones compartidas del panel, el menú y las preferencias de visualización.
+
 const cuerpo = document.body;
 const botonAbrir = document.querySelector('[data-abrir-menu]');
 const raiz = document.documentElement;

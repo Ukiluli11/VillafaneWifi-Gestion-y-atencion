@@ -1,3 +1,4 @@
+{{-- Reutiliza los campos bancarios y de billetera en los formularios de cuentas receptoras. --}}
 <label>Nombre
     <input name="nombre" maxlength="100" value="{{ old('nombre', $cuenta?->nombre) }}" required>
 </label>

@@ -1,4 +1,5 @@
-﻿param(
+﻿# Revisa el estado del VPS y las condiciones necesarias para la demostración.
+param(
     [ValidateRange(1, 2147483647)]
     [int]$CuotaDemo = 26,
     [switch]$ProbarIA,

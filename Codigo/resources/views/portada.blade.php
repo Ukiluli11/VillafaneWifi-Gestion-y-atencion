@@ -1,3 +1,4 @@
+{{-- Presenta los servicios de Villafañe WiFi y el acceso al panel de gestión. --}}
 <!DOCTYPE html>
 <html lang="es">
 <head>

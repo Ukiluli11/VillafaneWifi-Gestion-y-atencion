@@ -9,6 +9,9 @@ use App\Models\Cuota;
 use Brick\Math\BigDecimal;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Reúne las cuotas, los pagos y el saldo de la cuenta corriente de un cliente.
+ */
 class ServicioCuentaCorriente
 {
     public function instruccionesTransferencia(Cliente $cliente): ?string

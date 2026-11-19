@@ -5,6 +5,9 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Define los campos del cliente que se devuelven en las respuestas JSON.
+ */
 class ClienteResource extends JsonResource
 {
     /**

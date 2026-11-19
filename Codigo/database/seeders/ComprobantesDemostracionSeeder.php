@@ -10,6 +10,9 @@ use App\Models\Pago;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Seeder;
 
+/**
+ * Carga comprobantes de demostración para mostrar distintos estados de revisión.
+ */
 class ComprobantesDemostracionSeeder extends Seeder
 {
     public function run(): void

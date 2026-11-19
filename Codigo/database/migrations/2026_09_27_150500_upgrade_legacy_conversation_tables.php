@@ -5,6 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Adapta las tablas de conversaciones previamente instaladas al esquema actual.
+ */
 return new class extends Migration
 {
     public function up(): void

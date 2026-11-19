@@ -5,6 +5,9 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Define la representación JSON de una cuota y su estado de cobro.
+ */
 class CuotaResource extends JsonResource
 {
     /**

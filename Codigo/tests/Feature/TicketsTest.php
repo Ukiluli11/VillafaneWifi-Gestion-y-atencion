@@ -19,6 +19,9 @@ use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
+/**
+ * Verifica las reglas y transiciones del flujo de atención de tickets.
+ */
 class TicketsTest extends TestCase
 {
     use LazilyRefreshDatabase;

@@ -1,5 +1,7 @@
 <?php
 
+// Registra las rutas de la API versionada para clientes, planes, servicios y cuentas corrientes.
+
 use App\Http\Controllers\Api\V1\ClienteController;
 use App\Http\Controllers\Api\V1\CuentaCorrienteController;
 use App\Http\Controllers\Api\V1\PlanController;

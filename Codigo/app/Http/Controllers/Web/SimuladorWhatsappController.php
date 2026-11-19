@@ -14,6 +14,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
+/**
+ * Recibe mensajes de prueba y presenta el resultado de una conversación simulada.
+ */
 class SimuladorWhatsappController extends Controller
 {
     public function create(): View

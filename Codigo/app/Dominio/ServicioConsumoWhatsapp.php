@@ -7,6 +7,9 @@ use App\Models\Mensaje;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Registra el consumo mensual de WhatsApp y aplica los límites antes del envío.
+ */
 class ServicioConsumoWhatsapp
 {
     public function reservar(bool $esPlantilla, string $destinatario, ?string $nombrePlantilla = null, bool $esRecordatorio = false): void

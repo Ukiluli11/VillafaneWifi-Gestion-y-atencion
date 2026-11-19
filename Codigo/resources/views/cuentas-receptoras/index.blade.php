@@ -1,3 +1,4 @@
+{{-- Lista las cuentas habilitadas para recibir pagos y sus opciones de gestión. --}}
 @extends('layouts.panel')
 @section('titulo', 'Cuentas receptoras')
 @section('contenido')

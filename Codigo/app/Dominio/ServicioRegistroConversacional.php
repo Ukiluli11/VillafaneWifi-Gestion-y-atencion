@@ -13,6 +13,9 @@ use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * Guía el registro de clientes a través de los mensajes de WhatsApp.
+ */
 class ServicioRegistroConversacional
 {
     public function __construct(

@@ -5,6 +5,9 @@ namespace App\Dominio;
 use Illuminate\Support\Facades\Hash;
 
 
+/**
+ * Centraliza el hash de contraseñas, su verificación y la actualización del hash.
+ */
 class ServicioSeguridad
 {
     

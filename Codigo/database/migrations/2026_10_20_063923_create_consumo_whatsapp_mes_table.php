@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Crea la tabla para registrar el consumo mensual de envíos de WhatsApp.
+ */
 return new class extends Migration
 {
     /**

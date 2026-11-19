@@ -13,6 +13,9 @@ use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * Gestiona las altas y cambios de estado de los servicios contratados por los clientes.
+ */
 class ServicioContrataciones
 {
     public function __construct(private readonly ServicioFacturacion $facturacion) {}

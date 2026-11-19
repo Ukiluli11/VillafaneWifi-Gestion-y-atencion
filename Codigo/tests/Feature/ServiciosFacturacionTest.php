@@ -17,6 +17,9 @@ use Illuminate\Support\Carbon;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
+/**
+ * Verifica los flujos de servicios contratados, facturación y registro de pagos.
+ */
 class ServiciosFacturacionTest extends TestCase
 {
     use LazilyRefreshDatabase;

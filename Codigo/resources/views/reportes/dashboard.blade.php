@@ -1,3 +1,4 @@
+{{-- Presenta los indicadores y accesos a los reportes del sistema. --}}
 @extends('layouts.panel')
 @section('titulo', 'Métricas y Dashboard Ejecutivo')
 @section('contenido')

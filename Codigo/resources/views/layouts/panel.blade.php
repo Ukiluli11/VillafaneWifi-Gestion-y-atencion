@@ -1,3 +1,4 @@
+{{-- Define la estructura común del panel, con navegación, encabezado y mensajes de estado. --}}
 <!DOCTYPE html>
 <html lang="es">
 <head>

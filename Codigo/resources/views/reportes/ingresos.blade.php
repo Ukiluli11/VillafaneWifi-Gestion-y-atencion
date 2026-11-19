@@ -1,3 +1,4 @@
+{{-- Muestra el reporte de ingresos y los controles de consulta. --}}
 @extends('layouts.panel')
 @section('titulo', 'Reporte Financiero de Ingresos')
 @section('contenido')

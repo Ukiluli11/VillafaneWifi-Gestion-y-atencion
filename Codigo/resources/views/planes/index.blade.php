@@ -1,3 +1,4 @@
+{{-- Lista los planes comerciales y las acciones disponibles. --}}
 @extends('layouts.panel')
 @section('titulo', 'Planes')
 @section('contenido')

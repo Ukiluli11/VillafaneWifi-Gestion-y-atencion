@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
+/**
+ * Ejecuta en segundo plano la lectura y el procesamiento de un comprobante.
+ */
 class ProcesarOcrComprobante implements ShouldQueue
 {
     use Queueable;

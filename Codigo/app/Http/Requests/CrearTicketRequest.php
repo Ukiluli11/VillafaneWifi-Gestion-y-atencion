@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Valida los datos de apertura de un ticket de atención.
+ */
 class CrearTicketRequest extends FormRequest
 {
     public function authorize(): bool

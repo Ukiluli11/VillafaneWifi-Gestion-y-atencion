@@ -1,3 +1,4 @@
+# Arranca MariaDB local en Windows cuando el puerto de la instancia no está disponible.
 $ErrorActionPreference = 'Stop'
 
 $ejecutableMariaDb = Join-Path $env:LOCALAPPDATA 'Programs\mariadb-11.8.9-winx64\bin\mariadbd.exe'

@@ -6,6 +6,8 @@ use App\Models\CuentaReceptora;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
+ * Genera cuentas receptoras de prueba con datos bancarios.
+ *
  * @extends Factory<CuentaReceptora>
  */
 class CuentaReceptoraFactory extends Factory

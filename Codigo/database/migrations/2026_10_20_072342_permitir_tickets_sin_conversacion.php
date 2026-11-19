@@ -5,6 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Permite registrar tickets de atención sin asociarlos a una conversación.
+ */
 return new class extends Migration
 {
     /**

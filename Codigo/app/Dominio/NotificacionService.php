@@ -15,6 +15,9 @@ use App\Models\Ticket;
 use Illuminate\Support\Facades\Cache;
 use Throwable;
 
+/**
+ * Coordina el envío al cliente de los avisos generados por el sistema.
+ */
 class NotificacionService
 {
     public function __construct(

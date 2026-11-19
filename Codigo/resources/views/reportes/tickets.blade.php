@@ -1,3 +1,4 @@
+{{-- Muestra los indicadores y listados del reporte de atención de tickets. --}}
 @extends('layouts.panel')
 @section('titulo', 'Reporte de Tickets y Eficiencia Técnica')
 @section('contenido')

@@ -1,2 +1,3 @@
+# Indica a los rastreadores web cómo tratar las rutas públicas del sitio.
 User-agent: *
 Disallow:

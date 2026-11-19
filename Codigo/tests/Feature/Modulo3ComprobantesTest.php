@@ -31,6 +31,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
+/**
+ * Comprueba la recepción y el procesamiento de comprobantes de pago.
+ */
 class Modulo3ComprobantesTest extends TestCase
 {
     use LazilyRefreshDatabase;

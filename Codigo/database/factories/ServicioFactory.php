@@ -8,6 +8,8 @@ use App\Models\Servicio;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
+ * Genera servicios contratados y sus asociaciones para las pruebas.
+ *
  * @extends Factory<Servicio>
  */
 class ServicioFactory extends Factory

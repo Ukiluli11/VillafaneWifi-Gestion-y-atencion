@@ -1,3 +1,4 @@
+# Prepara el paquete que se utiliza para publicar la aplicación en el VPS.
 param(
     [string]$Destino = (Join-Path ([IO.Path]::GetTempPath()) 'villafane-wifi-despliegue.tar.gz')
 )

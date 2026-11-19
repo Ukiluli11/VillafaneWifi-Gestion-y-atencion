@@ -1,3 +1,4 @@
+{{-- Muestra el formulario para cambiar la contraseña de la cuenta. --}}
 @extends('layouts.panel')
 @section('titulo', 'Cambiar contraseña')
 @section('contenido')

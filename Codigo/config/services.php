@@ -1,5 +1,7 @@
 <?php
 
+// Lee la configuración de las integraciones externas desde las variables de entorno.
+
 return [
 
     /*

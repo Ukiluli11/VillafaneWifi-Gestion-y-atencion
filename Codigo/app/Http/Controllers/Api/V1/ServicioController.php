@@ -12,6 +12,9 @@ use App\Models\Servicio;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
+/**
+ * Recibe las solicitudes JSON de la API sobre los servicios contratados.
+ */
 class ServicioController extends Controller
 {
     public function index(): AnonymousResourceCollection

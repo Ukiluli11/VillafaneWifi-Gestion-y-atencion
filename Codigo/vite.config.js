@@ -1,3 +1,5 @@
+// Configura cómo Vite compila los estilos y JavaScript que utiliza Laravel.
+
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import { bunny } from 'laravel-vite-plugin/fonts';

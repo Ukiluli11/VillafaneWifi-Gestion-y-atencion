@@ -2,6 +2,9 @@
 
 namespace App\Enums;
 
+/**
+ * Enumera los tipos de contenido que se registran en una conversación.
+ */
 enum TipoMensaje: string
 {
     case Texto = 'texto';

@@ -6,6 +6,9 @@ use Database\Seeders\DatosDemostracionSeeder;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * Comprueba que los datos de demostración se carguen correctamente.
+ */
 class DatosDemostracionSeederTest extends TestCase
 {
     use LazilyRefreshDatabase;

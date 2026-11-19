@@ -1,3 +1,4 @@
+# Programa la ejecución periódica del planificador de Laravel.
 [Unit]
 Description=Ejecutar el programador de Villafane Wifi cada minuto
 

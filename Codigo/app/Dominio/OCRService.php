@@ -9,6 +9,9 @@ use Illuminate\Support\Str;
 use RuntimeException;
 use Throwable;
 
+/**
+ * Extrae texto de los comprobantes y lo prepara para su interpretación.
+ */
 class OCRService
 {
     public function estaConfigurado(): bool

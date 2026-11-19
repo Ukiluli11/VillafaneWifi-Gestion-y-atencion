@@ -5,6 +5,9 @@ namespace App\Dominio;
 use App\Models\Cliente;
 use App\Models\Conversacion;
 
+/**
+ * Vincula la conversación de WhatsApp con el cliente identificado.
+ */
 class ServicioIdentificacion
 {
     public function identificarCliente(Conversacion $conversacion, string $numeroWhatsapp): ?Cliente

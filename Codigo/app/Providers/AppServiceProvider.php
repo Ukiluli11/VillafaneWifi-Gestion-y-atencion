@@ -15,6 +15,9 @@ use Illuminate\View\View as Vista;
 use RuntimeException;
 use Throwable;
 
+/**
+ * Registra y configura servicios de la aplicación durante el arranque de Laravel.
+ */
 class AppServiceProvider extends ServiceProvider
 {
     /**

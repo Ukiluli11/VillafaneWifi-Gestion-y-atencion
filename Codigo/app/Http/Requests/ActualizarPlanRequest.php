@@ -7,6 +7,9 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * Valida los cambios enviados para un plan comercial existente.
+ */
 class ActualizarPlanRequest extends FormRequest
 {
     /**

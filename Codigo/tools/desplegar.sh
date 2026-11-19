@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Prepara y publica una nueva versión de Laravel en el VPS.
 set -Eeuo pipefail
 umask 027
 

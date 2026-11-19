@@ -1,5 +1,7 @@
 <?php
 
+// Define los almacenes disponibles para la caché de la aplicación.
+
 use Illuminate\Support\Str;
 
 return [

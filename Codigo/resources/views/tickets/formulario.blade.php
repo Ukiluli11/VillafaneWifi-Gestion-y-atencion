@@ -1,3 +1,4 @@
+{{-- Reúne los datos para abrir un ticket desde el panel. --}}
 @extends('layouts.panel')
 @section('titulo', 'Registrar Ticket de Soporte')
 @section('contenido')

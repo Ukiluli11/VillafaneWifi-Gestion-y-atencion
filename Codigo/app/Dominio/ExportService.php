@@ -11,6 +11,9 @@ use OpenSpout\Writer\XLSX\Writer;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
+/**
+ * Genera las versiones descargables de los reportes en PDF y Excel.
+ */
 class ExportService
 {
     /**

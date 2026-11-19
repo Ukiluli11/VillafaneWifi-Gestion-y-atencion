@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Valida el motivo informado al rechazar un comprobante.
+ */
 class RechazarComprobanteRequest extends FormRequest
 {
     public function authorize(): bool

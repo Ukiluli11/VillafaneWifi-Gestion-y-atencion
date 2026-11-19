@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
+/**
+ * Verifica que el panel aplique los permisos al mostrar y ejecutar operaciones.
+ */
 class PermisosPanelTest extends TestCase
 {
     use LazilyRefreshDatabase;

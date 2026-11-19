@@ -1,3 +1,4 @@
+# Ejecuta las tareas programadas de Laravel que estén pendientes.
 [Unit]
 Description=Tareas programadas de Villafane Wifi
 After=network-online.target mariadb.service

@@ -8,6 +8,9 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * Valida los cambios de un servicio contratado.
+ */
 class ActualizarServicioRequest extends FormRequest
 {
     /**

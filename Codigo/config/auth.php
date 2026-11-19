@@ -1,5 +1,7 @@
 <?php
 
+// Configura los mecanismos de autenticación y el origen de las cuentas.
+
 use App\Models\Usuario;
 
 return [

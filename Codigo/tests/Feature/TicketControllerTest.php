@@ -8,6 +8,9 @@ use App\Models\Ticket;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * Comprueba las pantallas y acciones de la gestión web de tickets.
+ */
 class TicketControllerTest extends TestCase
 {
     use LazilyRefreshDatabase;

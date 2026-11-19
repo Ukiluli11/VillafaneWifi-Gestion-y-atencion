@@ -1,3 +1,4 @@
+{{-- Comparte los campos de cuenta, perfil y permisos entre formularios de usuario. --}}
 @php
     $edicion = isset($usuario);
     $administrador = $usuario->administrador ?? null;

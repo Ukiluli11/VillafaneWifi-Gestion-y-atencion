@@ -1,5 +1,7 @@
 <?php
 
+// Configura los discos donde la aplicación guarda y recupera archivos.
+
 return [
 
     /*

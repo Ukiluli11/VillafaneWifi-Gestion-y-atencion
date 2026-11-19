@@ -1,3 +1,4 @@
+{{-- Muestra el formulario de edición de una cuenta receptora. --}}
 @extends('layouts.panel')
 @section('titulo', 'Editar cuenta receptora')
 @section('contenido')

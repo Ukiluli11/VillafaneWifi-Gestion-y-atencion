@@ -1,3 +1,4 @@
+{{-- Muestra las situaciones que requieren seguimiento en el panel de reportes. --}}
 @extends('layouts.panel')
 @section('titulo', 'Alertas de Vencimiento y Morosidad')
 @section('contenido')

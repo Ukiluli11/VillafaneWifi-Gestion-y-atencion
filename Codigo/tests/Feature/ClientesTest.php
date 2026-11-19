@@ -11,6 +11,9 @@ use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
+/**
+ * Verifica las operaciones del panel sobre los clientes.
+ */
 class ClientesTest extends TestCase
 {
     use LazilyRefreshDatabase;

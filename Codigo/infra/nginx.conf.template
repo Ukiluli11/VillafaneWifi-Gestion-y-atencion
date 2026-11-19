@@ -1,3 +1,4 @@
+# Plantilla del servidor Nginx que publica Laravel y comunica las solicitudes con PHP-FPM.
 # Reemplazar DEMO_HOST y PHP_FPM_SOCKET antes de instalar este sitio.
 # Certbot agrega HTTPS a esta configuración después de validar el dominio.
 server {

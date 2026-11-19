@@ -14,6 +14,9 @@ use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
+/**
+ * Verifica la gestión de las cuentas que reciben pagos.
+ */
 class CuentasReceptorasTest extends TestCase
 {
     use LazilyRefreshDatabase;

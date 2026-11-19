@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
+/**
+ * Mide el comportamiento de operaciones del sistema al aumentar el volumen de datos.
+ */
 class EscalabilidadTest extends TestCase
 {
     use LazilyRefreshDatabase;

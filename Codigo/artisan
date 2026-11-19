@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+// Inicia Laravel en modo consola y ejecuta el comando Artisan solicitado.
+
 use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 

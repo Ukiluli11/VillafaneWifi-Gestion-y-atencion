@@ -1,3 +1,4 @@
+# Ejecuta el respaldo privado de la base de datos y de los archivos de la aplicación.
 [Unit]
 Description=Respaldo privado de Villafane Wifi
 After=mariadb.service

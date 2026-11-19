@@ -17,6 +17,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * Genera cuotas de los servicios contratados y registra los pagos correspondientes.
+ */
 class ServicioFacturacion
 {
     /**

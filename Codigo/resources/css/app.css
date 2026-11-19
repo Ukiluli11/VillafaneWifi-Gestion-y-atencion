@@ -1,3 +1,5 @@
+/* Define los estilos compartidos del panel, sus componentes y temas. */
+
 :root {
     font-family: "Instrument Sans", Inter, ui-sans-serif, system-ui, sans-serif;
     color: #242d28; background: #f3e9d7; font-synthesis: none; line-height: 1.5;

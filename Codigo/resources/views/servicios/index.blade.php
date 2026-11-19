@@ -1,3 +1,4 @@
+{{-- Lista los servicios contratados y permite consultar su estado. --}}
 @extends('layouts.panel')
 @section('titulo', 'Servicios')
 @section('contenido')

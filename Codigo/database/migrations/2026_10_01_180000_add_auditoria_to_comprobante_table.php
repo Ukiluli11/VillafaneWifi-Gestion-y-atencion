@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Agrega información de auditoría para las decisiones tomadas sobre comprobantes.
+ */
 return new class extends Migration
 {
     public function up(): void

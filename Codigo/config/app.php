@@ -1,5 +1,7 @@
 <?php
 
+// Define la identidad, regionalización y opciones generales de Laravel.
+
 return [
 
     /*

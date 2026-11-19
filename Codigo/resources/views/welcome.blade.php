@@ -1,3 +1,4 @@
+{{-- Contiene la vista de bienvenida incluida por Laravel. --}}
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>

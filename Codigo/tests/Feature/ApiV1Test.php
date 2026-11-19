@@ -7,6 +7,9 @@ use App\Models\Cliente;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * Comprueba las rutas y las respuestas JSON de la API v1.
+ */
 class ApiV1Test extends TestCase
 {
     use LazilyRefreshDatabase;

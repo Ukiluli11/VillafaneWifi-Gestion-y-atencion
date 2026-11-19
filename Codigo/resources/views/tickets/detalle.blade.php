@@ -1,3 +1,4 @@
+{{-- Presenta un ticket, sus notas internas y las acciones de seguimiento. --}}
 @extends('layouts.panel')
 @section('titulo', 'Ticket #' . $ticket->id_ticket . ' - ' . ucfirst(str_replace('_', ' ', $ticket->estado->value)))
 @section('contenido')

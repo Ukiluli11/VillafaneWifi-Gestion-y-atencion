@@ -32,6 +32,9 @@ use Illuminate\Support\Facades\Storage;
 use PHPUnit\Framework\Attributes\TestWith;
 use Tests\TestCase;
 
+/**
+ * Comprueba los flujos de atención y gestión de conversaciones por WhatsApp.
+ */
 class Modulo2WhatsappTest extends TestCase
 {
     use LazilyRefreshDatabase;

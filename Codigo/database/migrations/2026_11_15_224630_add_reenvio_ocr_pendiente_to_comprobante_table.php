@@ -5,6 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Agrega un indicador para identificar comprobantes cuyo reenvío por OCR está pendiente.
+ */
 return new class extends Migration
 {
     public function up(): void

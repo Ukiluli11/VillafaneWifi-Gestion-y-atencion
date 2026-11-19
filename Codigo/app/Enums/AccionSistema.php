@@ -2,6 +2,9 @@
 
 namespace App\Enums;
 
+/**
+ * Enumera las acciones que las políticas de autorización pueden permitir o restringir.
+ */
 enum AccionSistema: string
 {
     case ConsultarClientes = 'consultar_clientes';

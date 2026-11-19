@@ -6,6 +6,9 @@ use App\Dominio\ServicioUsuarios;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * Verifica el inicio y cierre de sesión y las restricciones de acceso.
+ */
 class AutenticacionTest extends TestCase
 {
     use LazilyRefreshDatabase;

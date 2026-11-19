@@ -1,3 +1,4 @@
+{{-- Presenta el formulario para cargar un comprobante de pago desde el panel. --}}
 @extends('layouts.panel')
 @section('titulo', 'Cargar Comprobante Manual')
 @section('contenido')

@@ -10,6 +10,9 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * Valida los datos recibidos al editar la ficha de un cliente.
+ */
 class ActualizarClienteRequest extends FormRequest
 {
     /**

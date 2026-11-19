@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Valida el texto enviado al registrar una nota interna.
+ */
 class AgregarNotaInternaRequest extends FormRequest
 {
     public function authorize(): bool

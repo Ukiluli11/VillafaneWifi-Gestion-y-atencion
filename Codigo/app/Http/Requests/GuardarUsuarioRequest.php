@@ -10,6 +10,9 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * Valida los datos de acceso y de perfil de las cuentas gestionadas en el panel.
+ */
 class GuardarUsuarioRequest extends FormRequest
 {
     /**

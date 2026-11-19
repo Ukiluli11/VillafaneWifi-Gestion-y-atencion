@@ -5,6 +5,9 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Valida los parámetros enviados para generar cuotas de facturación.
+ */
 class GenerarCuotasRequest extends FormRequest
 {
     /**

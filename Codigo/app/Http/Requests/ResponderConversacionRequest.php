@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Valida el contenido de la respuesta manual enviada desde una conversación.
+ */
 class ResponderConversacionRequest extends FormRequest
 {
     public function authorize(): bool

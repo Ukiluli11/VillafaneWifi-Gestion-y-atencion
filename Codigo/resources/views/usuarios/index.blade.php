@@ -1,3 +1,4 @@
+{{-- Lista las cuentas de los usuarios internos y sus acciones de gestión. --}}
 @extends('layouts.panel')
 @section('titulo', 'Usuarios')
 @section('contenido')

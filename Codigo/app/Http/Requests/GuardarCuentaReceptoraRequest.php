@@ -8,6 +8,9 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * Valida los datos de una cuenta destinada a recibir pagos.
+ */
 class GuardarCuentaReceptoraRequest extends FormRequest
 {
     /**

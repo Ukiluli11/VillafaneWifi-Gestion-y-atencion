@@ -11,6 +11,9 @@ use App\Models\Servicio;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * Verifica el funcionamiento de los filtros en los listados del panel.
+ */
 class FiltrosPanelTest extends TestCase
 {
     use LazilyRefreshDatabase;

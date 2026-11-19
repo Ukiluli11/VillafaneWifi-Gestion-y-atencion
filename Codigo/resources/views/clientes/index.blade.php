@@ -1,3 +1,4 @@
+{{-- Lista los clientes del sistema y permite buscarlos y filtrarlos. --}}
 @extends('layouts.panel')
 @section('titulo', 'Clientes')
 @section('contenido')

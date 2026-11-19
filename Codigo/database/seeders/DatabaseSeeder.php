@@ -7,6 +7,9 @@ use App\Models\Usuario;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+/**
+ * Crea la cuenta administradora inicial si está configurada y carga los datos de demostración.
+ */
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;

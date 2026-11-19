@@ -1,3 +1,4 @@
+# Prepara los servicios necesarios y muestra los datos para iniciar una demostración local.
 $ErrorActionPreference = 'Stop'
 
 $aplicacion = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path

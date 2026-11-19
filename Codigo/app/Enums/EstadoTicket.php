@@ -2,6 +2,9 @@
 
 namespace App\Enums;
 
+/**
+ * Enumera los estados del ticket a lo largo de su atención.
+ */
 enum EstadoTicket: string
 {
     case Pendiente = 'pendiente';

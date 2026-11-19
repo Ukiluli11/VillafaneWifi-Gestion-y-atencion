@@ -1,3 +1,4 @@
+{{-- Presenta el formulario y los resultados de la simulación de mensajes de WhatsApp. --}}
 @extends('layouts.panel')
 @section('titulo', 'Simulador WhatsApp')
 @section('contenido')

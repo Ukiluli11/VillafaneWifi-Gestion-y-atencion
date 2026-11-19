@@ -6,6 +6,9 @@ use App\Dominio\FormatoDatosCliente;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * Valida los datos de un mensaje ingresado en el simulador de WhatsApp.
+ */
 class SimularMensajeWhatsappRequest extends FormRequest
 {
     public function authorize(): bool

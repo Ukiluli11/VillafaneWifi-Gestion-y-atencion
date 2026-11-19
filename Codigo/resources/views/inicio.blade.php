@@ -1,3 +1,4 @@
+{{-- Presenta el inicio del panel para un usuario autenticado. --}}
 @extends('layouts.panel')
 @section('titulo', 'Resumen')
 @section('contenido')

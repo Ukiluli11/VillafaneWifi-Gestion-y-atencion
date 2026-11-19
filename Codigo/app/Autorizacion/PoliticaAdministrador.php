@@ -6,6 +6,9 @@ use App\Enums\AccionSistema;
 use App\Enums\NivelAcceso;
 use App\Models\Administrador;
 
+/**
+ * Determina las acciones permitidas para el perfil de administrador según sus permisos.
+ */
 class PoliticaAdministrador implements PoliticaAcceso
 {
     public function __construct(private readonly Administrador $administrador) {}

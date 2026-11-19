@@ -2,6 +2,9 @@
 
 namespace App\Enums;
 
+/**
+ * Enumera los estados que puede adoptar el envío de un mensaje.
+ */
 enum EstadoEnvioMensaje: string
 {
     case Recibido = 'recibido';

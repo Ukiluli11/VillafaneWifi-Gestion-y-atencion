@@ -18,6 +18,9 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
+/**
+ * Verifica el registro y la revisión de comprobantes de pago.
+ */
 class ComprobantesTest extends TestCase
 {
     use LazilyRefreshDatabase;

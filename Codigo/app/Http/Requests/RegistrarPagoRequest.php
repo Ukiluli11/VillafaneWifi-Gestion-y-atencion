@@ -7,6 +7,9 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * Valida el importe y los datos de referencia de un pago ingresado en el sistema.
+ */
 class RegistrarPagoRequest extends FormRequest
 {
     /**

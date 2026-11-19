@@ -1,3 +1,4 @@
+# Arranca la aplicación Laravel en el entorno local de Windows.
 $ErrorActionPreference = 'Stop'
 
 & (Join-Path $PSScriptRoot 'iniciar-mariadb.ps1')

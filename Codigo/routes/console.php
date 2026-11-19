@@ -1,5 +1,7 @@
 <?php
 
+// Registra y programa las tareas de facturación, asignación de tickets y avisos de vencimiento.
+
 use App\Dominio\ServicioFacturacion;
 use App\Dominio\ServicioTickets;
 use Carbon\CarbonImmutable;

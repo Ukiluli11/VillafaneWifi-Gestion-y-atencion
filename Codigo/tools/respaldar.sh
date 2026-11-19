@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Empaqueta la base MariaDB y los archivos privados en un respaldo con retención limitada.
 set -Eeuo pipefail
 umask 077
 

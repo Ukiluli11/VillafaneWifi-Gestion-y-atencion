@@ -6,6 +6,9 @@ use App\Enums\MedioPago;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
+/**
+ * Valida los datos necesarios para aprobar un comprobante de pago.
+ */
 class AprobarComprobanteRequest extends FormRequest
 {
     public function authorize(): bool

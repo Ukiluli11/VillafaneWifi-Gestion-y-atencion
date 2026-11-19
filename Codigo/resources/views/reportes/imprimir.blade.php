@@ -1,3 +1,4 @@
+{{-- Prepara el contenido de los reportes en formato de impresión. --}}
 <!DOCTYPE html>
 <html lang="es">
 <head>

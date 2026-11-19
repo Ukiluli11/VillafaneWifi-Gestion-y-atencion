@@ -8,6 +8,9 @@ use App\Models\Usuario;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * Gestiona las cuentas de administradores y empleados, sus perfiles y el estado de acceso.
+ */
 class ServicioUsuarios
 {
     public function __construct(private readonly ServicioSeguridad $servicioSeguridad) {}

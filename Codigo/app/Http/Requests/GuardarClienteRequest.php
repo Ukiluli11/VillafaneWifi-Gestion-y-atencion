@@ -9,6 +9,9 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * Valida los datos identificatorios y de contacto al dar de alta un cliente.
+ */
 class GuardarClienteRequest extends FormRequest
 {
     /**

@@ -1,3 +1,4 @@
+{{-- Reúne los datos necesarios para registrar o actualizar un cliente. --}}
 @extends('layouts.panel')
 @php($edicion = isset($cliente))
 @section('titulo', $edicion ? 'Editar cliente' : 'Nuevo cliente')

@@ -24,6 +24,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
+/**
+ * Comprueba los indicadores, filtros y formatos de salida de los reportes.
+ */
 class ReportesTest extends TestCase
 {
     use LazilyRefreshDatabase;

@@ -1,3 +1,4 @@
+{{-- Muestra la deuda pendiente y los filtros del reporte de morosidad. --}}
 @extends('layouts.panel')
 @section('titulo', 'Reporte de Clientes y Morosidad')
 @section('contenido')

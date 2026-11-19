@@ -13,6 +13,9 @@ use App\Models\Usuario;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
+/**
+ * Gestiona las conversaciones de WhatsApp, sus mensajes y su estado de atención.
+ */
 class ServicioConversaciones
 {
     public function __construct(private readonly ServicioIdentificacion $identificacion) {}

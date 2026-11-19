@@ -1,5 +1,7 @@
 <?php
 
+// Define el almacenamiento, la duración y las opciones de las sesiones web.
+
 use Illuminate\Support\Str;
 
 return [

@@ -11,6 +11,9 @@ use App\Models\Plan;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
+/**
+ * Recibe las solicitudes JSON de la API relacionadas con los planes comerciales.
+ */
 class PlanController extends Controller
 {
     public function index(): AnonymousResourceCollection

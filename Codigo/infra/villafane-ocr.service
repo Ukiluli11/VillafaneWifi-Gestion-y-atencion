@@ -1,3 +1,4 @@
+# Inicia el trabajador de Laravel que procesa la cola de OCR de comprobantes.
 [Unit]
 Description=Lectura de comprobantes de Villafane Wifi
 After=network-online.target mariadb.service

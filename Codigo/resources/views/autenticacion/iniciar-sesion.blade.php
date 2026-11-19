@@ -1,3 +1,4 @@
+{{-- Muestra el formulario de acceso al panel y sus errores de validación. --}}
 @extends('layouts.panel')
 @section('titulo', 'Iniciar sesión')
 @section('contenido')

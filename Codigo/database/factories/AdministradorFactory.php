@@ -7,6 +7,8 @@ use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
+ * Crea perfiles de administrador asociados a una cuenta de usuario.
+ *
  * @extends Factory<Administrador>
  */
 class AdministradorFactory extends Factory

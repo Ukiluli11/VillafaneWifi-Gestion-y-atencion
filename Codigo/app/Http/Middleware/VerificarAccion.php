@@ -8,6 +8,9 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Comprueba el permiso exigido por una ruta antes de ejecutar su controlador.
+ */
 class VerificarAccion
 {
     /**

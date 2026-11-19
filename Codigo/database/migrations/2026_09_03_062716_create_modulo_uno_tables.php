@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Crea la estructura inicial de usuarios, clientes, servicios, cuotas y pagos.
+ */
 return new class extends Migration
 {
     /**

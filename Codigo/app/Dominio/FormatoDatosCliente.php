@@ -2,6 +2,9 @@
 
 namespace App\Dominio;
 
+/**
+ * Normaliza los datos identificatorios y de contacto usados en el registro de clientes.
+ */
 final class FormatoDatosCliente
 {
     public const SIN_NUMERO_NEGATIVO = '/\A(?!\s*[-−]\s*[0-9])/u';

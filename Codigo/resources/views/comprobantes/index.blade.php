@@ -1,3 +1,4 @@
+{{-- Muestra la bandeja de comprobantes y sus filtros. --}}
 @extends('layouts.panel')
 @section('titulo', 'Bandeja de Conciliación de Comprobantes')
 @section('contenido')

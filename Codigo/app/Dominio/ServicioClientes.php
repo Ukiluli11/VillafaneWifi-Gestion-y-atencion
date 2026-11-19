@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * Centraliza las operaciones de alta, actualización y consulta de clientes.
+ */
 class ServicioClientes
 {
     public function __construct(private readonly ServicioContrataciones $contrataciones) {}

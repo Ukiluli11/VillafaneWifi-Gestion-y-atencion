@@ -20,6 +20,9 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
+/**
+ * Verifica la contabilización del consumo y los límites de envío de WhatsApp.
+ */
 class ConsumoWhatsappTest extends TestCase
 {
     use LazilyRefreshDatabase;

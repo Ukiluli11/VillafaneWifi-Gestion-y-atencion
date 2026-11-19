@@ -1,5 +1,7 @@
 <?php
 
+// Configura las conexiones de base de datos y los almacenes Redis disponibles.
+
 use Illuminate\Support\Str;
 use Pdo\Mysql;
 

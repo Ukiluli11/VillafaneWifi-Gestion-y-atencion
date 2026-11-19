@@ -6,6 +6,9 @@ use App\Enums\AccionSistema;
 use App\Enums\EstadoUsuario;
 use App\Models\Usuario;
 
+/**
+ * Selecciona la política correspondiente al usuario y centraliza la consulta de sus permisos.
+ */
 class ServicioAutorizacion
 {
     public function puede(Usuario $usuario, AccionSistema $accion): bool

@@ -6,6 +6,9 @@ use App\Models\Plan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * Aplica las reglas de alta, actualización y disponibilidad de los planes comerciales.
+ */
 class ServicioPlanes
 {
     /** @param array<string, mixed> $datos */

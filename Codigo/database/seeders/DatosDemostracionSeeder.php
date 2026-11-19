@@ -14,6 +14,9 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Genera datos de ejemplo para recorrer los módulos del sistema.
+ */
 class DatosDemostracionSeeder extends Seeder
 {
     use WithoutModelEvents;

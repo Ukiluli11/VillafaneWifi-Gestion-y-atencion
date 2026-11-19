@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Valida el archivo y los datos enviados al cargar un comprobante.
+ */
 class SubirComprobanteRequest extends FormRequest
 {
     public function authorize(): bool

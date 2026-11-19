@@ -6,6 +6,9 @@ use App\Enums\AccionSistema;
 use App\Enums\AreaEmpleado;
 use App\Models\Empleado;
 
+/**
+ * Determina las acciones permitidas para el perfil de empleado.
+ */
 class PoliticaEmpleado implements PoliticaAcceso
 {
     /** @var array<string, list<AccionSistema>> */

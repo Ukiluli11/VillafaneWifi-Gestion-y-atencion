@@ -23,6 +23,9 @@ use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
+/**
+ * Presenta los indicadores del panel y coordina la descarga o impresión de reportes.
+ */
 class ReporteController extends Controller
 {
     public function __construct(private readonly ReporteService $reporteService) {}

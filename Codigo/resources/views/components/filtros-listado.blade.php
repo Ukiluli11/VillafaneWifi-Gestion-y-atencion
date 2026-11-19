@@ -1,3 +1,4 @@
+{{-- Renderiza controles reutilizables de búsqueda y filtrado para los listados. --}}
 @props(['ruta', 'busqueda', 'placeholder'])
 
 <form class="buscador filtros-listado" method="GET" action="{{ $ruta }}" role="search">
