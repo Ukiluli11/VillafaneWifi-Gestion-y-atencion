@@ -14,7 +14,7 @@ class TicketsDemostracionSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = Usuario::where('tipo', 'administrador')->first();
+        $admin = Usuario::whereHas('administrador')->first() ?? Usuario::first();
         $soporte = Usuario::whereHas('empleado', fn ($q) => $q->where('area', 'soporte'))->first() ?? $admin;
 
         $servicioAna = Servicio::whereHas('cliente', fn ($q) => $q->where('nombre_razon_social', 'like', '%Ana%'))->first()

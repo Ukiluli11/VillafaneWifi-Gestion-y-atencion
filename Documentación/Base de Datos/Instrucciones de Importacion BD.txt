@@ -1,0 +1,77 @@
+================================================================================
+VILLAFAÑE WIFI — RESPALDO Y SCRIPT DE BASE DE DATOS (BACKUP / DUMP SQL)
+================================================================================
+
+PROYECTO: Sistema de Gestión Integral y Atención al Cliente para Villafañe Wifi
+CÁTEDRA: Seminario de Integración — Ciclo Lectivo 2026
+DOCENTE: Dr. Cristian Fernando Cerquand
+ALUMNOS: Belazquez, Agustín Lautaro & Serrano, Ulises Iván
+
+--------------------------------------------------------------------------------
+1. DESCRIPCIÓN Y PROPÓSITO DEL RESPALDO (BACKUP):
+--------------------------------------------------------------------------------
+Este directorio contiene la copia de seguridad y exportación física completa
+(DDL + DML) de la base de datos relacional del sistema:
+
+- Nombre de la Base de Datos: villafane_wifi
+- Motor Relacional Soportado: MariaDB 10.11+ / MySQL 8.0+ (InnoDB)
+- Codificación: utf8mb4_unicode_ci
+
+Archivos disponibles:
+• villafane_wifi_backup.sql  -> Script SQL estándar (compatible con phpMyAdmin, Workbench, DBeaver)
+• villafane_wifi_backup.bak  -> Mismo respaldo en formato .bak para entornos que requieran dicha extensión
+• villafane_wifi_backup.sql.gz -> Versión comprimida de distribución rápida
+
+--------------------------------------------------------------------------------
+2. CORRESPONDENCIA CON EL MODELO ENTIDAD-RELACIÓN Y DICCIONARIOS:
+--------------------------------------------------------------------------------
+La estructura física implementada coincide en un 100% con los artefactos de diseño:
+- Diagrama DER Conceptual (DER modelo conceptual.drawio)
+- Diagrama DER Lógico Relacional normalizado a 3FN (DER modelo logico.png / .mwb)
+- Diccionario de Datos de Base de Datos (Diccionario de Datos BD.docx)
+- Informe del Sistema — Capítulo 9 (Modelado de Datos y Persistencia)
+
+Tablas del Dominio del Negocio (14 tablas con claves primarias y foráneas activas):
+1.  usuario               -> Cuentas base, credenciales hasheadas con Bcrypt y estados.
+2.  administrador         -> Especialización con nivel de acceso (total/restringido) y permisos.
+3.  empleado              -> Especialización con área operativa (soporte, atención, administración).
+4.  cliente               -> Abonados con DNI/CUIT, contacto WhatsApp, dirección y estado.
+5.  plan                  -> Catálogo de planes de conectividad (velocidad, tarifa, estado).
+6.  servicio              -> Conexiones instaladas (cliente, plan, domicilio de conexión, estado).
+7.  cuenta_receptora      -> Cuentas bancarias y billeteras virtuales para recaudación.
+8.  cuota                 -> Obligaciones mensuales emitidas (período, importe, vencimiento, estado).
+9.  pago                  -> Asentamiento contable de cobros (fecha, monto, medio de pago).
+10. conversacion          -> Hilos de chat por WhatsApp Cloud API con máquina de estados.
+11. mensaje               -> Historial de mensajes entrantes/salientes con emisor y estado de entrega.
+12. comprobante           -> Transferencias recibidas, datos extraídos por OCR Tesseract y hash antifraude.
+13. ticket                -> HelpDesk y soporte técnico (tipo, incidente, estado y técnico asignado).
+14. nota_interna          -> Seguimiento técnico interno, bitácora de auditoría y reaperturas.
+
+Tablas Técnicas del Framework:
+15. consumo_whatsapp_mes  -> Control de límites de consumo y cupos de la API de WhatsApp.
+16. jobs                  -> Cola de tareas en segundo plano (procesamiento OCR asíncrono).
+17. failed_jobs           -> Registro de excepciones y reintentos de workers de cola.
+18. migrations            -> Historial de migraciones versionadas de Laravel.
+
+--------------------------------------------------------------------------------
+3. INSTRUCCIONES DE IMPORTACIÓN / RESTAURACIÓN:
+--------------------------------------------------------------------------------
+
+MÉTODO A: Desde phpMyAdmin (XAMPP / Laragon / Servidor Web):
+1. Abrir phpMyAdmin en el navegador (http://localhost/phpmyadmin).
+2. Crear una base de datos vacía llamada: villafane_wifi (cotejamiento utf8mb4_unicode_ci).
+3. Seleccionar la base de datos "villafane_wifi" en el panel izquierdo.
+4. Hacer clic en la pestaña superior "Importar".
+5. Seleccionar el archivo "villafane_wifi_backup.sql" y presionar "Continuar / Ejecutar".
+
+MÉTODO B: Desde Consola / Terminal (MySQL o MariaDB):
+1. Crear la base de datos si no existe:
+   mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS villafane_wifi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+2. Restaurar el backup:
+   mysql -u root -p villafane_wifi < villafane_wifi_backup.sql
+
+MÉTODO C: Desde MySQL Workbench o DBeaver:
+1. Conectarse a la instancia local o remota de MySQL/MariaDB.
+2. Ir a "Server" -> "Data Import".
+3. Elegir "Import from Self-Contained File", seleccionar "villafane_wifi_backup.sql", indicar "villafane_wifi" como Default Target Schema y presionar "Start Import".
+================================================================================
